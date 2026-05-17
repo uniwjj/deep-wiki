@@ -14,7 +14,7 @@ updated: 2026-05-17
 
 ## 当前阶段：AI Agent 深度源码分析
 
-聚焦 [[Claude Code]] 的完整源码级理解：
+聚焦 [[claude-code]] 的完整源码级理解：
 
 - Agent 循环与工具系统 → [[claude-code-architecture]]
 - 多 Agent 协作机制 → [[agent-multi-agent-collaboration]]

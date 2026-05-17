@@ -2,6 +2,9 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-17] lint --fix | 修复 1 处断链
+- fixed `learning-path` — `[[Claude Code]]` → `[[claude-code]]`（空格导致断链）
+
 ## [2026-05-17] lint --fix | 扩展 5 个 stub 页面
 - expanded `agent-multi-agent-collaboration` — 两种协作范式、五种通用模式、选型铁律、五条设计原则
 - expanded `agent-tdd-workflow` — Superpowers 强制 TDD 循环、Meta JiT 语义级测试
