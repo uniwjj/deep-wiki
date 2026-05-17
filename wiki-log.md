@@ -2,6 +2,17 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-17] lint --fix | 扩展 5 个 stub 页面
+- expanded `agent-multi-agent-collaboration` — 两种协作范式、五种通用模式、选型铁律、五条设计原则
+- expanded `agent-tdd-workflow` — Superpowers 强制 TDD 循环、Meta JiT 语义级测试
+- expanded `agent-architecture-patterns` — 10 大设计模式及架构原则
+- expanded `agent-mcp-protocol` — JSON-RPC 基础、8 传输/7 来源、工具包装流程、安全设计
+- expanded `learning-path` — 三阶段学习计划：Agent 源码 → AI 工程化 → 大数据融合
+
+## [2026-05-17] lint | 知识库健康检查
+- 130 页，500+ 链接：断链 0，孤立页 0，缺失 frontmatter 0，无来源 0，内容过期 0
+- 标记 34 浅层页（26%）：13 index 页 + 4 hub 页 + 5 轻量概念 + 12 stub 待扩展
+
 ## [2026-05-17] ingest | SDD 自定义工作流：OpenSpec + Superpowers 薄编排
 - created `sdd-custom-workflow` — 薄编排架构，sdd-* action skills 统一入口，Action Not Phases，三段式 skill 结构，信息丢失防护，渐进采用策略
 - updated `superpowers-openspec-pitfalls` — 新增薄编排页交叉引用

@@ -8,8 +8,8 @@
     },
     "wiki/learning-path.md": {
       "path": "wiki/learning-path.md",
-      "mtime": 1778652850501.5874,
-      "contentHash": "a63d09d55453121d",
+      "mtime": 1779031020308.3005,
+      "contentHash": "a660eb944096d4e9",
       "lastSynced": "2026-05-17"
     },
     "wiki/tech-radar.md": {
@@ -20,8 +20,8 @@
     },
     "wiki/ai-agent/agent-architecture-patterns.md": {
       "path": "wiki/ai-agent/agent-architecture-patterns.md",
-      "mtime": 1778652816320.33,
-      "contentHash": "db1111996aa56537",
+      "mtime": 1779030983503.8882,
+      "contentHash": "aa3e40638c751847",
       "lastSynced": "2026-05-17"
     },
     "wiki/ai-agent/agent-autonomous-planning.md": {
@@ -50,8 +50,8 @@
     },
     "wiki/ai-agent/agent-mcp-protocol.md": {
       "path": "wiki/ai-agent/agent-mcp-protocol.md",
-      "mtime": 1778652823679.786,
-      "contentHash": "fc35aa934296bf03",
+      "mtime": 1779031004861.1848,
+      "contentHash": "3f2ba8f52c594af3",
       "lastSynced": "2026-05-17"
     },
     "wiki/ai-agent/agent-memory-system.md": {
@@ -62,8 +62,8 @@
     },
     "wiki/ai-agent/agent-multi-agent-collaboration.md": {
       "path": "wiki/ai-agent/agent-multi-agent-collaboration.md",
-      "mtime": 1778652827484.5928,
-      "contentHash": "b5e62225665f0b51",
+      "mtime": 1779030930798.678,
+      "contentHash": "3278cfa1665c190d",
       "lastSynced": "2026-05-17"
     },
     "wiki/ai-agent/agent-skill-test-case.md": {
@@ -80,8 +80,8 @@
     },
     "wiki/ai-agent/agent-tdd-workflow.md": {
       "path": "wiki/ai-agent/agent-tdd-workflow.md",
-      "mtime": 1778652834795.617,
-      "contentHash": "538ba313e1fb5568",
+      "mtime": 1779030952606.58,
+      "contentHash": "88bad272919236db",
       "lastSynced": "2026-05-17"
     },
     "wiki/ai-agent/agent-vs-framework-vs-harness.md": {
