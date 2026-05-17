@@ -530,8 +530,8 @@
     },
     "wiki/ai-agent/openspec-sdd-practice.md": {
       "path": "wiki/ai-agent/openspec-sdd-practice.md",
-      "mtime": 1778824830563.7903,
-      "contentHash": "02fe75e37534428d",
+      "mtime": 1779029501528.9607,
+      "contentHash": "42c549f69cfd8a77",
       "lastSynced": "2026-05-17"
     },
     "wiki/ai-agent/progressive-spec-methodology.md": {
@@ -546,10 +546,16 @@
       "contentHash": "b80b2ab2b5265f6b",
       "lastSynced": "2026-05-17"
     },
+    "wiki/ai-agent/sdd-custom-workflow.md": {
+      "path": "wiki/ai-agent/sdd-custom-workflow.md",
+      "mtime": 1779029478786.014,
+      "contentHash": "0e14785228b40ea9",
+      "lastSynced": "2026-05-17"
+    },
     "wiki/ai-agent/sdd-openspec-superpowers.md": {
       "path": "wiki/ai-agent/sdd-openspec-superpowers.md",
-      "mtime": 1778830572774.2114,
-      "contentHash": "6cec3be04fe1db1f",
+      "mtime": 1779029495348.014,
+      "contentHash": "6a83c7c2a2b48a63",
       "lastSynced": "2026-05-17"
     },
     "wiki/ai-agent/spec-kit.md": {
@@ -566,14 +572,26 @@
     },
     "wiki/ai-agent/superpowers-framework.md": {
       "path": "wiki/ai-agent/superpowers-framework.md",
-      "mtime": 1778830515960.6646,
-      "contentHash": "09674e6f294310b9",
+      "mtime": 1779028292779.971,
+      "contentHash": "7fb2d16cd5c905a7",
+      "lastSynced": "2026-05-17"
+    },
+    "wiki/ai-agent/superpowers-openspec-legacy-workflow.md": {
+      "path": "wiki/ai-agent/superpowers-openspec-legacy-workflow.md",
+      "mtime": 1779028398905.3264,
+      "contentHash": "9701963e15bf2dc9",
+      "lastSynced": "2026-05-17"
+    },
+    "wiki/ai-agent/superpowers-openspec-pitfalls.md": {
+      "path": "wiki/ai-agent/superpowers-openspec-pitfalls.md",
+      "mtime": 1779029490444.2026,
+      "contentHash": "7352d6ce4a81d39f",
       "lastSynced": "2026-05-17"
     },
     "wiki/ai-agent/superpowers-vs-openspec.md": {
       "path": "wiki/ai-agent/superpowers-vs-openspec.md",
-      "mtime": 1778830618320.357,
-      "contentHash": "775f1c3d7256ed70",
+      "mtime": 1779026800698.0771,
+      "contentHash": "b28c6404800c1f13",
       "lastSynced": "2026-05-17"
     },
     "wiki/ai-ml/bookrag.md": {

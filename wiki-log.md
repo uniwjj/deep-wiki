@@ -2,6 +2,27 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-17] ingest | SDD 自定义工作流：OpenSpec + Superpowers 薄编排
+- created `sdd-custom-workflow` — 薄编排架构，sdd-* action skills 统一入口，Action Not Phases，三段式 skill 结构，信息丢失防护，渐进采用策略
+- updated `superpowers-openspec-pitfalls` — 新增薄编排页交叉引用
+- updated `sdd-openspec-superpowers` — 新增薄编排页交叉引用
+- updated `openspec-sdd-practice` — 新增薄编排页交叉引用
+- 跳过 `AI编程三剑客` — 同一文章已于 2026-05-15 摄入
+
+## [2026-05-17] ingest | Superpowers 实测基准 + 双框架组合踩坑
+- created `superpowers-openspec-pitfalls` — 7 个坑及解决方案、自定义衔接 Skill、四组合效果对比、3 分钟快速上手
+- updated `superpowers-framework` — 新增定量基准(58%→91%)、6 技能详解、3 种最佳场景、AI 编程工程化拐点分析
+- updated `superpowers-openspec-legacy-workflow` — 新增踩坑页交叉引用
+- updated `openspec-sdd-practice` — 新增踩坑页交叉引用
+- updated `sdd-openspec-superpowers` — 新增踩坑页交叉引用
+
+## [2026-05-17] ingest | Superpowers + OpenSpec 协同开发实战指南
+- created `superpowers-openspec-legacy-workflow` — 老旧项目四阶段闭环（分析→规约→生成→同步），团队角色变化，4大避坑指南
+- updated `sdd-openspec-superpowers` — 新增老旧项目实战链接
+- updated `openspec-sdd-practice` — 新增协同实战链接
+- updated `superpowers-framework` — 新增协同实战链接
+- updated `superpowers-vs-openspec` — 新增协同实战链接
+
 ## [2026-05-17] ingest | Claude Code 大型代码库配置指南
 - created `claude-code-configuration-guide` — 实操配置指南，含 CLAUDE.md 分层模板、Hooks/Skills 配置实例、代码地图、分阶段检查清单
 - updated `claude-code-large-codebase` — 新增配置指南交叉引用

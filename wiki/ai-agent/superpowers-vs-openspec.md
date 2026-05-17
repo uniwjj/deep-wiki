@@ -95,6 +95,7 @@ OpenSpec 将"规范"本身变为驱动 AI 工作的"源代码"。在写第一行
 
 ## 相关页面
 
+- [[superpowers-openspec-legacy-workflow]] — 在老旧项目中协同使用的四阶段实战
 - [[ai-programming-tools-comparison]] — Spec-Kit、OpenSpec、Superpowers 三剑客全面对比
 - [[spec-kit]] — GitHub 官方 SDD 框架
 - [[sdd-openspec-superpowers]] — SDD 双框架操作层面对比

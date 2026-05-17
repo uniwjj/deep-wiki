@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code安装Superpowers后代码通过率58%→91%：AI编程工程化拐点来了</title>
+  <!-- ingested: 2026-05-17 | wiki_pages: see wiki-log.md -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-size: 16px; line-height: 1.8; color: #333; max-width: 800px; margin: 0 auto; padding: 20px;
+    }
+    article { margin-bottom: 40px; }
+    article .article-meta h1 { font-size: 24px; margin-bottom: 8px; }
+    article .article-meta .meta-info { font-size: 13px; color: #999; }
+    article .article-meta .meta-info span { margin-right: 16px; }
+    article .article-meta .meta-info a { color: #666; }
+    article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+    article .article-body img { max-width: 100%; height: auto; }
+    article .article-body pre {
+      background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto;
+      font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;
+    }
+    article .article-body code {
+      font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+      background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em;
+    }
+    article .article-body pre code { background: transparent; padding: 0; }
+    article .article-body blockquote {
+      margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555;
+    }
+    article .article-body table {
+      border-collapse: collapse; width: 100%; margin: 16px 0;
+    }
+    article .article-body th, article .article-body td {
+      border: 1px solid #ddd; padding: 8px 12px; text-align: left;
+    }
+    article .article-body th { background: #f0f0f0; font-weight: 600; }
+    article .article-body ul, article .article-body ol { padding-left: 24px; }
+    article .article-body a { color: #1a73e8; }
+  </style>
+</head>
+<body>
+<article>
+  <header class="article-meta">
+    <h1>Claude Code安装Superpowers后代码通过率58%→91%：AI编程工程化拐点来了</h1>
+    <div class="meta-info">
+      <span>作者：代码萌新充电站</span>
+      <span>发表：2026-05-16 14:39</span>
+      <span>来源：<a href="https://www.toutiao.com/article/7640374866981732916" target="_blank">https://www.toutiao.com/article/7640374866981732916</a></span>
+      <span>下载：2026-05-17 20:39</span>
+    </div>
+  </header>
+  <hr>
+  <div class="article-body">
+    <p>安装这个插件后代码通过率从58% 飙升到 91%，GitHub 一个月涨了12 万星。</p><p>这个叫Superpowers的开源工程化框架，把需求澄清、计划拆解、TDD 测试驱动开发、子代理并行协作、代码审查这 14 个技能打包成了一套 Agent 工作流。它不教 AI 怎么写代码，而是教 AI 怎么按专业软件工程标准交付代码。</p><p>我花了一整天在本地跑了一遍，这篇文章拆解它的核心架构、14 个技能的实战效果，以及为什么这套方法大概率会改变 AI 编程助手的底层工作方式。建议收藏，下次搭项目时直接翻出来对着用。</p><ul><li>GitHub Stars— 122,990+（2026年5月，月增3.8万星）</li><li>核心能力— 14个可组合技能：需求澄清→计划拆解→TDD→并行代理→审查</li><li>实测效果— 代码一次通过率 58%→91%，人工修复从2轮降至0.2轮</li><li>安装— Claud Code CLI 中运行<code>/plugin install superpowers@superpowers-marketplace</code></li></ul><h1>从提示词魔法到流程标准：Superpowers 解决的核心问题</h1><p>AI 编程工具现在遍地都是。Claude Code、Cursor、Codex——选哪个都差不多。但有一个通用毛病：你把需求扔进去，它三秒甩出一堆代码。能跑。但边界条件呢？单元测试呢？安全性呢？没人管。</p><p>传统 AI 编程：给提示词 → AI 生成代码 → 人工检查修改。每一步的质量全靠提示词设计水平和 review 的细致程度。</p><p>Superpowers 的思路转了 180 度：流程大于提示。定义标准化软件工程流程 → AI 按流程执行 → 自动验证质量 → 继续优化改进。</p><p>杀手锏在于「强制执行」——不是你提醒 AI 先写测试再写代码，而是 TDD 技能在 AI 准备动手时自动介入，强迫走完红-绿-重构循环。人不需要时刻盯着，AI 自己管自己。</p><h1>14 个工程化技能拆解：从需求到上线完整流水线</h1><p>完整跑一遍就知道它为什么叫「超能力」了。这 14 个技能覆盖软件开发的全部关键节点，下面挑最核心的 6 个逐个拆。</p><h1>brainstorming 头脑风暴技能：苏格拉底式需求澄清</h1><p>在任何代码出现之前，brainstorming 技能强制 AI 进入提问模式。你说「做个用户认证系统」，它按标准模板追问：用户规模多大？支持哪些登录方式？要不要 2FA？密码策略怎么定？session 还是 JWT？</p><p>这个技能单独用就值回时间成本。很多项目失败不是因为代码烂，而是需求一开始就没搞对。AI 用苏格拉底式提问把模糊想法变成结构化设计文档，这个过程在传统开发中通常发生在开会吵了半小时之后。</p><h1>编写计划和执行计划技能：大任务切成 2-5 分钟小块</h1><p>编写计划技能把需求拆成结构化清单，每个子任务标注文件路径、代码意图、验证步骤。执行计划技能按清单顺序执行，每完成一步自动验证。</p><p>实测：让 AI 写带分页和权限过滤的 REST API。没装 Superpowers 时它一口气写完，路由参数搞错一个，我花 15 分钟定位 bug。装上后自动拆成数据模型、查询逻辑、路由层、测试 4 个子任务，第二个子任务跑单元测试时就发现了参数缺失并修正，全程不需要我介入。</p><h1>子代理并行驱动开发：多核 AI 同时干活</h1><p><span><br>dispatching-parallel-agents 技能把独立子任务分发给多个并行子代理。比如开发电商系统，子代理 1 搞用户模块，子代理 2 搞商品模块，子代理 3 搞订单模块。三个子代理同时写代码，主代理最后整合。</span></p><p>对大型项目效率提升是倍数量级的。但有一个坑：子代理之间的依赖关系必须在编写计划阶段提前定义清楚，否则会出现 API 接口不一致。这套工具对工程纪律的要求比传统 AI 编程更高——不是更省心，而是更规范。</p><h1>TDD 测试驱动开发技能：红-绿-重构自动循环</h1><p>这是 Superpowers 的灵魂技能，也是代码通过率从 58% 拉到 91% 的核心原因。</p><p>标准 TDD 三步走：红灯（写失败的测试）→ 绿灯（最少代码让测试通过）→ 重构（优化代码结构）。Superpowers 全程自动执行这三步，不需要手动干预。</p><div class="syl-shadow-provider"><div class="syl-table-wrap"><table><tbody><tr><th>对比维度</th><th>无 Superpowers</th><th>有 Superpowers</th></tr><tr><td>CRUD接口一次通过率</td><td>58%</td><td>91%</td></tr><tr><td>人工修复轮数</td><td>平均 2 轮</td><td>平均 0.2 轮</td></tr><tr><td>测试覆盖率</td><td>不保证</td><td>96%</td></tr><tr><td>8接口REST项目耗时</td><td>~2.5h</td><td>47分钟</td></tr></tbody></table></div></div><p>差距的根源：AI 自己写的测试发现了自己写的 bug，人工修复变成了 AI 自修。这组对比值得截图，下次选 AI 编程工具时直接翻出来看。</p><h1>调试技能：科学化诊断替代盲猜修复</h1><p>遇到 bug 时，调试技能让 AI 走五步系统化诊断流程：复现问题 → 提出假设 → 逐一验证 → 找到根因 → 修复验证。</p><p>我故意埋了一个 N+1 查询的性能问题。没装 Superpowers 时 AI 直接开始改代码，猜了两个方向全错。装上后它先用 profiling 工具确认查询次数异常，定位到关联查询未使用 eager loading，一处修改解决。从「盲修」到「诊断」，效率差距肉眼可见。</p><h1>代码审查技能：提交前自动拦截质量问题</h1><p>receiving-code-review 技能在代码写完后自动扫描：检查规范遵守、安全漏洞、性能隐患。所有问题在提交前被拦截。</p><p>思路跟生产环境 CI Pipeline 完全一致，区别在于 Superpowers 把它前置到了开发阶段——问题在代码还热着的时候就被发现，而不是等推到 CI 流水线再报错。</p><h1>Superpowers 三种最有效的使用场景</h1><h1>新项目从零开始</h1><p>这是 Superpowers 的最佳战场。brainstorming 澄清需求 → 编写计划拆任务 → TDD 执行开发 → 代码审查收尾，整套跑下来，从需求到可上线代码比手动 + AI 辅助的模式至少快 3 倍。</p><p>关键数字：8 接口 REST 项目，全程47 分钟，测试覆盖率96%，零人工调试。</p><h1>接手别人的遗留代码仓库</h1><p>调试技能在这种场景下最有用。你不熟悉代码库，AI 也不熟悉——传统模式下 AI 会「猜」逻辑，猜错概率很高。调试技能强制它先理解再动手，第一步就是分析代码结构和调用关系。</p><p>我在一个有 2300 行的遗留 Node.js 项目上实测：加一个新功能。没装 Superpowers：AI 改了 3 个文件，改坏了 1 个老功能。装上后：AI 先画调用图，确认影响范围，再动代码，零回归问题。</p><h1>团队协作开发</h1><p>子代理并行能力在团队场景下是核武器级别。编写计划产出的任务清单可以直接发配给多个开发者，每人用一个子代理按计划执行。任务拆分标准统一、代码风格一致、测试覆盖相同——传统 Code Review 流程根本做不到这种一致性。</p><h1>Superpowers 的局限和适用边界</h1><p>不是万能药，几个实在的限制需要讲清楚。</p><p>平台兼容性：Superpowers 目前只支持 Claude Code 作为主驱动引擎。虽然官方写着兼容 Codex 和 OpenCode，实战中 Claude Code 的集成度最高，其他环境或多或少有技能触发不稳定的问题。</p><p>学习成本：14 个技能不是「装了就变强」。你需要理解每个技能的触发时机和适用场景。比如 brainstorming 技能在改一个小 bug 时也会跳出来提问，反而拖节奏。知道什么时候开、什么时候关，才算真正会用。</p><p>Token 消耗：完整跑通 brainstorming + 编写计划 + TDD + 代码审查这套流程，Token 消耗大约是直接让 AI 写代码的 3-4 倍。对个人开发者每月多花几十块钱，但对频繁使用的小团队，API 费用翻倍需要认真算账。</p><p>Superpowers 代表的不只是更好用，而是 AI 编程工程化的拐点</p><p>Superpowers 的火爆不是偶然。它标记了一个分水岭：AI 编程从「让 AI 写代码」进化到「让 AI 按工程标准交付软件」。</p><p>2023 年 AI 编程是代码补全。2024 年是对话式编程。2025 到 2026 年是 Agent 自主编程。但自主不代表质量——能自己干活和能按规范干活是两码事。Superpowers 做的事，就是给 AI 的自主能力套上软件工程的纪律约束。</p><p>这个趋势一旦确立，未来所有 AI 编程助手都会内置类似的流程引擎。到时候比的不再是代码生成速度，而是工程流程规不规范。</p><p>你觉得 AI 编程现在最大的瓶颈是代码质量还是需求理解？评论区聊聊。</p>
+  </div>
+</article>
+</body>
+</html>
