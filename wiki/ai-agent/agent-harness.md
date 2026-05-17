@@ -19,3 +19,5 @@ updated: 2026-05-15
 - [[harness-design-long-running]] — 长任务 Harness 设计
 - [[harness-engineering-practice]] — Harness 工程实践
 - [[agent-vs-framework-vs-harness]] — Agent/Framework/Harness 三者区分
+- [[claude-code-large-codebase]] — 大型代码库中的 Harness 构建顺序与配置模式
+- [[claude-code-configuration-guide]] — 配置实操指南与分阶段检查清单

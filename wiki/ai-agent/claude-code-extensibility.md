@@ -12,6 +12,8 @@ updated: 2026-05-10
 
 核心分离：**Skills 扩展模型能做什么**（内容，以指令注入）。**Hooks 扩展何时和如何执行**（控制流，生命周期拦截器）。
 
+此外，LSP 和 Subagent 是两种能力型扩展点（非配置型）：LSP 提供符号级代码导航，Subagent 提供隔离上下文的任务委托。
+
 ## 为什么需要四种机制？
 
 | 机制 | 唯一能力 | 上下文成本 | 注入点 |
@@ -87,12 +89,20 @@ MCP skills **永不执行内联 shell 命令**。信任边界是绝对的。
 
 当 skill 被调用，其 frontmatter 声明的 hooks 注册为**会话作用域 hooks**。`skillRoot` 变为 `CLAUDE_PLUGIN_ROOT` 供 hook 的 shell 命令使用。
 
+## LSP 和 Subagent
+
+- **LSP**：通过语言服务器提供实时代码智能，支持符号级导航和自动错误检测。需要在 Claude Code 中安装代码智能插件和对应语言服务器二进制。多语言代码库中的最高价值投资之一。
+- **Subagent**：独立 Claude 实例，拥有自己的上下文窗口。分离探索与编辑，支持并行工作。只返回最终结果给父代理。
+
+> 构建顺序建议：CLAUDE.md → Hooks → Skills → Plugins，然后 MCP 和 LSP。不要跳过基础直接跳到 MCP。
+
 ## 相关页面
 
 - [[claude-code-architecture]] — 六抽象整体架构
 - [[claude-code-mcp]] — MCP 协议实现
 - [[claude-code-tool-system]] — PreToolUse/PostToolUse 在工具管道中的位置
 - [[claude-code-memory-system]] — 记忆系统（另一种扩展形式）
+- [[claude-code-large-codebase]] — 大型代码库中各组件的规模化应用
 
 ## 工具池组装
 
@@ -118,3 +128,4 @@ execute()  → 控制操作是否/如何运行 → 权限规则, Hooks
 - [[claude-code-permission-system]] — 权限系统（Hooks 与权限管道深度集成）
 - [[claude-code-context-compaction]] — 上下文管理
 - [[claude-code-subagent]] — 子代理（AgentTool 元工具）
+- [[claude-code-large-codebase]] — 构建顺序与规模化最佳实践

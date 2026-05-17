@@ -64,4 +64,5 @@ Demo 和生产的分水岭。Claude Code 创始人：让模型验证自己，质
 
 - [[claude-code-harness]] — Claude Code Harness 架构
 - [[agent-architecture-patterns]] — Agent 架构模式
+- [[claude-code-large-codebase]] — 大型代码库中的 Harness 构建顺序与配置模式
 - [[claude-code-vs-opencode]] — 框架对比

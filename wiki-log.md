@@ -2,6 +2,20 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-17] ingest | Claude Code 大型代码库配置指南
+- created `claude-code-configuration-guide` — 实操配置指南，含 CLAUDE.md 分层模板、Hooks/Skills 配置实例、代码地图、分阶段检查清单
+- updated `claude-code-large-codebase` — 新增配置指南交叉引用
+- updated `agent-harness` — 新增配置指南链接
+
+## [2026-05-17] ingest | How Claude Code works in large codebases
+- created `claude-code-large-codebase` — Anthropic 官方大型代码库最佳实践，agentic search 与 RAG 对比、Harness 构建顺序、三大配置模式、组织级落地
+- updated `claude-code-search-strategy` — 新增大型代码库实践链接
+- updated `agent-harness-overview` — 新增 Harness 构建顺序链接
+- updated `claude-code-extensibility` — 新增 LSP/Subagent 说明和构建顺序
+- updated `claude-md-best-practices` — 新增分层策略和模型演进维护
+- updated `ai-governance` — 新增组织级 AI 治理模式
+- updated `agent-harness` — 新增大型代码库页面链接
+
 ## [2026-05-15] lint --fix | 知识库整理优化
 - fixed `sources/2026/05/15/` — 补 ingested frontmatter
 - fixed 10 页 — 补 sources 字段（8 draft + 2 meta）
