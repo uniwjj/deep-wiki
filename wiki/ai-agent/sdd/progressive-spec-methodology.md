@@ -5,7 +5,7 @@ aliases: [Progressive Spec, Spec Coding, 渐进式规格]
 tags: [ai-agent, practice, concept]
 sources: [2026/04/05/渐进式Spec新范式.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # 渐进式 Spec 方法论

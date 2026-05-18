@@ -5,7 +5,7 @@ aliases: [Karpathy知识库搭建, Karpathy Knowledge Base Practice]
 tags: [ai-agent, practice]
 sources: [2026/04/06/跟着Karpathy从零搭建AI知识库.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # Karpathy 知识库实操指南

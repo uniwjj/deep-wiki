@@ -6,7 +6,7 @@ tags: [ai-agent, concept]
 sources: [2026/05/10/lint-stub.md]
 status: draft
 created: 2026-05-10
-updated: 2026-05-15
+updated: 2026-05-18
 ---
 
 # Agent Harness
@@ -22,3 +22,11 @@ updated: 2026-05-15
 - [[agent-vs-framework-vs-harness]] — Agent/Framework/Harness 三者区分
 - [[claude-code-large-codebase]] — 大型代码库中的 Harness 构建顺序与配置模式
 - [[claude-code-configuration-guide]] — 配置实操指南与分阶段检查清单
+
+## 相关页面
+
+- [[agent-harness-overview]] — 核心入口：Harness 六承重层与七步循环
+- [[harness-build-to-delete]] — Harness 演进：从"补"到"删"
+- [[harness-as-backend]] — Harness 作为新后端的范式转变
+- [[agent-vs-framework-vs-harness]] — 三层概念辨析
+- [[ai-agent/index]] — AI Agent 总览

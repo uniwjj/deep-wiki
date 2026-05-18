@@ -5,7 +5,7 @@ aliases: [Open Design, 开源设计工具, AI设计Agent]
 tags: [ai-agent, tool]
 sources: [2026/05/09/Open-Design开源平替Claude-Design.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # Open Design

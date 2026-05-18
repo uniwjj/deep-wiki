@@ -5,7 +5,7 @@ aliases: [Auto Dream, 自动梦境, Claude Code记忆机制, REM睡眠记忆, CC
 tags: [ai-agent, tool, concept]
 sources: [2026/03/29/claude-code-auto-dream-guide.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # Claude Code 自动梦境（Auto Dream）

@@ -6,7 +6,7 @@ tags: [ai-agent, concept]
 sources: [2026/05/10/lint-stub.md]
 status: draft
 created: 2026-05-10
-updated: 2026-05-15
+updated: 2026-05-18
 ---
 
 # LLM Wiki
@@ -20,3 +20,11 @@ updated: 2026-05-15
 - [[llm-wiki-applications]] — 应用场景
 - [[llm-wiki-six-layer]] — 六层架构设计
 - [[rag-vs-llm-wiki]] — RAG vs LLM Wiki 深度对比
+
+## 相关页面
+
+- [[llm-wiki-concept]] — 核心概念入口
+- [[obsidian-claudian]] — Obsidian + Claude Code 整合方案
+- [[karpathy-agent-obsidian-os]] — Karpathy 的知识库 OS 实践
+- [[ai-knowledge-base]] — AI 知识库技术全景
+- [[rag-query-optimization]] — RAG 查询优化策略

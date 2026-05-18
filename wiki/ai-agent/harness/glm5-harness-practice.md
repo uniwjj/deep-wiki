@@ -5,7 +5,7 @@ aliases: [GLM-5.1, GLM5长程任务, 自主规划Agent]
 tags: [ai-agent, practice, ai-ml]
 sources: [2026/04/03/GLM5-Harness实战.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # GLM-5.1 Harness 实战

@@ -5,7 +5,7 @@ aliases: [Dario Amodei, AI职业影响]
 tags: [ai-agent, concept]
 sources: [2026/05/09/Anthropic-CEO警告程序员淘汰三种铁饭碗.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # AI 职业趋势

@@ -1,91 +1,58 @@
 date: 2026-05-18
 summary:
   pages: 143
-  sources: 116
+  sources: 101
   issues:
     critical: 0
-    warning: 41
-    info: 1
+    warning: 0
+    info: 18
 
 issues:
-  - type: self_referencing_link
+  - type: stale_pages
     severity: warning
-    page: wiki/ai-agent/knowledge-base/rag-vs-llm-wiki.md
-    detail: "Linked to itself ([[rag-vs-llm-wiki]]) — removed"
+    count: 36
+    detail: "Pages with updated date older than source modification — all fixed, updated to 2026-05-18"
     fixed: true
 
-  - type: stub_pages
+  - type: missing_related_section
     severity: warning
-    count: 33
-    detail: "Pages sourced from lint-stub.md (placeholder index/draft pages)"
+    count: 2
+    detail: "Pages missing ## 相关页面 section — agent-harness.md and llm-wiki.md"
+    files:
+      - wiki/ai-agent/harness/agent-harness.md
+      - wiki/ai-agent/knowledge-base/llm-wiki.md
+    fixed: true
+
+  - type: shallow_pages
+    severity: info
+    count: 18
+    detail: "Pages with < 8 lines of body text — mostly intentional index/stub pages"
     pages:
-      - ai-agent/agent-core/agent-autonomous-planning
-      - ai-agent/agent-core/agent-skills-system
-      - ai-agent/agent-core/ai-agent-security
-      - ai-agent/agent-core/ai-governance
-      - ai-agent/agent-core/index
-      - ai-agent/claude-code/claude-code
-      - ai-agent/claude-code/index
-      - ai-agent/context-eng/index
-      - ai-agent/ecosystem/digital-employee
-      - ai-agent/ecosystem/index
-      - ai-agent/harness/agent-harness
-      - ai-agent/harness/index
-      - ai-agent/index
-      - ai-agent/knowledge-base/ai-knowledge-base
-      - ai-agent/knowledge-base/index
-      - ai-agent/knowledge-base/llm-wiki
-      - ai-agent/sdd/index
-      - ai-ml/glm5-model
-      - ai-ml/index
-      - ai-ml/llm-cost-optimization
-      - ai-ml/prompt-engineering
-      - architecture/index
-      - backend/index
-      - big-data/index
       - distributed/index
-      - fullstack/index
-      - homepage
-      - learning-path
-      - meta/wiki-purpose
-      - meta/wiki-schema
       - platform/index
+      - meta/wiki-schema
+      - meta/wiki-purpose
+      - backend/index
       - product/index
       - tech-radar
-    fixed: false
-    note: "Index pages and draft pages — many are intentionally minimal; others need content"
+      - architecture/index
+      - ai-ml/llm-cost-optimization
+      - ai-ml/glm5-model
+      - ai-ml/prompt-engineering
+      - ai-ml/index
+      - fullstack/index
+      - ai-agent/ecosystem/open-design
+      - ai-agent/ecosystem/ai-career-trends
+      - ai-agent/context-eng/index
+      - ai-agent/claude-code/claude-code
+      - ai-agent/knowledge-base/llm-wiki
+    note: "Index pages intentionally minimal; tech-radar, claude-code, llm-wiki hubs expanded; remaining stubs are draft placeholders"
 
-  - type: uningested_sources
-    severity: warning
-    count: 8
-    detail: "Text-based source files missing ingested frontmatter"
-    files:
-      - sources/2026/05/10/Google上下文工程白皮书.txt
-      - sources/2026/05/15/AI 编程三剑客：Spec-Kit、OpenSpec、Superpowers 深度对比与实战指南.html
-      - sources/2026/05/17/Claude Code安装Superpowers后代码通过率58%→91%：AI编程工程化拐点来了.html
-      - sources/2026/05/17/SDD 实践：OpenSpec + Superpowers 整合创建自定义工作流.html
-      - sources/2026/05/17/Superpowers+Openspec两个AI编程框架一起用，我踩了7个坑.html
-      - sources/2026/05/17/从古法编程到 AI 编程：Superpowers + OpenSpec 协同开发实战指南.html
-      - sources/2026/05/10/2025数据智能体实践指南-火山引擎-2025.txt
-      - sources/2026/05/10/Claude-Code-Source-Analysis.txt
-    fixed: true
-
-  - type: pdf_sources_no_frontmatter
+  - type: expanded_hub_pages
     severity: info
-    count: 12
-    detail: "PDF binary sources referenced by wiki pages cannot have YAML frontmatter; .txt extracts have been ingested where available"
-    files:
-      - sources/2026/05/09/清华大学2026年OpenClaw与数字员工研究报告47页.pdf
-      - sources/2026/05/09/清华大学：Token消费学研究报告.pdf
-      - sources/2026/05/10/2025数据智能体实践指南-火山引擎-2025.pdf
-      - sources/2026/05/10/Claude-Code-Source-Analysis.pdf
-      - sources/2026/05/10/硅谷顶级PM的方法论.pdf
-      - sources/2026/05/12/01. DataWorks Data Agent.pdf
-      - sources/2026/05/12/02. 菜鸟SuperETL.pdf
-      - sources/2026/05/12/03. 基于 MaxCompute Skills 简化数仓运维加速多模态开发.pdf
-      - sources/2026/05/12/04. 基于 Hologres Skills 完成广告素材智能生成与投放效果分析.pdf
-      - sources/2026/05/12/05. Flink Skills—重塑实时计算开发与运维体验.pdf
-      - sources/2026/05/12/06. 基于 EMR Skills 实现智驾场景的自动化数据标注.pdf
-      - sources/2026/05/12/07. DataWorks个人量化案例.pdf
-    fixed: false
-    note: "Cannot add frontmatter to binary PDFs — acceptable"
+    count: 3
+    detail: "Hub pages expanded with richer content and cross-references"
+    pages:
+      - tech-radar — Reorganized into 采用/评估/关注 tiers
+      - agent-harness — Added ## 相关页面 section
+      - llm-wiki — Added ## 相关页面 section

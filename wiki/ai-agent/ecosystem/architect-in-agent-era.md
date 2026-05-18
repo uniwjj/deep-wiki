@@ -5,7 +5,7 @@ aliases: [Agent架构师, 架构师能力, Harness半衰期, Architect in Agent 
 tags: [ai-agent, concept, architecture]
 sources: [2026/05/09/Agent时代架构师到底应该学什么.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # Agent 时代架构师的核心能力

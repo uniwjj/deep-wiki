@@ -5,7 +5,7 @@ aliases: [distributed, 分布式]
 tags: [distributed, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-05-10
+updated: 2026-05-18
 ---
 
 # 分布式系统

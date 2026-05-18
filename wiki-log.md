@@ -2,6 +2,14 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-18] lint | 深度检查与优化（第六轮）
+- fixed 36 stale pages — 批量更新 updated 日期至 2026-05-18（源文件修改时间在页面 updated 之后）
+- fixed 2 pages — agent-harness.md、llm-wiki.md 补充缺失的 ## 相关页面 章节
+- expanded tech-radar — 从 6 行扩展为 采用/评估/关注 三级技术雷达，新增 big-data 和 agent-core 链接
+- expanded claude-code hub — 从 8 行扩展为架构全景/核心机制/多Agent/工程实践四组分类，覆盖 34 篇子页面
+- updated product/index — 新增 architect-in-agent-era、ai-career-trends、tech-radar 跨领域链接
+- verified: 0 broken wikilinks, 0 stale pages, 0 missing frontmatter, 0 orphans
+
 ## [2026-05-18] lint | 全局健康检查与修复（第五轮）
 - fixed `rag-vs-llm-wiki.md` — 移除自引用 [[rag-vs-llm-wiki]]
 - fixed 5 shallow pages — architecture、backend、distributed、fullstack、platform 五个领域 index 页面补全领域说明

@@ -5,7 +5,7 @@ aliases: [Deep Study, 知识库首页]
 tags: [meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-09
-updated: 2026-05-10
+updated: 2026-05-18
 ---
 
 # Deep Study

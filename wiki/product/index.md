@@ -5,7 +5,7 @@ aliases: [product, 产品管理, 技术管理]
 tags: [product, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-05-10
+updated: 2026-05-18
 ---
 
 # 产品与技术管理
@@ -22,3 +22,6 @@ updated: 2026-05-10
 ## 相关页面
 
 - [[homepage]]
+- [[architect-in-agent-era]] — Agent 时代架构师的七项系统能力
+- [[ai-career-trends]] — AI 时代的职业趋势判断
+- [[tech-radar]] — 技术雷达：采用 / 评估 / 关注

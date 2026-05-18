@@ -6,7 +6,7 @@ tags: [ai-agent, concept]
 sources: [2026/05/10/lint-stub.md]
 status: draft
 created: 2026-05-10
-updated: 2026-05-10
+updated: 2026-05-18
 ---
 
 # Agent Skills 系统

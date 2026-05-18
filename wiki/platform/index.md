@@ -5,7 +5,7 @@ aliases: [platform, 平台]
 tags: [platform, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-05-10
+updated: 2026-05-18
 ---
 
 # 平台工程

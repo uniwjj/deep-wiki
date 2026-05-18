@@ -5,7 +5,7 @@ aliases: [Manus, 上下文工程, Context Engineering]
 tags: [ai-agent, concept, practice]
 sources: [2026/05/09/AI代理的上下文工程：构建Manus的经验教训.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # Manus 上下文工程

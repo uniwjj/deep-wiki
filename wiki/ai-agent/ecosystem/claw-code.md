@@ -5,7 +5,7 @@ aliases: [claw-code, clawcode, AI编码Harness]
 tags: [ai-agent, tool]
 sources: [2026/04/02/claw-code突破10万星.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # claw-code

@@ -5,7 +5,7 @@ aliases: [Agent Paradigms, Agent范式, ReAct, Plan-and-Execute, Reflection, 设
 tags: [ai-agent, concept, comparison]
 sources: [2026/05/10/Agent范式.md]
 created: 2026-05-10
-updated: 2026-05-10
+updated: 2026-05-18
 ---
 
 # Agent 设计范式

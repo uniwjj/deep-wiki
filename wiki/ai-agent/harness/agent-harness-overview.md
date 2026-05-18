@@ -5,7 +5,7 @@ aliases: [Harness综述, Agent Harness, The Anatomy of an Agent Harness]
 tags: [ai-agent, concept, architecture]
 sources: [2026/05/09/Agent-Harness综述同一模型体感差异在哪.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # Agent Harness 综述

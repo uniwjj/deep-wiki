@@ -5,7 +5,7 @@ aliases: [六层架构, LLM Wiki改造, Six-Layer Architecture, LLM Wiki Six-Lay
 tags: [ai-agent, practice]
 sources: [2026/05/09/Karpathy-LLM-Wiki改造六层架构.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # LLM Wiki 六层架构

@@ -5,7 +5,7 @@ aliases: [fullstack, 全栈]
 tags: [fullstack, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-05-10
+updated: 2026-05-18
 ---
 
 # 全栈开发

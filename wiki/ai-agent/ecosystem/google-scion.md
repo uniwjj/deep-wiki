@@ -5,7 +5,7 @@ aliases: [Scion, Google AI虚拟机]
 tags: [ai-agent, tool]
 sources: [2026/04/11/Google悄悄开源了个"AI虚拟机"，让多个Agent同时干活不打架.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # Google Scion

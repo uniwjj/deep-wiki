@@ -5,7 +5,7 @@ aliases: [opencode, OpenCode]
 tags: [ai-agent, tool, architecture]
 sources: [2026/05/12/deepwiki-opencode.html]
 created: 2026-05-12
-updated: 2026-05-12
+updated: 2026-05-18
 ---
 
 # OpenCode 源码架构

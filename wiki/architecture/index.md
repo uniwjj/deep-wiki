@@ -5,7 +5,7 @@ aliases: [architecture, 架构]
 tags: [architecture, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-05-10
+updated: 2026-05-18
 ---
 
 # 架构与设计

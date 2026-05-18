@@ -5,7 +5,7 @@ aliases: [RAG优化, Query改写, Prompt构建, RAG Query Optimization]
 tags: [ai-ml, practice]
 sources: [2026/05/09/封神级RAG优化实战query改写加prompt构建.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # RAG Query 优化实战

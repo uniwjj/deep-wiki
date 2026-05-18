@@ -5,7 +5,7 @@ aliases: [Obsidian, 第二大脑, Obsidian知识管理]
 tags: [ai-agent, tool, practice]
 sources: [2026/03/26/挖到宝！Obsidian打造个人第二大脑.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # Obsidian 个人第二大脑

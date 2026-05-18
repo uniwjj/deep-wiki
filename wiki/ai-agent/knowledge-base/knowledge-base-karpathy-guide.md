@@ -5,7 +5,7 @@ aliases: [LLM知识库教程, 知识库四步法, Karpathy Knowledge Base Guide]
 tags: [ai-agent, practice]
 sources: [2026/04/05/LLM搭建知识库保姆级教程.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # Karpathy 知识库搭建指南

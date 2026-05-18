@@ -5,7 +5,7 @@ aliases: [Harness Backend, Agent后端]
 tags: [ai-agent, concept, architecture]
 sources: [2026/05/09/Harness正在成为新后端.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # Harness 作为新后端

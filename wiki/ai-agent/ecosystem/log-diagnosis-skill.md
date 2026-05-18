@@ -5,7 +5,7 @@ aliases: [log-diagnosis, Skill+MCP, AI日志诊断]
 tags: [ai-agent, practice, tool]
 sources: [2026/04/02/日志诊断Skill.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # 日志诊断 Skill

@@ -5,7 +5,7 @@ aliases: [7 pitfalls, 双框架踩坑, OpenSpec Superpowers 衔接, spec-complia
 tags: [ai-agent, practice, decision]
 sources: [2026/05/17/Superpowers+Openspec两个AI编程框架一起用，我踩了7个坑.html]
 created: 2026-05-17
-updated: 2026-05-17
+updated: 2026-05-18
 ---
 
 # Superpowers + OpenSpec 组合踩坑实录

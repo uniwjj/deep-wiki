@@ -5,7 +5,7 @@ aliases: [Context Engineering, 上下文工程, Google Context Engineering]
 tags: [ai-agent, concept, architecture]
 sources: [2026/05/10/Google上下文工程白皮书.txt]
 created: 2026-05-10
-updated: 2026-05-10
+updated: 2026-05-18
 ---
 
 # Google 上下文工程白皮书

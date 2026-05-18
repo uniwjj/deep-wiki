@@ -5,7 +5,7 @@ aliases: [RAG对比, LLM Wiki vs RAG]
 tags: [ai-agent, concept, comparison]
 sources: [2026/04/07/Karpathy终结RAG草莽时代.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # RAG vs LLM Wiki

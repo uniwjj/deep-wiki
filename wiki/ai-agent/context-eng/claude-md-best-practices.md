@@ -5,7 +5,7 @@ aliases: [CLAUDE.md, CLI配置, AI编程规则]
 tags: [ai-agent, practice]
 sources: [2026/04/26/Karpathy的CLAUDE.md爆火：AI不瞎改了但开始用聪明的方式犯错.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # CLAUDE.md 最佳实践

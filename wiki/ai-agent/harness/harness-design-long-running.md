@@ -5,7 +5,7 @@ aliases: [GAN Harness, 3-Agent Architecture, 长任务Harness]
 tags: [ai-agent, architecture, concept]
 sources: [2026/05/09/anthropic-harness-design-long-running-apps.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # 长任务 Harness 设计

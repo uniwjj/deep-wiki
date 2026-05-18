@@ -5,7 +5,7 @@ aliases: [JiT Testing, 即时测试, Dodgy Diff]
 tags: [ai-agent, practice, concept]
 sources: [2026/04/21/AI写代码太快人类测试跟不上了Meta用新方法把bug检出率提升4倍.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-18
 ---
 
 # Meta JiT 测试
