@@ -37,5 +37,5 @@ updated: 2026-05-18
 ## 相关页面
 
 - [[ai-agent/index]]
-- [[claude-code/index]]
-- [[harness/index]]
+- [[claude-code]]
+- [[harness]]

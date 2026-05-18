@@ -16,13 +16,13 @@ Agent 开发领域的技术积累索引，按子领域分目录管理。
 
 | 目录 | 页数 | 说明 |
 |------|------|------|
-| [[claude-code/index\|Claude Code 深度分析]] | 34 | Claude Code 源码级架构、内部机制、多 Agent 协作 |
-| [[agent-core/index\|Agent 基础理论]] | 16 | Agent 设计范式、记忆、规划、安全、治理 |
-| [[sdd/index\|SDD 规范驱动开发]] | 10 | OpenSpec、Superpowers、Spec-Kit 三剑客 |
-| [[knowledge-base/index\|知识库与 RAG]] | 12 | LLM Wiki 概念、实现、Karpathy 实践 |
-| [[harness/index\|Harness 编排体系]] | 8 | Agent Harness 模式、工程实践 |
-| [[context-eng/index\|上下文工程]] | 3 | Google/Manus 上下文工程、CLAUDE.md |
-| [[ecosystem/index\|工具生态与趋势]] | 15 | OpenCode、Claw、Hermes 等工具及职业趋势 |
+| [[ai-agent/claude-code/index]] | 34 | Claude Code 源码级架构、内部机制、多 Agent 协作 |
+| [[ai-agent/agent-core/index]] | 16 | Agent 设计范式、记忆、规划、安全、治理 |
+| [[ai-agent/sdd/index]] | 10 | OpenSpec、Superpowers、Spec-Kit 三剑客 |
+| [[ai-agent/knowledge-base/index]] | 12 | LLM Wiki 概念、实现、Karpathy 实践 |
+| [[ai-agent/harness/index]] | 8 | Agent Harness 模式、工程实践 |
+| [[ai-agent/context-eng/index]] | 3 | Google/Manus 上下文工程、CLAUDE.md |
+| [[ai-agent/ecosystem/index]] | 15 | OpenCode、Claw、Hermes 等工具及职业趋势 |
 
 ## 快速入口
 

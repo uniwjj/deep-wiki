@@ -46,5 +46,5 @@ Agent 核心理论与机制，共 16 篇。
 ## 相关页面
 
 - [[ai-agent/index]]
-- [[claude-code/index]]
-- [[context-eng/index]]
+- [[claude-code]]
+- [[context-eng]]

@@ -2,7 +2,7 @@
 title: LLM 成本优化
 description: 大语言模型使用中的成本控制策略——Token 压缩、缓存、模型路由
 aliases: [llm-cost-optimization, LLM Cost Optimization, LLM成本优化]
-tags: [ai-ml, practice, draft]
+tags: [ai-ml, practice]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-14
 updated: 2026-05-14

@@ -151,10 +151,10 @@ InfiniSynapse 提供 Command Tools 让 [[claude-code|Claude Code]]、Cursor、Co
 
 | 方案 | 对应组件 | 差异 |
 |------|---------|------|
-| [[openai-data-agent\|OpenAI Data Agent 六层上下文]] | InfiniRAG | OpenAI 强调离线统一向量化 + 查询时 RAG 拉取，InfiniSynapse 强调知识可调用化 |
-| [[dataworks-data-agent\|DataWorks Data Agent]] | InfiniAgent + 受控执行内核 | DataWorks 把 Code Agent / Data Agent 融合在同一受控内核，InfiniSynapse 主张分工协作 |
-| [[dataagent-semantic-layer\|DataAgent 语义层]] | InfiniSQL 命名中间表 | DataAgent 通过节点类型/连接器/调度参数定义语义；InfiniSQL 让中间表的命名本身承载语义 |
-| [[data-agent-practice-guide\|火山引擎实践指南]] | 整体架构 | 火山指南强调"分层隔离/多路径冗余/置信度驱动/人机协同"，InfiniSynapse 三件组合是对该框架的具体实现思路之一 |
+| [[openai-data-agent]] | InfiniRAG | OpenAI 强调离线统一向量化 + 查询时 RAG 拉取，InfiniSynapse 强调知识可调用化 |
+| [[dataworks-data-agent]] | InfiniAgent + 受控执行内核 | DataWorks 把 Code Agent / Data Agent 融合在同一受控内核，InfiniSynapse 主张分工协作 |
+| [[dataagent-semantic-layer]] | InfiniSQL 命名中间表 | DataAgent 通过节点类型/连接器/调度参数定义语义；InfiniSQL 让中间表的命名本身承载语义 |
+| [[data-agent-practice-guide]] | 整体架构 | 火山指南强调"分层隔离/多路径冗余/置信度驱动/人机协同"，InfiniSynapse 三件组合是对该框架的具体实现思路之一 |
 
 ## 待考察问题
 

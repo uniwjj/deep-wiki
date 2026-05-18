@@ -1,8 +1,9 @@
-## Obsidian + Claudian真香警告：AI知识库终极方案
-
 ---
 ingested: 2026-05-09
 wiki_pages: [ai-agent/knowledge-base/obsidian-claudian]
+---
+
+## Obsidian + Claudian真香警告：AI知识库终极方案
 ---
 
 **文章信息**：

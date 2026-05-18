@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: []
+wiki_pages: [ai-agent/ecosystem/claude-managed-agents]
 ---
 
 # Anthropic的「脑手分离」：Claude Managed Agents架构拆解

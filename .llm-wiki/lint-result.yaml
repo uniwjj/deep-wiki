@@ -1,107 +1,94 @@
-date: 2026-05-15
+date: 2026-05-18
 summary:
-  pages: 107
-  sources: 120
-  issues: {critical: 1, warning: 17, info: 7}
+  pages: 143
+  sources: 101
+  issues: {critical: 11, warning: 14, info: 3}
 issues:
-  # Critical
-  - type: uningested_source
+  - type: broken_wikilink
     severity: critical
-    file: sources/2026/05/15/AI 编程三剑客：Spec-Kit、OpenSpec、Superpowers 深度对比与实战指南.html
-    detail: "Missing ingested frontmatter"
-    fix: add_ingested_frontmatter
-
-  # Warning: missing sources
-  - type: missing_sources_frontmatter
+    page: wiki/ai-agent/index.md
+    detail: "7 wikilinks with escaped pipe in table cells (\\|) → fixed by using full wiki-relative paths"
+  - type: broken_wikilink
+    severity: critical
+    page: wiki/big-data/infinisynapse.md
+    detail: "4 wikilinks with escaped pipe in table cells (\\|) → fixed by using bare wikilinks"
+  - type: missing_status_field
     severity: warning
-    page: wiki/ai-agent/agent-autonomous-planning.md
-    detail: "sources field empty"
-  - type: missing_sources_frontmatter
+    page: wiki/ai-agent/agent-core/agent-skills-system.md
+    detail: "draft in tags but no status field → added status: draft, removed draft from tags"
+  - type: missing_status_field
     severity: warning
-    page: wiki/ai-agent/ai-agent-security.md
-    detail: "sources field empty"
-  - type: missing_sources_frontmatter
+    page: wiki/ai-agent/claude-code/claude-code.md
+    detail: "draft in tags but no status field → added status: draft, removed draft from tags"
+  - type: missing_status_field
     severity: warning
-    page: wiki/ai-agent/ai-governance.md
-    detail: "sources field empty"
-  - type: missing_sources_frontmatter
+    page: wiki/ai-agent/harness/agent-harness.md
+    detail: "draft in tags but no status field → added status: draft, removed draft from tags"
+  - type: missing_status_field
     severity: warning
-    page: wiki/ai-agent/ai-knowledge-base.md
-    detail: "sources field empty"
-  - type: missing_sources_frontmatter
+    page: wiki/ai-agent/knowledge-base/llm-wiki.md
+    detail: "draft in tags but no status field → added status: draft, removed draft from tags"
+  - type: missing_status_field
     severity: warning
-    page: wiki/ai-agent/digital-employee.md
-    detail: "sources field empty"
-  - type: missing_sources_frontmatter
-    severity: warning
-    page: wiki/ai-ml/glm5-model.md
-    detail: "sources field empty"
-  - type: missing_sources_frontmatter
-    severity: warning
-    page: wiki/ai-ml/llm-cost-optimization.md
-    detail: "sources field empty"
-  - type: missing_sources_frontmatter
-    severity: warning
-    page: wiki/ai-ml/prompt-engineering.md
-    detail: "sources field empty"
-  - type: missing_sources_frontmatter
-    severity: warning
-    page: wiki/meta/wiki-purpose.md
-    detail: "sources field empty"
-  - type: missing_sources_frontmatter
-    severity: warning
-    page: wiki/meta/wiki-schema.md
-    detail: "sources field empty"
-
-  # Warning: shallow pages
-  - type: shallow_page
-    severity: warning
-    page: wiki/learning-path.md
-    detail: "~1 prose sentence, needs expansion or merge"
-  - type: shallow_page
+    page: wiki/ai-ml/token-consumption-economics.md
+    detail: "draft in tags but no status field → added status: draft, removed draft from tags"
+  - type: missing_status_field
     severity: warning
     page: wiki/tech-radar.md
-    detail: "~1 prose sentence, needs expansion or merge"
-  - type: shallow_page
+    detail: "draft in tags but no status field → added status: draft, removed draft from tags"
+  - type: redundant_draft_tag
     severity: warning
-    page: wiki/meta/wiki-schema.md
-    detail: "~1 prose sentence, mirrors root config"
-  - type: shallow_page
+    page: wiki/ai-agent/agent-core/agent-autonomous-planning.md
+    detail: "draft in both tags and status field → removed draft from tags"
+  - type: redundant_draft_tag
     severity: warning
-    page: wiki/ai-agent/digital-employee.md
-    detail: "~2 prose sentences + bullet lists"
-  - type: shallow_page
+    page: wiki/ai-agent/agent-core/ai-agent-security.md
+    detail: "draft in both tags and status field → removed draft from tags"
+  - type: redundant_draft_tag
     severity: warning
-    page: wiki/ai-agent/ai-agent-security.md
-    detail: "~2 prose sentences + bullet lists"
-
-  # Warning: redundant hub pages
-  - type: redundant_hub
+    page: wiki/ai-agent/agent-core/ai-governance.md
+    detail: "draft in both tags and status field → removed draft from tags"
+  - type: redundant_draft_tag
     severity: warning
-    page: wiki/ai-agent/llm-wiki.md
-    detail: "No unique content, just links to llm-wiki-concept/implementations/applications/six-layer"
-  - type: redundant_hub
+    page: wiki/ai-agent/knowledge-base/ai-knowledge-base.md
+    detail: "draft in both tags and status field → removed draft from tags"
+  - type: redundant_draft_tag
     severity: warning
-    page: wiki/ai-agent/agent-harness.md
-    detail: "No unique content, just links to agent-harness-overview and related"
-
-  # Info: potential duplicates
-  - type: duplicate_topic_cluster
+    page: wiki/ai-agent/ecosystem/digital-employee.md
+    detail: "draft in both tags and status field → removed draft from tags"
+  - type: redundant_draft_tag
+    severity: warning
+    page: wiki/ai-ml/glm5-model.md
+    detail: "draft in both tags and status field → removed draft from tags"
+  - type: redundant_draft_tag
+    severity: warning
+    page: wiki/ai-ml/llm-cost-optimization.md
+    detail: "draft in both tags and status field → removed draft from tags"
+  - type: redundant_draft_tag
+    severity: warning
+    page: wiki/ai-ml/prompt-engineering.md
+    detail: "draft in both tags and status field → removed draft from tags"
+  - type: missing_source_frontmatter
+    severity: warning
+    page: sources/2026/02/26/Obsidian + Claudian真香警告：AI知识库终极方案.md
+    detail: "missing opening --- frontmatter delimiter → fixed"
+  - type: missing_source_frontmatter
+    severity: warning
+    page: sources/2026/05/10/Agent范式.md
+    detail: "missing opening --- frontmatter delimiter → fixed"
+  - type: missing_source_frontmatter
+    severity: warning
+    page: sources/2026/05/10/Claude Code from Source.md
+    detail: "missing opening --- frontmatter delimiter → fixed"
+  - type: orphan_page
     severity: info
-    pages:
-      - wiki/ai-agent/superpowers-vs-openspec.md
-      - wiki/ai-agent/ai-programming-tools-comparison.md
-      - wiki/ai-agent/sdd-openspec-superpowers.md
-    detail: "3 pages compare SDD tools—need clear distinction (philosophy vs. practical vs. operational)"
-  - type: duplicate_topic_cluster
+    page: wiki/ai-agent/claude-code/index
+    detail: "no incoming links → fixed by ai-agent/index.md using full wiki-relative wikilink"
+  - type: orphan_page
     severity: info
-    pages:
-      - wiki/ai-agent/knowledge-base-karpathy-guide.md
-      - wiki/ai-agent/knowledge-base-karpathy-practice.md
-    detail: "Nearly identical content (both cover Karpathy LLM Wiki setup)—consider merge"
-  - type: duplicate_topic_cluster
+    page: wiki/ai-agent/ecosystem/index
+    detail: "no incoming links → fixed by ai-agent/index.md using full wiki-relative wikilink"
+  - type: orphan_page
     severity: info
-    pages:
-      - wiki/ai-agent/obsidian-second-brain.md
-      - wiki/ai-agent/obsidian-claudian.md
-    detail: "Both use 'Obsidian' alias—ambiguous cross-referencing"
+    page: wiki/ai-agent/sdd/index
+    detail: "no incoming links → fixed by ai-agent/index.md using full wiki-relative wikilink"

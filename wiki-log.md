@@ -2,12 +2,28 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-18] lint | 全局健康检查与修复（第四轮）
+- fixed `ai-agent/index.md` — 修复 7 条 table 内 `\|` 转义导致的断链，改用 wiki-relative 路径 `[[ai-agent/subdir/index]]`
+- fixed `big-data/infinisynapse.md` — 修复 4 条 table 内 `\|` 转义导致的断链，改用裸 wikilink
+- fixed 6 pages — 补充 `status: draft` 字段，移除 tags 中的 draft（agent-skills-system, claude-code, agent-harness, llm-wiki, token-consumption-economics, tech-radar）
+- fixed 8 pages — 移除 tags 中冗余的 draft（agent-autonomous-planning, ai-agent-security, ai-governance, ai-knowledge-base, digital-employee, glm5-model, llm-cost-optimization, prompt-engineering）
+- fixed 3 sources — 补充缺失的开 `---` frontmatter 分隔符（Obsidian+Claudian, Agent范式, Claude Code from Source）
+- fixed 3 orphans — claude-code/index, ecosystem/index, sdd/index 现在通过 ai-agent/index.md 获得入链
+- verified: 0 broken wikilinks, 0 wanted pages, 0 orphans
+
 ## [2026-05-18] ingest | Pushing the Frontier for Data Agents with Genie (Databricks Blog)
 - updated `big-data/databricks-genie` — 从二手转述升级为原始博文，补充四阶段执行轨迹、40% 表搜索提升、GEPA 优化等原文细节
 - created `ai-agent/specialized-knowledge-search` — 专用知识搜索技术：从企业资产提取语义上下文构建多索引、与通用 RAG 对比
 - created `ai-agent/parallel-thinking` — 并行思考：多轨迹采样聚合弥补 Data Agent 缺确定性测试的问题
 - created `ai-agent/multi-llm-design` — Multi-LLM 架构：不同子 Agent 使用不同模型分工，含 GEPA 成本优化
 - updated `big-data/code-agent-vs-data-agent` — Related 新增三个技术页面的链接
+
+## [2026-05-18] lint | 全局健康检查与修复（第三轮）
+- fixed 5 source files — 修复 15 条 broken wiki_pages 引用（wiki/前缀、stale路径、bare prefix）
+- fixed 7 index.md — 修复跨子目录 relative-path wikilinks（`[[subdir/index]]` → `[[subdir]]`）
+- added frontmatter to 2 uningested HTML sources
+- fixed `Anthropic的「脑手分离」` — 补充空 wiki_pages
+- verified: 0 broken source refs, 0 broken wikilinks
 
 ## [2026-05-18] lint | 全局健康检查与修复（第二轮）
 - fixed `agent-multi-agent-collaboration` — 修复 broken source 引用: Agent-Harness综述.md

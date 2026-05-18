@@ -2,8 +2,9 @@
 title: LLM Wiki
 description: LLM Wiki 知识库——核心概念、开源实现与应用场景索引（→ 详见子页面）
 aliases: [llm-wiki]
-tags: [ai-agent, concept, draft]
+tags: [ai-agent, concept]
 sources: [2026/05/10/lint-stub.md]
+status: draft
 created: 2026-05-10
 updated: 2026-05-15
 ---

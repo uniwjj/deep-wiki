@@ -39,4 +39,4 @@ AI 驱动的知识库方案与 RAG 技术，共 12 篇。
 ## 相关页面
 
 - [[ai-agent/index]]
-- [[context-eng/index]]
+- [[context-eng]]

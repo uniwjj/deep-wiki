@@ -32,5 +32,5 @@ Agent 编排系统的设计模式与工程实践，共 8 篇。
 ## 相关页面
 
 - [[ai-agent/index]]
-- [[sdd/index]]
-- [[claude-code/index]]
+- [[sdd]]
+- [[claude-code]]

@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-14
-wiki_pages: [dataagent-semantic-layer]
+wiki_pages: [big-data/dataagent-semantic-layer]
 ---
 # DataWorks DataAgent 语义层总结
 

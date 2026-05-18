@@ -2,8 +2,9 @@
 title: Agent Harness
 description: Agent 编排系统索引——概念、架构与工程实践（→ 详见 agent-harness-overview）
 aliases: [agent-harness, Harness]
-tags: [ai-agent, concept, draft]
+tags: [ai-agent, concept]
 sources: [2026/05/10/lint-stub.md]
+status: draft
 created: 2026-05-10
 updated: 2026-05-15
 ---
