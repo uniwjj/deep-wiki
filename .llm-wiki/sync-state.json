@@ -68,14 +68,14 @@
     },
     "wiki/architecture/index.md": {
       "path": "wiki/architecture/index.md",
-      "mtime": 1778652892278.2524,
-      "contentHash": "2f7769f5dd52d046",
+      "mtime": 1779083433574.141,
+      "contentHash": "789770e8ece07e7c",
       "lastSynced": "2026-05-18"
     },
     "wiki/backend/index.md": {
       "path": "wiki/backend/index.md",
-      "mtime": 1778652894914.443,
-      "contentHash": "dd0063d6867bc4c6",
+      "mtime": 1779083438709.51,
+      "contentHash": "9e2914d1b6750182",
       "lastSynced": "2026-05-18"
     },
     "wiki/big-data/code-agent-vs-data-agent.md": {
@@ -176,14 +176,14 @@
     },
     "wiki/distributed/index.md": {
       "path": "wiki/distributed/index.md",
-      "mtime": 1778652900101.2666,
-      "contentHash": "0fafa38b13c65a8e",
+      "mtime": 1779083443751.306,
+      "contentHash": "8e01863b15a992db",
       "lastSynced": "2026-05-18"
     },
     "wiki/fullstack/index.md": {
       "path": "wiki/fullstack/index.md",
-      "mtime": 1778652902782.5022,
-      "contentHash": "d3f3e06cd845c542",
+      "mtime": 1779083449015.135,
+      "contentHash": "90175348af0179d4",
       "lastSynced": "2026-05-18"
     },
     "wiki/meta/wiki-purpose.md": {
@@ -200,8 +200,8 @@
     },
     "wiki/platform/index.md": {
       "path": "wiki/platform/index.md",
-      "mtime": 1778652905157.3464,
-      "contentHash": "32551155483af166",
+      "mtime": 1779083453965.8064,
+      "contentHash": "6e5df9b30116f59c",
       "lastSynced": "2026-05-18"
     },
     "wiki/product/index.md": {
@@ -788,8 +788,8 @@
     },
     "wiki/ai-agent/knowledge-base/rag-vs-llm-wiki.md": {
       "path": "wiki/ai-agent/knowledge-base/rag-vs-llm-wiki.md",
-      "mtime": 1778558265568.327,
-      "contentHash": "b80b2ab2b5265f6b",
+      "mtime": 1779083428427.5928,
+      "contentHash": "cff27ba028c637b2",
       "lastSynced": "2026-05-18"
     },
     "wiki/ai-agent/sdd/ai-programming-tools-comparison.md": {

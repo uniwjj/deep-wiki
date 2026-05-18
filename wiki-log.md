@@ -2,6 +2,14 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-18] lint | 全局健康检查与修复（第五轮）
+- fixed `rag-vs-llm-wiki.md` — 移除自引用 [[rag-vs-llm-wiki]]
+- fixed 5 shallow pages — architecture、backend、distributed、fullstack、platform 五个领域 index 页面补全领域说明
+- fixed 8 uningested sources — 为 Google上下文工程白皮书、AI编程三剑客对比、Superpowers踩坑实录等 8 个来源文件补充 ingested 标记
+- flagged 12 PDF 来源 — 无法为二进制 PDF 添加 frontmatter（已通过 .txt 提取副本覆盖）
+- flagged 33 stub pages — 标记为 lint-stub 的占位/索引页面（多数为有意最小化）
+- verified: 0 broken wikilinks across 143 pages
+
 ## [2026-05-18] lint | 全局健康检查与修复（第四轮）
 - fixed `ai-agent/index.md` — 修复 7 条 table 内 `\|` 转义导致的断链，改用 wiki-relative 路径 `[[ai-agent/subdir/index]]`
 - fixed `big-data/infinisynapse.md` — 修复 4 条 table 内 `\|` 转义导致的断链，改用裸 wikilink

@@ -61,6 +61,5 @@ updated: 2026-05-09
 
 ## 相关页面
 
-- [[llm-wiki-concept]] — LLM Wiki 核心
-- [[bookrag]] — BookRAG
-- [[rag-vs-llm-wiki]] — RAG vs Wiki 对比
+- [[llm-wiki-concept]] — LLM Wiki 核心概念
+- [[bookrag]] — 结构感知 RAG 方案
