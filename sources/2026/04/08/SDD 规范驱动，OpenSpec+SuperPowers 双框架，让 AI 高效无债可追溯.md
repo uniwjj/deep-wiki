@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/sdd-openspec-superpowers]
+wiki_pages: [ai-agent/sdd/sdd-openspec-superpowers]
 ---
 
 ## SDD 规范驱动，OpenSpec+SuperPowers 双框架

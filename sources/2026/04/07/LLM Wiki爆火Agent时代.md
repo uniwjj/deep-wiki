@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/llm-wiki-applications]
+wiki_pages: [ai-agent/knowledge-base/llm-wiki-applications]
 ---
 
 ## LLM Wiki爆火，Agent时代知识库搭建革命，人人都能拥有第二大脑

@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/openspec-sdd-practice]
+wiki_pages: [ai-agent/sdd/openspec-sdd-practice]
 ---
 
 ## OpenSpec 实战复盘：一个真实项目的 SDD 全流程落地记录

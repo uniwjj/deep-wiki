@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/openclaw]
+wiki_pages: [ai-agent/ecosystem/openclaw]
 ---
 
 ## 狂揽4万星，换掉OpenClaw太爽了，5美元就能养个AI打工人

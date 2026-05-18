@@ -1,7 +1,7 @@
 # 字节面试官："Plan-and-Execute 比 ReAct 强在哪？"，我："名字比较长，显得更高级？"，面试官："门在那边，走好。"
 ---
 ingested: 2026-05-10
-wiki_pages: [agent-design-paradigms]
+wiki_pages: [ai-agent/agent-core/agent-design-paradigms]
 ---
 
 结果面试官一开口，直接问了个灵魂问题：

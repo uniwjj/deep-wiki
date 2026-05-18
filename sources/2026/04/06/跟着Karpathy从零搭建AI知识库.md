@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/knowledge-base-karpathy-practice]
+wiki_pages: [ai-agent/knowledge-base/knowledge-base-karpathy-practice]
 ---
 
 ## 跟着Karpathy从零搭建爆火的个人AI知识库

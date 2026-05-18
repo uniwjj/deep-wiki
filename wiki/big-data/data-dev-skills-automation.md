@@ -3,7 +3,7 @@ title: 数仓开发 Skills 自动化
 description: Claude Code Skills 封装数仓工具链——查表/验证SQL/部署/运维四大场景自动化，对接 MaxCompute+DataWorks API，70% 重复开发被干掉
 aliases: [数据开发Skills, EasyData Skills]
 tags: [big-data, ai-agent, practice]
-sources: [2026/04/09/数开的未来在哪？.md]
+sources: [2026/04/09/数开的未来在哪？我用一套 Skills 干掉了数开 70% 的重复开发.md]
 created: 2026-05-09
 updated: 2026-05-09
 ---

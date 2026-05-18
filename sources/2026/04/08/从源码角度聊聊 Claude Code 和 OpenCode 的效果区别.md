@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claude-code-vs-opencode]
+wiki_pages: [ai-agent/claude-code/claude-code-vs-opencode]
 ---
 
 ## 从源码角度聊聊 Claude Code 和 OpenCode 的效果区别

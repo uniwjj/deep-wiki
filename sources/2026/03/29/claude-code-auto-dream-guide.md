@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claude-code-auto-dream]
+wiki_pages: [ai-agent/claude-code/claude-code-auto-dream]
 ---
 
 # Claude Code 自动梦境（Auto Dream）：Anthropic 的全新记忆功能

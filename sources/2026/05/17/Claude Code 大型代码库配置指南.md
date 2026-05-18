@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-17
-wiki_pages: [ai-agent/claude-code-configuration-guide]
+wiki_pages: [ai-agent/claude-code/claude-code-configuration-guide]
 ---
 
 # Claude Code 大型代码库配置指南

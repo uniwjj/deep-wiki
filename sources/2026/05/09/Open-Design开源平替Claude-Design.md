@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/open-design]
+wiki_pages: [ai-agent/ecosystem/open-design]
 ---
 ## Open Design
 

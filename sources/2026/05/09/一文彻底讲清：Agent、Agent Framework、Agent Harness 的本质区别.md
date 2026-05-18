@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/agent-vs-framework-vs-harness]
+wiki_pages: [ai-agent/harness/agent-vs-framework-vs-harness]
 ---
 ## 一文讲清：Agent / Framework / Harness
 

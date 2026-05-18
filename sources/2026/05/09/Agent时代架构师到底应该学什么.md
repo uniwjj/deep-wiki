@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/agent-harness-overview]
+wiki_pages: [ai-agent/harness/agent-harness-overview]
 ---
 
 ## Agent 时代，架构师到底应该学什么？

@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/llm-wiki-implementations]
+wiki_pages: [ai-agent/knowledge-base/llm-wiki-implementations]
 ---
 ## LLM-Wiki 工具
 

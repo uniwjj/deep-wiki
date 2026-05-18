@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/openclaw]
+wiki_pages: [ai-agent/ecosystem/openclaw]
 ---
 
 # 谈OpenClaw的Memory Wiki

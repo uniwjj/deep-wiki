@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claude-code-architecture]
+wiki_pages: [ai-agent/claude-code/claude-code-architecture]
 ---
 
 ## Claude Code 源码架构解析：从启动、Prompt 到权限管道

@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/graphify-tool]
+wiki_pages: [ai-agent/ecosystem/graphify-tool]
 ---
 
 ## 卡帕西没做完，开源社区48小时搞定！完全体知识库，token省70倍

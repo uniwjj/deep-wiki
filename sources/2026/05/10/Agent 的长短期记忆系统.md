@@ -6,7 +6,7 @@ date: ~2026-04
 retrieved: 2026-05-10
 type: article
 ingested: 2026-05-10
-wiki_pages:
+wiki_pages: [ai-agent/agent-core/agent-memory-system]
   - wiki/ai-agent/agent-memory-system.md
 ---
 

@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/harness-as-backend]
+wiki_pages: [ai-agent/harness/harness-as-backend]
 ---
 ## Harness 正成为新后端
 

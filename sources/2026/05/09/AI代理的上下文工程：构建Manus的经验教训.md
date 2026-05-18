@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/manus-context-engineering]
+wiki_pages: [ai-agent/context-eng/manus-context-engineering]
 ---
 
 ## AI代理的上下文工程：构建Manus的经验教训

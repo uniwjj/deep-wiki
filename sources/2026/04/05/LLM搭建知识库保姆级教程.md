@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/knowledge-base-karpathy-guide]
+wiki_pages: [ai-agent/knowledge-base/knowledge-base-karpathy-guide]
 ---
 
 ## 最近很火的用LLM搭建知识库的保姆级教程

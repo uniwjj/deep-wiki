@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/agent-harness-overview]
+wiki_pages: [ai-agent/harness/agent-harness-overview]
 ---
 
 ## Claude Code 产品负责人：面试了上百个 PM 后发现，大多数人还在用互联网时代的逻辑应聘 AI 公司

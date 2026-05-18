@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/progressive-spec-methodology]
+wiki_pages: [ai-agent/sdd/progressive-spec-methodology]
 ---
 
 ## 2026年AI编程新范式："渐进式Spec"

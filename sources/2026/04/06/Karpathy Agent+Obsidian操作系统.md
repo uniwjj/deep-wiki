@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/karpathy-agent-obsidian-os]
+wiki_pages: [ai-agent/knowledge-base/karpathy-agent-obsidian-os]
 ---
 
 ## Karpathy 把 Agent + Obsidian 玩成了个人知识库操作系统

@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/agent-skill-test-case]
+wiki_pages: [ai-agent/agent-core/agent-skill-test-case]
 ---
 
 ## Agent Skills 实战：把 QA 测试用例（Test Cases）写成 Skill

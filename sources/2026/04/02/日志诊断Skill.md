@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/log-diagnosis-skill]
+wiki_pages: [ai-agent/ecosystem/log-diagnosis-skill]
 ---
 
 ## 日志诊断 Skill：用 AI + MCP 一键解决BUG｜得物技术

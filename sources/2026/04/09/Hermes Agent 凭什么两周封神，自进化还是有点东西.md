@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/hermes-agent]
+wiki_pages: [ai-agent/ecosystem/hermes-agent]
 ---
 
 ## Hermes Agent 凭什么两周封神，自进化还是有点东西！

@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/hermes-agent]
+wiki_pages: [ai-agent/ecosystem/hermes-agent]
 ---
 
 # Hermes Agent教程：能"自己进化"专属超级分身AI Agent

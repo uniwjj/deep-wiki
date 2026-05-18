@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/harness-engineering-practice]
+wiki_pages: [ai-agent/harness/harness-engineering-practice]
 ---
 ## Harness Engineering 实践
 

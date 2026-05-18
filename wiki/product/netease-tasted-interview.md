@@ -1,7 +1,7 @@
 ---
 title: TASTED 六力面试追问实战
 description: 基于 SBO 行为面试法，通过层层追问细节评估 TASTED 六力的面试方法
-aliases: [TASTED面试, SBO行为面试法, 网易面试方法论]
+aliases: [TASTED面试, SBO行为面试法, 网易面试方法论, TASTED Model, NetEase Interview]
 tags: [product, practice]
 sources: [2026/05/14/网易人才观面试.md]
 created: 2026-05-14

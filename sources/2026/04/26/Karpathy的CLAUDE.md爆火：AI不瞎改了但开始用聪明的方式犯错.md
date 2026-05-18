@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claude-md-best-practices]
+wiki_pages: [ai-agent/context-eng/claude-md-best-practices]
 ---
 
 ## Karpathy 的 CLAUDE.md 爆火，程序员却惊呼：AI 不瞎改了，但开始用聪明的方式犯错

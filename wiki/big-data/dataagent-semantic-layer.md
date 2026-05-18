@@ -2,7 +2,7 @@
 title: DataAgent 语义层
 description: DataWorks DataAgent 语义层的具体内容——从分享录音和数据开发 SKILL 中提取的结构化领域知识，包括节点类型体系、连接器参数、FlowSpec 规范、调度与依赖语义、运行时约束等
 aliases: [语义层, semantic layer, 数据语义层]
-tags: [big-data, ai-agent, meta]
+tags: [big-data, ai-agent, concept]
 sources: [2026/05/12/DataWorks DataAgent分享录音.md, 2026/05/14/DataAgent语义层分析.md]
 created: 2026-05-14
 updated: 2026-05-14

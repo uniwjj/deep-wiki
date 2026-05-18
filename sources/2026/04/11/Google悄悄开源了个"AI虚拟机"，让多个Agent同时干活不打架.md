@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/google-scion]
+wiki_pages: [ai-agent/ecosystem/google-scion]
 ---
 
 # Google悄悄开源了个"AI虚拟机"，让多个Agent同时干活不打架

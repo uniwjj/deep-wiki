@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/agent-harness-overview]
+wiki_pages: [ai-agent/harness/agent-harness-overview]
 ---
 
 ## The Anatomy of an Agent Harness（Agent Harness 的剖析）总结

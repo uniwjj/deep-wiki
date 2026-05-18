@@ -1,7 +1,7 @@
 # Claude Code from Source — Architecture, Patterns & Internals
 ---
 ingested: 2026-05-10
-wiki_pages: [claude-code-bootstrap-pipeline, claude-code-state-architecture, claude-code-api-layer, claude-code-agent-loop, claude-code-tool-system, claude-code-concurrent-tools, claude-code-memory-system, claude-code-swarm, claude-code-terminal-ui, claude-code-input-system, claude-code-mcp, claude-code-remote-execution, claude-code-performance, claude-code-architecture, claude-code-subagent, claude-code-fork-subagent, claude-code-extensibility]
+wiki_pages: [ai-agent/claude-code/claude-code-bootstrap-pipeline, ai-agent/claude-code/claude-code-state-architecture, ai-agent/claude-code/claude-code-api-layer, ai-agent/claude-code/claude-code-agent-loop, ai-agent/claude-code/claude-code-tool-system, ai-agent/claude-code/claude-code-concurrent-tools, ai-agent/claude-code/claude-code-memory-system, ai-agent/claude-code/claude-code-swarm, ai-agent/claude-code/claude-code-terminal-ui, ai-agent/claude-code/claude-code-input-system, ai-agent/claude-code/claude-code-mcp, ai-agent/claude-code/claude-code-remote-execution, ai-agent/claude-code/claude-code-performance, ai-agent/claude-code/claude-code-architecture, ai-agent/claude-code/claude-code-subagent, ai-agent/claude-code/claude-code-fork-subagent, ai-agent/claude-code/claude-code-extensibility]
 ---
 
 > How Anthropic built the most widely used AI coding agent

@@ -22,6 +22,13 @@ wiki/
 ├── distributed/        # 分布式系统
 ├── ai-ml/              # AI/ML/LLM（模型、RAG、推理等基础）
 ├── ai-agent/           # AI Agent 开发（框架、工具调用、多 Agent）
+│   ├── claude-code/    #  Claude Code 源码深度分析
+│   ├── agent-core/     #  Agent 基础理论与机制
+│   ├── sdd/            #  SDD 规范驱动开发
+│   ├── knowledge-base/ #  LLM Wiki、知识库、RAG
+│   ├── harness/        #  Harness 编排体系
+│   ├── context-eng/    #  上下文工程与记忆
+│   └── ecosystem/      #  工具生态与趋势
 ├── fullstack/          # 全栈开发（前端、Node.js、全栈框架）
 ├── backend/            # 后端工程
 ├── platform/           # 平台工程
@@ -31,6 +38,13 @@ wiki/
 ```
 
 按领域分子目录，每篇页面归属唯一目录。
+
+### 子目录规则
+
+- 领域目录下页面数超过 30 时，可按主题拆分为二级子目录
+- 每个子目录必须有 `index.md` 作为该子领域的聚合索引
+- 子目录命名仍然使用 kebab-case 英文
+- `[[wikilinks]]` 仅使用文件名（不含路径），由 Obsidian 自动解析——移动页面不破坏已有链接
 
 ## 存档目录（sources/）
 

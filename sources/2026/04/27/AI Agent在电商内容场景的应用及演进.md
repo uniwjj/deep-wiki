@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/ai-agent-ecommerce-content]
+wiki_pages: [ai-agent/ecosystem/ai-agent-ecommerce-content]
 ---
 
 ## AI Agent 在电商内容场景的应用及演进

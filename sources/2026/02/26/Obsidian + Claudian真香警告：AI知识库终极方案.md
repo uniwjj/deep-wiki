@@ -2,7 +2,7 @@
 
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/obsidian-claudian]
+wiki_pages: [ai-agent/knowledge-base/obsidian-claudian]
 ---
 
 **文章信息**：

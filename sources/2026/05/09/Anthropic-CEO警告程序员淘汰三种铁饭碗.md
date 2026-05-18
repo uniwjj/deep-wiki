@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/ai-career-trends]
+wiki_pages: [ai-agent/ecosystem/ai-career-trends]
 ---
 ## Anthropic CEO 警告
 

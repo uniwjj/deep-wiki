@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/openclaw]
+wiki_pages: [ai-agent/ecosystem/openclaw]
 ---
 
 ## OpenClaw 用户集体"叛逃" Hermes时代来临！

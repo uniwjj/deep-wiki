@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claude-managed-agents]
+wiki_pages: [ai-agent/ecosystem/claude-managed-agents]
 ---
 
 # Anthropic亲自下场，又一批Agent创业公司死掉了

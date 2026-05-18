@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/llm-wiki-concept]
+wiki_pages: [ai-agent/knowledge-base/llm-wiki-concept]
 ---
 
 ## Karpathy 新发的LLM Wiki，可能彻底颠覆RAG知识库

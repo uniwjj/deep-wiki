@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/harness-design-long-running]
+wiki_pages: [ai-agent/harness/harness-design-long-running]
 ---
 
 # 长时运行应用开发的 Harness 设计

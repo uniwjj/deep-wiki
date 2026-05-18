@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/anthropic-cookbook]
+wiki_pages: [ai-agent/ecosystem/anthropic-cookbook]
 ---
 
 ## Anthropic Cookbook：Claude 开发者必备食谱库，效率提升 10 倍！

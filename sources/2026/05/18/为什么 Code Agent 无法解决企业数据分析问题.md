@@ -6,7 +6,7 @@ date: 2026-05-16
 retrieved: 2026-05-18
 type: blog
 ingested: 2026-05-18
-wiki_pages:
+wiki_pages: [big-data/infinisynapse, big-data/code-agent-vs-data-agent]
   - big-data/code-agent-vs-data-agent.md
   - big-data/infinisynapse.md
   - big-data/databricks-genie.md

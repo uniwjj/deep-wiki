@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claude-code-harness]
+wiki_pages: [ai-agent/claude-code/claude-code-harness]
 ---
 
 ## Claude Code 源码蒸馏 - Harness Engineering 实践记录

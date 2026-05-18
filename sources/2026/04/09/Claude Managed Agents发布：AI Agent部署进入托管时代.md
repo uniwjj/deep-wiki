@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claude-managed-agents]
+wiki_pages: [ai-agent/ecosystem/claude-managed-agents]
 ---
 
 # Claude Managed Agents发布：AI Agent部署进入托管时代

@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-15
-wiki_pages:
+wiki_pages: [ai-agent/sdd/superpowers-vs-openspec]
   - [[superpowers-vs-openspec]]
   - [[sdd-openspec-superpowers]]
   - [[superpowers-framework]]

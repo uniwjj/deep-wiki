@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/agent-harness-overview]
+wiki_pages: [ai-agent/harness/agent-harness-overview]
 ---
 
 ## Agent Harness 综述：同一个模型，为什么做出来的 Agent 差这么远

@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/hermes-agent]
+wiki_pages: [ai-agent/ecosystem/hermes-agent]
 ---
 
 # 装完Hermes Agent玩了一圈，我觉得龙虾已死！

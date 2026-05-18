@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/meta-jit-testing]
+wiki_pages: [ai-agent/agent-core/meta-jit-testing]
 ---
 
 ## AI 写代码太快，人类测试跟不上了，Meta 用新方法把 bug 检出率提升 4 倍

@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/sdd-openspec-superpowers]
+wiki_pages: [ai-agent/sdd/sdd-openspec-superpowers]
 ---
 
 ## OpenSpec vs Superpowers：2 套 AI 编码工作流，3 个场景怎么选？

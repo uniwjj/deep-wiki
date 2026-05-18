@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/rag-vs-llm-wiki]
+wiki_pages: [ai-agent/knowledge-base/rag-vs-llm-wiki]
 ---
 ## RAG/GraphRAG/Wiki 五代对比
 

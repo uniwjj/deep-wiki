@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claude-managed-agents]
+wiki_pages: [ai-agent/ecosystem/claude-managed-agents]
 ---
 
 # Anthropic新发布的工程博客，重新思考Agent的新架构

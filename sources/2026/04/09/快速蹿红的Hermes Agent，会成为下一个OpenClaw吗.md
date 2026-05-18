@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/hermes-agent]
+wiki_pages: [ai-agent/ecosystem/hermes-agent]
 ---
 
 ## 快速蹿红的Hermes Agent，会成为下一个OpenClaw吗？

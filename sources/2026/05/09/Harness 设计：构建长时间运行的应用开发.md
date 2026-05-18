@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/agent-harness-overview]
+wiki_pages: [ai-agent/harness/agent-harness-overview]
 ---
 
 ## Harness 设计：构建长时间运行的应用开发总结

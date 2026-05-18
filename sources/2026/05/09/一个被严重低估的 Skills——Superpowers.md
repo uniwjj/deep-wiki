@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/superpowers-framework]
+wiki_pages: [ai-agent/sdd/superpowers-framework]
 ---
 
 ## 一个被严重低估的 Skills——Superpowers总结

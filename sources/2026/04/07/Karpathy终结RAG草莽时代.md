@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/rag-vs-llm-wiki]
+wiki_pages: [ai-agent/knowledge-base/rag-vs-llm-wiki]
 ---
 
 ## Karpathy 亲手终结了RAG的草莽时代

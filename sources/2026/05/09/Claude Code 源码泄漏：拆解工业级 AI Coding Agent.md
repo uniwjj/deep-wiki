@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claude-code-harness]
+wiki_pages: [ai-agent/claude-code/claude-code-harness]
 ---
 
 ## Claude Code 源码泄漏：拆解一个工业级 AI Coding Agent 到底是怎么造出来的

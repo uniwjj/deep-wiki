@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claude-code-hidden-features]
+wiki_pages: [ai-agent/claude-code/claude-code-hidden-features]
 ---
 
 ## Claude Code 泄露代码隐藏的87个未发布功能 暴露其野心...

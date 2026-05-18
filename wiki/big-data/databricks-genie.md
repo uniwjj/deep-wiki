@@ -40,7 +40,7 @@ Genie 是 Databricks 面向 Lakehouse 全量资产（结构化表、dashboard、
 
 - [[specialized-knowledge-search]] — 利用企业数据资产（表、notebook、dashboard、文档）构建语义搜索索引，表搜索性能提升 40%
 - [[parallel-thinking]] — 采样多条轨迹、聚合跨轨迹信息计算最终答案，弥补缺少确定性测试的不足
-- [[multi-llm-design]] — 不同子 Agent 使用不同 LLM + 优化 prompt（含 [[GEPA]] 成本优化方法）
+- [[multi-llm-design]] — 不同子 Agent 使用不同 LLM + 优化 prompt（含 GEPA 成本优化方法）
 
 ## Data Agent 的三个独特挑战
 

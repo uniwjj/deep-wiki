@@ -6,7 +6,7 @@ date: ~2026-04
 retrieved: 2026-05-10
 type: article
 ingested: 2026-05-10
-wiki_pages:
+wiki_pages: [ai-agent/claude-code/claude-code-multi-agent-mechanism, ai-agent/claude-code/claude-code-fork-subagent, ai-agent/claude-code/claude-code-coordinator-mode]
   - wiki/ai-agent/claude-code-multi-agent-mechanism.md
   - wiki/ai-agent/claude-code-fork-subagent.md
   - wiki/ai-agent/claude-code-coordinator-mode.md

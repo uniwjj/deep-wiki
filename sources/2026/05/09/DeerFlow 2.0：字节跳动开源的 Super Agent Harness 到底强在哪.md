@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/deerflow]
+wiki_pages: [ai-agent/ecosystem/deerflow]
 ---
 ## DeerFlow 2.0
 

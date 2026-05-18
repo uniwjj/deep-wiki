@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/obsidian-second-brain]
+wiki_pages: [ai-agent/knowledge-base/obsidian-second-brain]
 ---
 
 ## 挖到宝！Obsidian打造个人第二大脑，本地存储+无限拓展太香了

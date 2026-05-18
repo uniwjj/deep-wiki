@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/glm5-harness-practice]
+wiki_pages: [ai-agent/harness/glm5-harness-practice]
 ---
 
 ## 3小时，我用GLM-5.1把Anthropic那套Harness玩法打通了，已投产

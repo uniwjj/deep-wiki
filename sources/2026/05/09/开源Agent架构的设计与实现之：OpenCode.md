@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claude-code-harness]
+wiki_pages: [ai-agent/claude-code/claude-code-harness]
 ---
 
 ## 开源Agent架构的设计与实现之：OpenCode

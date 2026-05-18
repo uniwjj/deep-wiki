@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-12
-wiki_pages: [dataworks-data-agent, superetl, hologres-skills, flink-skills, emr-skills, maxcompute-skills, dataworks-stock-case]
+wiki_pages: [big-data/dataworks-data-agent, big-data/superetl, big-data/hologres-skills, big-data/flink-skills, big-data/emr-skills, big-data/maxcompute-skills, big-data/dataworks-stock-case]
 ---
 
 DataWorks 2025年04月29日，瞎聊日分享录音。分享包括下面内容：

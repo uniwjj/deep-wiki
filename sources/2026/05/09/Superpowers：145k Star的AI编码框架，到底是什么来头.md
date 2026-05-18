@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/superpowers-framework]
+wiki_pages: [ai-agent/sdd/superpowers-framework]
 ---
 
 # Superpowers：145k Star的AI编码框架，到底是什么来头？

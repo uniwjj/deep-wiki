@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/sub-agent-vs-team]
+wiki_pages: [ai-agent/agent-core/sub-agent-vs-team]
 ---
 
 ## AI Agent 进阶：Sub-Agents vs Agent Teams

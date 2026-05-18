@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claw-code]
+wiki_pages: [ai-agent/ecosystem/claw-code]
 ---
 
 ## 2小时破10万星！claw-code：史上最快达成GitHub里程碑的AI编码工具

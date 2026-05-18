@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claude-code-sourcemap-reverse]
+wiki_pages: [ai-agent/claude-code/claude-code-sourcemap-reverse]
 ---
 
 ## 终于把Claude Code本地跑起来了，看看缺少哪些文件，如何修复

@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/llm-wiki-six-layer]
+wiki_pages: [ai-agent/knowledge-base/llm-wiki-six-layer]
 ---
 ## LLM Wiki 六层架构
 

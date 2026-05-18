@@ -6,7 +6,7 @@ date: 2026-04-14
 retrieved: 2026-05-10
 type: paper
 ingested: 2026-05-10
-wiki_pages:
+wiki_pages: [ai-agent/claude-code/dive-into-claude-code, ai-agent/claude-code/claude-code-subagent, ai-agent/claude-code/claude-code-extensibility, ai-agent/claude-code/claude-code-context-compaction, ai-agent/claude-code/claude-code-session-persistence, ai-agent/claude-code/claude-code-permission-system, ai-agent/agent-core/agent-mcp-protocol]
   - wiki/ai-agent/dive-into-claude-code.md
   - wiki/ai-agent/claude-code-permission-system.md
   - wiki/ai-agent/claude-code-context-compaction.md

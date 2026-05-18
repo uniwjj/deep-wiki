@@ -1,6 +1,6 @@
 ---
 ingested: 2026-05-09
-wiki_pages: [ai-agent/claude-managed-agents]
+wiki_pages: [ai-agent/ecosystem/claude-managed-agents]
 ---
 
 ## 效率提升十倍！Anthropic发布Agent基础设施Claude Managed Agents

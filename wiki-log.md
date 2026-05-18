@@ -8,6 +8,51 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - created `ai-agent/parallel-thinking` — 并行思考：多轨迹采样聚合弥补 Data Agent 缺确定性测试的问题
 - created `ai-agent/multi-llm-design` — Multi-LLM 架构：不同子 Agent 使用不同模型分工，含 GEPA 成本优化
 - updated `big-data/code-agent-vs-data-agent` — Related 新增三个技术页面的链接
+
+## [2026-05-18] lint | 全局健康检查与修复（第二轮）
+- fixed `agent-multi-agent-collaboration` — 修复 broken source 引用: Agent-Harness综述.md
+- fixed `open-design` — 修复 broken source 引用: Open Design.md → Open-Design开源平替Claude-Design.md
+- fixed `harness-design-long-running` — 修复 broken source 引用: anthropic-harness-design-long-running-apps.md
+- updated 84 source files — 批量修复 wiki_pages 目录拆分后的 stale 路径
+- fixed `DataWorks DataAgent分享录音.md` — 补充 big-data/ 前缀
+- fixed `开源AI编程工具对决` — 补充 wiki_pages
+- fixed 4 sources — 补充空 wiki_pages 字段
+- verified: 0 broken wikilinks, 0 broken source refs
+
+## [2026-05-18] lint | 全局健康检查与修复（第一轮）
+- fixed `claude-managed-agents` — 修复 5 条 truncated source 文件名
+- fixed `agent-harness-overview` — 修复 source 引用: Agent-Harness综述.md → 完整文件名
+- fixed `harness-build-to-delete` — 修复 source 引用
+- fixed `harness-as-backend` — 修复 source 引用
+- fixed `harness-engineering-practice` — 修复 source 引用
+- fixed `agent-vs-framework-vs-harness` — 修复 source 引用
+- fixed `ai-career-trends` — 修复 source 引用
+- fixed `deerflow` — 修复 source 引用
+- fixed `hermes-agent` — 修复 source 引用
+- fixed `architect-in-agent-era` — 修复 source 引用
+- fixed `claude-md-best-practices` — 修复 source 引用
+- fixed `manus-context-engineering` — 修复 source 引用
+- fixed `llm-wiki-six-layer` — 修复 source 引用
+- fixed `sub-agent-vs-team` — 修复 source 引用
+- fixed `data-dev-skills-automation` — 修复 source 引用
+- fixed `maxcompute-data-ai` — 修复 source 引用
+- fixed `openai-data-agent` — 修复 source 引用
+- fixed `rag-query-optimization` — 修复 source 引用
+- fixed `google-scion` — 修复 source 引用
+- fixed `ai-agent-ecommerce-content` — 修复 source 引用
+- fixed `sdd-openspec-superpowers` — 修复 source 日期路径: 04/08 → 05/09
+- fixed `openspec-sdd-practice` — 修复 source 引用
+- fixed `meta-jit-testing` — 修复 source 引用
+- fixed `databricks-genie` — 移除 broken wikilink [[GEPA]]
+- updated 7 subdir index.md — 补充 sources: [2026/05/10/lint-stub.md]
+- updated 12 pages — 补充英文 aliases
+- fixed `dataagent-semantic-layer` — 修正 content type tag: meta → concept
+
+## [2026-05-18] lint | Schema 拆分：ai-agent/ 重组为 8 个子目录
+- updated `wiki-schema.md` — 新增子目录规则：领域目录超 30 页可按主题拆分子目录
+- reorganized `ai-agent/` — 99 页拆分为 7 个子目录：claude-code(34)、agent-core(16)、sdd(10)、knowledge-base(12)、harness(8)、context-eng(3)、ecosystem(15)
+- created 7 子目录 `index.md` 索引页
+- updated `ai-agent/index.md` — 改为子领域表格导航
 - updated `big-data/dataagent-semantic-layer` — Related 新增 specialized-knowledge-search 链接
 
 ## [2026-05-18] ingest | 为什么 Code Agent 无法解决企业数据分析问题（WinClaw）
