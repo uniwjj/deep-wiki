@@ -43,3 +43,7 @@ updated: 2026-05-09
 
 - [[data-dev-skills-automation]] — 数仓开发 Skills
 - [[maxcompute-data-ai]] — MaxCompute Data+AI
+- [[code-agent-vs-data-agent]] — 为什么需要专门 Data Agent
+- [[databricks-genie]] — Databricks 企业级 Data Agent（同类产品）
+- [[infinisynapse]] — InfiniRAG 与本页"六层上下文"思路对照
+- [[dataagent-semantic-layer]] — DataAgent 语义层

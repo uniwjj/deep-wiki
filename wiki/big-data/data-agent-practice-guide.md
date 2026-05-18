@@ -143,3 +143,6 @@ updated: 2026-05-10
 - [[dataworks-data-agent]] — DataWorks Data Agent 产品架构
 - [[superetl]] — 菜鸟 SuperETL 实践
 - [[flink-skills]] — Flink Agent Skills
+- [[code-agent-vs-data-agent]] — Code Agent 与 Data Agent 的根本差异
+- [[databricks-genie]] — Databricks Genie
+- [[infinisynapse]] — InfiniSynapse Data Agent 基础设施方案

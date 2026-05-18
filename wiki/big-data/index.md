@@ -5,7 +5,7 @@ aliases: [big-data, 大数据]
 tags: [big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-05-10
+updated: 2026-05-18
 ---
 
 # 大数据技术
@@ -23,7 +23,14 @@ updated: 2026-05-10
 
 - [[maxcompute-data-ai]] — MaxCompute Data+AI 演进
 - [[openai-data-agent]] — OpenAI Data Agent 分析
+- [[databricks-genie]] — Databricks Genie 企业级 Data Agent
+- [[infinisynapse]] — InfiniSynapse（InfiniAgent + InfiniSQL + InfiniRAG）
 - [[data-dev-skills-automation]] — 数开 Skills 自动化
+
+## 概念与对比
+
+- [[code-agent-vs-data-agent]] — Code Agent 与 Data Agent 的根本差异
+- [[dataagent-semantic-layer]] — DataAgent 语义层的实物层面内容
 
 ## 实践案例
 

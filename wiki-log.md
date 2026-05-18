@@ -2,6 +2,15 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-18] ingest | 为什么 Code Agent 无法解决企业数据分析问题（WinClaw）
+- created `big-data/code-agent-vs-data-agent` — Code Agent vs Data Agent 目标函数差异、Databricks Genie 三个挑战、维度对比、协作分工
+- created `big-data/infinisynapse` — InfiniAgent + InfiniSQL + InfiniRAG 三件组合，含命名中间表/虚拟数仓/异构源 join/可审计工作流（draft）
+- created `big-data/databricks-genie` — Genie stub，记录 Lakehouse 全资产覆盖、specialized search + parallel thinking + Multi-LLM、内部 32%→90% benchmark（draft，待拉原文）
+- updated `big-data/index` — 新增"概念与对比"分组，加入 databricks-genie / infinisynapse 链接
+- updated `big-data/dataworks-data-agent` — Related 链接新文章三页
+- updated `big-data/data-agent-practice-guide` — Related 链接新文章三页
+- updated `big-data/openai-data-agent` — Related 与 InfiniRAG / Genie 对照
+
 ## [2026-05-17] lint --fix | 修复 1 处断链
 - fixed `learning-path` — `[[Claude Code]]` → `[[claude-code]]`（空格导致断链）
 
