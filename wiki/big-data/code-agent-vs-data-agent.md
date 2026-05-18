@@ -114,3 +114,6 @@ Code Agent 默认方式是不断改代码，注意力从"业务问题"转移到"
 - [[dataagent-semantic-layer]] — DataAgent 语义层的实物层面内容
 - [[claude-code]] — Code Agent 代表
 - [[agent-design-paradigms]] — Agent 设计范式（ReAct/Plan-and-Execute/Reflection）
+- [[specialized-knowledge-search]] — 应对挑战一的语义搜索技术
+- [[parallel-thinking]] — 应对挑战三的多轨迹采样聚合方法
+- [[multi-llm-design]] — Genie 的 Multi-LLM 架构

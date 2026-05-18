@@ -2,6 +2,14 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-18] ingest | Pushing the Frontier for Data Agents with Genie (Databricks Blog)
+- updated `big-data/databricks-genie` — 从二手转述升级为原始博文，补充四阶段执行轨迹、40% 表搜索提升、GEPA 优化等原文细节
+- created `ai-agent/specialized-knowledge-search` — 专用知识搜索技术：从企业资产提取语义上下文构建多索引、与通用 RAG 对比
+- created `ai-agent/parallel-thinking` — 并行思考：多轨迹采样聚合弥补 Data Agent 缺确定性测试的问题
+- created `ai-agent/multi-llm-design` — Multi-LLM 架构：不同子 Agent 使用不同模型分工，含 GEPA 成本优化
+- updated `big-data/code-agent-vs-data-agent` — Related 新增三个技术页面的链接
+- updated `big-data/dataagent-semantic-layer` — Related 新增 specialized-knowledge-search 链接
+
 ## [2026-05-18] ingest | 为什么 Code Agent 无法解决企业数据分析问题（WinClaw）
 - created `big-data/code-agent-vs-data-agent` — Code Agent vs Data Agent 目标函数差异、Databricks Genie 三个挑战、维度对比、协作分工
 - created `big-data/infinisynapse` — InfiniAgent + InfiniSQL + InfiniRAG 三件组合，含命名中间表/虚拟数仓/异构源 join/可审计工作流（draft）

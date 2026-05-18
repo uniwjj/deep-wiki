@@ -1,0 +1,127 @@
+---
+ingested: 2026-05-18
+wiki_pages: [wiki/big-data/databricks-genie, wiki/ai-agent/specialized-knowledge-search, wiki/ai-agent/parallel-thinking, wiki/ai-agent/multi-llm-design]
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pushing the Frontier for Data Agents with Genie</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 16px; line-height: 1.75; color: #2d2d2d; max-width: 820px; margin: 0 auto; padding: 24px;
+  background: #fff;
+}
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 30px; font-weight: 800; margin-bottom: 12px; line-height: 1.25; color: #111; letter-spacing: -0.5px; }
+article .article-meta .meta-info { font-size: 13px; color: #777; }
+article .article-meta .meta-info span { margin-right: 18px; }
+article .article-meta .meta-info a { color: #555; }
+article .article-meta .subtitle {
+  font-size: 16px; color: #666; margin-top: 14px; line-height: 1.6; font-style: italic;
+}
+article hr { margin: 24px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 6px; }
+article .article-body h2 {
+  font-size: 22px; font-weight: 700; margin: 36px 0 14px; padding-bottom: 8px;
+  border-bottom: 2px solid #ff3621; color: #111;
+}
+article .article-body p { margin: 14px 0; }
+article .article-body ul, article .article-body ol { padding-left: 26px; margin: 14px 0; }
+article .article-body li { margin: 8px 0; }
+article .article-body figure {
+  margin: 24px 0; text-align: center;
+  background: #fafafa; padding: 16px; border-radius: 8px; border: 1px solid #eee;
+}
+article .article-body figcaption {
+  font-size: 13px; color: #666; margin-top: 10px; line-height: 1.5; font-style: italic;
+}
+article .article-body code {
+  font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+  background: #f1f5f9; border-radius: 3px; padding: 2px 6px; font-size: 0.9em; color: #c7254e;
+}
+article .article-body blockquote {
+  margin: 18px 0; padding: 12px 18px; border-left: 4px solid #ff3621;
+  background: #fff5f3; color: #555;
+}
+article .article-body a { color: #ff3621; text-decoration: none; }
+article .article-body a:hover { text-decoration: underline; }
+article .article-body strong { color: #111; }
+</style>
+</head>
+<body>
+<article>
+  <header class="article-meta">
+    <h1>Pushing the Frontier for Data Agents with Genie</h1>
+    <div class="meta-info">
+      <span>Author: The Databricks AI Research Team</span>
+      <span>Published: 2026-05-08</span>
+      <span>Source: <a href="https://www.databricks.com/blog/pushing-frontier-data-agents-genie" target="_blank">databricks.com</a></span>
+    </div>
+    <p class="subtitle">How Genie's specialized knowledge search, parallel thinking, and multi-LLM design push data agents past coding-agent baselines, with +59.5% accuracy gains.</p>
+  </header>
+  <hr>
+  <div class="article-body">
+    <p><a href="https://www.databricks.com/blog/next-generation-databricks-genie" target="_blank">Genie</a> is Databricks' state-of-the-art data agent designed for answering complex questions about enterprise data consisting of both structured (tables, dashboards, notebooks, etc.) and unstructured (workspace files, Google Drive, Sharepoint etc.) data sources. This blog describes some of the unique challenges faced by data agents and introduces techniques to address them, including using specialized knowledge search, parallel thinking, and Multi-LLM designs. From our experiments on an internal benchmark of real-world data analysis tasks, we observe that these techniques can significantly improve the overall accuracy of Genie over a leading coding agent (from 32% to over 90%) while also significantly reducing the costs and latency.</p>
+
+    <figure>
+      <img alt="Figure 1: A plot of Genie experiments using different techniques such as specialized knowledge search, parallel thinking, and a Multi-LLM design with optimized prompts." src="https://www.databricks.com/sites/default/files/inline-images/plot-of-Genie-experiments.png">
+      <figcaption>Figure 1: A plot of Genie experiments using different techniques such as specialized knowledge search, parallel thinking, and a Multi-LLM design with optimized prompts.</figcaption>
+    </figure>
+
+    <h2>Key Challenges for Data Agents</h2>
+    <p>Coding agents have shown that a powerful LLM can do incredible things autonomously when equipped with tools that help it understand the code context. While coding agents operate effectively in static, deterministic environments like a disk's file system, <em>data</em> agents introduce an entirely new paradigm. Data agents work within a dynamic, constantly evolving data lakehouse that encompasses a wealth of semantic context across hundreds of thousands of tables, notebooks, dashboards, and documents.</p>
+    <p>For example, consider a real (anonymized) query asked by an internal user in Figure 2: the user notices that two enterprise dashboards reporting the same product's revenue show contradictory spikes on different dates and asks the agent to explain why. This reasonable question is deceptively hard because no single data source contains the answer and resolving the question requires cross-system discovery across tables, internal documents, and dashboards, and reasoning about how multi-day reports are set up. Additionally, it requires the agent to dig into enterprise pricing details to find contract rates. Finally, it requires the agent to have an ability to automatically correct itself when intermediate calculations reveal incorrect initial assumptions. The figure shows how the agent is able to successfully solve the task by proceeding in different phases: (1) parallel multi-agent data discovery, (2) data investigation, (3) self-correction loop, and (4) verification.</p>
+    <p>Compared to Coding Agents, Data Agents have three key unique challenges:</p>
+    <ul>
+      <li><strong>Scale of Data Discovery:</strong> Finding the right data sources to answer the user query is one of the biggest challenges with enterprise customers having millions of structured and unstructured sources (like tables, dashboards, and documents), a scale that breaks conventional search methods.</li>
+      <li><strong>Determining "Source of Truth" Business Knowledge:</strong> Answering business questions needs deep, specific knowledge drawn from many sources (e.g., table metadata, company documents, internal messages) that are often outdated, contradictory, or superseded, forcing the agent to determine the most authoritative information.</li>
+      <li><strong>Lack of Verifiable Tests:</strong> Unlike coding agents that can use deterministic, verifiable tests to iteratively refine code, data agents have no corresponding test because the "specification" is just the high-level user query without a notion of the expected correct answer. Moreover, the queries may not always be answerable because of incompleteness in data, and it is important for data agents to be able to identify such cases and surface it back to users.</li>
+    </ul>
+
+    <figure>
+      <img alt="Figure 2: An example trajectory showing how Genie solves a complex user query across different phases: parallel multi-agent asset discovery, data investigation (SQL extraction, comparative analysis, root-cause investigation), self-correction and reconciliation, and final verification." src="https://www.databricks.com/sites/default/files/inline-images/trajectory-showing-how-Genie-solves-a-complex-user-query.png">
+      <figcaption>Figure 2: An example trajectory showing how Genie solves a complex user query across different phases: parallel multi-agent asset discovery, data investigation (SQL extraction, comparative analysis, root-cause investigation), self-correction and reconciliation, and final verification.</figcaption>
+    </figure>
+
+    <h2>Key Technical Advances</h2>
+    <p>Figure 3 shows some of the key technical innovations in Genie that enable it to perform significantly better than generic coding agents, namely: i) Specialized Knowledge Search, ii) Parallel Thinking, and iii) Multi-LLM. Specialized knowledge search uses semantic contextual data to ground the asset discovery sub-agents and significantly improve the search quality. Parallel thinking allows the agent to sample multiple different trajectories and then aggregate the findings across trajectories to compute the final answer. Finally, Multi-LLM allows the agent to use different LLMs for each of the different sub-agents together with their optimized prompts to further improve the overall accuracy and latency.</p>
+
+    <figure>
+      <img alt="Figure 3: The key technical advances in Genie: i) Specialized Knowledge Search, ii) Parallel Thinking, and iii) Multi-LLM that allow for significant improvements in accuracy and latency." src="https://www.databricks.com/sites/default/files/inline-images/key-technical-advances-in-Genie.png">
+      <figcaption>Figure 3: The key technical advances in Genie: i) Specialized Knowledge Search, ii) Parallel Thinking, and iii) Multi-LLM that allow for significant improvements in accuracy and latency.</figcaption>
+    </figure>
+
+    <h2>Specialized Knowledge Search</h2>
+    <p>Genie uses the existing data assets such as workspace tables, notebooks, dashboards, documents, and files to derive a rich semantic enterprise context and then uses this context to construct a search index. It uses multiple search indices in parallel together with rich metadata signals to efficiently discover most relevant assets for a user query. Figure 4 demonstrates how leveraging the specialized knowledge search helps Genie improve table search performance by up to 40% on our table discovery benchmarks.</p>
+
+    <figure>
+      <img alt="Figure 4: Comparison of Specialized Knowledge Search for Table Search performance." src="https://www.databricks.com/sites/default/files/inline-images/Comparison-of-Specialized-Knowledge-Search-for-Table-Search-performance.png">
+      <figcaption>Figure 4: Comparison of Specialized Knowledge Search for Table Search performance.</figcaption>
+    </figure>
+
+    <h2>Parallel Thinking</h2>
+    <p>Unlike software engineering tasks, where coding agents can first write tests to verify the desired functionality and then iterate on code generation until the tests pass, the open-ended data queries don't have such corresponding unit tests. In the absence of tests, it becomes challenging for data agents to know if the generated answer is correct or needs more refinement. To address this challenge, we leverage parallel thinking by sampling multiple trajectories and aggregating relevant information across the trajectories to compute the final answer. Figure 5 shows how parallel thinking can significantly improve the answer accuracy, although with some additional latency and token costs. Furthermore, as shown in Figure 1, combining Multi-LLM and further optimizations can further significantly reduce costs and latency.</p>
+
+    <figure>
+      <img alt="Figure 5: Adding parallel thinking improves overall performance across both GPT-5.4 and Opus-4.6." src="https://www.databricks.com/sites/default/files/inline-images/parallel-thinking.png">
+      <figcaption>Figure 5: Adding parallel thinking improves overall performance across both GPT-5.4 and Opus-4.6.</figcaption>
+    </figure>
+
+    <h2>Multi-LLM</h2>
+    <p>One of the key technical advances in Genie is the ability to leverage different LLMs for different sub-agents as we observe different LLMs are good at complementary capabilities. For example, it can use a different LLM for the planning stage, a different LLM for various search sub-agents, a different one for code generation and judges. With the Databricks platform, it is seamless to try out any of the frontier models (including Opus, GPT, and Gemini), open-source models, as well as custom trained models. In addition to accuracy, we also observe that different LLMs result in very different latency and cost characteristics. Figure 6 shows how different LLMs perform on table search tasks and how the corresponding accuracy and cost can be further optimized using methods like <a href="https://arxiv.org/abs/2507.19457" target="_blank">GEPA</a>.</p>
+
+    <figure>
+      <img alt="Figure 6: Optimizing the accuracy and cost for different LLMs for Table Search using GEPA." src="https://www.databricks.com/sites/default/files/inline-images/Optimizing-the-accuracy-and-cost-for-different-LLMs-for-Table-Search-using-GEPA.png">
+      <figcaption>Figure 6: Optimizing the accuracy and cost for different LLMs for Table Search using GEPA.</figcaption>
+    </figure>
+
+    <h2>Conclusion</h2>
+    <p>While coding and data analysis share many conceptual similarities, the dynamic nature of enterprise data systems create some unique challenges. Data agents need to efficiently discover the right assets from a large enterprise context, determine "truth" in an ambiguous environment and write efficient code and queries to correctly answer user's questions. We developed several novel approaches to solve these problems such as specialized knowledge search to leverage rich semantic information and multiple metadata signals, Multi-LLM to leverage different LLMs with optimized prompts using GEPA, and parallel thinking to further improve the overall accuracy. Adding these approaches to Genie helps it perform significantly better than leading coding agents on the benchmark tasks. There are still a lot of challenging open-ended questions left to explore, and it has never been a more exciting time to explore research in this area of building state-of-the-art data agents for enterprises.</p>
+  </div>
+</article>
+</body>
+</html>
