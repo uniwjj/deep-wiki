@@ -2,6 +2,9 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-19] research | SDD & Spec 讨论素材准备（v2 完整版）
+- updated `SDD-讨论素材.md` — 基于知识库全部 11 篇 SDD 专题深度改写：补充 Spec-Kit 5阶段门控、Superpowers 14技能+实测基准、OpenSpec 7步工作流+Delta Spec、双框架8步联合工作流+7坑+2衔接Skill、老旧项目4阶段实战+Redis库存预扣案例、薄编排11个action+三层架构+Override机制、渐进式方法论3铁律+知识飞轮
+
 ## [2026-05-18] lint | 深度检查与优化（第六轮）
 - fixed 36 stale pages — 批量更新 updated 日期至 2026-05-18（源文件修改时间在页面 updated 之后）
 - fixed 2 pages — agent-harness.md、llm-wiki.md 补充缺失的 ## 相关页面 章节
