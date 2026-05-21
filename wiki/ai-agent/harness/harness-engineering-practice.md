@@ -37,4 +37,5 @@ Stripe 案例 + Routa.js（多 Agent 协作遵循统一规范）：github.com/ph
 ## 相关页面
 
 - [[agent-harness-overview]] — Harness 综述
+- [[dw-harness-practice|数仓 Harness 工程落地方案]] — 数仓侧的 Harness 五层防御实践
 - [[harness-design-long-running]] — 长任务设计

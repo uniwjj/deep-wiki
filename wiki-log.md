@@ -2,6 +2,10 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-21] ingest | Claude Code Harness 工程：数仓侧落地方案｜得物技术
+- created `dw-harness-practice.md` — 数仓 Harness 工程落地方案：五层防御体系、8步 SKILL 工作流、hooks 自动验证、subagent 上下文隔离
+- updated `harness-engineering-practice.md` — 添加数仓 Harness 实践的交叉引用
+
 ## [2026-05-19] research | SDD & Spec 讨论素材准备（v2 完整版）
 - updated `SDD-讨论素材.md` — 基于知识库全部 11 篇 SDD 专题深度改写：补充 Spec-Kit 5阶段门控、Superpowers 14技能+实测基准、OpenSpec 7步工作流+Delta Spec、双框架8步联合工作流+7坑+2衔接Skill、老旧项目4阶段实战+Redis库存预扣案例、薄编排11个action+三层架构+Override机制、渐进式方法论3铁律+知识飞轮
 
