@@ -2,6 +2,21 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-24] ingest | 开源项目 superpowers 深度解读：把 AI Coding Agent 变成遵守工程流程的协作伙伴
+- created `superpowers-repo-architecture.md` — 仓库内部架构分析：四层能力模块（skills/agents/commands/hooks）、跨平台分发分层设计、using-superpowers 总控机制（1% 规则）、两条执行路径（subagent vs executing-plans）、receiving-code-review 反表演式认同、writing-skills 元技能 SDD 方式、5 个核心设计洞察 + 4 个局限
+- updated `ai-agent/sdd/index.md` — 页数 12→13
+- updated `ai-agent/index.md` — SDD 页数同步
+
+## [2026-05-24] ingest | Superpowers：让 AI 编程从"碰运气"变成"走流程"的完整方法论
+- updated `superpowers-workflow-scenarios.md` — 新增各步骤的操作级细节：头脑风暴 9 步标准化流程、Git 隔离 4 步创建、任务拆分 6 类禁止占位符、子代理两轮复查机制、TDD 偷懒借口表、代码审查三级标准+5 项验证清单、收尾四选项、安装验证、自定义技能 TDD 方式
+
+## [2026-05-24] ingest | Superpowers 实战指南：7 步流程 + 14 个技能 + 3 条铁律
+- created `superpowers-workflow-scenarios.md` — 完整 7 步工作流（头脑风暴→Worktree→任务拆分→子代理→TDD→审查→收尾）+ 三种场景裁剪指南（新项目/老项目加功能/修 Bug）
+- created `superpowers-iron-laws.md` — 三条铁律详解：无测试不写代码、无根因不修 Bug、无验证不完成
+- updated `superpowers-framework.md` — 补充 7 步工作流与三条铁律引用，新增来源
+- updated `ai-agent/sdd/index.md` — 新增 2 篇页面，页数 10→12
+- updated `ai-agent/index.md` — SDD 页数同步更新
+
 ## [2026-05-21] ingest | Claude Code Harness 工程：数仓侧落地方案｜得物技术
 - created `dw-harness-practice.md` — 数仓 Harness 工程落地方案：五层防御体系、8步 SKILL 工作流、hooks 自动验证、subagent 上下文隔离
 - updated `harness-engineering-practice.md` — 添加数仓 Harness 实践的交叉引用

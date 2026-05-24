@@ -5,7 +5,7 @@ aliases: [ai-agent, Agent 开发]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-05-18
+updated: 2026-05-24
 ---
 
 # AI Agent 开发
@@ -18,7 +18,7 @@ Agent 开发领域的技术积累索引，按子领域分目录管理。
 |------|------|------|
 | [[ai-agent/claude-code/index]] | 34 | Claude Code 源码级架构、内部机制、多 Agent 协作 |
 | [[ai-agent/agent-core/index]] | 16 | Agent 设计范式、记忆、规划、安全、治理 |
-| [[ai-agent/sdd/index]] | 10 | OpenSpec、Superpowers、Spec-Kit 三剑客 |
+| [[ai-agent/sdd/index]] | 13 | OpenSpec、Superpowers、Spec-Kit 三剑客 |
 | [[ai-agent/knowledge-base/index]] | 12 | LLM Wiki 概念、实现、Karpathy 实践 |
 | [[ai-agent/harness/index]] | 8 | Agent Harness 模式、工程实践 |
 | [[ai-agent/context-eng/index]] | 3 | Google/Manus 上下文工程、CLAUDE.md |

@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开源项目 superpowers 深度解读：把 AI Coding Agent 变成遵守工程流程的协作伙伴</title>
+  <!--
+  ingested: 2026-05-24
+  wiki_pages: [superpowers-repo-architecture]
+  -->
+  <style>
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 16px; line-height: 1.8; color: #333; max-width: 800px; margin: 0 auto; padding: 20px;
+}
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+  </style>
+</head>
+<body>
+<article>
+  <header class="article-meta">
+    <h1>开源项目 superpowers 深度解读：把 AI Coding Agent 变成遵守工程流程的协作伙伴</h1>
+    <div class="meta-info">
+      <span>作者：Miku16</span>
+      <span>发表：2026-03-26 18:48:04</span>
+      <span>来源：<a href="https://juejin.cn/post/7621126550411509794" target="_blank">https://juejin.cn/post/7621126550411509794</a></span>
+      <span>下载：2026-05-24</span>
+    </div>
+  </header>
+  <hr>
+<div class="article-viewer markdown-body result"><style>.markdown-body{word-break:break-word;line-height:1.75;font-weight:400;font-size:16px;overflow-x:hidden;color:#252933}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{line-height:1.5;margin-top:35px;margin-bottom:10px;padding-bottom:5px}.markdown-body h1{font-size:24px;line-height:38px;margin-bottom:5px}.markdown-body h2{font-size:22px;line-height:34px;padding-bottom:12px;border-bottom:1px solid #ececec}.markdown-body h3{font-size:20px;line-height:28px}.markdown-body h4{font-size:18px;line-height:26px}.markdown-body h5{font-size:17px;line-height:24px}.markdown-body h6{font-size:16px;line-height:24px}.markdown-body p{line-height:inherit;margin-top:22px;margin-bottom:22px}.markdown-body img{max-width:100%}.markdown-body hr{border:none;border-top:1px solid #ddd;margin-top:32px;margin-bottom:32px}.markdown-body code{word-break:break-word;border-radius:2px;overflow-x:auto;background-color:#fff5f5;color:#ff502c;font-size:.87em;padding:.065em .4em}.markdown-body code,.markdown-body pre{font-family:Menlo,Monaco,Consolas,Courier New,monospace}.markdown-body pre{overflow:auto;position:relative;line-height:1.75}.markdown-body pre>code{font-size:12px;padding:15px 12px;margin:0;word-break:normal;display:block;overflow-x:auto;color:#333;background:#f8f8f8}.markdown-body a{text-decoration:none;color:#0269c8;border-bottom:1px solid #d1e9ff}.markdown-body a:active,.markdown-body a:hover{color:#275b8c}.markdown-body table{display:inline-block!important;font-size:12px;width:auto;max-width:100%;overflow:auto;border:1px solid #f6f6f6}.markdown-body thead{background:#f6f6f6;color:#000;text-align:left}.markdown-body tr:nth-child(2n){background-color:#fcfcfc}.markdown-body td,.markdown-body th{padding:12px 7px;line-height:24px}.markdown-body td{min-width:120px}.markdown-body blockquote{color:#666;padding:1px 23px;margin:22px 0;border-left:4px solid #cbcbcb;background-color:#f8f8f8}.markdown-body blockquote:after{display:block;content:""}.markdown-body blockquote>p{margin:10px 0}.markdown-body ol,.markdown-body ul{padding-left:28px}.markdown-body ol li,.markdown-body ul li{margin-bottom:0;list-style:inherit}.markdown-body ol li .task-list-item,.markdown-body ul li .task-list-item{list-style:none}.markdown-body ol li .task-list-item ol,.markdown-body ol li .task-list-item ul,.markdown-body ul li .task-list-item ol,.markdown-body ul li .task-list-item ul{margin-top:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:3px}.markdown-body ol li{padding-left:6px}.markdown-body .contains-task-list{padding-left:0}.markdown-body .task-list-item{list-style:none}@media (max-width:720px){.markdown-body h1{font-size:24px}.markdown-body h2{font-size:20px}.markdown-body h3{font-size:18px}}</style><style data-highlight data-highlight-key="juejin">.markdown-body pre,.markdown-body pre>code.hljs{color:#333;background:#f8f8f8}.hljs-comment,.hljs-quote{color:#998;font-style:italic}.hljs-keyword,.hljs-selector-tag,.hljs-subst{color:#333;font-weight:700}.hljs-literal,.hljs-number,.hljs-tag .hljs-attr,.hljs-template-variable,.hljs-variable{color:teal}.hljs-doctag,.hljs-string{color:#d14}.hljs-section,.hljs-selector-id,.hljs-title{color:#900;font-weight:700}.hljs-subst{font-weight:400}.hljs-class .hljs-title,.hljs-type{color:#458;font-weight:700}.hljs-attribute,.hljs-name,.hljs-tag{color:navy;font-weight:400}.hljs-link,.hljs-regexp{color:#009926}.hljs-bullet,.hljs-symbol{color:#990073}.hljs-built_in,.hljs-builtin-name{color:#0086b3}.hljs-meta{color:#999;font-weight:700}.hljs-deletion{background:#fdd}.hljs-addition{background:#dfd}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}</style><h2 data-id="heading-0">开源项目 superpowers 深度解读：把 AI Coding Agent 变成遵守工程流程的协作伙伴</h2>
+<p><strong>摘要：</strong> <code>superpowers</code> 不是一个普通的 Prompt 仓库，而是一套面向 AI Coding Agent 的工程化工作流系统。本文基于对仓库核心 skills、平台配置文件和工作流设计的系统阅读，梳理它如何通过 brainstorming、planning、TDD、debugging、review、verification 和多代理协作，把 AI 从“会写代码”进一步约束为“按流程做开发”的协作伙伴。</p>
+<p><strong>项目地址：</strong> <a href="https://github.com/obra/superpowers" target="_blank" title="https://github.com/obra/superpowers" ref="nofollow noopener noreferrer">github.com/obra/superp…</a></p>
+<hr>
+<h3 data-id="heading-1">一、前言：为什么 <code>superpowers</code> 值得专门写一篇解读</h3>
+<p>最近在看 AI Coding Agent 相关的开源项目时，我注意到了 <code>obra/superpowers</code> 这个仓库。</p>
+<p>最初吸引我的，不是它有没有某个炫酷功能，而是它在试图解决一个更本质的问题：当 AI 真正参与软件开发时，我们到底该怎样约束它、组织它、使用它？</p>
+<p>很多时候，我们会把 AI 当成一个“更快的程序员”。但真正用久了就会发现，AI 最大的问题往往不是不会写代码，而是缺少稳定的工程纪律。比如：</p>
+<ul>
+<li>它太容易跳过需求澄清</li>
+<li>太容易看到问题就直接下手改</li>
+<li>太容易在没验证的情况下宣称“已经完成”</li>
+<li>太容易在复杂任务中途跑偏</li>
+<li>太容易把多步骤工作做成一次性冲动输出</li>
+</ul>
+<p>而 <code>superpowers</code> 做的事情，就是把这些原本依赖资深工程师经验把控的研发纪律，拆解成一组可发现、可调用、可组合的 skills，让 AI 不只是“会写代码”，而是“按流程做开发”。</p>
+<p>所以在我看来，这个仓库最有价值的地方，并不是它教会模型某个具体技巧，而是它在尝试建立一套面向 AI Coding Agent 的研发工作流。</p>
+<p>如果把普通 Prompt Engineering 理解成“怎么让模型更会答题”，那么 <code>superpowers</code> 更像是在做另一件事：</p>
+<p><strong>怎么让模型进入一种更接近真实工程团队的工作方式。</strong></p>
+<p>这也是我觉得这个项目值得认真读一遍、并且值得专门写成文章的原因。</p>
+<hr>
+<h3 data-id="heading-2">二、superpowers 到底是什么？</h3>
+<p>从仓库 <code>README.md</code> 的介绍来看，<code>superpowers</code> 的官方定位非常明确：</p>
+<p>Superpowers is a complete software development workflow for your coding agents.</p>
+<p>也就是说，它不是单点能力增强，而是一套完整的软件开发工作流。</p>
+<h4 data-id="heading-3">1. 它服务的对象不是“人”，而是“Coding Agent”</h4>
+<p>这个仓库面向的是 Claude Code、Cursor、Codex、OpenCode、Gemini CLI 等 AI 编码平台。它不是直接给开发者提供一个按钮或页面，而是给这些“会写代码的 AI 代理”提供一套可调用的技能系统。</p>
+<p>从仓库里的配置文件可以看到这一点：</p>
+<ul>
+<li><code>.claude-plugin/plugin.json</code></li>
+<li><code>.cursor-plugin/plugin.json</code></li>
+<li><code>gemini-extension.json</code></li>
+<li><code>.codex/INSTALL.md</code></li>
+<li><code>.opencode/INSTALL.md</code></li>
+<li><code>GEMINI.md</code></li>
+</ul>
+<p>这说明作者一开始就不是按单平台来设计，而是按“跨平台 Agent 技能分发系统”来设计的。</p>
+<h4 data-id="heading-4">2. 它的核心不是代码逻辑，而是技能与规则</h4>
+<p>这个仓库最重要的目录不是 <code>src/</code>、<code>app/</code>、<code>components/</code> 之类，而是：</p>
+<ul>
+<li><code>skills/</code></li>
+<li><code>agents/</code></li>
+<li><code>commands/</code></li>
+<li><code>hooks/</code></li>
+</ul>
+<p>其中最关键的是 <code>skills/</code>。</p>
+<p>每个 skill 基本都是一个结构化的 Markdown 文件，里面包含：</p>
+<ul>
+<li>技能名</li>
+<li>触发条件</li>
+<li>使用场景</li>
+<li>核心原则</li>
+<li>执行流程</li>
+<li>红线与反模式</li>
+<li>示例与注意事项</li>
+</ul>
+<p>所以从本质上说，<code>superpowers</code> 更像是：</p>
+<p><strong>一个把工程</strong> <strong>最佳实践</strong> <strong>封装成可发现、可调用、可组合“技能模块”的仓库。</strong></p>
+<hr>
+<h3 data-id="heading-5">三、项目试图解决什么问题？</h3>
+<p>如果你经常使用 AI Coding Agent，大概率都见过这些问题：</p>
+<h4 data-id="heading-6">1. 一上来就写代码</h4>
+<p>你说“帮我做个功能”，AI 经常直接开始实现，甚至还没搞清楚你的真正需求。</p>
+<h4 data-id="heading-7">2. 调 bug 时喜欢拍脑袋</h4>
+<p>看到报错以后，很多模型会直接给出“可能是这里有问题，改一下试试”的建议，但并没有真正定位根因。</p>
+<h4 data-id="heading-8">3. 跳过测试与验证</h4>
+<p>不少时候，AI 改完代码就开始说“现在应该可以了”“问题已经修复”，但它并没有真正跑测试，也没有拿到证据。</p>
+<h4 data-id="heading-9">4. 没有计划意识</h4>
+<p>稍复杂一点的需求，如果不先拆任务，AI 很容易出现：</p>
+<ul>
+<li>中途偏题</li>
+<li>重复修改</li>
+<li>忘记关键步骤</li>
+<li>改出额外副作用</li>
+</ul>
+<h4 data-id="heading-10">5. 多代理协作缺乏纪律</h4>
+<p>当平台支持子代理、多代理并发时，如果没有流程约束，很容易出现：</p>
+<ul>
+<li>角色混乱</li>
+<li>上下文污染</li>
+<li>reviewer 形同虚设</li>
+<li>任务拆分不清晰</li>
+</ul>
+<p>而 <code>superpowers</code> 的思路是：</p>
+<p>不要期待模型天然具备稳定的工程纪律，而要把这些纪律写成规则、技能和流程，让它“被迫遵守”。</p>
+<p>这正是这个仓库最有意思的地方。</p>
+<hr>
+<h3 data-id="heading-11">四、仓库结构解读：它是怎么组织起来的？</h3>
+<p>先看仓库的核心组成。</p>
+<h4 data-id="heading-12">1. 顶层关键文件</h4>
+<h5 data-id="heading-13"><code>README.md</code></h5>
+<p>项目的总说明文件，介绍了：</p>
+<ul>
+<li>项目定位</li>
+<li>支持的平台</li>
+<li>安装方式</li>
+<li>基础工作流</li>
+<li>skills 列表</li>
+<li>哲学与贡献方式</li>
+</ul>
+<h5 data-id="heading-14"><code>package.json</code></h5>
+<p>这个文件非常简洁：</p>
+<pre><code class="hljs language-json" lang="json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"superpowers"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"version"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"5.0.6"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"module"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"main"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">".opencode/plugins/superpowers.js"</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>这也从侧面说明：</p>
+<ul>
+<li>它不是一个典型前端应用或 Node 服务</li>
+<li><code>package.json</code> 在这里只承担很轻量的插件入口声明作用</li>
+<li>真正的核心内容不在传统源码目录里，而在 skill 文档与平台配置中</li>
+</ul>
+<h4 data-id="heading-15">2. 配置与平台适配文件</h4>
+<p>我重点看了以下几个文件：</p>
+<ul>
+<li><code>.claude-plugin/plugin.json</code></li>
+<li><code>.cursor-plugin/plugin.json</code></li>
+<li><code>gemini-extension.json</code></li>
+<li><code>GEMINI.md</code></li>
+<li><code>hooks/hooks.json</code></li>
+</ul>
+<p>这些文件分别承担：</p>
+<ul>
+<li>向 Claude Code 声明插件元信息</li>
+<li>向 Cursor 声明 skills / agents / commands / hooks 的入口位置</li>
+<li>向 Gemini CLI 提供上下文文件入口</li>
+<li>向平台注册会话启动时的初始化动作</li>
+</ul>
+<p>举个例子，<code>.cursor-plugin/plugin.json</code> 中明确声明了：</p>
+<ul>
+<li><code>skills</code>: <code>./skills/</code></li>
+<li><code>agents</code>: <code>./agents/</code></li>
+<li><code>commands</code>: <code>./commands/</code></li>
+<li><code>hooks</code>: <code>./hooks/hooks-cursor.json</code></li>
+</ul>
+<p>这意味着：</p>
+<p>在 Cursor 这类平台里，<code>superpowers</code> 其实是一组“平台可识别的结构化能力模块”。</p>
+<h4 data-id="heading-16">3. 核心目录说明</h4>
+<h5 data-id="heading-17"><code>skills/</code></h5>
+<p>仓库真正的灵魂所在。</p>
+<p>我这次系统阅读了 <code>skills/</code> 目录下的全部核心 <code>SKILL.md</code> 文件，包括：</p>
+<ul>
+<li><code>using-superpowers</code></li>
+<li><code>brainstorming</code></li>
+<li><code>writing-plans</code></li>
+<li><code>test-driven-development</code></li>
+<li><code>systematic-debugging</code></li>
+<li><code>subagent-driven-development</code></li>
+<li><code>executing-plans</code></li>
+<li><code>dispatching-parallel-agents</code></li>
+<li><code>requesting-code-review</code></li>
+<li><code>receiving-code-review</code></li>
+<li><code>using-git-worktrees</code></li>
+<li><code>verification-before-completion</code></li>
+<li><code>finishing-a-development-branch</code></li>
+<li><code>writing-skills</code></li>
+</ul>
+<p>这些 skill 共同构成了一整套开发工作流。</p>
+<h5 data-id="heading-18"><code>agents/</code></h5>
+<p>这里定义一些专门角色，例如：</p>
+<ul>
+<li><code>agents/code-reviewer.md</code></li>
+</ul>
+<p>它本质上是一个“高级代码审查员”角色说明，用于在某些技能流程里被当作子代理调用。</p>
+<h5 data-id="heading-19"><code>commands/</code></h5>
+<p>这里放的是快捷命令入口，例如：</p>
+<ul>
+<li><code>brainstorm.md</code></li>
+<li><code>write-plan.md</code></li>
+<li><code>execute-plan.md</code></li>
+</ul>
+<p>其中有些命令已经被标记为 deprecated，说明作者在逐步把“命令式入口”收敛到“技能式入口”。</p>
+<h5 data-id="heading-20"><code>hooks/</code></h5>
+<p>这里主要是会话启动钩子。比如 <code>hooks/hooks.json</code> 中定义了 <code>SessionStart</code> 时触发的命令。</p>
+<p>这意味着 <code>superpowers</code> 并不是只有“手动使用技能”这一个入口，它还在尝试通过 hook 把一些行为前置到会话生命周期里。</p>
+<h5 data-id="heading-21"><code>docs/</code></h5>
+<p>这里包括：</p>
+<ul>
+<li>Codex 适配文档</li>
+<li>OpenCode 适配文档</li>
+<li>测试文档</li>
+<li>历史设计与计划文档</li>
+</ul>
+<p>这部分对于理解项目如何跨平台运行非常有帮助。</p>
+<h5 data-id="heading-22"><code>tests/</code></h5>
+<p>我阅读了 <code>tests/claude-code/README.md</code>，它说明了项目是如何测试 skills 行为的。</p>
+<p>这点很重要，因为它表明作者并没有把技能当成“不可验证的文字说明”，而是在尝试让它们也具备可测试性。</p>
+<hr>
+<h3 data-id="heading-23">五、这不是“提示词堆砌”，而是一套技能系统</h3>
+<p>这是我阅读后最强烈的感受之一。</p>
+<p>很多人理解 Prompt Engineering，还是停留在“写几段提示词”的层面。但在 <code>superpowers</code> 里，Prompt 已经被进一步工程化了。</p>
+<h4 data-id="heading-24">1. 每个 skill 都有 frontmatter 元数据</h4>
+<p>以 <code>SKILL.md</code> 为例，开头通常会写：</p>
+<pre><code class="hljs language-yaml" lang="yaml"><span class="hljs-meta">---</span>
+<span class="hljs-attr">name:</span> <span class="hljs-string">using-superpowers</span>
+<span class="hljs-attr">description:</span> <span class="hljs-string">Use</span> <span class="hljs-string">when</span> <span class="hljs-string">starting</span> <span class="hljs-string">any</span> <span class="hljs-string">conversation...</span>
+<span class="hljs-meta">---
+</span></code></pre>
+<p>这里的 <code>name</code> 和 <code>description</code> 并不是装饰，它们是平台进行技能发现与匹配的重要依据。</p>
+<h4 data-id="heading-25">2. skill 的 description 被精心设计成“触发条件”</h4>
+<p>在 <code>writing-skills/SKILL.md</code> 里，作者反复强调一件事：</p>
+<ul>
+<li>description 只能描述“何时使用”</li>
+<li>不能把完整流程浓缩写在 description 里</li>
+</ul>
+<p>因为一旦 description 直接总结了流程，模型可能只看 description，不认真读取 skill 正文。</p>
+<p>这个细节非常值得写进文章，因为它揭示了一个很真实的 Prompt Engineering 问题：</p>
+<p><strong>模型会走捷径，因此提示词设计不仅要表达规则，还要防止模型误读规则。</strong></p>
+<h4 data-id="heading-26">3. skill 是一个“可复用行为模块”</h4>
+<p>这些 skill 不是普通文档，它们承担的作用更像：</p>
+<ul>
+<li>一个工程规范</li>
+<li>一个行为控制器</li>
+<li>一个流程模板</li>
+<li>一个角色指令集</li>
+</ul>
+<p>所以比起“提示词仓库”，我更愿意把 <code>superpowers</code> 理解成：</p>
+<p><strong>AI Coding Agent 的行为操作系统。</strong></p>
+<hr>
+<h3 data-id="heading-27">六、先给出总览：superpowers 的完整工作流长什么样？</h3>
+<p>在具体解读各个 skill 之前，先把 <code>superpowers</code> 的主流程放在前面，这样后面的阅读顺序会更清晰。</p>
+<p>按照我对 README 和全部核心 skill 的梳理，它的完整工作流大致可以分成下面几个阶段：</p>
+<pre><code class="hljs language-css" lang="css">会话开始
+  ↓
+using-superpowers：先判断该用哪些 skill
+  ↓
+需求澄清与设计
+  ↓
+brainstorming：理解上下文、提问、比较方案、形成 spec
+  ↓
+准备实施
+  ↓
+using-git-worktrees：创建隔离工作区，验证基线
+  ↓
+writing-plans：把 spec 写成详细实施计划
+  ↓
+选择执行方式
+  ↓
+subagent-driven-development / executing-plans
+  ↓
+实现中的纪律约束
+  ├─ test-driven-development：先测后写
+  ├─ systematic-debugging：遇到问题先查根因
+  ├─ requesting-<span class="hljs-selector-tag">code</span>-review：完成后请求审查
+  ├─ receiving-<span class="hljs-selector-tag">code</span>-review：理性处理反馈
+  ├─ dispatching-parallel-agents：独立问题可并行派发
+  └─ verification-before-completion：没有验证就不能宣称完成
+  ↓
+收尾阶段
+  ↓
+finishing-<span class="hljs-selector-tag">a</span>-development-branch：测试、合并、PR、保留或丢弃分支
+  ↓
+能力演进
+  ↓
+writing-skills：把新的有效方法沉淀成 skill
+</code></pre>
+<p>从这个结构里可以看出，<code>superpowers</code> 并不是把 skill 零散堆在一起，而是在试图构建一条完整的、可复用的软件研发流水线。</p>
+<p>接下来，我就按照这条工作流来依次解读各个核心 skill。</p>
+<hr>
+<h3 data-id="heading-28">七、工作流第一步：<code>using-superpowers</code> —— 先决定流程，再开始行动</h3>
+<p>如果把整套系统比作一个研发流程框架，那么 <code>using-superpowers</code> 就是它的总控开关。</p>
+<h4 data-id="heading-29">1. 它的任务不是做事，而是决定“该怎么做”</h4>
+<p>这个 skill 的核心要求非常激进：</p>
+<ul>
+<li>只要有 1% 的可能某个 skill 适用</li>
+<li>就必须先检查并调用 skill</li>
+<li>连澄清问题之前都要先做 skill 判断</li>
+</ul>
+<p>也就是说，它不允许模型靠“直觉”直接进入执行状态。</p>
+<h4 data-id="heading-30">2. 它在压制 AI 最典型的坏习惯：先动手再说</h4>
+<p>作者在这个 skill 里把很多常见想法都列成 red flags，比如：</p>
+<ul>
+<li>“我先问点问题再说”</li>
+<li>“我先看看代码再决定”</li>
+<li>“这任务太简单，不需要 skill”</li>
+</ul>
+<p>这些在人类开发者看来很正常，但在作者眼里，这些往往意味着模型正在绕开流程。</p>
+<h4 data-id="heading-31">3. 它的真正意义</h4>
+<p>我觉得 <code>using-superpowers</code> 的价值在于，它不是给 AI 更多选择，而是在收紧 AI 的自由度。</p>
+<p><strong>只要系统里存在合适的方法论，就不能靠即兴发挥跳过去。</strong></p>
+<p>这正是整套 superpowers 能成立的前提。没有这个总控 skill，后面的其他 skills 很容易沦为“存在但不使用”的摆设。</p>
+<hr>
+<h3 data-id="heading-32">八、工作流第二步：<code>brainstorming</code> —— 先把需求讲清楚，再进入实现</h3>
+<p>在 <code>using-superpowers</code> 判断出这是一项需要设计和实现的任务后，最先进入的核心 skill 就是 <code>brainstorming</code>。</p>
+<h4 data-id="heading-33">1. 它在解决“AI 过早实现”的问题</h4>
+<p>这个 skill 明确要求：</p>
+<ul>
+<li>先探索项目上下文</li>
+<li>一次只问一个问题</li>
+<li>理解目标、约束和成功标准</li>
+<li>提供 2~3 个方案与权衡</li>
+<li>分段给出设计</li>
+<li>让用户确认后再继续</li>
+<li>最终输出 spec 文档</li>
+</ul>
+<p>也就是说，它不是“边问边写代码”，而是“先设计，再谈实现”。</p>
+<h4 data-id="heading-34">2. 它特别重视提问方式</h4>
+<p>我觉得这个 skill 很成熟的一点是，它连“提问姿势”都规范了：</p>
+<ul>
+<li>一次只问一个问题</li>
+<li>优先多选题</li>
+<li>项目过大时先拆子项目</li>
+<li>视觉问题才使用 visual companion</li>
+</ul>
+<p>这说明作者很清楚：</p>
+<p>需求澄清不是随便问几个问题，而是一种需要被设计的交互过程。</p>
+<h4 data-id="heading-35">3. 它的产物不是聊天记录，而是 spec</h4>
+<p>这点很关键。</p>
+<p>很多 AI 对话在需求聊清楚后就结束了，但 <code>brainstorming</code> 要求把结果落地成文档。这样做有两个好处：</p>
+<ul>
+<li>后面 <code>writing-plans</code> 有了稳定输入</li>
+<li>后面 review 时有了明确参照物</li>
+</ul>
+<p>所以这个 skill 更像是从“对话式需求”走向“文档化设计”的桥梁。</p>
+<hr>
+<h3 data-id="heading-36">九、工作流第三步：<code>using-git-worktrees</code> —— 在隔离环境里启动实施</h3>
+<p>设计确认后，<code>superpowers</code> 并不是马上开始写代码，而是先进入工作区准备阶段。这一步由 <code>using-git-worktrees</code> 负责。</p>
+<h4 data-id="heading-37">1. 为什么它会出现在实现之前？</h4>
+<p>因为作者认为，正式开始实现前，必须先保证：</p>
+<ul>
+<li>当前工作在隔离分支里进行</li>
+<li>不会污染主工作目录</li>
+<li>项目依赖已安装</li>
+<li>基线测试状态已确认</li>
+</ul>
+<p>这其实是一个非常典型的工程化动作，只是很多 AI 工具默认不会主动做。</p>
+<h4 data-id="heading-38">2. 这个 skill 做了哪些事？</h4>
+<p>它会引导代理：</p>
+<ul>
+<li>优先检查 <code>.worktrees/</code> 或 <code>worktrees/</code></li>
+<li>检查是否有项目约定目录</li>
+<li>必要时询问用户 worktree 放在哪里</li>
+<li>验证目录是否被 <code>.gitignore</code> 忽略</li>
+<li>创建新 worktree 和分支</li>
+<li>自动识别项目类型并运行安装命令</li>
+<li>再跑测试验证干净基线</li>
+</ul>
+<h4 data-id="heading-39">3. 这个 skill 的价值</h4>
+<p>我觉得它非常像一个团队里的“开工前检查清单”。</p>
+<p>它的重点不在“Git worktree 这个功能新不新”，而在于：</p>
+<p><strong>正式实施之前，要先把隔离环境和验证基线搭好。</strong></p>
+<p>这会让后续开发、调试和收尾都更清晰。</p>
+<hr>
+<h3 data-id="heading-40">十、工作流第四步：<code>writing-plans</code> —— 把 spec 写成可执行施工图</h3>
+<p>完成设计并建立隔离工作区之后，下一步就是 <code>writing-plans</code>。</p>
+<h4 data-id="heading-41">1. 它是整套系统里最像“项目经理 + 技术负责人”的 skill</h4>
+<p>这个 skill 不只是让 AI 列个待办清单，而是要求它产出一份极度具体的实施计划，包括：</p>
+<ul>
+<li>每个任务对应哪些文件</li>
+<li>哪些文件需要新建、哪些需要修改</li>
+<li>测试文件在哪</li>
+<li>每一步的代码长什么样</li>
+<li>运行什么命令验证</li>
+<li>预期看到什么结果</li>
+<li>每个动作要小到 2~5 分钟级别</li>
+</ul>
+<h4 data-id="heading-42">2. 为什么计划要写得这么细？</h4>
+<p>因为作者默认执行代理有这些特点：</p>
+<ul>
+<li>上下文有限</li>
+<li>容易跑偏</li>
+<li>不会自动补足隐含前提</li>
+<li>一旦计划模糊就容易自由发挥</li>
+</ul>
+<p>所以 <code>writing-plans</code> 的本质是：</p>
+<p><strong>在执行之前，尽可能消灭模糊空间。</strong></p>
+<h4 data-id="heading-43">3. 它是后续一切执行与 review 的共享契约</h4>
+<p>没有这份详细计划，后面的：</p>
+<ul>
+<li>子代理执行</li>
+<li>规格审查</li>
+<li>代码质量审查</li>
+<li>完成验证</li>
+</ul>
+<p>都很容易失去统一坐标。</p>
+<p>所以在整个工作流里，<code>writing-plans</code> 可以说是“从设计走向实施”的关键枢纽。</p>
+<hr>
+<h3 data-id="heading-44">十一、工作流第五步：进入执行分支 —— <code>subagent-driven-development</code> 与 <code>executing-plans</code></h3>
+<p>到这一步，设计、工作区、实施计划都准备好了，才真正进入“干活阶段”。但 <code>superpowers</code> 并没有只提供一种执行方式，而是提供了两条不同的执行路径。</p>
+<h4 data-id="heading-45">1. <code>subagent-driven-development</code>：更推荐的主路径</h4>
+<p>这是整个仓库里最有代表性的 skill 之一。</p>
+<p>它的思路是：</p>
+<ul>
+<li>每个任务派一个新的 implementer 子代理</li>
+<li>子代理完成后，先做 <strong>spec compliance review</strong></li>
+<li>再做 <strong>code quality review</strong></li>
+<li>如果有问题，就打回给 implementer 修复</li>
+<li>直到通过后，才进入下一任务</li>
+</ul>
+<h5 data-id="heading-46">为什么它重要？</h5>
+<p>因为它体现的不是“AI 更聪明”，而是“AI 更像一个有分工的团队”。</p>
+<p>作者特别强调：</p>
+<ul>
+<li>fresh subagent per task</li>
+<li>review 顺序不能乱</li>
+<li>规格对了，才有资格谈代码质量</li>
+</ul>
+<p>这一点让我觉得非常成熟。它已经不是单 agent 编码，而是流程化的多代理协作。</p>
+<h4 data-id="heading-47">2. <code>executing-plans</code>：没有子代理时的替代路径</h4>
+<p>如果平台不支持子代理，或者当前就想在本会话里执行，也可以走 <code>executing-plans</code>。</p>
+<p>它的要求是：</p>
+<ul>
+<li>先读计划</li>
+<li>先做批判性 review</li>
+<li>再逐个执行任务</li>
+<li>遇到阻塞就停下来问</li>
+<li>最后进入 <code>finishing-a-development-branch</code></li>
+</ul>
+<p>也就是说，它虽然没有多代理那种精细流水线，但仍然遵守“先计划、再执行、最后收尾”的主逻辑。</p>
+<h4 data-id="heading-48">3. 两条路径的差异</h4>
+<p>我觉得可以这样理解：</p>
+<ul>
+<li><code>subagent-driven-development</code> 更像“团队协作模式”</li>
+<li><code>executing-plans</code> 更像“单人按施工图施工”</li>
+</ul>
+<p>前者质量更高、结构更完整；后者更通用，但精度略低。</p>
+<hr>
+<h3 data-id="heading-49">十二、执行中的刚性纪律一：<code>test-driven-development</code> —— 先写失败测试，再写实现</h3>
+<p>进入真正实现阶段后，第一个非常关键的纪律 skill 就是 <code>test-driven-development</code>。</p>
+<h4 data-id="heading-50">1. 这个 skill 的铁律非常明确</h4>
+<p>它反复强调：</p>
+<p>NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST</p>
+<p>也就是说，没有先失败的测试，就不允许写生产代码。</p>
+<h4 data-id="heading-51">2. 它在压制什么？</h4>
+<p>它在压制的是人类和 AI 共同的一个冲动：</p>
+<ul>
+<li>先写出来再说</li>
+<li>等功能跑通了再补测试</li>
+<li>觉得这个功能“太简单了，不用测”</li>
+</ul>
+<p>而这个 skill 的态度非常坚决：</p>
+<ul>
+<li>如果你先写了实现代码，就删掉重来</li>
+<li>如果没有亲眼看到测试失败，就不算完成</li>
+<li>测试通过之前不能宣称完成</li>
+</ul>
+<h4 data-id="heading-52">3. 它为什么在执行阶段这么重要？</h4>
+<p>因为真正开始写代码后，模型最容易滑回“先实现再说”的惯性。</p>
+<p>所以这个 skill 的存在，本质上是在整个执行过程中不断提醒：</p>
+<p><strong>你不是在证明自己会写代码，而是在证明你的代码真的被测试约束住了。</strong></p>
+<hr>
+<h3 data-id="heading-53">十三、执行中的刚性纪律二：<code>systematic-debugging</code> —— 一旦出问题，先查根因</h3>
+<p>真实开发不可能一路顺滑，因此在执行阶段，另一个非常关键的 skill 就是 <code>systematic-debugging</code>。</p>
+<h4 data-id="heading-54">1. 它规定：不能直接修，必须先调查</h4>
+<p>这个 skill 的核心原则是：</p>
+<p>NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST</p>
+<p>它要求模型在遇到 bug、测试失败、意外行为时，按四个阶段走：</p>
+<ul>
+<li>根因调查</li>
+<li>模式分析</li>
+<li>假设与验证</li>
+<li>实施修复</li>
+</ul>
+<h4 data-id="heading-55">2. 它为什么是执行阶段不可缺的一环？</h4>
+<p>因为只要开始写代码，就一定会遇到：</p>
+<ul>
+<li>某个测试失败</li>
+<li>某个边界条件不对</li>
+<li>某个环境行为异常</li>
+</ul>
+<p>而这时候，如果没有调试纪律，模型最容易做的就是拍脑袋给修复建议。</p>
+<h4 data-id="heading-56">3. 它和 TDD 其实是互补关系</h4>
+<ul>
+<li><code>test-driven-development</code> 约束“怎么开始实现”</li>
+<li><code>systematic-debugging</code> 约束“出问题时怎么处理”</li>
+</ul>
+<p>前者防止无测试实现，后者防止无证据修复。</p>
+<p>这两个 skill 放在一起，基本构成了 <code>superpowers</code> 在执行阶段的底层纪律框架。</p>
+<hr>
+<h3 data-id="heading-57">十四、执行中的协作机制：<code>requesting-code-review</code> 与 <code>receiving-code-review</code></h3>
+<p>代码写完不代表流程结束，<code>superpowers</code> 还把 review 做成了明确的两步机制。</p>
+<h4 data-id="heading-58">1. <code>requesting-code-review</code>：主动发起审查</h4>
+<p>这个 skill 负责的不是“顺便看一眼”，而是结构化地发起 code review。</p>
+<p>它要求：</p>
+<ul>
+<li>明确本次实现了什么</li>
+<li>明确依据的是哪份计划或需求</li>
+<li>明确 git diff 的起止范围</li>
+<li>把这些上下文提供给 reviewer</li>
+</ul>
+<p>这说明作者并不把 review 看成一件模糊的事，而是认为：</p>
+<p>review 的质量，很大程度取决于 review 输入是否被结构化。</p>
+<h4 data-id="heading-59">2. <code>receiving-code-review</code>：收到意见后不能表演式认同</h4>
+<p>这个 skill 我个人非常喜欢，因为它很少见。</p>
+<p>它要求模型在收到 review 后：</p>
+<ul>
+<li>先完整阅读</li>
+<li>先理解反馈要求</li>
+<li>再回到代码里验证</li>
+<li>如果 reviewer 对，就修改</li>
+<li>如果 reviewer 不对，要做技术性反驳</li>
+</ul>
+<p>它甚至明确反对这种表达：</p>
+<ul>
+<li>“你说得对”</li>
+<li>“非常好的建议”</li>
+<li>“我这就改”</li>
+</ul>
+<p>原因很简单：</p>
+<p><strong>review 不是情绪表演，而是技术判断。</strong></p>
+<h4 data-id="heading-60">3. 这两个 skill 合起来，构成了完整的 review 闭环</h4>
+<p>也就是说，<code>superpowers</code> 不只是规范“怎么提审”，还规范“怎么接审”。</p>
+<p>这让整个执行流程更像真实工程团队，而不是“AI 自己写、自己夸、自己结束”。</p>
+<hr>
+<h3 data-id="heading-61">十五、执行中的并行能力：<code>dispatching-parallel-agents</code> —— 独立问题才适合并发处理</h3>
+<p>并不是所有任务都必须串行执行。</p>
+<p>在一些场景下，比如：</p>
+<ul>
+<li>多个测试文件同时失败</li>
+<li>多个独立子系统都有问题</li>
+<li>几个故障域之间互不依赖</li>
+</ul>
+<p><code>superpowers</code> 会建议使用 <code>dispatching-parallel-agents</code>。</p>
+<h4 data-id="heading-62">1. 它强调的不是“多开几个 agent”，而是“按独立问题域拆分”</h4>
+<p>这个 skill 最重要的判断标准是：</p>
+<ul>
+<li>问题是否独立</li>
+<li>是否存在共享状态</li>
+<li>是否会互相影响</li>
+</ul>
+<p>如果相关，就不要并行；如果独立，就一域一个代理。</p>
+<h4 data-id="heading-63">2. 这体现了作者对并发边界的清醒认知</h4>
+<p>很多所谓的多 agent 工作流，只强调“并行更快”。</p>
+<p>但 <code>dispatching-parallel-agents</code> 更强调的是：</p>
+<p><strong>不是能并发就该并发，而是只有在问题真正独立时，并发才是增益。</strong></p>
+<p>这说明 <code>superpowers</code> 并不是把多代理当噱头，而是把它当工程上的调度策略。</p>
+<hr>
+<h3 data-id="heading-64">十六、执行中的最后一道门：<code>verification-before-completion</code> —— 没有验证证据，就不能说完成</h3>
+<p>在我看来，<code>verification-before-completion</code> 是整个仓库价值观最鲜明的一个 skill。</p>
+<h4 data-id="heading-65">1. 它只强调一件事：证据先于结论</h4>
+<p>这个 skill 的铁律是：</p>
+<p>NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE</p>
+<p>翻译过来就是：</p>
+<p>如果你没有在当前这条消息对应的上下文里跑过验证命令，就不能说“完成了”“修好了”“通过了”。</p>
+<h4 data-id="heading-66">2. 它在修正 AI 最常见的“自信型错误”</h4>
+<p>比如这些话：</p>
+<ul>
+<li>“现在应该可以了”</li>
+<li>“这个问题已经修复”</li>
+<li>“测试应该都过了”</li>
+</ul>
+<p>在人类看来这可能只是口头语，但在工程语境里，这类表达其实会直接伤害信任。</p>
+<p>所以这个 skill 明确要求：</p>
+<ul>
+<li>先识别需要什么命令证明</li>
+<li>运行完整命令</li>
+<li>查看输出和退出码</li>
+<li>再据此表达状态</li>
+</ul>
+<h4 data-id="heading-67">3. 它其实是在给 AI 建立“完成声明的准入门槛”</h4>
+<p>这一点非常重要。</p>
+<p>因为很多时候，不是 AI 不会干活，而是它太容易在没证据时做出“完成姿态”。</p>
+<p>而 <code>verification-before-completion</code> 的作用，就是让“完成”这句话必须有证据托底。</p>
+<hr>
+<h3 data-id="heading-68">十七、工作流最后一步：<code>finishing-a-development-branch</code> —— 正式收尾，而不是一句“搞定了”</h3>
+<p>当实现、调试、review、验证都走完之后，才轮到 <code>finishing-a-development-branch</code>。</p>
+<h4 data-id="heading-69">1. 它把收尾动作流程化了</h4>
+<p>这个 skill 要求先做一件事：</p>
+<ul>
+<li>再跑一次测试确认当前状态真的通过</li>
+</ul>
+<p>然后再给用户四种明确选项：</p>
+<ol>
+<li>本地合并回基础分支</li>
+<li>推送并创建 Pull Request</li>
+<li>保留当前分支，稍后处理</li>
+<li>丢弃这次工作</li>
+</ol>
+<h4 data-id="heading-70">2. 为什么这个 skill 很重要？</h4>
+<p>因为很多 AI 工具在最后一步往往只有一句话：</p>
+<ul>
+<li>“已经完成”</li>
+<li>“代码写好了”</li>
+<li>“你可以提交了”</li>
+</ul>
+<p>但真实开发里，完成实现不等于完成研发流程。</p>
+<p>你还得决定：</p>
+<ul>
+<li>怎么集成</li>
+<li>是否开 PR</li>
+<li>是否保留现场</li>
+<li>是否清理 worktree</li>
+</ul>
+<p>而 <code>finishing-a-development-branch</code> 正是在把这些真实研发动作显式化。</p>
+<h4 data-id="heading-71">3. 这一步说明 superpowers 真正在模拟团队开发闭环</h4>
+<p>它不是把“写完代码”当终点，而是把“完成一次标准研发交付动作”当终点。</p>
+<p>这是我觉得这个项目很有意思的地方之一。</p>
+<hr>
+<h3 data-id="heading-72">十八、工作流之外的能力沉淀：<code>writing-skills</code> —— 把有效经验反过来沉淀成新的 skill</h3>
+<p>前面的所有 skill，解决的是“如何使用 superpowers 做开发”。而 <code>writing-skills</code> 解决的问题更偏向元层：</p>
+<p><strong>如果我们发现一种新的有效方法，应该怎样把它写成新的 skill？</strong></p>
+<h4 data-id="heading-73">1. 它把“写 skill”本身也做成了流程</h4>
+<p>这个 skill 明确提出：</p>
+<ul>
+<li>写 skill 也应该遵守类似 TDD 的方式</li>
+<li>先设计压力场景</li>
+<li>看看没有这个 skill 时模型会怎么失败</li>
+<li>再写 skill 去修复这些失败模式</li>
+<li>最后再验证 skill 是否真的起作用</li>
+</ul>
+<h4 data-id="heading-74">2. 它非常看重可搜索性与可维护性</h4>
+<p>例如：</p>
+<ul>
+<li><code>description</code> 只描述何时使用</li>
+<li>skill 名称要可检索</li>
+<li>要覆盖用户可能搜索的关键词和症状</li>
+<li>要控制 token 长度</li>
+<li>要避免让 description 取代 skill 正文</li>
+</ul>
+<h4 data-id="heading-75">3. 这说明作者把 Prompt / Skill 当成“软件资产”而不是“一次性文本”</h4>
+<p>我觉得这是这个仓库特别值得学习的一点。</p>
+<p>因为它意味着：</p>
+<ul>
+<li>skill 需要测试</li>
+<li>skill 需要维护</li>
+<li>skill 需要性能优化（token）</li>
+<li>skill 需要检索优化</li>
+</ul>
+<p>这已经非常接近软件工程思维了。</p>
+<hr>
+<h3 data-id="heading-76">十九、使用演示：如果我真的用 superpowers 做一个功能，它会怎么跑？</h3>
+<p>这一节作为“使用演示模块”，方便后续插截图。你完全可以在这里补上 Claude Code、Cursor 或其他平台中的真实对话截图、计划截图、执行截图。</p>
+<h4 data-id="heading-77">1.在ClaudeCode中安装<a href="https://github.com/obra/superpowers" target="_blank" title="https://github.com/obra/superpowers" ref="nofollow noopener noreferrer">superpowers</a>插件</h4>
+<p><img src="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/a9a65291225f4101a2570cdb9212f58e~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAgTWlrdTE2:q75.awebp?rk3s=f64ab15b&#x26;x-expires=1779961711&#x26;x-signature=LxfEUB%2BHSOHIFuZVhhpZwaS8XT8%3D" alt=""></p>
+<pre><code class="hljs language-bash" lang="bash">/plugin marketplace add obra/superpowers-marketplace
+</code></pre>
+<p>注册插件市场</p>
+<p><img src="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/4551bb5a346d49528d4acedda29ab12d~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAgTWlrdTE2:q75.awebp?rk3s=f64ab15b&#x26;x-expires=1779961711&#x26;x-signature=LHIIVnx0LnP1fx29DyfDpr5yC8M%3D" alt=""></p>
+<pre><code class="hljs language-bash" lang="bash">/plugin install superpowers@superpowers-marketplace
+</code></pre>
+<p>从此市场安装插件</p>
+<p><img src="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/1d56991fd9064c8b80e1ef6889cd5179~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAgTWlrdTE2:q75.awebp?rk3s=f64ab15b&#x26;x-expires=1779961711&#x26;x-signature=KftDILm6ODkzjS4xB%2Fm58NK7y6E%3D" alt=""></p>
+<pre><code class="hljs language-arduino" lang="arduino">https:<span class="hljs-comment">//github.com/obra/superpowers</span>
+我已经安装好该插件了，请你向我介绍如何使用
+</code></pre>
+<p><img src="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/14d6dfc029504449999ee2bacfbbda92~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAgTWlrdTE2:q75.awebp?rk3s=f64ab15b&#x26;x-expires=1779961711&#x26;x-signature=8ApdF6CQtlJO7WwNz7OBeWY0VVE%3D" alt=""></p>
+<p><img src="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/477b229b084347c6a35a335230c7e9c4~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAgTWlrdTE2:q75.awebp?rk3s=f64ab15b&#x26;x-expires=1779961711&#x26;x-signature=bqYuEnXkcBQk0MEZHo2P%2Fojjtw8%3D" alt=""></p>
+<p>查看该插件功能</p>
+<pre><code class="hljs language-bash" lang="bash">● Skill(superpowers:using-superpowers)
+  ⎿  Successfully loaded skill
+                                                                                                                                 ● Bash(:)
+  ⎿  (No output)
+                                                                                                                                 ● 好的，我已经通过 superpowers:using-superpowers skill 了解了整套体系。现在为你介绍 Superpowers 插件的使用方法。
+                                                                                                                                   ---                                                                                                                              Superpowers 是什么
+
+  Superpowers 是一套由 @obra 开发的 Claude Code
+  插件系统，它为你提供了一系列结构化、强制性的工作流程技能，确保在开发过程中遵循最佳实践。
+
+  ---
+  核心原则（Important）
+
+  Superpowers 有一个不可协商的铁律：
+
+  只要有 1% 的可能性某个 skill 适用，就必须使用它。
+
+  这意味着它强制你在做以下事情前，先调用对应的 skill：
+
+  ┌───────────────────┬─────────────────────────────────────────────────────────┐
+  │       场景        │                   必须先调用的 Skill                    │
+  ├───────────────────┼─────────────────────────────────────────────────────────┤
+  │ 任何创意/开发工作 │ superpowers:brainstorming                               │
+  ├───────────────────┼─────────────────────────────────────────────────────────┤
+  │ 写代码前          │ superpowers:test-driven-development                     │
+  ├───────────────────┼─────────────────────────────────────────────────────────┤
+  │ 修复 Bug          │ superpowers:systematic-debugging                        │
+  ├───────────────────┼─────────────────────────────────────────────────────────┤
+  │ 多步骤实现        │ superpowers:writing-plans → superpowers:executing-plans │
+  ├───────────────────┼─────────────────────────────────────────────────────────┤
+  │ 子代理并行开发    │ superpowers:dispatching-parallel-agents                 │
+  ├───────────────────┼─────────────────────────────────────────────────────────┤
+  │ 完成工作前        │ superpowers:verification-before-completion              │
+  ├───────────────────┼─────────────────────────────────────────────────────────┤
+  │ 接受代码审查      │ superpowers:receiving-code-review                       │
+  ├───────────────────┼─────────────────────────────────────────────────────────┤
+  │ 代码审查他人      │ superpowers:requesting-code-review                      │
+  ├───────────────────┼─────────────────────────────────────────────────────────┤
+  │ 创建/修改 skill   │ superpowers:writing-skills                              │
+  ├───────────────────┼─────────────────────────────────────────────────────────┤
+  │ Git Worktrees     │ superpowers:using-git-worktrees                         │
+  └───────────────────┴─────────────────────────────────────────────────────────┘
+
+  ---
+  已安装的 Skills 列表
+
+  根据系统显示，你现在可以使用以下 skills：
+
+  流程类（Process Skills）
+
+  - superpowers:brainstorming - 任何创意工作前必须调用
+  - superpowers:systematic-debugging - 调试 Bug
+  - superpowers:writing-plans - 编写实现计划
+  - superpowers:executing-plans - 执行计划
+  - superpowers:subagent-driven-development - 子代理驱动开发
+  - superpowers:dispatching-parallel-agents - 并行子代理
+
+  验证类
+
+  - superpowers:test-driven-development - 测试驱动开发
+  - superpowers:verification-before-completion - 完成前验证
+  - superpowers:requesting-code-review - 请求代码审查
+  - superpowers:receiving-code-review - 接受代码审查
+
+  Git 相关
+
+  - superpowers:using-git-worktrees - 使用 Git Worktrees
+  - superpowers:finishing-a-development-branch - 完成开发分支
+
+  工具类
+
+  - superpowers:writing-skills - 编写 skills
+
+  ---
+  基本使用方式
+
+  方式一：直接调用 Skill
+
+  /skill superpowers:brainstorming
+
+  或带参数：
+
+  /skill superpowers:writing-plans <span class="hljs-string">"构建用户登录系统"</span>
+
+  方式二：使用快捷命令
+
+  Superpowers 提供了一系列快捷命令：
+
+  ┌─────────────┬────────────────────┐
+  │    命令     │        作用        │
+  ├─────────────┼────────────────────┤
+  │ /brainstorm │ 启动头脑风暴       │
+  ├─────────────┼────────────────────┤
+  │ /plan       │ 创建实现计划       │
+  ├─────────────┼────────────────────┤
+  │ /execute    │ 执行计划           │
+  ├─────────────┼────────────────────┤
+  │ /tdd        │ 测试驱动开发       │
+  ├─────────────┼────────────────────┤
+  │ /debug      │ 系统调试           │
+  ├─────────────┼────────────────────┤
+  │ /review     │ 请求代码审查       │
+  ├─────────────┼────────────────────┤
+  │ /verify     │ 完成前验证         │
+  ├─────────────┼────────────────────┤
+  │ /worktree   │ 使用 Git Worktrees │
+  └─────────────┴────────────────────┘
+
+  ---
+  使用流程示例
+
+  场景：我要开发一个新功能
+
+  Step 1: 头脑风暴
+  /skill superpowers:brainstorming
+  → 它会引导你探索需求、明确意图
+
+  Step 2: 制定计划（如果需要多步骤）
+  /skill superpowers:writing-plans
+  → 它会帮你创建详细的实现计划
+
+  Step 3: 执行计划
+  /skill superpowers:executing-plans
+  → 它会按步骤执行，并设置检查点
+
+  Step 4: 完成前验证
+  /skill superpowers:verification-before-completion
+  → 确保所有测试通过、代码质量达标
+
+  Step 5: 代码审查
+  /skill superpowers:requesting-code-review
+
+  ---
+  关键约束
+
+  1. 技能优先：做任何事之前，先检查是否有对应的 skill
+  2. 顺序执行：多个 skill 冲突时，先执行流程 skills，再执行实现 skills
+  3. 禁止绕过：不能<span class="hljs-string">"随便先看一下"</span>再调用 skill，必须先调用
+  4. 用户指令最高：如果 CLAUDE.md 和 skill 冲突，听用户的
+
+  ---
+  你现在可以做什么
+
+  试试运行：
+
+  /skill superpowers:using-superpowers --<span class="hljs-built_in">help</span>
+
+  或者查看更多 skill 的细节：
+
+  /skill superpowers:brainstorming
+
+  这就是 Superpowers 的核心使用方法——强制纪律、结构化流程、确保质量。
+
+✻ Brewed <span class="hljs-keyword">for</span> 1m 47s
+</code></pre>
+<h4 data-id="heading-78">2.使用superpowers进行开发</h4>
+<h5 data-id="heading-79">第一步：进入 <code>using-superpowers</code></h5>
+<p>AI 会先判断：这个任务是否涉及设计、计划、实现、测试、review。</p>
+<h5 data-id="heading-80">第二步：进入 <code>brainstorming</code></h5>
+<p>AI 会开始问：</p>
+<ul>
+<li>失败重试适用于哪些接口？</li>
+<li>最多重试几次？</li>
+<li>是否需要指数退避？</li>
+<li>出错后前端如何提示？</li>
+</ul>
+<p>它还可能提出多种方案，例如：</p>
+<ul>
+<li>简单固定重试</li>
+<li>指数退避重试</li>
+<li>区分错误类型后重试</li>
+</ul>
+<p>然后形成一份 spec。</p>
+<h5 data-id="heading-81">第三步：进入 <code>using-git-worktrees</code></h5>
+<p>AI 会为这次任务建立隔离工作区，并确认当前测试基线是否通过。</p>
+<h5 data-id="heading-82">第四步：进入 <code>writing-plans</code></h5>
+<p>AI 会把“登录失败重试机制”拆成一系列可执行任务，比如：</p>
+<ul>
+<li>为重试逻辑写失败测试</li>
+<li>实现最小版本的重试函数</li>
+<li>为错误类型分支补测试</li>
+<li>更新调用方</li>
+<li>补集成测试</li>
+<li>提交 commit</li>
+</ul>
+<h5 data-id="heading-83">第五步：进入执行阶段</h5>
+<p>这里通常会有两种路线：</p>
+<ul>
+<li><code>subagent-driven-development</code>：每个任务交给独立子代理执行</li>
+<li><code>executing-plans</code>：在当前会话里按计划逐步执行</li>
+</ul>
+<h5 data-id="heading-84">第六步：实现过程中穿插其他 skills</h5>
+<p>例如：</p>
+<ul>
+<li>写代码前走 <code>test-driven-development</code></li>
+<li>测试失败或行为异常时走 <code>systematic-debugging</code></li>
+<li>每个阶段结束后走 <code>requesting-code-review</code></li>
+<li>收到 review 后走 <code>receiving-code-review</code></li>
+<li>宣称完成前走 <code>verification-before-completion</code></li>
+</ul>
+<h5 data-id="heading-85">第七步：进入 <code>finishing-a-development-branch</code></h5>
+<p>最后 AI 不会直接说“完成了”，而是会：</p>
+<ul>
+<li>先确认测试通过</li>
+<li>询问你是要本地合并、创建 PR、保留分支，还是丢弃工作</li>
+</ul>
+<hr>
+<h3 data-id="heading-86">二十、跨平台适配：为什么说它不是某个平台的私有技巧？</h3>
+<p>这也是我认为 <code>superpowers</code> 很值得学习的一点。</p>
+<h4 data-id="heading-87">1. 它在多平台上做了分发设计</h4>
+<p>根据仓库内容，它至少覆盖了：</p>
+<ul>
+<li>Claude Code</li>
+<li>Cursor</li>
+<li>Codex</li>
+<li>OpenCode</li>
+<li>Gemini CLI</li>
+</ul>
+<h4 data-id="heading-88">2. 各平台接入方式不同</h4>
+<h5 data-id="heading-89">对 Codex</h5>
+<p>通过 <code>~/.agents/skills/</code> 的发现机制和符号链接接入。</p>
+<h5 data-id="heading-90">对 OpenCode</h5>
+<p>通过 plugin 数组注册，并用 hook 把技能目录和上下文注入进去。</p>
+<h5 data-id="heading-91">对 Cursor</h5>
+<p>通过插件 marketplace 元数据接入。</p>
+<h5 data-id="heading-92">对 Gemini</h5>
+<p>通过 <code>GEMINI.md</code> 指定上下文文件。</p>
+<h4 data-id="heading-93">3. 这背后体现的抽象能力</h4>
+<p>作者没有把 skill 与某个平台深度耦合，而是尽量抽象成：</p>
+<ul>
+<li>skill 内容</li>
+<li>元数据</li>
+<li>角色文件</li>
+<li>hook 配置</li>
+<li>命令入口</li>
+</ul>
+<p>然后在不同平台上做轻量适配。</p>
+<p>这很像软件工程里“核心逻辑与运行时适配分层”的思路。</p>
+<hr>
+<h3 data-id="heading-94">二十一、这个项目最值得学习的 5 个地方</h3>
+<p>读完之后，我觉得 <code>superpowers</code> 最值得学习的，不是某条具体 skill，而是以下五点。</p>
+<h4 data-id="heading-95">1. 它把 Prompt Engineering 软件工程化了</h4>
+<p>不是几段提示词，而是：</p>
+<ul>
+<li>模块化</li>
+<li>可分发</li>
+<li>可测试</li>
+<li>可适配</li>
+<li>可持续演化</li>
+</ul>
+<h4 data-id="heading-96">2. 它非常清楚 AI 的弱点在哪</h4>
+<p>整个仓库几乎都在围绕这些弱点设计：</p>
+<ul>
+<li>爱跳步骤</li>
+<li>爱拍脑袋</li>
+<li>爱跳过验证</li>
+<li>爱过早实现</li>
+<li>爱在模糊要求下自由发挥</li>
+</ul>
+<h4 data-id="heading-97">3. 它不迷信模型能力，而是强调流程治理</h4>
+<p>这个项目传达出的一个很强烈的信号是：</p>
+<p>提升 AI 编码质量，不一定靠更强的模型，也可以靠更强的流程。</p>
+<h4 data-id="heading-98">4. 它把多代理协作设计成了流水线，而不是噱头</h4>
+<p>不是“有多个 agent 就厉害”，而是：</p>
+<ul>
+<li>什么时候该拆</li>
+<li>怎么给上下文</li>
+<li>review 顺序怎么安排</li>
+<li>什么时候并行，什么时候串行</li>
+</ul>
+<p>都有明确原则。</p>
+<h4 data-id="heading-99">5. 它很重视“证据”</h4>
+<p>无论是 TDD、debugging、verification，还是 code review，底层都在强调同一件事：</p>
+<ul>
+<li>不要先说结论</li>
+<li>先拿证据</li>
+<li>没证据就不要宣称完成</li>
+</ul>
+<p>这其实是很典型的工程思维。</p>
+<hr>
+<h3 data-id="heading-100">二十二、这个项目的局限与争议点</h3>
+<p>当然，<code>superpowers</code> 也不是没有代价。</p>
+<h4 data-id="heading-101">1. 流程很重</h4>
+<p>这是最明显的。</p>
+<p>从 brainstorming 到 spec，再到 worktree、plan、子代理、review、finish，整个链路比普通聊天式编码重得多。</p>
+<p>对于简单任务，很多人会觉得它太“官僚”。</p>
+<h4 data-id="heading-102">2. 对平台能力有依赖</h4>
+<p>比如：</p>
+<ul>
+<li>有的平台子代理能力更强</li>
+<li>有的平台 skill 发现机制更成熟</li>
+<li>有的平台 hook 更完善</li>
+</ul>
+<p>这会直接影响 <code>superpowers</code> 的使用效果。</p>
+<h4 data-id="heading-103">3. 不一定适合所有使用风格</h4>
+<p>如果你的开发方式更偏：</p>
+<ul>
+<li>快速试错</li>
+<li>边做边改</li>
+<li>原型优先</li>
+</ul>
+<p>那这套流程可能会让你觉得被束缚。</p>
+<h4 data-id="heading-104">4. 强规则也可能导致机械执行</h4>
+<p>当规则非常细时，模型虽然更不容易乱来，但也可能变得：</p>
+<ul>
+<li>过度拘泥</li>
+<li>对简单任务反应迟缓</li>
+<li>把流程当目标本身</li>
+</ul>
+<p>所以它本质上是一种取舍：</p>
+<p>用灵活性换稳定性，用速度换可控性。</p>
+<hr>
+<h3 data-id="heading-105">二十三、从 superpowers 我得到的最大启发</h3>
+<p>如果只把这个项目看成“一个给 Claude/Cursor 用的增强仓库”，其实会低估它。</p>
+<p>我更愿意把它理解成：</p>
+<p><strong>一套针对 AI Coding Agent 的流程治理实验。</strong></p>
+<p>它的启发不在于某条规则本身，而在于它回答了一个更重要的问题：</p>
+<h4 data-id="heading-106">当 AI 参与软件研发时，我们该如何约束它？</h4>
+<p>作者给出的答案是：</p>
+<ul>
+<li>用 skill 约束行为入口</li>
+<li>用 spec 限制需求歧义</li>
+<li>用隔离工作区控制实施环境</li>
+<li>用 plan 降低执行偏差</li>
+<li>用 subagent 拆角色</li>
+<li>用 review 和 verification 建证据链</li>
+<li>用 hooks 和 metadata 做平台化分发</li>
+</ul>
+<p>这套设计说明，未来的 AI 编码工具竞争，可能不只是模型参数的竞争，也包括：</p>
+<ul>
+<li>工作流设计能力</li>
+<li>流程治理能力</li>
+<li>多代理编排能力</li>
+<li>行为约束能力</li>
+</ul>
+<p>从这个意义上说，<code>superpowers</code> 的价值已经不只是“好不好用”，而是“它揭示了下一阶段 Agent 工程的一种方向”。</p>
+<hr>
+<h3 data-id="heading-107">二十四、总结：为什么这个项目值得认真读一遍？</h3>
+<p>如果你是前端、后端、全栈，甚至只是一个经常使用 AI 编码助手的开发者，我都觉得这个仓库值得读。</p>
+<p>原因不一定是因为你会原封不动采用它的所有流程，而是因为它能帮你重新思考这几个问题：</p>
+<ul>
+<li>AI 写代码时，哪些步骤最容易偷懒？</li>
+<li>哪些最佳实践应该被写成“硬规则”而不是“软建议”？</li>
+<li>Prompt 能不能像代码一样被模块化、测试和维护？</li>
+<li>多代理协作真正需要什么样的流程设计？</li>
+</ul>
+<p>对我来说，<code>superpowers</code> 最值得学习的地方，不是它把某个模型“变得更聪明”，而是它试图把模型“变得更守规矩”。</p>
+<p>而在工程世界里，很多时候：</p>
+<p><strong>守规矩，往往比自作聪明更重要。</strong></p>
+<hr></article>
+</body>
+</html>
