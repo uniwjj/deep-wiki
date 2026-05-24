@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code + OpenSpec + Superpowers，AI协同开发实战详解（从入门到精通）</title>
+  <style>
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 16px; line-height: 1.8; color: #333; max-width: 800px; margin: 0 auto; padding: 20px;
+}
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre {
+  background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto;
+  font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;
+}
+article .article-body code {
+  font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+  background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em;
+}
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote {
+  margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555;
+}
+article .article-body table {
+  border-collapse: collapse; width: 100%; margin: 16px 0;
+}
+article .article-body th, article .article-body td {
+  border: 1px solid #ddd; padding: 8px 12px; text-align: left;
+}
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+  </style>
+</head>
+<body>
+<article>
+  <header class="article-meta">
+    <h1>Claude Code + OpenSpec + Superpowers，AI协同开发实战详解（从入门到精通）</h1>
+    <div class="meta-info">
+      <span>作者：小程故事多_80</span>
+      <span>发表：2026-03-29 19:01:21</span>
+      <span>来源：<a href="https://blog.csdn.net/u013970991/article/details/159598155" target="_blank">https://blog.csdn.net/u013970991/article/details/159598155</a></span>
+      <span>下载：2026-05-24</span>
+    </div>
+  </header>
+  <hr>
+  <div class="article-body">
+                <div id="content_views" class="markdown_views prism-atom-one-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                        <path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                    </svg>
+                    <p><img src="https://i-blog.csdnimg.cn/direct/313a2874756d45bc81ac9ca830b450fa.png" alt="在这里插入图片描述" /></p>
+<p>在AI编程普及的今天&#xff0c;很多开发者都有过这样的体验&#xff1a;用AI写代码速度飞快&#xff0c;可要么偏离需求返工不断&#xff0c;要么代码混乱无规范&#xff0c;要么思路跑偏没方向。其实问题不在于AI工具本身&#xff0c;而在于我们没有找到一套高效的协同逻辑&#xff0c;单独使用任何一款AI编程工具&#xff0c;都难以兼顾需求对齐、工程规范和高效执行。</p>
+<p>而Claude Code &#43; OpenSpec &#43; Superpowers的组合&#xff0c;恰好解决了这个痛点。这三者不是简单的工具叠加&#xff0c;而是形成了“需求对齐→流程约束→代码执行”的闭环&#xff0c;让AI编程从“自由发挥”变成“规范高效”&#xff0c;既保留AI的开发速度&#xff0c;又兼顾工程质量。今天就结合实战案例&#xff0c;从工具协同逻辑、环境搭建、核心工作流、进阶技巧到避坑指南&#xff0c;手把手教你玩转这套AI协同开发方案&#xff0c;看完就能直接上手落地。</p>
+<h3><a id="_9"></a>一、为什么要三者协同&#xff1f;打破单个工具的局限</h3>
+<p>在聊具体操作之前&#xff0c;我们先搞清楚一个核心问题&#xff1a;为什么单独用其中任何一个工具都不够&#xff1f;只有理解了单个工具的短板&#xff0c;才能明白三者协同的价值所在。</p>
+<h4><a id="11__13"></a>1.1 单个工具的“致命短板”&#xff0c;你大概率也遇到过</h4>
+<p>我们先逐个拆解&#xff0c;看看单独使用Claude Code、OpenSpec、Superpowers时&#xff0c;会遇到哪些实际问题&#xff0c;这些问题也是我们日常开发中最头疼的痛点。</p>
+<p>首先是只用Claude Code的情况。作为Anthropic推出的AI编程工具&#xff0c;Claude Code的代码生成速度非常快&#xff0c;通常简单需求5分钟内就能给出代码&#xff0c;但最大的问题是“需求不对齐”。比如你跟它说“加个用户登录功能”&#xff0c;它很快就写好代码&#xff0c;可等你Review时才发现&#xff0c;你要的是JWT认证&#xff0c;它却用了Session&#xff0c;只能让它重新修改&#xff0c;返工成本极高。更麻烦的是&#xff0c;如果你没有明确说明细节&#xff0c;它很可能会按照自己的理解“自由发挥”&#xff0c;最后写出的代码和实际需求偏差很大。</p>
+<p>然后是只用OpenSpec的情况。OpenSpec是一款需求规范工具&#xff0c;核心作用是生成标准化的需求文档&#xff0c;你只需要输入简单指令&#xff0c;它就能生成完整的spec文档&#xff0c;明确需求目标、范围和规范。但问题在于“有规范&#xff0c;无约束”&#xff0c;比如你用OpenSpec生成了登录功能的spec文档&#xff0c;让AI按照文档编码&#xff0c;可写到一半&#xff0c;AI就会偏离spec的要求&#xff0c;擅自修改逻辑&#xff0c;最后还是要人工干预&#xff0c;规范的价值根本没发挥出来。</p>
+<p>最后是只用Superpowers的情况。Superpowers是Claude Code的插件&#xff0c;核心优势是“工程纪律”&#xff0c;能帮你进行头脑风暴、制定执行计划、强制执行TDD&#xff08;测试驱动开发&#xff09;&#xff0c;但它的短板是“有纪律&#xff0c;无方向”。比如你让它做个登录功能&#xff0c;它会先头脑风暴、写计划、执行TDD&#xff0c;但这个计划的基础是什么&#xff1f;是它自己猜测的需求&#xff0c;没有明确的需求对齐&#xff0c;最后做出来的功能很可能不是你想要的&#xff0c;相当于“白忙活一场”。</p>
+<p>总结下来就是&#xff1a;Claude Code擅长“执行”却缺“方向”&#xff0c;OpenSpec擅长“规范”却缺“约束”&#xff0c;Superpowers擅长“纪律”却缺“目标”。而三者协同&#xff0c;就能完美互补&#xff0c;形成一个闭环。</p>
+<h4><a id="12__25"></a>1.2 三者协同的核心优势&#xff1a;分工明确&#xff0c;闭环高效</h4>
+<p>三者协同的核心逻辑&#xff0c;就是“各司其职、相互配合”&#xff0c;每个工具都承担自己最擅长的角色&#xff0c;最终实现“需求不跑偏、开发有规范、执行有效率”的效果。具体分工如下&#xff1a;</p>
+<p>OpenSpec&#xff1a;需求对齐 &#43; 规范沉淀&#xff0c;相当于整个开发流程的“指南针”&#xff0c;是所有开发工作的“真理来源”&#xff08;Source of Truth&#xff09;。它负责把模糊的需求&#xff08;比如老板说的“加个登录功能”&#xff09;转化为清晰、可执行的规范文档&#xff0c;明确需求目标、范围、边界&#xff0c;确保AI和开发者对需求的理解完全一致&#xff0c;避免返工。</p>
+<p>Superpowers&#xff1a;工程纪律 &#43; 流程约束&#xff0c;相当于开发流程的“管理员”。它负责把OpenSpec的规范转化为可落地的执行计划&#xff0c;通过头脑风暴细化技术方案&#xff0c;制定分步任务&#xff0c;强制执行TDD和代码审查&#xff0c;约束AI的开发行为&#xff0c;避免AI自由发挥&#xff0c;确保开发过程符合工程规范。</p>
+<p>Claude Code&#xff1a;代码执行 &#43; 工具调用&#xff0c;相当于开发流程的“执行者”。它负责按照Superpowers制定的计划&#xff0c;高效生成代码、执行测试、修复bug&#xff0c;发挥自身代码生成的优势&#xff0c;提升开发效率&#xff0c;同时严格遵循OpenSpec的规范&#xff0c;确保代码符合需求。</p>
+<p>三者协同的效应&#xff0c;远不止“1&#43;1&#43;1&#61;3”&#xff0c;而是“1&#43;1&#43;1&gt;3”。它能让AI编程从“无序”变得“有序”&#xff0c;从“低效返工”变得“高效落地”&#xff0c;尤其适合中型以上功能开发、多人协作项目和长期维护项目。</p>
+<h3><a id="_37"></a>二、环境搭建&#xff1a;一步到位&#xff0c;确保三者无缝协同</h3>
+<p>要使用这套协同方案&#xff0c;首先需要完成环境搭建&#xff0c;包括安装Claude Code、OpenSpec、Superpowers&#xff0c;以及配置协同工作流。整个过程并不复杂&#xff0c;跟着步骤操作&#xff0c;新手也能快速完成&#xff0c;所有命令行都已整理好&#xff0c;直接复制粘贴即可执行。</p>
+<h4><a id="21_Claude_Code_41"></a>2.1 安装Claude Code&#xff08;核心执行工具&#xff09;</h4>
+<p>Claude Code是这套方案的核心执行工具&#xff0c;支持macOS、Linux、WSL和Windows系统&#xff0c;不同系统的安装命令不同&#xff0c;具体如下&#xff1a;</p>
+<ol><li>macOS / Linux / WSL系统&#xff1a;打开终端&#xff0c;输入以下命令&#xff0c;回车后等待安装完成即可&#xff1a;</li></ol>
+<p>curl -fsSL https://claude.ai/install.sh | bash</p>
+<ol start="2"><li>Windows PowerShell系统&#xff1a;打开PowerShell&#xff08;以管理员身份运行&#xff09;&#xff0c;输入以下命令&#xff0c;回车后等待安装完成&#xff1a;</li></ol>
+<p>irm https://claude.ai/install.ps1 | iex</p>
+<ol start="3"><li>验证安装是否成功&#xff1a;安装完成后&#xff0c;在终端&#xff08;或PowerShell&#xff09;中输入以下命令&#xff0c;若能输出版本号&#xff0c;说明安装成功&#xff1a;</li></ol>
+<p>claude --version</p>
+<p>当前最新版本为2.1.41&#xff08;2026年3月&#xff09;&#xff0c;如果输出版本号与这个一致&#xff0c;或者更高版本&#xff0c;都可以正常使用。</p>
+<p>注意&#xff1a;Claude Code需要订阅才能使用&#xff0c;免费版不支持Claude Code功能&#xff0c;需要开通Claude Pro、Team或Enterprise订阅&#xff0c;订阅后才能正常调用代码生成、工具调用等功能。</p>
+<h4><a id="22_OpenSpec_61"></a>2.2 安装OpenSpec&#xff08;需求规范工具&#xff09;</h4>
+<p>OpenSpec是基于Node.js开发的工具&#xff0c;安装前需要确保你的电脑已经安装了Node.js&#xff08;建议版本16及以上&#xff09;&#xff0c;如果没有安装&#xff0c;可以先去Node.js官网下载安装&#xff0c;再进行OpenSpec的安装。</p>
+<ol><li>全局安装OpenSpec&#xff1a;打开终端&#xff08;或PowerShell&#xff09;&#xff0c;输入以下命令&#xff0c;回车后等待安装完成&#xff1a;</li></ol>
+<p>npm install -g &#64;fission-ai/openspec&#64;latest</p>
+<ol start="2"><li>初始化项目&#xff1a;安装完成后&#xff0c;进入你的项目目录&#xff08;如果没有项目&#xff0c;可以先创建一个&#xff0c;比如mkdir my-project &amp;&amp; cd my-project&#xff09;&#xff0c;输入以下命令初始化OpenSpec&#xff1a;</li></ol>
+<p>cd your-project&#xff08;将your-project替换为你的项目名称&#xff09;</p>
+<p>openspec init</p>
+<ol start="3"><li>
+<p>选择AI工具&#xff1a;初始化过程中&#xff0c;会提示你选择AI工具&#xff0c;这里直接选择“Claude Code”&#xff0c;因为我们要实现三者协同&#xff0c;OpenSpec需要和Claude Code联动。</p>
+</li><li>
+<p>查看生成的目录结构&#xff1a;初始化完成后&#xff0c;你的项目目录中会新增一个openspec文件夹&#xff0c;里面包含了OpenSpec的核心文件&#xff0c;具体结构如下&#xff1a;</p>
+</li></ol>
+<p>your-project/</p>
+<p>├── openspec/</p>
+<p>│   ├── specs/           # 当前系统规范&#xff08;Source of Truth&#xff09;&#xff0c;存储所有需求规范</p>
+<p>│   ├── changes/         # 进行中的变更&#xff0c;每个功能开发对应一个文件夹</p>
+<p>│   │   └── archive/     # 已完成的变更归档&#xff0c;方便后续追溯</p>
+<p>│   ├── AGENTS.md        # OpenSpec 指令&#xff08;AI读取&#xff0c;用于规范AI行为&#xff09;</p>
+<p>│   └── schemas/         # 自定义工作流schema&#xff08;可选&#xff0c;用于自定义开发流程&#xff09;</p>
+<p>└── …&#xff08;你的其他代码文件&#xff09;</p>
+<p>这个目录结构不需要手动修改&#xff0c;后续开发过程中&#xff0c;OpenSpec会自动维护这些文件夹和文件。</p>
+<h4><a id="23_Superpowers_97"></a>2.3 安装Superpowers&#xff08;工程纪律工具&#xff09;</h4>
+<p>Superpowers是Claude Code的插件&#xff0c;安装方式有两种&#xff0c;推荐使用第一种&#xff08;Claude Code插件市场&#xff09;&#xff0c;操作更简单&#xff0c;兼容性更好。</p>
+<p>方式1&#xff1a;Claude Code插件市场&#xff08;推荐&#xff09;</p>
+<ol><li>首先注册插件市场&#xff1a;打开终端&#xff0c;输入以下命令&#xff0c;回车执行&#xff1a;</li></ol>
+<p>/plugin marketplace add obra/superpowers-marketplace</p>
+<ol start="2"><li>安装Superpowers插件&#xff1a;注册完成后&#xff0c;输入以下命令&#xff0c;等待安装完成&#xff1a;</li></ol>
+<p>/plugin install superpowers&#64;superpowers-marketplace</p>
+<p>方式2&#xff1a;官方市场&#xff08;备选&#xff0c;若方式1安装失败可使用&#xff09;</p>
+<p>输入以下命令&#xff0c;直接从官方市场安装&#xff1a;</p>
+<p>/plugin install superpowers&#64;claude-plugins-official</p>
+<ol start="3"><li>验证安装是否成功&#xff1a;安装完成后&#xff0c;在终端输入“claude”&#xff0c;启动Claude Code&#xff0c;若看到以下提示&#xff0c;说明Superpowers安装成功&#xff1a;</li></ol>
+<p>“You have Superpowers. RIGHT NOW, go read: &#64;/…/getting-started/SKILL.md”</p>
+<p>此时&#xff0c;Superpowers已经成功集成到Claude Code中&#xff0c;后续开发过程中会自动激活相关功能。</p>
+<h3><a id="_125"></a>三、核心工作流&#xff1a;从需求到上线&#xff0c;一步一步落地&#xff08;实战实操&#xff09;</h3>
+<p>这套协同方案的核心工作流&#xff0c;分为5个阶段&#xff1a;OpenSpec需求对齐→Superpowers头脑风暴→Superpowers制定计划→Superpowers&#43;Claude Code执行→OpenSpec归档。我们以“添加用户登录功能”为例&#xff0c;详细拆解每个阶段的操作步骤&#xff0c;所有命令和操作都可直接复制落地&#xff0c;新手也能轻松跟上。</p>
+<h4><a id="31_1OpenSpec_129"></a>3.1 阶段1&#xff1a;OpenSpec需求对齐——把模糊需求变成清晰规范</h4>
+<p>需求对齐是开发的第一步&#xff0c;也是最关键的一步&#xff0c;避免后续返工的核心就在于此。这个阶段的核心目标&#xff0c;是用OpenSpec把模糊的需求&#xff08;比如“加个用户登录功能”&#xff09;转化为清晰、可执行的规范文档&#xff0c;明确需求目标、范围、边界。</p>
+<p>场景&#xff1a;老板说“加个用户登录功能”&#xff0c;没有给出更多细节&#xff0c;我们需要用OpenSpec梳理清楚需求。</p>
+<p>步骤1&#xff1a;创建变更提案</p>
+<ol><li>
+<p>打开终端&#xff0c;进入你的项目目录&#xff0c;输入“claude”启动Claude Code。</p>
+</li><li>
+<p>在Claude Code的交互界面中&#xff0c;输入以下指令&#xff0c;创建登录功能的变更提案&#xff1a;</p>
+</li></ol>
+<p>/opsx:propose 用户登录功能</p>
+<ol start="3"><li>等待AI生成提案文档&#xff1a;输入指令后&#xff0c;OpenSpec会自动生成一个变更文件夹&#xff08;openspec/changes/add-user-login/&#xff09;&#xff0c;里面包含4个核心文档&#xff0c;分别是&#xff1a;</li></ol>
+<p>openspec/changes/add-user-login/</p>
+<p>├── proposal.md      # 提案文档&#xff0c;说明为什么做、范围是什么</p>
+<p>├── specs/           # 系统行为变更&#xff08;Delta Spec&#xff09;&#xff0c;明确功能的具体行为</p>
+<p>│   └── auth/</p>
+<p>│       └── spec.md</p>
+<p>├── design.md        # 技术方案、架构决策&#xff0c;后续会由Superpowers细化</p>
+<p>└── tasks.md         # 实现清单&#xff08;Checklist&#xff09;&#xff0c;后续会由Superpowers细化</p>
+<p>其中&#xff0c;proposal.md是核心&#xff0c;它明确了需求的目标、范围、风险&#xff0c;避免AI和开发者理解偏差。以下是proposal.md的示例内容&#xff0c;也是AI自动生成的&#xff0c;我们可以在此基础上修改完善&#xff1a;</p>
+<h2><a id="_161"></a>用户登录功能提案</h2>
+<h3><a id="_163"></a>背景</h3>
+<p>当前系统无认证机制&#xff0c;需要添加用户登录功能以保护敏感数据。</p>
+<h3><a id="_167"></a>目标</h3>
+<ul><li>
+<p>支持邮箱 &#43; 密码登录</p>
+</li><li>
+<p>颁发 JWT Token</p>
+</li><li>
+<p>支持 Token 刷新</p>
+</li></ul>
+<h3><a id="In_Scope_175"></a>范围&#xff08;In Scope&#xff09;</h3>
+<ul><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" checked="true" disabled="" /> 用户登录 API</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" checked="true" disabled="" /> JWT 颁发与验证</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" checked="true" disabled="" /> Token 刷新机制</p>
+</li></ul>
+<h3><a id="Out_of_Scope_183"></a>范围外&#xff08;Out of Scope&#xff09;</h3>
+<ul><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 第三方登录&#xff08;Google/GitHub&#xff09;</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 双因素认证&#xff08;2FA&#xff09;</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 密码找回功能</p>
+</li></ul>
+<h3><a id="_191"></a>风险</h3>
+<ul><li>
+<p>JWT 密钥管理需要安全存储</p>
+</li><li>
+<p>Token 过期策略需要权衡用户体验与安全性</p>
+</li></ul>
+<p>这里有一个关键点&#xff1a;一定要明确写出“范围外&#xff08;Out of Scope&#xff09;”的内容&#xff0c;这样可以防止AI“过度帮助”&#xff0c;比如你只需要邮箱密码登录&#xff0c;AI就不会擅自添加第三方登录功能&#xff0c;避免做无用功。</p>
+<p>步骤2&#xff1a;Review提案&#xff0c;修改完善</p>
+<p>AI生成的提案的可能不是完全符合你的需求&#xff0c;需要我们进行Review和修改&#xff0c;修改方式有两种&#xff0c;可根据自己的习惯选择&#xff1a;</p>
+<p>修改方式1&#xff1a;直接编辑文件&#xff08;适合熟悉终端操作的开发者&#xff09;</p>
+<p>在终端中输入以下命令&#xff0c;打开proposal.md文件进行编辑&#xff08;使用vim编辑器&#xff09;&#xff1a;</p>
+<p>vim openspec/changes/add-user-login/proposal.md</p>
+<p>编辑完成后&#xff0c;按“Esc”键&#xff0c;输入“:wq”&#xff0c;回车保存并退出。</p>
+<p>修改方式2&#xff1a;让AI修改&#xff08;适合新手&#xff0c;更高效&#xff09;</p>
+<p>在Claude Code的交互界面中&#xff0c;直接输入修改指令&#xff0c;比如&#xff1a;</p>
+<p>修改 proposal.md&#xff0c;增加&#34;密码强度校验&#34;需求</p>
+<p>AI会自动修改proposal.md文件&#xff0c;添加密码强度校验的相关内容&#xff0c;修改完成后会提示你确认。</p>
+<p>步骤3&#xff1a;确认提案&#xff0c;进入下一阶段</p>
+<p>Review和修改完成后&#xff0c;在Claude Code的交互界面中输入以下指令&#xff0c;确认提案&#xff0c;进入后续的头脑风暴阶段&#xff1a;</p>
+<p>提案确认&#xff0c;继续</p>
+<h4><a id="32_2Superpowers_Brainstorming_225"></a>3.2 阶段2&#xff1a;Superpowers Brainstorming——细化技术方案&#xff0c;解决核心疑问</h4>
+<p>提案确认后&#xff0c;Superpowers会自动激活brainstorming&#xff08;头脑风暴&#xff09;功能&#xff0c;它会以苏格拉底式提问的方式&#xff0c;向你确认技术方案的核心细节&#xff0c;帮你细化设计&#xff0c;避免后续开发中出现方向偏差。</p>
+<p>这个阶段&#xff0c;AI会自动问你以下几个核心问题&#xff08;不同需求会有差异&#xff0c;以下是登录功能的常见问题&#xff09;&#xff0c;你只需要逐一回答即可&#xff1a;</p>
+<p>好的&#xff0c;我来帮你细化这个登录功能的设计。先确认几个问题&#xff1a;</p>
+<ol><li><strong>用户存储</strong>&#xff1a;用户信息存在哪里&#xff1f;</li></ol>
+<ul><li>
+<p>现有 PostgreSQL 数据库</p>
+</li><li>
+<p>还是新的用户服务&#xff1f;</p>
+</li></ul>
+<ol start="2"><li><strong>密码加密</strong>&#xff1a;使用什么算法&#xff1f;</li></ol>
+<ul><li>
+<p>bcrypt&#xff08;推荐&#xff0c;但慢&#xff09;</p>
+</li><li>
+<p>argon2&#xff08;更安全&#xff0c;需要额外依赖&#xff09;</p>
+</li></ul>
+<ol start="3"><li><strong>JWT 过期策略</strong>&#xff1a;</li></ol>
+<ul><li>
+<p>Access Token 多久过期&#xff1f;&#xff08;15 分钟&#xff1f;1 小时&#xff1f;&#xff09;</p>
+</li><li>
+<p>Refresh Token 多久过期&#xff1f;&#xff08;7 天&#xff1f;30 天&#xff1f;&#xff09;</p>
+</li></ul>
+<ol start="4"><li><strong>错误处理</strong>&#xff1a;</li></ol>
+<ul><li>
+<p>登录失败几次后锁定账户&#xff1f;</p>
+</li><li>
+<p>是否需要防暴力破解机制&#xff1f;</p>
+</li></ul>
+<p>你可以根据自己的项目实际情况&#xff0c;逐一回答这些问题。比如我们的回答可以是&#xff1a;</p>
+<ol><li>
+<p>用户存储&#xff1a;现有PostgreSQL数据库&#xff08;减少系统复杂度&#xff09;&#xff1b;</p>
+</li><li>
+<p>密码加密&#xff1a;bcrypt&#xff08;cost&#61;12&#xff09;&#xff08;成熟稳定&#xff0c;团队熟悉&#xff09;&#xff1b;</p>
+</li><li>
+<p>JWT过期策略&#xff1a;Access Token 15分钟&#xff0c;Refresh Token 7天&#xff08;平衡安全性与用户体验&#xff09;&#xff1b;</p>
+</li><li>
+<p>错误处理&#xff1a;5次失败后锁定账户15分钟&#xff0c;添加IP级别限流&#xff08;10次/分钟&#xff09;。</p>
+</li></ol>
+<p>回答完成后&#xff0c;Superpowers会自动将这些决策记录到design.md文件中&#xff0c;生成完整的技术方案设计文档。以下是生成的design.md示例内容&#xff1a;</p>
+<h2><a id="_269"></a>登录功能设计文档</h2>
+<h3><a id="_271"></a>架构决策</h3>
+<h4><a id="_1_273"></a>决策 1&#xff1a;用户存储</h4>
+<ul><li>
+<p><strong>选择</strong>&#xff1a;现有 PostgreSQL 数据库</p>
+</li><li>
+<p><strong>理由</strong>&#xff1a;减少系统复杂度&#xff0c;避免数据同步问题</p>
+</li><li>
+<p><strong>表结构</strong>&#xff1a;新增 <code>users</code> 表</p>
+</li></ul>
+<h4><a id="_2_281"></a>决策 2&#xff1a;密码加密</h4>
+<ul><li>
+<p><strong>选择</strong>&#xff1a;bcrypt&#xff08;cost&#61;12&#xff09;</p>
+</li><li>
+<p><strong>理由</strong>&#xff1a;成熟稳定&#xff0c;团队熟悉&#xff0c;性能可接受</p>
+</li></ul>
+<h4><a id="_3JWT__287"></a>决策 3&#xff1a;JWT 策略</h4>
+<ul><li>
+<p><strong>Access Token</strong>&#xff1a;15 分钟</p>
+</li><li>
+<p><strong>Refresh Token</strong>&#xff1a;7 天</p>
+</li><li>
+<p><strong>理由</strong>&#xff1a;平衡安全性与用户体验</p>
+</li></ul>
+<h4><a id="_4_295"></a>决策 4&#xff1a;安全防护</h4>
+<ul><li>
+<p><strong>失败锁定</strong>&#xff1a;5 次失败后锁定 15 分钟</p>
+</li><li>
+<p><strong>防暴力破解</strong>&#xff1a;IP 级别限流&#xff08;10 次/分钟&#xff09;</p>
+</li></ul>
+<p>这个design.md文件会成为后续开发的技术依据&#xff0c;AI在生成代码时&#xff0c;会严格遵循这些决策&#xff0c;避免出现技术方案偏差。</p>
+<h4><a id="33_3Superpowers_Writing_Plans_303"></a>3.3 阶段3&#xff1a;Superpowers Writing Plans——制定可落地的执行任务清单</h4>
+<p>头脑风暴完成后&#xff0c;Superpowers会自动进入writing-plans&#xff08;制定计划&#xff09;功能&#xff0c;将技术方案转化为分步执行的任务清单&#xff0c;每个任务都有明确的目标、验收标准和预计耗时&#xff0c;确保开发过程可追踪、可落地。</p>
+<p>这个阶段&#xff0c;Superpowers会自动更新tasks.md文件&#xff0c;生成详细的任务清单。以下是登录功能的tasks.md示例内容&#xff0c;每个任务都清晰明确&#xff0c;可直接执行&#xff1a;</p>
+<h2><a id="_309"></a>实现任务清单</h2>
+<h3><a id="_1_5__311"></a>任务 1&#xff1a;数据库迁移&#xff08;预计 5 分钟&#xff09;</h3>
+<ul><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 创建 <code>users</code> 表迁移文件</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 字段&#xff1a;id, email, password_hash, created_at, updated_at</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 添加唯一索引&#xff1a;email</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 运行迁移并验证</p>
+</li></ul>
+<h3><a id="_2_5__321"></a>任务 2&#xff1a;密码工具函数&#xff08;预计 5 分钟&#xff09;</h3>
+<ul><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 创建 <code>src/utils/password.ts</code></p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 实现 <code>hashPassword(password: string): Promise&lt;string&gt;</code></p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 实现 <code>verifyPassword(password, hash): Promise&lt;boolean&gt;</code></p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 编写单元测试</p>
+</li></ul>
+<h3><a id="_3JWT__5__331"></a>任务 3&#xff1a;JWT 工具函数&#xff08;预计 5 分钟&#xff09;</h3>
+<ul><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 创建 <code>src/utils/jwt.ts</code></p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 实现 <code>generateToken(userId, email): string</code></p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 实现 <code>verifyToken(token): Payload | null</code></p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 实现 <code>refreshToken(oldToken): string | null</code></p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 编写单元测试</p>
+</li></ul>
+<h3><a id="_4_API_10__343"></a>任务 4&#xff1a;登录 API&#xff08;预计 10 分钟&#xff09;</h3>
+<ul><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 创建 <code>src/routes/auth.ts</code></p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 实现 <code>POST /api/login</code> 端点</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 验证邮箱格式</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 验证密码</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 返回 JWT Token</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 编写集成测试</p>
+</li></ul>
+<h3><a id="_5Token__API_5__357"></a>任务 5&#xff1a;Token 刷新 API&#xff08;预计 5 分钟&#xff09;</h3>
+<ul><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 实现 <code>POST /api/refresh</code> 端点</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 验证 Refresh Token</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 颁发新 Access Token</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 编写集成测试</p>
+</li></ul>
+<h3><a id="_6_10__367"></a>任务 6&#xff1a;安全加固&#xff08;预计 10 分钟&#xff09;</h3>
+<ul><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 实现登录失败计数</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 实现账户锁定逻辑</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 实现 IP 限流中间件</p>
+</li><li class="task-list-item">
+<p><input type="checkbox" class="task-list-item-checkbox" disabled="" /> 编写压力测试</p>
+</li></ul>
+<p>这个任务清单有三个核心特点&#xff0c;也是我们制定开发计划的关键&#xff1a;</p>
+<ol><li>
+<p>每个任务耗时短&#xff1a;单个任务预计2-5分钟&#xff0c;最多10分钟&#xff0c;避免任务过大导致难以执行&#xff1b;</p>
+</li><li>
+<p>验收标准明确&#xff1a;每个任务都有具体的执行内容&#xff0c;比如“创建src/utils/password.ts”“实现hashPassword函数”&#xff0c;完成与否一目了然&#xff1b;</p>
+</li><li>
+<p>包含测试要求&#xff1a;每个任务都要求编写单元测试、集成测试或压力测试&#xff0c;确保代码质量&#xff0c;符合TDD开发规范。</p>
+</li></ol>
+<p>步骤&#xff1a;Review计划&#xff0c;确认执行</p>
+<p>和提案一样&#xff0c;AI生成的任务清单也需要我们Review&#xff0c;检查任务顺序是否合理、是否有遗漏的内容。比如发现“任务3&#xff08;JWT工具函数&#xff09;”和“任务4&#xff08;登录API&#xff09;”顺序反了&#xff0c;应该先实现JWT工具函数&#xff0c;再实现登录API&#xff0c;就可以在Claude Code中输入以下指令修改&#xff1a;</p>
+<p>任务 3 和任务 4 顺序反了&#xff0c;应该先实现 JWT 再实现登录 API</p>
+<p>AI会自动调整任务顺序&#xff0c;修改完成后&#xff0c;我们在交互界面中输入以下指令&#xff0c;确认计划&#xff0c;进入执行阶段&#xff1a;</p>
+<p>Plan 确认&#xff0c;开始执行</p>
+<h4><a id="34_4Superpowers__Claude_Code__395"></a>3.4 阶段4&#xff1a;Superpowers &#43; Claude Code 执行——自动开发&#xff0c;自动测试&#xff0c;自动修复</h4>
+<p>计划确认后&#xff0c;Superpowers会自动激活subagent-driven-development&#xff08;子代理驱动开发&#xff09;功能&#xff0c;调用Claude Code执行任务&#xff0c;整个过程几乎不需要人工干预&#xff0c;AI会自动完成代码生成、测试、修复bug、代码审查和提交代码。</p>
+<p>执行流程如下&#xff08;以登录功能的6个任务为例&#xff09;&#xff0c;AI会实时在终端中展示执行进度&#xff1a;</p>
+<p>[Task 1/6] 数据库迁移</p>
+<p>├─ 创建子 Agent&#xff08;专门负责执行这个任务的AI代理&#xff09;</p>
+<p>├─ 执行任务&#xff08;创建users表迁移文件、添加字段和索引、运行迁移&#xff09;</p>
+<p>├─ 运行测试 → 通过 ✓&#xff08;验证迁移是否成功&#xff0c;数据库是否新增users表&#xff09;</p>
+<p>├─ Code Review → 通过 ✓&#xff08;检查迁移文件语法、字段设计是否合理&#xff09;</p>
+<p>└─ 提交代码&#xff08;自动执行git add、git commit&#xff0c;提交信息为“完成数据库迁移任务”&#xff09;</p>
+<p>[Task 2/6] 密码工具函数</p>
+<p>├─ 创建子 Agent</p>
+<p>├─ 执行任务&#xff08;创建password.ts文件、实现hashPassword和verifyPassword函数&#xff09;</p>
+<p>├─ 运行测试 → 失败 ✗&#xff08;错误&#xff1a;bcrypt 未安装&#xff09;</p>
+<p>│  └─ 自动修复&#xff1a;安装 bcrypt&#xff08;AI自动执行npm install bcrypt命令&#xff09;</p>
+<p>├─ 重新测试 → 通过 ✓</p>
+<p>├─ Code Review → 通过 ✓&#xff08;检查函数逻辑、命名规范、代码复杂度&#xff09;</p>
+<p>└─ 提交代码</p>
+<p>…&#xff08;自动继续执行后续任务&#xff0c;直到所有任务完成&#xff09;</p>
+<p>这个阶段有几个非常实用的核心特性&#xff0c;也是这套协同方案的优势所在&#xff0c;值得重点关注&#xff1a;</p>
+<ol><li>
+<p>TDD强制执行&#xff1a;AI会先写测试用例&#xff0c;再写代码&#xff0c;确保代码能够通过测试&#xff0c;从根源上保证代码质量&#xff0c;避免出现“代码能运行但测试不通过”的情况。</p>
+</li><li>
+<p>两阶段Review&#xff1a;每个任务完成后&#xff0c;都会进行两次审查&#xff0c;一次是Spec合规性检查&#xff08;确认代码符合tasks.md和OpenSpec的规范&#xff09;&#xff0c;一次是代码质量检查&#xff08;检查命名规范、代码结构、复杂度等&#xff09;&#xff0c;确保代码既符合需求&#xff0c;又具备可维护性。</p>
+</li><li>
+<p>自动修复&#xff1a;如果测试失败&#xff0c;AI会自动排查问题&#xff0c;尝试修复。比如上面的例子中&#xff0c;测试时发现bcrypt未安装&#xff0c;AI会自动执行npm install bcrypt命令&#xff0c;修复后重新测试&#xff0c;无需人工干预。</p>
+</li><li>
+<p>进度追踪&#xff1a;AI会实时更新tasks.md文件中的复选框&#xff0c;完成一个任务就勾选一个&#xff0c;你可以随时打开tasks.md文件&#xff0c;查看开发进度&#xff0c;一目了然。</p>
+</li></ol>
+<p>整个执行过程&#xff0c;你只需要等待即可&#xff0c;AI会自动处理所有细节&#xff0c;遇到问题会自动修复&#xff0c;大大节省开发时间。比如登录功能的6个任务&#xff0c;预计耗时40分钟左右&#xff0c;AI可以全程自动完成&#xff0c;你只需要在最后验收即可。</p>
+<h4><a id="35_5OpenSpec_Archive_443"></a>3.5 阶段5&#xff1a;OpenSpec Archive——归档变更&#xff0c;沉淀规范</h4>
+<p>当所有任务完成后&#xff0c;我们需要将这次的变更归档&#xff0c;让OpenSpec的规范沉淀下来&#xff0c;方便后续开发时AI读取&#xff0c;避免重复工作&#xff0c;同时也便于项目追溯。</p>
+<p>步骤&#xff1a;归档变更</p>
+<p>在Claude Code的交互界面中&#xff0c;输入以下指令&#xff0c;完成变更归档&#xff1a;</p>
+<p>/opsx:archive</p>
+<p>归档后&#xff0c;OpenSpec会自动完成以下3件事&#xff0c;无需人工操作&#xff1a;</p>
+<ol><li>
+<p>合并Delta Spec&#xff1a;将changes/add-user-login/specs/中的规范&#xff0c;合并到openspec/specs/中&#xff0c;成为系统的正式规范&#xff0c;后续开发新功能时&#xff0c;AI会自动读取这个规范&#xff0c;确保功能之间的兼容性。</p>
+</li><li>
+<p>移动文件夹&#xff1a;将changes/add-user-login/文件夹&#xff0c;移动到changes/archive/2026-03-27-add-user-login/&#xff08;后面的日期会自动替换为你归档的日期&#xff09;&#xff0c;方便后续追溯这次变更的细节。</p>
+</li><li>
+<p>更新AGENTS.md&#xff1a;记录本次变更的摘要&#xff0c;包括需求目标、核心决策、完成情况&#xff0c;让团队成员和后续开发人员能够快速了解这次变更的内容。</p>
+</li></ol>
+<p>归档完成后&#xff0c;我们可以打开openspec/specs/auth/spec.md文件&#xff0c;查看合并后的规范&#xff0c;这个规范会成为系统的“真理来源”&#xff0c;后续任何与认证相关的开发&#xff0c;都会遵循这个规范。以下是合并后的spec.md示例内容&#xff1a;</p>
+<h2><a id="_463"></a>认证规范</h2>
+<h3><a id="_465"></a>目的</h3>
+<p>用户认证和会话管理。</p>
+<h3><a id="_469"></a>需求</h3>
+<h4><a id="_471"></a>需求&#xff1a;用户登录</h4>
+<p>系统应在用户成功登录后颁发 JWT Token。</p>
+<h5><a id="_475"></a>场景&#xff1a;有效凭证</h5>
+<ul><li>
+<p>GIVEN 用户有有效凭证</p>
+</li><li>
+<p>WHEN 用户提交登录表单</p>
+</li><li>
+<p>THEN 返回 JWT Token</p>
+</li><li>
+<p>AND 重定向到仪表盘</p>
+</li></ul>
+<h5><a id="_485"></a>场景&#xff1a;无效凭证</h5>
+<ul><li>
+<p>GIVEN 无效凭证</p>
+</li><li>
+<p>WHEN 用户提交登录表单</p>
+</li><li>
+<p>THEN 显示错误消息</p>
+</li><li>
+<p>AND 不颁发 Token</p>
+</li></ul>
+<h4><a id="Token__495"></a>需求&#xff1a;Token 刷新</h4>
+<p>系统应支持使用 Refresh Token 获取新的 Access Token。</p>
+<h5><a id="_Refresh_Token_499"></a>场景&#xff1a;有效的 Refresh Token</h5>
+<ul><li>
+<p>GIVEN 用户有未过期的 Refresh Token</p>
+</li><li>
+<p>WHEN 调用 <code>/api/refresh</code></p>
+</li><li>
+<p>THEN 返回新的 Access Token</p>
+</li></ul>
+<h4><a id="_507"></a>需求&#xff1a;账户锁定</h4>
+<p>系统应在连续 5 次登录失败后锁定账户 15 分钟。</p>
+<h5><a id="_511"></a>场景&#xff1a;多次失败</h5>
+<ul><li>
+<p>GIVEN 用户连续失败 5 次</p>
+</li><li>
+<p>WHEN 第 6 次尝试登录</p>
+</li><li>
+<p>THEN 返回&#34;账户已锁定&#34;错误</p>
+</li><li>
+<p>AND 15 分钟内不允许登录</p>
+</li></ul>
+<p>到这里&#xff0c;从需求提出到功能上线的完整工作流就结束了。整个过程中&#xff0c;我们只需要做3件事&#xff1a;提出需求、Review提案和计划、确认归档&#xff0c;其余的代码生成、测试、修复、提交等工作&#xff0c;都由AI自动完成&#xff0c;既高效又规范。</p>
+<h3><a id="AI_523"></a>四、进阶技巧&#xff1a;让AI协同开发更高效&#xff0c;适配复杂场景</h3>
+<p>掌握了核心工作流后&#xff0c;我们可以学习一些进阶技巧&#xff0c;适配更复杂的开发场景&#xff0c;比如并行开发多个功能、自定义工作流、验证规范与实现的一致性等&#xff0c;进一步提升开发效率。</p>
+<h4><a id="41__527"></a>4.1 并行开发多个功能&#xff0c;互不冲突</h4>
+<p>在实际开发中&#xff0c;我们经常需要同时开发多个功能&#xff0c;比如一边开发登录功能&#xff0c;一边开发暗黑模式。OpenSpec的Delta Spec机制支持并行开发&#xff0c;多个变更独立进行&#xff0c;不会相互冲突。</p>
+<p>具体操作步骤如下&#xff1a;</p>
+<ol><li>打开终端1&#xff0c;启动Claude Code&#xff0c;开发登录功能&#xff1a;</li></ol>
+<p>claude</p>
+<blockquote>
+<p>/opsx:propose 用户登录</p>
+</blockquote>
+<p>然后按照核心工作流&#xff0c;逐步完成提案、头脑风暴、计划、执行等步骤。</p>
+<ol start="2"><li>打开终端2&#xff0c;启动Claude Code&#xff0c;开发暗黑模式&#xff1a;</li></ol>
+<p>claude</p>
+<blockquote>
+<p>/opsx:propose 暗黑模式</p>
+</blockquote>
+<p>同样按照核心工作流&#xff0c;逐步推进开发。</p>
+<p>此时&#xff0c;openspec/changes/目录下会有两个进行中的变更文件夹&#xff0c;结构如下&#xff1a;</p>
+<p>openspec/changes/</p>
+<p>├── add-user-login/      # 变更 1&#xff08;登录功能&#xff0c;进行中&#xff09;</p>
+<p>├── add-dark-mode/       # 变更 2&#xff08;暗黑模式&#xff0c;进行中&#xff09;</p>
+<p>└── archive/             # 已完成归档的变更</p>
+<p>两个变更独立进行&#xff0c;不会相互影响&#xff0c;因为每个变更的规范都是Delta Spec&#xff08;增量规范&#xff09;&#xff0c;归档时OpenSpec会自动将两个变更的规范合并到openspec/specs/中&#xff0c;不会出现冲突。</p>
+<p>归档时的操作也很简单&#xff0c;哪个功能先完成&#xff0c;就先执行归档指令&#xff1a;</p>
+<h2><a id="1_563"></a>登录功能完成后&#xff0c;在终端1中输入</h2>
+<blockquote>
+<p>/opsx:archive</p>
+</blockquote>
+<h2><a id="2_567"></a>暗黑模式完成后&#xff0c;在终端2中输入</h2>
+<blockquote>
+<p>/opsx:archive</p>
+</blockquote>
+<p>这种方式非常适合多人协作开发&#xff0c;不同的开发者可以负责不同的功能&#xff0c;并行推进&#xff0c;大大提升项目整体进度。</p>
+<h4><a id="42_Schema_573"></a>4.2 自定义工作流Schema&#xff0c;适配个性化需求</h4>
+<p>默认的工作流是“proposal → specs → design → tasks → implement”&#xff0c;但在实际开发中&#xff0c;有些项目可能需要新增阶段&#xff0c;比如“Research&#xff08;调研&#xff09;”阶段&#xff0c;先进行市场分析、竞品对比、技术调研&#xff0c;再制定提案。这时&#xff0c;我们可以自定义工作流Schema&#xff0c;适配个性化需求。</p>
+<p>具体操作步骤如下&#xff1a;</p>
+<ol><li>创建Schema文件&#xff1a;在openspec/schemas/目录下&#xff0c;创建一个新的文件夹&#xff08;比如research-first&#xff09;&#xff0c;然后在该文件夹中创建schema.yaml文件&#xff1a;</li></ol>
+<p>mkdir openspec/schemas/research-first</p>
+<p>vim openspec/schemas/research-first/schema.yaml</p>
+<ol start="2"><li>编写Schema内容&#xff1a;将以下内容复制粘贴到schema.yaml文件中&#xff0c;保存退出。这个Schema新增了Research阶段&#xff0c;并且规定了各个阶段的依赖关系&#xff08;Research完成后才能做Proposal&#xff0c;Proposal完成后才能做specs和design等&#xff09;&#xff1a;</li></ol>
+<p>name: research-first</p>
+<p>artifacts:</p>
+<ul><li>id: research</li></ul>
+<p>generates: research.md</p>
+<p>requires: []</p>
+<ul><li>id: proposal</li></ul>
+<p>generates: proposal.md</p>
+<p>requires: [research]</p>
+<ul><li>id: specs</li></ul>
+<p>generates: specs/</p>
+<p>requires: [proposal]</p>
+<ul><li>id: design</li></ul>
+<p>generates: design.md</p>
+<p>requires: [proposal]</p>
+<ul><li>id: tasks</li></ul>
+<p>generates: tasks.md</p>
+<p>requires: [specs, design]</p>
+<ol start="3"><li>激活Schema&#xff1a;在终端中输入以下命令&#xff0c;激活我们自定义的Schema&#xff1a;</li></ol>
+<p>openspec schema init research-first</p>
+<ol start="4"><li>使用自定义工作流&#xff1a;激活后&#xff0c;创建新的变更时&#xff0c;就会按照我们自定义的流程执行&#xff1a;</li></ol>
+<blockquote>
+<p>/opsx:new 新功能研究</p>
+</blockquote>
+<h2><a id="Research_629"></a>第一步&#xff1a;Research&#xff08;调研阶段&#xff09;</h2>
+<blockquote>
+<p>/opsx:continue</p>
+</blockquote>
+<h2><a id="AI__researchmd_633"></a>AI 生成 research.md&#xff08;包含市场分析、竞品对比、技术调研等内容&#xff09;</h2>
+<h2><a id="Proposal_635"></a>第二步&#xff1a;Proposal&#xff08;提案阶段&#xff09;</h2>
+<blockquote>
+<p>/opsx:continue</p>
+</blockquote>
+<h2><a id="AI__proposalmd_639"></a>AI 生成 proposal.md&#xff08;基于调研结果制定提案&#xff09;</h2>
+<h2><a id="__641"></a>… 依次继续后续阶段</h2>
+<p>这种方式可以适配不同项目的需求&#xff0c;比如有些项目需要严格的调研流程&#xff0c;有些项目需要新增测试阶段&#xff0c;都可以通过自定义Schema来实现。</p>
+<h4><a id="43_Spec_645"></a>4.3 验证实现与Spec的一致性&#xff0c;避免偏离规范</h4>
+<p>在开发过程中&#xff0c;我们可能会手动修改代码&#xff0c;或者AI在执行过程中出现微小偏差&#xff0c;导致代码实现与OpenSpec的规范不一致。这时&#xff0c;我们可以随时使用OpenSpec的验证功能&#xff0c;检查实现与规范的一致性&#xff0c;及时发现问题并修复。</p>
+<p>具体操作步骤如下&#xff1a;</p>
+<ol><li>在Claude Code的交互界面中&#xff0c;输入以下指令&#xff0c;启动验证&#xff1a;</li></ol>
+<blockquote>
+<p>/opsx:verify</p>
+</blockquote>
+<ol start="2"><li>查看验证结果&#xff1a;AI会从三个维度进行验证&#xff0c;分别是完整性、正确性、一致性&#xff0c;然后输出详细的验证结果&#xff0c;示例如下&#xff1a;</li></ol>
+<p>验证结果&#xff1a;</p>
+<p>[CRITICAL] 任务 4.2 未完成&#xff1a;登录 API 未实现邮箱格式验证</p>
+<p>[WARNING] 任务 6.1 部分完成&#xff1a;登录失败计数实现&#xff0c;但未集成到 API</p>
+<p>[SUGGESTION] 命名不一致&#xff1a;<code>user_id</code> vs <code>userId</code></p>
+<p>建议&#xff1a;修复 CRITICAL 问题后再归档</p>
+<p>三个维度的验证内容说明&#xff1a;</p>
+<ul><li>
+<p>完整性&#xff1a;所有任务是否完成&#xff1f;所有需求是否有对应实现&#xff1f;比如上面的示例中&#xff0c;任务4.2未完成&#xff0c;属于严重问题&#xff08;CRITICAL&#xff09;&#xff0c;必须修复。</p>
+</li><li>
+<p>正确性&#xff1a;实现是否符合Spec的意图&#xff1f;边界情况是否处理&#xff1f;比如登录功能是否正确颁发JWT Token&#xff0c;无效凭证是否返回错误消息。</p>
+</li><li>
+<p>一致性&#xff1a;代码是否符合design.md的决策&#xff1f;命名规范是否统一&#xff1f;比如上面的示例中&#xff0c;命名出现不一致&#xff0c;属于建议性问题&#xff08;SUGGESTION&#xff09;&#xff0c;可以根据团队规范修改。</p>
+</li></ul>
+<p>根据验证结果&#xff0c;我们可以针对性地修复问题&#xff0c;确保代码实现与规范完全一致&#xff0c;避免归档后出现隐患。</p>
+<h3><a id="44_Git_Worktrees_677"></a>4.4 使用Git Worktrees隔离开发&#xff0c;降低风险</h3>
+<p>在开发过程中&#xff0c;如果直接在主分支&#xff08;main&#xff09;上开发&#xff0c;一旦出现问题&#xff0c;很难回滚&#xff0c;容易影响项目的稳定性。Superpowers的using-git-worktrees功能&#xff0c;可以自动创建隔离分支&#xff0c;隔离开发环境&#xff0c;降低开发风险。</p>
+<p>具体操作步骤如下&#xff1a;</p>
+<ol><li>启动新会话&#xff1a;打开终端&#xff0c;输入“claude”启动Claude Code&#xff0c;然后输入以下指令&#xff0c;开始开发新功能&#xff08;比如用户注册功能&#xff09;&#xff1a;</li></ol>
+<blockquote>
+<p>帮我开发用户注册功能</p>
+</blockquote>
+<ol start="2"><li>Superpowers自动创建隔离分支&#xff1a;输入指令后&#xff0c;Superpowers会自动执行以下操作&#xff0c;无需人工干预&#xff1a;</li></ol>
+<p>① 创建Git Worktree&#xff1a;执行git worktree add …/wt-user-register -b feature/user-register命令&#xff0c;创建一个隔离的工作目录&#xff08;…/wt-user-register&#xff09;&#xff0c;并创建feature/user-register分支。这里需要注意&#xff0c;…/表示工作目录在当前项目目录的上级&#xff0c;避免与主分支工作目录混淆&#xff0c;也可以自定义路径&#xff0c;只需修改命令中的路径参数即可。</p>
+<p>② 切换目录&#xff1a;自动切换到创建的隔离工作目录中&#xff0c;所有开发操作都在这个目录中进行&#xff0c;不影响主分支的代码。后续所有的代码生成、测试、提交&#xff0c;都会在这个隔离目录和对应分支中完成&#xff0c;主分支始终保持干净、稳定。</p>
+<p>③ 验证测试基线&#xff1a;执行npm test命令&#xff0c;确保当前项目的测试用例全部通过&#xff0c;避免基于有问题的基线进行开发。如果测试失败&#xff0c;Superpowers会提示你先修复主分支的测试问题&#xff0c;再开始新功能开发&#xff0c;从根源上避免引入新的bug。</p>
+<p>④ 开始开发&#xff1a;验证通过后&#xff0c;自动进入核心工作流&#xff0c;启动子代理&#xff0c;开始开发用户注册功能&#xff0c;全程自动执行提案、头脑风暴、计划制定、代码生成、测试修复等操作。</p>
+<p>这种方式的优势非常明显&#xff1a;</p>
+<ul><li>
+<p>主分支不受影响&#xff1a;开发过程中出现任何问题&#xff0c;都只影响隔离分支&#xff0c;不会污染主分支的代码。比如开发过程中误删文件、引入严重bug&#xff0c;只需删除隔离工作目录和分支&#xff0c;主分支依然保持正常&#xff0c;无需回滚操作。</p>
+</li><li>
+<p>支持并行开发&#xff1a;多个功能可以分别创建隔离分支&#xff0c;并行开发&#xff0c;互不干扰。比如一个开发者开发用户注册功能&#xff0c;另一个开发者开发用户编辑功能&#xff0c;各自在自己的隔离分支中开发&#xff0c;归档时再合并到主分支&#xff0c;大幅提升开发效率。</p>
+</li><li>
+<p>便于回滚&#xff1a;如果开发失败&#xff0c;直接删除隔离分支和工作目录即可&#xff0c;不会影响主分支&#xff0c;降低开发风险。同时&#xff0c;隔离分支可以随时暂停开发&#xff0c;后续继续开发时&#xff0c;只需切换到对应的工作目录&#xff0c;即可恢复之前的开发状态。</p>
+</li></ul>
+<ol start="3"><li>开发完成后的操作&#xff1a;当用户注册功能开发完成后&#xff0c;在Claude Code的交互界面中输入以下指令&#xff0c;AI会提供多种后续操作选项&#xff1a;</li></ol>
+<blockquote>
+<p>/opsx:finish</p>
+</blockquote>
+<p>AI 提供选项&#xff1a;</p>
+<ol><li>Merge to main&#xff08;合并到主分支&#xff09;&#xff1a;直接将隔离分支的代码合并到主分支&#xff0c;适合单人开发、无需团队Review的场景。</li><li>Create PR&#xff08;创建Pull Request&#xff09;&#xff1a;生成PR描述&#xff08;包含功能说明、测试结果、规范验证情况&#xff09;&#xff0c;并推送分支到远程仓库&#xff0c;适合团队协作场景&#xff0c;需经过团队Code Review后再合并。</li><li>Keep branch&#xff08;保留分支&#xff09;&#xff1a;不合并到主分支&#xff0c;保留隔离分支和工作目录&#xff0c;适合功能需要后续迭代优化的场景。</li><li>Abandon&#xff08;放弃开发&#xff09;&#xff1a;删除隔离分支和工作目录&#xff0c;适合开发失败、无需保留代码的场景。</li></ol>
+<p>我们可以根据实际需求选择对应的操作&#xff0c;比如团队协作场景下&#xff0c;选择“2. Create PR”&#xff0c;AI会自动生成规范的PR描述&#xff0c;包含功能实现细节、测试覆盖率、规范验证结果等内容&#xff0c;推送分支到远程仓库后&#xff0c;团队成员可以基于PR进行Code Review&#xff0c;提出修改意见&#xff0c;AI会自动根据意见修复代码&#xff0c;直到PR通过。</p>
+<p>补充说明&#xff1a;如果需要切换回主分支开发&#xff0c;只需在终端输入“cd 原项目目录”&#xff0c;即可退出隔离工作目录&#xff0c;回到主分支工作环境&#xff0c;操作简单便捷。</p>
+<h3><a id="AI_720"></a>五、避坑指南&#xff1a;新手必看&#xff0c;避开AI协同开发的常见陷阱</h3>
+<p>在使用这套协同方案的过程中&#xff0c;新手很容易陷入一些误区&#xff0c;导致开发效率下降、代码规范失控&#xff0c;甚至出现项目风险。结合大量实战经验&#xff0c;整理了6个最常见的陷阱&#xff0c;以及对应的解决方法&#xff0c;帮你少走弯路。</p>
+<h4><a id="51_1AI_724"></a>5.1 陷阱1&#xff1a;跳过需求对齐&#xff0c;直接让AI写代码</h4>
+<p>很多开发者急于求成&#xff0c;拿到需求后不使用OpenSpec梳理规范&#xff0c;直接让Claude Code写代码&#xff0c;看似节省了时间&#xff0c;实则会导致后期大量返工——AI写的代码大概率偏离需求&#xff0c;甚至出现逻辑错误&#xff0c;最后需要反复修改&#xff0c;反而耗时更长。</p>
+<p>解决方法&#xff1a;严格遵循“需求对齐→计划制定→代码执行”的流程&#xff0c;无论需求多简单&#xff0c;都要先用OpenSpec创建提案&#xff0c;明确需求目标、范围和边界&#xff0c;确认提案后再推进后续开发。哪怕是简单的“修改一个按钮样式”&#xff0c;也可以用OpenSpec快速生成简洁的规范&#xff0c;避免AI自由发挥。</p>
+<h4><a id="52_2Review_AI_730"></a>5.2 陷阱2&#xff1a;不Review AI生成的提案和计划</h4>
+<p>AI生成的提案和计划虽然高效&#xff0c;但并非完美&#xff0c;可能存在需求遗漏、任务顺序不合理、技术方案不符合项目实际等问题。如果直接确认执行&#xff0c;会导致后续开发出现偏差&#xff0c;比如任务顺序颠倒、遗漏关键功能&#xff0c;甚至出现技术选型错误。</p>
+<p>解决方法&#xff1a;AI生成提案和计划后&#xff0c;一定要花5-10分钟Review&#xff0c;重点检查3点&#xff1a;① 需求范围是否准确&#xff0c;是否有遗漏或多余的内容&#xff1b;② 技术方案是否符合项目现有架构&#xff0c;是否存在兼容性问题&#xff1b;③ 任务顺序是否合理&#xff0c;是否存在依赖关系错误。发现问题及时让AI修改&#xff0c;避免后期返工。</p>
+<h4><a id="53_3AI_736"></a>5.3 陷阱3&#xff1a;过度依赖AI&#xff0c;不关注代码质量</h4>
+<p>这套协同方案虽然能让AI自动完成代码生成、测试和修复&#xff0c;但不代表我们可以完全放手不管。有些AI生成的代码虽然能通过测试&#xff0c;但可能存在代码冗余、命名不规范、逻辑不够简洁等问题&#xff0c;长期下来会导致项目代码臃肿&#xff0c;难以维护。</p>
+<p>解决方法&#xff1a;每个功能开发完成后&#xff0c;花少量时间Review核心代码&#xff08;比如关键工具函数、API接口逻辑&#xff09;&#xff0c;结合OpenSpec的验证功能&#xff0c;检查代码是否符合规范、逻辑是否合理。同时&#xff0c;定期整理项目代码&#xff0c;优化冗余逻辑&#xff0c;确保代码的可维护性。</p>
+<h4><a id="54_4_742"></a>5.4 陷阱4&#xff1a;忽略配置安全&#xff0c;导致项目风险</h4>
+<p>环境配置阶段&#xff0c;很多新手会忽略Claude Code的权限配置&#xff0c;要么不限制AI的操作权限&#xff0c;要么配置错误&#xff0c;导致AI可能执行rm -rf *、sudo等危险命令&#xff0c;删除项目文件、修改系统配置&#xff0c;造成不可挽回的损失。</p>
+<p>解决方法&#xff1a;严格按照前文2.4节的配置步骤&#xff0c;修改.claude/settings.json文件&#xff0c;限制AI的操作权限&#xff0c;只允许AI执行openspec、npm、git相关的安全命令。同时&#xff0c;定期检查配置文件&#xff0c;确保没有被意外修改&#xff0c;避免出现安全隐患。</p>
+<h4><a id="55_5_748"></a>5.5 陷阱5&#xff1a;并行开发时不注意规范冲突</h4>
+<p>虽然OpenSpec的Delta Spec机制支持并行开发&#xff0c;但如果多个功能涉及同一模块的规范修改&#xff0c;比如两个功能同时修改用户认证逻辑&#xff0c;归档时可能会出现规范冲突&#xff0c;导致后续开发出现问题。</p>
+<p>解决方法&#xff1a;并行开发前&#xff0c;先检查各个功能的需求范围&#xff0c;确认是否涉及同一模块的规范修改。如果涉及&#xff0c;及时沟通&#xff0c;明确分工&#xff0c;避免同时修改同一规范&#xff1b;归档时&#xff0c;先归档一个功能&#xff0c;检查规范合并无问题后&#xff0c;再归档另一个功能&#xff0c;确保规范一致性。</p>
+<h4><a id="56_6_754"></a>5.6 陷阱6&#xff1a;不归档变更&#xff0c;规范无法沉淀</h4>
+<p>有些开发者开发完成功能后&#xff0c;忘记执行/opsx:archive指令归档变更&#xff0c;导致变更文件夹一直停留在openspec/changes/目录下&#xff0c;规范无法合并到系统正式规范中&#xff0c;后续开发新功能时&#xff0c;AI无法读取之前的规范&#xff0c;导致重复开发、规范不一致。</p>
+<p>解决方法&#xff1a;每个功能开发完成后&#xff0c;立即执行/opsx:archive指令归档变更&#xff0c;确保规范沉淀到openspec/specs/中。同时&#xff0c;定期检查openspec/changes/目录&#xff0c;清理未归档的变更&#xff0c;避免目录混乱&#xff0c;便于项目追溯。</p>
+<h3><a id="_760"></a>六、实战总结&#xff1a;这套协同方案的核心价值与适用场景</h3>
+<p>通过前面的详细讲解&#xff0c;我们已经完整掌握了Claude Code &#43; OpenSpec &#43; Superpowers的协同开发方案&#xff0c;从环境搭建、核心工作流&#xff0c;到进阶技巧和避坑指南&#xff0c;每一步都结合实战案例&#xff0c;确保大家能够直接上手落地。最后&#xff0c;我们总结一下这套方案的核心价值和适用场景&#xff0c;帮大家更好地判断是否适合自己的项目。</p>
+<h4><a id="61__764"></a>6.1 核心价值&#xff1a;高效与规范的双重保障</h4>
+<p>这套协同方案的核心价值&#xff0c;在于打破了单个AI编程工具的局限&#xff0c;通过“需求对齐→流程约束→代码执行”的闭环&#xff0c;实现了“高效开发”与“规范落地”的双重保障&#xff0c;具体体现在3个方面&#xff1a;</p>
+<ol><li>
+<p>提升开发效率&#xff1a;AI自动完成代码生成、测试、修复、提交等重复性工作&#xff0c;开发者只需专注于需求梳理、方案决策和核心代码Review&#xff0c;大幅节省开发时间&#xff0c;小型功能可实现“小时级落地”&#xff0c;中型功能可实现“天级落地”。</p>
+</li><li>
+<p>保障代码质量&#xff1a;通过OpenSpec的规范约束、Superpowers的TDD强制执行和两阶段Review&#xff0c;以及AI的自动修复功能&#xff0c;从根源上减少bug&#xff0c;确保代码符合需求规范和工程标准&#xff0c;降低后期维护成本。</p>
+</li><li>
+<p>降低协作成本&#xff1a;规范沉淀后&#xff0c;团队成员和AI对需求的理解保持一致&#xff0c;并行开发互不冲突&#xff0c;多人协作时无需反复沟通需求细节&#xff0c;大幅降低协作成本&#xff0c;尤其适合中小型团队和多人协作项目。</p>
+</li></ol>
+<h4><a id="62__774"></a>6.2 适用场景&#xff1a;这些项目用它&#xff0c;效率翻倍</h4>
+<p>这套协同方案并非适用于所有项目&#xff0c;结合实战经验&#xff0c;以下3类项目使用它&#xff0c;能实现效率最大化&#xff1a;</p>
+<ol><li>
+<p>中型以上功能开发&#xff1a;比如用户认证系统、支付功能、后台管理系统等&#xff0c;需求相对复杂&#xff0c;需要规范的流程和高质量的代码&#xff0c;这套方案能避免返工&#xff0c;确保功能高效落地。</p>
+</li><li>
+<p>多人协作项目&#xff1a;团队成员分工明确&#xff0c;需要统一的需求规范和开发流程&#xff0c;避免出现代码混乱、需求偏差等问题&#xff0c;这套方案能实现规范沉淀和并行开发&#xff0c;提升团队协作效率。</p>
+</li><li>
+<p>长期维护项目&#xff1a;需要持续迭代功能&#xff0c;规范的沉淀能确保后续迭代不偏离原有架构&#xff0c;减少技术债务&#xff0c;AI的自动修复和测试功能&#xff0c;能降低长期维护成本。</p>
+</li></ol>
+<p>不适用场景&#xff1a;简单的一次性脚本开发&#xff08;比如单个接口调试、简单的数据处理脚本&#xff09;&#xff0c;这类需求无需复杂的规范和流程&#xff0c;直接使用Claude Code即可&#xff0c;无需搭建整套协同环境&#xff0c;避免过度复杂。</p>
+<h4><a id="63__786"></a>6.3 后续展望&#xff1a;持续优化&#xff0c;适配更多场景</h4>
+<p>随着AI编程技术的不断发展&#xff0c;Claude Code、OpenSpec和Superpowers也在持续更新迭代&#xff0c;后续我们可以关注3个优化方向&#xff0c;进一步提升协同开发效率&#xff1a;</p>
+<ol><li>
+<p>集成更多工具&#xff1a;比如集成代码覆盖率工具、性能测试工具&#xff0c;让AI在执行过程中自动完成覆盖率检测和性能测试&#xff0c;进一步提升代码质量。</p>
+</li><li>
+<p>优化自定义Schema&#xff1a;结合项目实际需求&#xff0c;定制更贴合的工作流&#xff0c;比如新增安全审计阶段、文档生成阶段&#xff0c;适配更复杂的开发场景。</p>
+</li><li>
+<p>团队规范集成&#xff1a;将团队的代码规范、命名规范、测试规范融入OpenSpec和Superpowers的配置中&#xff0c;让AI生成的代码更贴合团队习惯&#xff0c;减少后期修改成本。</p>
+</li></ol>
+<h3><a id="_796"></a>七、附录&#xff1a;常用指令速查&#xff08;新手必备&#xff09;</h3>
+<p>为了方便大家快速上手&#xff0c;整理了这套协同方案中最常用的指令&#xff0c;按场景分类&#xff0c;直接复制使用即可&#xff0c;无需记忆。</p>
+<h4><a id="71_OpenSpec_800"></a>7.1 OpenSpec核心指令&#xff08;需求规范相关&#xff09;</h4>
+<ul><li>
+<p>/opsx:propose 功能名称&#xff1a;创建功能变更提案&#xff08;核心指令&#xff0c;需求对齐第一步&#xff09;</p>
+</li><li>
+<p>/opsx:archive&#xff1a;归档变更&#xff0c;沉淀规范&#xff08;功能开发完成后执行&#xff09;</p>
+</li><li>
+<p>/opsx:verify&#xff1a;验证代码实现与规范的一致性&#xff08;开发过程中可随时执行&#xff09;</p>
+</li><li>
+<p>/opsx:new 功能名称&#xff1a;使用自定义Schema创建新变更</p>
+</li><li>
+<p>/opsx:explore 需求描述&#xff1a;进入探索模式&#xff0c;深入澄清需求、调查问题&#xff0c;辅助梳理需求细节</p>
+</li><li>
+<p>/opsx:apply&#xff1a;执行变更中的任务&#xff0c;触发AI自动编写对应代码</p>
+</li></ul>
+<h2><a id="1_Merge_to_main_814"></a>1. Merge to main&#xff08;合并到主分支&#xff09;</h2>
+<h2><a id="2_Create_PRPull_RequestCode_Review_816"></a>2. Create PR&#xff08;创建Pull Request&#xff0c;用于团队Code Review&#xff09;</h2>
+<h2><a id="3_Abandon_818"></a>3. Abandon&#xff08;放弃开发&#xff0c;删除隔离分支和工作目录&#xff09;</h2>
+<p>我们可以根据实际需求选择对应的操作&#xff0c;比如选择“2. Create PR”&#xff0c;AI会自动生成PR描述&#xff08;包含功能说明、测试结果、规范验证情况&#xff09;&#xff0c;并推送分支到远程仓库&#xff0c;方便团队进行Code Review&#xff0c;进一步保障代码质量。</p>
+<h3><a id="AI_822"></a>五、避坑指南&#xff1a;新手必看&#xff0c;避开AI协同开发的常见陷阱</h3>
+<p>在使用这套协同方案的过程中&#xff0c;新手很容易陷入一些误区&#xff0c;导致开发效率下降、代码规范失控&#xff0c;甚至出现项目风险。结合大量实战经验&#xff0c;整理了6个最常见的陷阱&#xff0c;以及对应的解决方法&#xff0c;帮你少走弯路。</p>
+<h4><a id="51_1AI_826"></a>5.1 陷阱1&#xff1a;跳过需求对齐&#xff0c;直接让AI写代码</h4>
+<p>很多开发者急于求成&#xff0c;拿到需求后不使用OpenSpec梳理规范&#xff0c;直接让Claude Code写代码&#xff0c;看似节省了时间&#xff0c;实则会导致后期大量返工——AI写的代码大概率偏离需求&#xff0c;甚至出现逻辑错误&#xff0c;最后需要反复修改&#xff0c;反而耗时更长。</p>
+<p>解决方法&#xff1a;严格遵循“需求对齐→计划制定→代码执行”的流程&#xff0c;无论需求多简单&#xff0c;都要先用OpenSpec创建提案&#xff0c;明确需求目标、范围和边界&#xff0c;确认提案后再推进后续开发。哪怕是简单的“修改一个按钮样式”&#xff0c;也可以用OpenSpec快速生成简洁的规范&#xff0c;避免AI自由发挥。</p>
+<h4><a id="52_2Review_AI_832"></a>5.2 陷阱2&#xff1a;不Review AI生成的提案和计划</h4>
+<p>AI生成的提案和计划虽然高效&#xff0c;但并非完美&#xff0c;可能存在需求遗漏、任务顺序不合理、技术方案不符合项目实际等问题。如果直接确认执行&#xff0c;会导致后续开发出现偏差&#xff0c;比如任务顺序颠倒、遗漏关键功能&#xff0c;甚至出现技术选型错误。</p>
+<p>解决方法&#xff1a;AI生成提案和计划后&#xff0c;一定要花5-10分钟Review&#xff0c;重点检查3点&#xff1a;① 需求范围是否准确&#xff0c;是否有遗漏或多余的内容&#xff1b;② 技术方案是否符合项目现有架构&#xff0c;是否存在兼容性问题&#xff1b;③ 任务顺序是否合理&#xff0c;是否存在依赖关系错误。发现问题及时让AI修改&#xff0c;避免后期返工。</p>
+<h4><a id="53_3AI_838"></a>5.3 陷阱3&#xff1a;过度依赖AI&#xff0c;不关注代码质量</h4>
+<p>这套协同方案虽然能让AI自动完成代码生成、测试和修复&#xff0c;但不代表我们可以完全放手不管。有些AI生成的代码虽然能通过测试&#xff0c;但可能存在代码冗余、命名不规范、逻辑不够简洁等问题&#xff0c;长期下来会导致项目代码臃肿&#xff0c;难以维护。</p>
+<p>解决方法&#xff1a;每个功能开发完成后&#xff0c;花少量时间Review核心代码&#xff08;比如关键工具函数、API接口逻辑&#xff09;&#xff0c;结合OpenSpec的验证功能&#xff0c;检查代码是否符合规范、逻辑是否合理。同时&#xff0c;定期整理项目代码&#xff0c;优化冗余逻辑&#xff0c;确保代码的可维护性。</p>
+<h4><a id="54_4_844"></a>5.4 陷阱4&#xff1a;忽略配置安全&#xff0c;导致项目风险</h4>
+<p>环境配置阶段&#xff0c;很多新手会忽略Claude Code的权限配置&#xff0c;要么不限制AI的操作权限&#xff0c;要么配置错误&#xff0c;导致AI可能执行rm -rf *、sudo等危险命令&#xff0c;删除项目文件、修改系统配置&#xff0c;造成不可挽回的损失。</p>
+<p>解决方法&#xff1a;严格按照前文2.4节的配置步骤&#xff0c;修改.claude/settings.json文件&#xff0c;限制AI的操作权限&#xff0c;只允许AI执行openspec、npm、git相关的安全命令。同时&#xff0c;定期检查配置文件&#xff0c;确保没有被意外修改&#xff0c;避免出现安全隐患。</p>
+<h4><a id="55_5_850"></a>5.5 陷阱5&#xff1a;并行开发时不注意规范冲突</h4>
+<p>虽然OpenSpec的Delta Spec机制支持并行开发&#xff0c;但如果多个功能涉及同一模块的规范修改&#xff0c;比如两个功能同时修改用户认证逻辑&#xff0c;归档时可能会出现规范冲突&#xff0c;导致后续开发出现问题。</p>
+<p>解决方法&#xff1a;并行开发前&#xff0c;先检查各个功能的需求范围&#xff0c;确认是否涉及同一模块的规范修改。如果涉及&#xff0c;及时沟通&#xff0c;明确分工&#xff0c;避免同时修改同一规范&#xff1b;归档时&#xff0c;先归档一个功能&#xff0c;检查规范合并无问题后&#xff0c;再归档另一个功能&#xff0c;确保规范一致性。</p>
+<h4><a id="56_6_856"></a>5.6 陷阱6&#xff1a;不归档变更&#xff0c;规范无法沉淀</h4>
+<p>有些开发者开发完成功能后&#xff0c;忘记执行/opsx:archive指令归档变更&#xff0c;导致变更文件夹一直停留在openspec/changes/目录下&#xff0c;规范无法合并到系统正式规范中&#xff0c;后续开发新功能时&#xff0c;AI无法读取之前的规范&#xff0c;导致重复开发、规范不一致。</p>
+<p>解决方法&#xff1a;每个功能开发完成后&#xff0c;立即执行/opsx:archive指令归档变更&#xff0c;确保规范沉淀到openspec/specs/中。同时&#xff0c;定期检查openspec/changes/目录&#xff0c;清理未归档的变更&#xff0c;避免目录混乱&#xff0c;便于项目追溯。</p>
+<h3><a id="_862"></a>六、实战总结&#xff1a;这套协同方案的核心价值与适用场景</h3>
+<p>通过前面的详细讲解&#xff0c;我们已经完整掌握了Claude Code &#43; OpenSpec &#43; Superpowers的协同开发方案&#xff0c;从环境搭建、核心工作流&#xff0c;到进阶技巧和避坑指南&#xff0c;每一步都结合实战案例&#xff0c;确保大家能够直接上手落地。最后&#xff0c;我们总结一下这套方案的核心价值和适用场景&#xff0c;帮大家更好地判断是否适合自己的项目。</p>
+<h4><a id="61__866"></a>6.1 核心价值&#xff1a;高效与规范的双重保障</h4>
+<p>这套协同方案的核心价值&#xff0c;在于打破了单个AI编程工具的局限&#xff0c;通过“需求对齐→流程约束→代码执行”的闭环&#xff0c;实现了“高效开发”与“规范落地”的双重保障&#xff0c;具体体现在3个方面&#xff1a;</p>
+<ol><li>
+<p>提升开发效率&#xff1a;AI自动完成代码生成、测试、修复、提交等重复性工作&#xff0c;开发者只需专注于需求梳理、方案决策和核心代码Review&#xff0c;大幅节省开发时间&#xff0c;小型功能可实现“小时级落地”&#xff0c;中型功能可实现“天级落地”。</p>
+</li><li>
+<p>保障代码质量&#xff1a;通过OpenSpec的规范约束、Superpowers的TDD强制执行和两阶段Review&#xff0c;以及AI的自动修复功能&#xff0c;从根源上减少bug&#xff0c;确保代码符合需求规范和工程标准&#xff0c;降低后期维护成本。</p>
+</li><li>
+<p>降低协作成本&#xff1a;规范沉淀后&#xff0c;团队成员和AI对需求的理解保持一致&#xff0c;并行开发互不冲突&#xff0c;多人协作时无需反复沟通需求细节&#xff0c;大幅降低协作成本&#xff0c;尤其适合中小型团队和多人协作项目。</p>
+</li></ol>
+<h4><a id="62__876"></a>6.2 适用场景&#xff1a;这些项目用它&#xff0c;效率翻倍</h4>
+<p>这套协同方案并非适用于所有项目&#xff0c;结合实战经验&#xff0c;以下3类项目使用它&#xff0c;能实现效率最大化&#xff1a;</p>
+<ol><li>
+<p>中型以上功能开发&#xff1a;比如用户认证系统、支付功能、后台管理系统等&#xff0c;需求相对复杂&#xff0c;需要规范的流程和高质量的代码&#xff0c;这套方案能避免返工&#xff0c;确保功能高效落地。</p>
+</li><li>
+<p>多人协作项目&#xff1a;团队成员分工明确&#xff0c;需要统一的需求规范和开发流程&#xff0c;避免出现代码混乱、需求偏差等问题&#xff0c;这套方案能实现规范沉淀和并行开发&#xff0c;提升团队协作效率。</p>
+</li><li>
+<p>长期维护项目&#xff1a;需要持续迭代功能&#xff0c;规范的沉淀能确保后续迭代不偏离原有架构&#xff0c;减少技术债务&#xff0c;AI的自动修复和测试功能&#xff0c;能降低长期维护成本。</p>
+</li></ol>
+<p>不适用场景&#xff1a;简单的一次性脚本开发&#xff08;比如单个接口调试、简单的数据处理脚本&#xff09;&#xff0c;这类需求无需复杂的规范和流程&#xff0c;直接使用Claude Code即可&#xff0c;无需搭建整套协同环境&#xff0c;避免过度复杂。</p>
+<h4><a id="63__888"></a>6.3 后续展望&#xff1a;持续优化&#xff0c;适配更多场景</h4>
+<p>随着AI编程技术的不断发展&#xff0c;Claude Code、OpenSpec和Superpowers也在持续更新迭代&#xff0c;后续我们可以关注3个优化方向&#xff0c;进一步提升协同开发效率&#xff1a;</p>
+<ol><li>
+<p>集成更多工具&#xff1a;比如集成代码覆盖率工具、性能测试工具&#xff0c;让AI在执行过程中自动完成覆盖率检测和性能测试&#xff0c;进一步提升代码质量。</p>
+</li><li>
+<p>优化自定义Schema&#xff1a;结合项目实际需求&#xff0c;定制更贴合的工作流&#xff0c;比如新增安全审计阶段、文档生成阶段&#xff0c;适配更复杂的开发场景。</p>
+</li><li>
+<p>团队规范集成&#xff1a;将团队的代码规范、命名规范、测试规范融入OpenSpec和Superpowers的配置中&#xff0c;让AI生成的代码更贴合团队习惯&#xff0c;减少后期修改成本。</p>
+</li></ol>
+<h3><a id="_898"></a>七、附录&#xff1a;常用指令速查&#xff08;新手必备&#xff09;</h3>
+<p>为了方便大家快速上手&#xff0c;整理了这套协同方案中最常用的指令&#xff0c;按场景分类&#xff0c;直接复制使用即可&#xff0c;无需记忆。</p>
+<h4><a id="71_OpenSpec_902"></a>7.1 OpenSpec核心指令&#xff08;需求规范相关&#xff09;</h4>
+<ul><li>
+<p>/opsx:propose 功能名称&#xff1a;创建功能变更提案&#xff08;核心指令&#xff0c;需求对齐第一步&#xff09;</p>
+</li><li>
+<p>/opsx:archive&#xff1a;归档变更&#xff0c;沉淀规范&#xff08;功能开发完成后执行&#xff09;</p>
+</li><li>
+<p>/opsx:verify&#xff1a;验证代码实现与规范的一致性&#xff08;开发过程中可随时执行&#xff09;</p>
+</li><li>
+<p>/opsx:new 功能名称&#xff1a;使用自定义Schema创建新变更</p>
+</li><li>
+<p>/opsx:explore 需求描述&#xff1a;进入探索模式&#xff0c;深入澄清需求、调查问题&#xff0c;辅助梳理需求细节</p>
+</li><li>
+<p>/opsx:apply&#xff1a;执行变更中的任务&#xff0c;触发AI自动编写对应代码</p>
+</li><li>
+<p>/opsx:continue&#xff1a;根据任务依赖关系&#xff0c;创建下一个工作文档&#xff08;如提案后生成规范文档&#xff09;</p>
+</li></ul>
+
+
+                </div>
+  </div>
+</article>
+</body>
+</html>

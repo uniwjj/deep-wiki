@@ -2,6 +2,13 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-24] ingest | SDD 实践：OpenSpec + Superpowers 整合创建自定义工作流（re-ingest）
+- 源文件已归档至 sources/2026/05/24/，内容与 2026-05-17 首次摄入一致，无新增 wiki 页面
+- 已有页面 `sdd-custom-workflow.md` 已完整覆盖此文内容
+
+## [2026-05-24] ingest | 从古法编程到 AI 编程：Superpowers + OpenSpec 协同开发实战指南（re-ingest）
+- 源文件归档，内容同 2026-05-17 首次摄入 → `superpowers-openspec-legacy-workflow.md`
+
 ## [2026-05-24] ingest | 开源项目 superpowers 深度解读：把 AI Coding Agent 变成遵守工程流程的协作伙伴
 - created `superpowers-repo-architecture.md` — 仓库内部架构分析：四层能力模块（skills/agents/commands/hooks）、跨平台分发分层设计、using-superpowers 总控机制（1% 规则）、两条执行路径（subagent vs executing-plans）、receiving-code-review 反表演式认同、writing-skills 元技能 SDD 方式、5 个核心设计洞察 + 4 个局限
 - updated `ai-agent/sdd/index.md` — 页数 12→13

@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDD 实践：OpenSpec + Superpowers 整合创建自定义工作流</title>
+  <!--
+  ingested: 2026-05-24
+  wiki_pages: [] (re-ingest, 首次摄入 2026-05-17 → sdd-custom-workflow.md)
+  -->
+  <style>
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 16px; line-height: 1.8; color: #333; max-width: 800px; margin: 0 auto; padding: 20px;
+}
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre {
+  background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto;
+  font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;
+}
+article .article-body code {
+  font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+  background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em;
+}
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote {
+  margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555;
+}
+article .article-body table {
+  border-collapse: collapse; width: 100%; margin: 16px 0;
+}
+article .article-body th, article .article-body td {
+  border: 1px solid #ddd; padding: 8px 12px; text-align: left;
+}
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+  </style>
+</head>
+<body>
+<article>
+  <header class="article-meta">
+    <h1>SDD 实践：OpenSpec + Superpowers 整合创建自定义工作流</h1>
+    <div class="meta-info">
+      <span>作者：光辉GuangHui</span>
+      <span>发表：2026-03-23 20:28:08</span>
+      <span>来源：<a href="https://juejin.cn/post/7619871928371183666" target="_blank">https://juejin.cn/post/7619871928371183666</a></span>
+      <span>下载：2026-05-24</span>
+    </div>
+  </header>
+  <hr>
+  <div class="article-body">
+<div class="article-viewer markdown-body result"><style>.markdown-body{word-break:break-word;line-height:1.75;font-weight:400;font-size:16px;overflow-x:hidden;color:#252933}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{line-height:1.5;margin-top:35px;margin-bottom:10px;padding-bottom:5px}.markdown-body h1{font-size:24px;line-height:38px;margin-bottom:5px}.markdown-body h2{font-size:22px;line-height:34px;padding-bottom:12px;border-bottom:1px solid #ececec}.markdown-body h3{font-size:20px;line-height:28px}.markdown-body h4{font-size:18px;line-height:26px}.markdown-body h5{font-size:17px;line-height:24px}.markdown-body h6{font-size:16px;line-height:24px}.markdown-body p{line-height:inherit;margin-top:22px;margin-bottom:22px}.markdown-body img{max-width:100%}.markdown-body hr{border:none;border-top:1px solid #ddd;margin-top:32px;margin-bottom:32px}.markdown-body code{word-break:break-word;border-radius:2px;overflow-x:auto;background-color:#fff5f5;color:#ff502c;font-size:.87em;padding:.065em .4em}.markdown-body code,.markdown-body pre{font-family:Menlo,Monaco,Consolas,Courier New,monospace}.markdown-body pre{overflow:auto;position:relative;line-height:1.75}.markdown-body pre>code{font-size:12px;padding:15px 12px;margin:0;word-break:normal;display:block;overflow-x:auto;color:#333;background:#f8f8f8}.markdown-body a{text-decoration:none;color:#0269c8;border-bottom:1px solid #d1e9ff}.markdown-body a:active,.markdown-body a:hover{color:#275b8c}.markdown-body table{display:inline-block!important;font-size:12px;width:auto;max-width:100%;overflow:auto;border:1px solid #f6f6f6}.markdown-body thead{background:#f6f6f6;color:#000;text-align:left}.markdown-body tr:nth-child(2n){background-color:#fcfcfc}.markdown-body td,.markdown-body th{padding:12px 7px;line-height:24px}.markdown-body td{min-width:120px}.markdown-body blockquote{color:#666;padding:1px 23px;margin:22px 0;border-left:4px solid #cbcbcb;background-color:#f8f8f8}.markdown-body blockquote:after{display:block;content:""}.markdown-body blockquote>p{margin:10px 0}.markdown-body ol,.markdown-body ul{padding-left:28px}.markdown-body ol li,.markdown-body ul li{margin-bottom:0;list-style:inherit}.markdown-body ol li .task-list-item,.markdown-body ul li .task-list-item{list-style:none}.markdown-body ol li .task-list-item ol,.markdown-body ol li .task-list-item ul,.markdown-body ul li .task-list-item ol,.markdown-body ul li .task-list-item ul{margin-top:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:3px}.markdown-body ol li{padding-left:6px}.markdown-body .contains-task-list{padding-left:0}.markdown-body .task-list-item{list-style:none}@media (max-width:720px){.markdown-body h1{font-size:24px}.markdown-body h2{font-size:20px}.markdown-body h3{font-size:18px}}</style><style data-highlight data-highlight-key="juejin">.markdown-body pre,.markdown-body pre>code.hljs{color:#333;background:#f8f8f8}.hljs-comment,.hljs-quote{color:#998;font-style:italic}.hljs-keyword,.hljs-selector-tag,.hljs-subst{color:#333;font-weight:700}.hljs-literal,.hljs-number,.hljs-tag .hljs-attr,.hljs-template-variable,.hljs-variable{color:teal}.hljs-doctag,.hljs-string{color:#d14}.hljs-section,.hljs-selector-id,.hljs-title{color:#900;font-weight:700}.hljs-subst{font-weight:400}.hljs-class .hljs-title,.hljs-type{color:#458;font-weight:700}.hljs-attribute,.hljs-name,.hljs-tag{color:navy;font-weight:400}.hljs-link,.hljs-regexp{color:#009926}.hljs-bullet,.hljs-symbol{color:#990073}.hljs-built_in,.hljs-builtin-name{color:#0086b3}.hljs-meta{color:#999;font-weight:700}.hljs-deletion{background:#fdd}.hljs-addition{background:#dfd}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}</style><h2 data-id="heading-0">SDD 实践：OpenSpec + Superpowers 整合创建自定义工作流</h2>
+<blockquote>
+<p>本文介绍如何将 OpenSpec（规格驱动变更管理）与 Superpowers（AI 执行纪律）整合为一套连贯的 Spec-Driven Development（SDD）工作流。</p>
+</blockquote>
+<hr>
+<h3 data-id="heading-1">1. 问题：AI 辅助开发缺什么</h3>
+<p>AI 编码助手已经能完成完整功能。但随着 AI 承担的任务范围变大，两个问题开始显现：</p>
+<p><strong>设计共识随对话消失。</strong> AI 在长对话中会遗忘早期约束。brainstorm 中否决的方案，可能在第 50 轮对话时被重新提出。<code>/clear</code> 释放上下文后，之前达成的共识全部丢失。</p>
+<p><strong>AI 有能力写代码，但没有纪律维护工程质量。</strong> 它不会主动先写测试，不会系统定位 bug 根因，也不会在写代码前检查 spec。如果没有外部结构约束，产出质量完全依赖于人类工程师在每次对话中是否足够谨慎。</p>
+<p>这两个问题恰好被两个工具分别解决：</p>
+<ul>
+<li><strong>OpenSpec</strong> 管"写什么"——用结构化 artifact（proposal → specs → design → tasks）管理每一次变更，用 Delta Spec（ADDED / MODIFIED / REMOVED）适配棕地开发，用 GIVEN/WHEN/THEN 场景确保需求可验证</li>
+<li><strong>Superpowers</strong> 管"怎么做"——用严格的执行纪律（TDD 铁律、系统化调试、双阶段代码审查）约束 AI 的行为</li>
+</ul>
+<p>但单独使用都不够：OpenSpec 有 spec 流程但缺 TDD 纪律，Superpowers 有执行方法论但设计共识无处持久化。SDD 的整合目标就是让两者的能力互补。</p>
+<hr>
+<h3 data-id="heading-2">2. 整合的核心理念</h3>
+<h4 data-id="heading-3">Action Not Phases</h4>
+<p>SDD 的每个操作是独立能力（action），不是必须按顺序完成的阶段（phase）。</p>
+<pre><code class="hljs language-css" lang="css">sdd-brainstorm   — 想深度探索设计
+sdd-propose      — 想固化提案
+sdd-ff           — 想快进生成所有规划文档
+sdd-plan         — 想细化实施计划
+sdd-<span class="hljs-selector-tag">code</span>         — 想按 TDD 实施
+sdd-review-spec  — 想审查 spec 质量
+sdd-review-<span class="hljs-selector-tag">code</span>  — 想审查代码
+sdd-verify       — 想全面验证
+sdd-ship         — 想归档合并
+</code></pre>
+<p>依赖关系是 <strong>enabler</strong>（前置 artifact 应存在），不是 <strong>gate</strong>（缺失则阻断）。大特性可以走完整流程，小修复可以跳过头脑风暴直接 <code>sdd-propose</code>——这不是"违规跳阶段"，而是根据需要选择能力组合。</p>
+<h4 data-id="heading-4">产物接力</h4>
+<p>每个 action 的输出是下一个 action 的输入，所有中间状态持久化为文件：</p>
+<pre><code class="hljs language-css" lang="css">brainstorm<span class="hljs-selector-class">.md</span> → proposal<span class="hljs-selector-class">.md</span> → specs/ → design<span class="hljs-selector-class">.md</span> → tasks<span class="hljs-selector-class">.md</span> → plan<span class="hljs-selector-class">.md</span> → <span class="hljs-selector-attr">[代码]</span> → <span class="hljs-selector-attr">[归档]</span>
+</code></pre>
+<p>两个关键含义：</p>
+<ol>
+<li>任意步骤之间可以安全 <code>/clear</code>，状态在文件系统中，不在对话历史里</li>
+<li>每个 action 是"无状态"的——它只读取文件，不依赖之前的对话记忆</li>
+</ol>
+<h4 data-id="heading-5">不修改底层工具</h4>
+<p>SDD 是编排层，不修改 OpenSpec 或 Superpowers 的任何原有文件。两个工具保持独立升级能力。</p>
+<hr>
+<h3 data-id="heading-6">3. 薄编排架构</h3>
+<h4 data-id="heading-7">为什么是"薄编排"</h4>
+<p>早期设计中，SDD skills 复制了大量 OpenSpec 和 Superpowers 的逻辑（比如自己实现苏格拉底式提问流程）。这导致上游升级时 SDD 不会自动跟进，修 bug 需要多处修改。</p>
+<p>薄编排的思路是：<strong>SDD skill 只做编排，核心工作委托给底层 skill。</strong></p>
+<pre><code class="hljs language-kotlin" lang="kotlin">用户 ──→ sdd-* skills（唯一入口）
+             │
+             ├── invoke → Superpowers skills（brainstorming / TDD / debugging...）
+             ├── invoke → OpenSpec skills（<span class="hljs-keyword">continue</span>-change / ff-change / verify...）
+             └── SDD 自有逻辑（前置检查 / review 循环 / 产物校验）
+</code></pre>
+<p><strong>用户只认识 <code>sdd-*</code></strong>，不需要知道 OpenSpec 或 Superpowers 的存在。SDD 保留编排权（review 循环、决策追溯检查、批次管理），底层 skill 做核心工作。</p>
+<h4 data-id="heading-8">每个 Skill 的统一三段式结构</h4>
+<p>所有 SDD skill 遵循同一结构：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>阶段</th><th>执行方</th><th>职责</th></tr></thead><tbody><tr><td><strong>前置逻辑</strong></td><td>SDD 自有</td><td>定位 change 目录、读取已有 artifact、检查前置条件</td></tr><tr><td><strong>核心执行</strong></td><td>invoke 底层 skill</td><td>核心工作交给 OpenSpec 或 Superpowers</td></tr><tr><td><strong>后置逻辑</strong></td><td>SDD 自有</td><td>review 循环、产物格式校验、下一步引导</td></tr></tbody></table>
+<p>以 <code>sdd-brainstorm</code> 为例：前置逻辑定位 change 目录并读取项目上下文；核心执行 invoke <code>superpowers:brainstorming</code> 进行苏格拉底式探索；后置逻辑 dispatch brainstorm-reviewer 进行审查（最多 3 轮）。</p>
+<h4 data-id="heading-9">Override 机制</h4>
+<p>部分 Superpowers skills 有内置的自动转场逻辑（比如 brainstorming 完成后自动进入 writing-plans）。在 SDD 中，这种自动转场会打断编排节奏。SDD 通过显式 Override 解决：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>被调用 Skill</th><th>Override 什么</th><th>保留什么</th></tr></thead><tbody><tr><td><code>superpowers:brainstorming</code></td><td>输出位置、模板格式、禁止转入 writing-plans、跳过内置 reviewer</td><td>苏格拉底式提问、方案探索、分段确认</td></tr><tr><td><code>superpowers:writing-plans</code></td><td>输出位置、模板格式、禁止转入 executing-plans、跳过内置 reviewer</td><td>2-5 分钟粒度、TDD 步骤结构</td></tr><tr><td><code>superpowers:using-git-worktrees</code></td><td>分支命名为 <code>sdd/&#x3C;change-name></code></td><td>安全验证、基线测试</td></tr></tbody></table>
+<p>其余 skills（TDD、debugging、code-review、verification 等）的核心纪律全部保留，无需 Override。</p>
+<hr>
+<h3 data-id="heading-10">4. 三层架构</h3>
+<pre><code class="hljs language-kotlin" lang="kotlin">┌─────────────────────────────────────────────────────────────┐
+│              SDD Action Skills（编排层）                       │
+│  sdd-brainstorm  sdd-propose  sdd-ff  sdd-plan  sdd-code   │
+│  sdd-<span class="hljs-keyword">continue</span>  sdd-review-spec  sdd-review-code             │
+│  sdd-verify  sdd-ship  sdd-doctor                           │
+└───────────────┬──────────────────────┬──────────────────────┘
+                │                      │
+    ┌───────────▼───────────┐  ┌───────▼──────────────────────┐
+    │   Superpowers（纪律层） │  │   OpenSpec（规格层）           │
+    │  brainstorming         │  │  Schema / 模板系统            │
+    │  writing-plans         │  │  <span class="hljs-keyword">continue</span>-change / ff-change │
+    │  test-driven-development│  │  verify-change / archive     │
+    │  systematic-debugging  │  │  sync-specs                  │
+    │  requesting-code-review│  │  Delta Spec 格式             │
+    │  using-git-worktrees   │  │                              │
+    │  verification          │  │                              │
+    │  finishing-branch      │  │                              │
+    └────────────────────────┘  └──────────────────────────────┘
+</code></pre>
+<h4 data-id="heading-11">委托关系全景</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>SDD Action</th><th>委托给</th><th>SDD 自有逻辑</th><th>产物</th></tr></thead><tbody><tr><td><strong>sdd-doctor</strong></td><td>无</td><td>检查环境、skill 完整性、change 状态</td><td>诊断报告</td></tr><tr><td><strong>sdd-brainstorm</strong></td><td><code>superpowers:brainstorming</code></td><td>前置：定位 change dir / 后置：brainstorm-reviewer 循环</td><td><code>brainstorm.md</code> + review</td></tr><tr><td><strong>sdd-propose</strong></td><td><code>openspec-continue-change</code></td><td>前置：读 brainstorm / 后置：决策追溯检查</td><td><code>proposal.md</code></td></tr><tr><td><strong>sdd-continue</strong></td><td><code>openspec-continue-change</code></td><td>识别下一个缺失 artifact、格式校验</td><td>依赖链中下一个 artifact</td></tr><tr><td><strong>sdd-ff</strong></td><td><code>openspec-ff-change</code></td><td>识别所有缺失 artifact、批量校验</td><td>所有缺失 artifact（至 tasks.md）</td></tr><tr><td><strong>sdd-plan</strong></td><td><code>superpowers:writing-plans</code></td><td>前置：读 tasks+specs+design / 后置：plan-reviewer 循环</td><td><code>plan.md</code> + review</td></tr><tr><td><strong>sdd-code</strong></td><td><code>superpowers:test-driven-development</code> + <code>superpowers:using-git-worktrees</code> + <code>superpowers:systematic-debugging</code></td><td>前置：读 plan 定位批次 / 后置：更新 tasks.md</td><td>代码 + 测试 + commits</td></tr><tr><td><strong>sdd-review-spec</strong></td><td>无（派遣 subagent）</td><td>spec-reviewer 审查</td><td><code>reviews/spec-r&#x3C;N>.md</code></td></tr><tr><td><strong>sdd-review-code</strong></td><td>Phase 2: <code>superpowers:requesting-code-review</code></td><td>Phase 1: spec-compliance 审查</td><td><code>reviews/code-*.md</code></td></tr><tr><td><strong>sdd-verify</strong></td><td><code>superpowers:verification-before-completion</code> + <code>openspec-verify-change</code></td><td>逐条 scenario 覆盖率统计</td><td>验证报告</td></tr><tr><td><strong>sdd-ship</strong></td><td><code>openspec-sync-specs</code> + <code>openspec-archive-change</code> + <code>superpowers:finishing-a-development-branch</code></td><td>前置：最终验证 / 编排：三步顺序执行</td><td>归档 + specs 同步</td></tr></tbody></table>
+<hr>
+<h3 data-id="heading-12">5. Artifact 依赖链与模板</h3>
+<h4 data-id="heading-13">依赖关系</h4>
+<pre><code class="hljs language-scss" lang="scss">brainstorm<span class="hljs-selector-class">.md</span> ──→ proposal<span class="hljs-selector-class">.md</span> ──→ specs/ ──→ tasks<span class="hljs-selector-class">.md</span> ──→ plan<span class="hljs-selector-class">.md</span>
+  (可选)            (必需)     ↗   (必需)      (必需)
+                            proposal<span class="hljs-selector-class">.md</span>
+                               ↓
+                           design<span class="hljs-selector-class">.md</span>
+                            (可选)
+</code></pre>
+<p><strong>必需 artifact</strong>：<code>proposal.md</code>、<code>specs/</code>、<code>tasks.md</code> — spec 流程的骨架。</p>
+<p><strong>可选 artifact</strong>：<code>brainstorm.md</code>（需求已明确时跳过）、<code>design.md</code>（简单变更不需要技术设计）、<code>plan.md</code>（虽然强烈推荐，但紧急修复可直接实施）。</p>
+<p>关键设计：<code>tasks.md</code> 不硬依赖 <code>design.md</code>，简单变更可以从 specs 直接出 tasks。<code>plan.md</code> 由 <code>sdd-plan</code> 单独生成（而非 <code>sdd-ff</code> 一并生成），确保 plan 质量由 Superpowers 的 writing-plans 纪律保障。</p>
+<h4 data-id="heading-14">tasks.md 与 plan.md 的分工</h4>
+<p>两者回答不同层次的问题，不能合并：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>tasks.md（做什么）</th><th>plan.md（怎么做）</th></tr></thead><tbody><tr><td>归属</td><td>OpenSpec 产物</td><td>Superpowers 产物</td></tr><tr><td>约束</td><td>schema 模板</td><td>writing-plans 纪律</td></tr><tr><td>格式</td><td>checkbox + spec 链接</td><td>文件路径 + 测试代码 + 运行命令</td></tr><tr><td>粒度</td><td>spec requirement 级</td><td>2-5 分钟工程师操作级</td></tr></tbody></table>
+<p>tasks.md 中的一条：</p>
+<pre><code class="hljs language-markdown" lang="markdown"><span class="hljs-bullet">-</span> [ ] 1.1 实现主题切换 API [spec:ui-theme#toggle-theme]
+</code></pre>
+<p>plan.md 中的对应展开：</p>
+<pre><code class="hljs language-markdown" lang="markdown"><span class="hljs-section">#### Task 1.1：实现主题切换 API [spec:ui-theme#toggle-theme]</span>
+<span class="hljs-bullet">-</span> <span class="hljs-strong">**文件**</span>：<span class="hljs-code">`src/theme/ThemeProvider.ts`</span> (Create)
+<span class="hljs-bullet">-</span> <span class="hljs-strong">**RED**</span>：编写失败测试
+  test('toggleTheme switches from light to dark', () => { ... })
+<span class="hljs-bullet">-</span> <span class="hljs-strong">**运行验证失败**</span>：<span class="hljs-code">`npm test -- --filter "toggleTheme"`</span>
+<span class="hljs-bullet">-</span> <span class="hljs-strong">**GREEN**</span>：最小实现
+<span class="hljs-bullet">-</span> <span class="hljs-strong">**运行验证通过**</span>：<span class="hljs-code">`npm test -- --filter "toggleTheme"`</span>
+</code></pre>
+<h4 data-id="heading-15">Schema 与模板</h4>
+<p>Schema（<code>openspec/schemas/sdd/schema.yaml</code>）只管<strong>内容约束</strong>——产物里应该有什么——不管<strong>流程编排</strong>——谁来做、怎么做。流程编排的职责完全由 SDD skill 承担。</p>
+<p>7 个模板文件（位于 <code>openspec/schemas/sdd/templates/</code>）是 Schema 层和 Action 层之间的接口契约：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模板元素</th><th>生产方</th><th>消费方</th></tr></thead><tbody><tr><td>spec GIVEN/WHEN/THEN 场景</td><td><code>spec.md</code> 模板要求可测试断言</td><td><code>sdd-code</code> 将场景翻译为测试</td></tr><tr><td>tasks <code>[spec:domain#scenario]</code> 链接</td><td><code>tasks.md</code> 模板格式</td><td><code>sdd-code</code> 定位对应场景</td></tr><tr><td>proposal/design "决策追溯"节</td><td>模板必填节</td><td><code>sdd-review-spec</code> 验证完整性</td></tr></tbody></table>
+<hr>
+<h3 data-id="heading-16">6. Review 机制</h3>
+<p>SDD 中有两类 review，设计意图不同。</p>
+<h4 data-id="heading-17">内嵌 Review</h4>
+<p>是 action 内部的质量保证，不是独立步骤：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>所在 Action</th><th>Reviewer</th><th>检查焦点</th></tr></thead><tbody><tr><td><code>sdd-brainstorm</code></td><td>brainstorm-reviewer</td><td>方案完整性、决策清晰度、YAGNI</td></tr><tr><td><code>sdd-plan</code></td><td>plan-reviewer</td><td>任务粒度、TDD 步骤完整性、spec 对齐</td></tr></tbody></table>
+<p>内嵌 review 不违反"Action Not Phases"——它是 action 内部的质量保证机制。</p>
+<h4 data-id="heading-18">独立 Review</h4>
+<p>是可选 action，按需触发：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Action</th><th>Reviewer</th><th>推荐场景</th></tr></thead><tbody><tr><td><code>sdd-review-spec</code></td><td>spec-reviewer</td><td>大特性在实施前推荐执行</td></tr><tr><td><code>sdd-review-code</code></td><td>spec-compliance + code-quality（双阶段）</td><td>每批次实施后</td></tr></tbody></table>
+<h4 data-id="heading-19">双阶段代码审查</h4>
+<p><code>sdd-review-code</code> 分两阶段执行：</p>
+<ol>
+<li><strong>Phase 1：Spec 合规审查</strong>（SDD 自有逻辑，dispatch subagent）—— 代码是否实现了 spec 中的场景</li>
+<li><strong>Phase 2：代码质量审查</strong>（invoke <code>superpowers:requesting-code-review</code>）—— 可读性、设计模式、潜在问题</li>
+</ol>
+<p>Phase 1 必须通过后才进入 Phase 2。理由：如果代码没有实现 spec 要求的功能，讨论代码质量毫无意义。先确认"做对了"，再讨论"做好了"。</p>
+<p>所有 review 产物写入 <code>reviews/</code> 目录，命名格式 <code>&#x3C;artifact>-r&#x3C;round>.md</code>。</p>
+<hr>
+<h3 data-id="heading-20">7. 信息丢失防护</h3>
+<p>长文档链路中的信息丢失是真实风险。<code>brainstorm.md</code> 中的关键约束，到 <code>plan.md</code> 生成时可能已不可见（中间经过多次 <code>/clear</code>）。</p>
+<p>SDD 通过两层机制防护：</p>
+<p><strong>第一层：模板的"决策追溯"必填节。</strong> <code>proposal.md</code> 和 <code>design.md</code> 模板均要求显式引用 brainstorm 中的关键决策：</p>
+<pre><code class="hljs language-xml" lang="xml">## 决策追溯
+<span class="hljs-comment">&#x3C;!-- 必填：引用 brainstorm.md 中的关键决策 --></span>
+- 选择 [X] 而非 [Y]：[原因]（见 brainstorm.md §关键决策）
+- 约束 [Z]：[来源]（见 brainstorm.md §约束分析）
+</code></pre>
+<p><strong>第二层：后置逻辑的自动检查。</strong> <code>sdd-propose</code> 的后置逻辑会验证 proposal 是否引用了 brainstorm 中的所有关键决策。<code>sdd-review-spec</code> 也会检查决策追溯的完整性作为兜底。</p>
+<p>信息沿依赖链向下传递：brainstorm → proposal（决策追溯）→ specs（需求场景）→ tasks（spec 链接）→ plan（保留 spec 链接）。每一环都有显式引用，不靠对话记忆。</p>
+<hr>
+<h3 data-id="heading-21">8. 上下文卫生</h3>
+<p>AI 辅助开发的一大挑战是对话上下文膨胀。SDD 的解法是<strong>持久化一切，然后安心清空</strong>。</p>
+<p>每个 action 完成时都会输出：</p>
+<blockquote>
+<p>"本 action 已完成，产物已持久化至 <code>&#x3C;path></code>。如需释放上下文，可安全 <code>/clear</code>。"</p>
+</blockquote>
+<p><strong>使用建议：</strong></p>
+<ul>
+<li>每个 action 完成后 <code>/clear</code> — 这是核心习惯，不是可选操作</li>
+<li>看到完成提示中的文件路径就可以 <code>/clear</code> — 产物在文件系统中，对话历史是不可靠的状态存储</li>
+<li>不要在 action 中途 <code>/clear</code> — 每个 action 设计为原子操作</li>
+</ul>
+<p>三个 action 包含交互式流程，不适合中途清空：<code>sdd-brainstorm</code>（多轮对话 + review 循环）、<code>sdd-plan</code>（可能需要 review 循环）、<code>sdd-code</code>（单批次内的 TDD 循环）。</p>
+<hr>
+<h3 data-id="heading-22">9. 完整工作流</h3>
+<h4 data-id="heading-23">大特性标准路径</h4>
+<pre><code class="hljs language-bash" lang="bash"><span class="hljs-comment"># 步骤 1：深度探索设计</span>
+sdd-brainstorm
+  → brainstorm.md + reviews/brainstorm-r1.md
+/clear
+
+<span class="hljs-comment"># 步骤 2：快进生成所有规划文档</span>
+sdd-ff
+  → proposal.md + specs/ + design.md + tasks.md
+/clear
+
+<span class="hljs-comment"># 步骤 3：审查 spec 质量（大特性推荐）</span>
+sdd-review-spec
+  → reviews/spec-r1.md
+/clear
+
+<span class="hljs-comment"># 步骤 4：细化实施计划</span>
+sdd-plan
+  → plan.md + reviews/plan-r1.md
+/clear
+
+<span class="hljs-comment"># 步骤 5-8：按批次 TDD 实施 + 代码审查</span>
+sdd-code          <span class="hljs-comment"># 批次一</span>
+/clear
+sdd-review-code   <span class="hljs-comment"># 审查批次一</span>
+/clear
+sdd-code          <span class="hljs-comment"># 批次二</span>
+/clear
+sdd-review-code   <span class="hljs-comment"># 审查批次二</span>
+/clear
+
+<span class="hljs-comment"># 步骤 9：全面验证</span>
+sdd-verify
+/clear
+
+<span class="hljs-comment"># 步骤 10：归档合并</span>
+sdd-ship
+</code></pre>
+<h4 data-id="heading-24">小修复最短路径</h4>
+<pre><code class="hljs language-css" lang="css">sdd-propose  → /<span class="hljs-attribute">clear</span> → sdd-ff → /<span class="hljs-attribute">clear</span> → sdd-plan → /<span class="hljs-attribute">clear</span> → sdd-<span class="hljs-selector-tag">code</span> → /<span class="hljs-attribute">clear</span> → sdd-ship
+</code></pre>
+<p>跳过 brainstorm（需求已明确）、跳过 spec review（改动小）、跳过独立 verify（ship 内置验证）。</p>
+<h4 data-id="heading-25">Next Action 引导</h4>
+<p>每个 action 完成时给出明确的下一步建议：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>当前 Action</th><th>推荐下一步</th></tr></thead><tbody><tr><td><code>sdd-brainstorm</code></td><td>逐步确认 → <code>sdd-propose</code>；需求充分 → <code>sdd-ff</code></td></tr><tr><td><code>sdd-propose</code></td><td>逐步确认 → <code>sdd-continue</code>；需求充分 → <code>sdd-ff</code></td></tr><tr><td><code>sdd-continue</code></td><td>继续 → <code>sdd-continue</code>；快进 → <code>sdd-ff</code>；到 tasks → <code>sdd-plan</code></td></tr><tr><td><code>sdd-ff</code></td><td>大特性 → <code>sdd-review-spec</code>；小修复 → <code>sdd-plan</code></td></tr><tr><td><code>sdd-review-spec</code></td><td>Approved → <code>sdd-plan</code>；Issues → 修正后再审</td></tr><tr><td><code>sdd-plan</code></td><td><code>sdd-code</code> 开始实施</td></tr><tr><td><code>sdd-code</code></td><td><code>sdd-review-code</code> 审查本批次</td></tr><tr><td><code>sdd-review-code</code></td><td>有更多批次 → <code>sdd-code</code>；全完成 → <code>sdd-verify</code></td></tr><tr><td><code>sdd-verify</code></td><td>Pass → <code>sdd-ship</code>；Fail → <code>sdd-code</code> 补充</td></tr><tr><td><code>sdd-ship</code></td><td>本轮完成</td></tr></tbody></table>
+<hr>
+<h3 data-id="heading-26">10. 渐进采用策略</h3>
+<p>不需要一次性使用全部 11 个 action。分阶段引入：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>阶段</th><th>使用的 Action</th><th>建立的习惯</th></tr></thead><tbody><tr><td>第一阶段</td><td><code>sdd-propose</code> → <code>sdd-ff</code> → <code>sdd-plan</code> → <code>sdd-code</code> → <code>sdd-ship</code></td><td>spec 驱动 + TDD</td></tr><tr><td>第二阶段</td><td>+ <code>sdd-review-spec</code> + <code>sdd-review-code</code></td><td>审查纪律</td></tr><tr><td>第三阶段</td><td>+ <code>sdd-brainstorm</code> + <code>sdd-verify</code></td><td>完整工程纪律</td></tr></tbody></table>
+<p>每个阶段都能独立提供价值。</p>
+<hr>
+<h3 data-id="heading-27">11. 目录结构</h3>
+<pre><code class="hljs language-objectivec" lang="objectivec">openspec/
+├── config.yaml                     # 项目配置（默认 schema: sdd）
+├── specs/                          # 全局 spec（归档后合并至此）
+│   └── &#x3C;domain>/
+│       └── spec.md
+├── schemas/
+│   └── sdd/                        # SDD schema + 模板
+│       ├── schema.yaml             <span class="hljs-meta"># artifact 定义、依赖链、内容约束</span>
+│       └── templates/
+│           ├── brainstorm.md
+│           ├── proposal.md
+│           ├── spec.md
+│           ├── design.md
+│           ├── tasks.md
+│           ├── plan.md
+│           └── review.md
+└── changes/
+    ├── &#x3C;change-name>/              # 活跃变更
+    │   ├── brainstorm.md
+    │   ├── proposal.md
+    │   ├── specs/
+    │   │   └── &#x3C;capability>/
+    │   │       └── spec.md
+    │   ├── design.md
+    │   ├── tasks.md
+    │   ├── plan.md
+    │   └── reviews/
+    │       ├── brainstorm-r1.md
+    │       ├── spec-r1.md
+    │       ├── plan-r1.md
+    │       ├── code-batch1-r1.md
+    │       └── code-final-r1.md
+    └── archive/
+        └── YYYY-MM-DD-&#x3C;name>/
+
+.claude/skills/
+├── sdd-doctor/         <span class="hljs-built_in">SKILL</span>.md
+├── sdd-brainstorm/     <span class="hljs-built_in">SKILL</span>.md + brainstorm-reviewer-prompt.md
+├── sdd-propose/        <span class="hljs-built_in">SKILL</span>.md
+├── sdd-<span class="hljs-keyword">continue</span>/       <span class="hljs-built_in">SKILL</span>.md
+├── sdd-ff/             <span class="hljs-built_in">SKILL</span>.md
+├── sdd-plan/           <span class="hljs-built_in">SKILL</span>.md + plan-reviewer-prompt.md
+├── sdd-code/           <span class="hljs-built_in">SKILL</span>.md
+├── sdd-review-spec/    <span class="hljs-built_in">SKILL</span>.md + spec-reviewer-prompt.md
+├── sdd-review-code/    <span class="hljs-built_in">SKILL</span>.md + spec-compliance-reviewer-prompt.md
+│                               + code-quality-reviewer-prompt.md
+├── sdd-verify/         <span class="hljs-built_in">SKILL</span>.md
+└── sdd-ship/           <span class="hljs-built_in">SKILL</span>.md
+</code></pre>
+<hr>
+<h3 data-id="heading-28">12. 关键设计决策</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>决策</th><th>选择</th><th>理由</th></tr></thead><tbody><tr><td>架构模式</td><td>薄编排（invoke 委托）</td><td>消除逻辑复制和版本漂移，底层工具可独立升级</td></tr><tr><td>用户入口</td><td>只有 <code>sdd-*</code></td><td>消除三套入口（SDD / OpenSpec / Superpowers）的选择困惑</td></tr><tr><td>Schema instruction</td><td>只管内容约束</td><td>执行者（OpenSpec skill）无法执行流程编排指令，职责分离</td></tr><tr><td>Override 策略</td><td>具体路径 + 具体禁止 + 兜底检测</td><td>提高 Override 可靠性，避免笼统指令被忽略</td></tr><tr><td>design 可选化</td><td>tasks/plan 不硬依赖 design</td><td>简单变更不需要技术设计文档</td></tr><tr><td>ff 不生成 plan</td><td>apply 依赖 tasks 而非 plan</td><td>让 ff 自然停在 tasks，plan 单独由 writing-plans 纪律保证质量</td></tr><tr><td>tasks vs plan 共存</td><td>分开（what vs how）</td><td>合并会导致要么 tasks 过于详细，要么 plan 过于抽象</td></tr><tr><td>代码审查分两阶段</td><td>spec 合规 → 代码质量</td><td>先确认"做对了"再讨论"做好了"</td></tr><tr><td>Review 形态</td><td>内嵌（brainstorm/plan）+ 独立（spec/code）</td><td>内嵌是质量保证，独立是可选能力，不违反 Action Not Phases</td></tr></tbody></table>
+<hr>
+<h3 data-id="heading-29">13. 适用场景</h3>
+<p>SDD 的价值在以下场景中最明显：</p>
+<ul>
+<li><strong>复杂特性</strong>：brainstorm → spec → TDD 流程在需求复杂、边界条件多时价值最大</li>
+<li><strong>长期项目</strong>：归档机制将变更历史转化为制度记忆，新成员可通过 archive 了解设计决策的来龙去脉</li>
+<li><strong>团队协作</strong>：artifact 体系提供共同语言，review 让代码审查更有焦点</li>
+</ul>
+<p>对于简单的一次性脚本或快速验证原型，完整流程的开销大于收益。渐进采用策略正是为了让开发者找到适合自己项目的平衡点。</p>
+<hr>
+<blockquote>
+<p><strong>核心哲学：用结构消除歧义，用纪律保证质量，用归档积累智慧。</strong></p>
+</blockquote></div>  </div>
+</article>
+</body>
+</html>
