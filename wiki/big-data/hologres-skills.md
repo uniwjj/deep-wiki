@@ -1,16 +1,28 @@
 ---
 title: Hologres Skills
-description: Hologres 多模融合一站式 AI 数据检索分析平台——AI Function 一键调用百炼模型、CLI 与 Skills 体系、Mem0 长记忆方案，实现广告素材智能生成与投放分析
+description: Hologres 多模融合一站式 AI 数据检索分析平台——从 HSAP 1.0 到 HSAP 2.0，AI Function 一键调用百炼模型、CLI 与 Skills 体系、Mem0 长记忆方案、多 Agent AI 助手，实现广告素材智能生成与投放分析
 aliases: [Hologres Skills, Hologres AI Function]
 tags: [big-data, ai-agent, platform, tool]
-sources: [2026/05/12/04. 基于 Hologres Skills 完成广告素材智能生成与投放效果分析.pdf, 2026/05/12/DataWorks DataAgent分享录音.md]
+sources: [2026/05/12/04. 基于 Hologres Skills 完成广告素材智能生成与投放效果分析.pdf, 2026/05/12/DataWorks DataAgent分享录音.md, 2026/05/28/基于 Hologres Skills 完成广告素材智能生成与投放效果分析.pdf]
 created: 2026-05-12
-updated: 2026-05-12
+updated: 2026-05-29
 ---
 
 # Hologres Skills
 
 Hologres 定位为**多模融合的一站式 AI 数据检索分析平台**，核心理念：“一份数据、一份计算、多模分析”。演讲人：骆撷冬（阿里云智能集团产品专家）。
+
+## Hologres 演进之路
+
+从 2016 年诞生到 2025 年 HSAP 2.0 的四次架构跃迁：
+
+| 版本 | 年份 | 里程碑 |
+|------|------|--------|
+| 诞生 | 2016 | 新型 KV 存储引擎 For Blink 状态，替换搜索 HBase |
+| Hologres 1.0 HSAP | 2020 | 阿里云正式商业化，VLDB2020 发表分析服务一体化（HSAP）论文 |
+| Hologres 2.0 Serverless | 2023 | 计算组实例发布，湖仓加速（MaxCompute/OSS 原生存储） |
+| Hologres 3.0 实时湖仓 | 2024 | 湖仓一体 + Dynamic Table 近实时增量加工 + Copilot |
+| Hologres 4.0 HSAP 2.0 | 2025 | 分析检索一体化 + 非结构化数据 + AI Function + ChatBI |
 
 ## 多模融合架构
 
@@ -63,22 +75,68 @@ SELECT ai_gen_image(prompt, style) FROM materials;
 
 ## 智能营销内容生成场景
 
-打通素材 → 生成 → 投放分析全链路：
+打通素材 → 生成 → 投放分析全链路，以游戏行业为例解决三大瓶颈：
 
-1. **准备素材**：上传蒙版图片（如刘备/吕布人物蒙版）到 OSS
-2. **Object Table 对接**：Hologres 读取 OSS 上的非结构化物料
-3. **AI 图片生成**：AI Function 调用百炼模型，根据 Prompt + 风格参数生成营销图片（如"北京枭雄风格"）
-4. **分镜脚本生成**：对生成的图片写分镜脚本
-5. **AI 视频生成**：调用 Wan 模型根据分镜脚本生成视频
-6. **投放效果分析**：投放数据写入 Hologres，进行效果闭环分析
+| 瓶颈 | 问题 |
+|------|------|
+| 创意产能瓶颈 | 素材生成靠堆人，创意风格不统一，流水线成本高、周期长 |
+| 效果验证瓶颈 | 依赖人工经验判断素材潜力，试错成本高，测试池小 |
+| 全链路闭环瓶颈 | 素材生产与效果数据割裂，缺乏有效创意指导，全链路难以规模化 |
 
-整个过程可由 DataAgent/OpenClaw 触发，按 Skills 中步骤自动串联执行。
+### 四步全链路闭环
 
-### 客户画像
+**Step 1：原始素材采集和分析**
 
-游戏、电商、互联网、广告行业中：日常需大量生产营销素材，产能瓶颈明显，人工创作效率低、风格不统一，期望提高创作效率、实现自动化流水线。
+站外素材 + 内部素材（文档/图片/视频）→ OSS Object Table 自动映射，每个文件映射成一条记录，无缝对接 AI Function 和 Dynamic Table 增量加工。
 
-## Hologres CLI & Skills
+```sql
+CREATE OBJECT TABLE video_object_table
+WITH (
+  path='oss://ai-demo-datasets/unsplash-25k/part1/',
+  "oss_endpoint" = 'oss-cn-beijing-internal.aliyuncs.com',
+  "role_arn" = '***'
+);
+```
+
+**Step 2：动态智能标签匹配**
+
+利用 Dynamic Table 和 AI Function 自动增量分析素材，匹配多维度结构化标签体系。
+
+**Step 3：智能生成创意素材**
+
+基于 Qwen-Max 生成分镜脚本 → 通义万象（Wan）模型生成视频。全流程 SQL 驱动：
+
+```sql
+-- 生成分镜脚本
+SELECT ai_gen('qwen-max', prompt) AS script FROM game_materials;
+
+-- 通义万象生成视频
+SELECT ai_gen('wan', json_build_object(
+  'prompt', script,
+  'reference_urls', material_list,
+  'parameters', json_build_object('size', '1280*720', 'duration', 10)
+)) FROM story_script;
+```
+
+**Step 4：素材审核与投放效果分析**
+
+- **素材自动审核**：基于 Qwen 模型自动化分析素材，从合规性、平台规范、质量、热点、爆款等多维度打分，输出 `{score, status, issues}` JSON
+- **广告投放实时分析**：高并发实时写入 Hologres，内置窗口/漏斗/留存/路径/触点归因等复杂计算，自动弹性扩缩容
+
+## Hologres AI 助手：多 Agent 协作
+
+围绕 Hologres 实例，基于资深数仓专家沉淀的多个 Skills，提供多 Agent 协同支撑数仓全流程：
+
+| Agent | 职责 |
+|-------|------|
+| **QA Agent** | 售前技术方案咨询、产品规格推荐、功能使用答疑 |
+| **Develop/Optimize Agent** | 数仓搭建教程、SQL 调优建议、功能开发最佳实践 |
+| **OPS Agent** | 实例资源诊断、慢/错 SQL 诊断、成本治理 |
+| **Data Analyze Agent** | 自然语言访问数据、报表可视化生成、数据解读与趋势预测 |
+
+零代码开箱即用：自然语言对话，无需懂 SQL，无需写代码。内置多名资深数仓专家沉淀的专业 Skills，助力数仓从入门到精通。
+
+## Hologres AI Function：一键调用百炼模型
 
 Agent Ready 的一站式实时数仓工具链：
 
@@ -113,6 +171,7 @@ openclaw plugins install @hologres/openclaw-mem0
 ## 相关页面
 
 - [[dataworks-data-agent]] — DataWorks Data Agent 产品
+- [[dataworks-2026-0528-xialiaori]] — 2026-05-28 虾聊日全部分享内容汇总
 - [[maxcompute-skills]] — MaxCompute 同类 Skills 体系
 - [[flink-skills]] — Flink Skills 联动方案
 - [[emr-skills]] — EMR Skills

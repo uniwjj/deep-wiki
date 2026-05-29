@@ -1,11 +1,11 @@
 ---
 title: EMR Skills
-description: 阿里云 EMR AI Native 平台——数据处理/实时分析/系统运维三大 Skill 类、Spark Skills 驱动智驾图片标注、多模态 AI Function、全栈 Serverless 免运维
-aliases: [EMR Skills, EMR AI Native, EMR Agent]
+description: 阿里云 EMR AI Native 平台——从 Lakehouse 到 Agentic Lakehouse，三大子产品 Skills（Spark/StarRocks/集群）覆盖五大场景，多模态 AI Function + 混合检索，全栈 Serverless 免运维
+aliases: [EMR Skills, EMR AI Native, EMR Agent, Agentic Lakehouse]
 tags: [big-data, ai-agent, platform, tool]
-sources: [2026/05/12/06. 基于 EMR Skills 实现智驾场景的自动化数据标注.pdf, 2026/05/12/DataWorks DataAgent分享录音.md]
+sources: [2026/05/12/06. 基于 EMR Skills 实现智驾场景的自动化数据标注.pdf, 2026/05/12/DataWorks DataAgent分享录音.md, 2026/05/28/EMR Skills：从 Lakehouse 到 Agentic Lakehouse.pdf]
 created: 2026-05-12
-updated: 2026-05-12
+updated: 2026-05-29
 ---
 
 # EMR Skills
@@ -114,19 +114,129 @@ SELECT ai_query(prompt, read_file(path)) FROM read_file('oss://bucket/path/*.jpg
 - **Serverless 免运维**：无需管理基础设施，按需弹性扩缩容
 - **生产级稳定性**：企业级可靠性保障，完善的容错与重试
 
+## EMR Serverless StarRocks Skills 详细能力地图
+
+StarRocks Skills 按用户意图拆分六大类，满足 DBA/SRE、数据工程师、分析师、开发者多角色需求：
+
+### 领域知识（Assistant）
+
+| Skill | 功能 |
+|-------|------|
+| `knowledge-qa-skill` | 文档查询、概念解释、功能了解 |
+| `config-guide-skill` | 配置项含义和推荐值 |
+
+### 开发管理（Assistant）
+
+| Skill | 功能 |
+|-------|------|
+| `sql-assistant-skill` | 写 SQL、改 SQL、理解 SQL |
+| `schema-design-skill` | 建表、分区分桶、索引设计 |
+| `data-import-skill` | 数据导入方式选择和实施 |
+
+### 性能分析（Assistant）
+
+| Skill | 功能 |
+|-------|------|
+| `query-tune-skill` | 单条 SQL 执行瓶颈分析 |
+| `workload-tune-skill` | 系统级资源和负载调优 |
+| `workload-analysis-skill` | 系统负载统计（Top SQL、pattern、趋势） |
+
+### 诊断（Assistant/Manage）
+
+| Skill | 功能 |
+|-------|------|
+| `error-fix` | 无法归类领域的通用报错兜底 |
+| `bug-search` | 搜社区已知 bug 和修复 |
+| `health-diagnose` | 深度根因分析与修复建议 |
+| `health-inspect` | 主动巡检、发现潜在风险 |
+
+### 运维（Manage）
+
+| Skill | 功能 |
+|-------|------|
+| `instance-manage` | 查看/管理实例信息 |
+| `migration-execute` | 执行数据或集群迁移 |
+| `cluster-upgrade` | 执行版本升级 |
+| `backup-recovery` | 执行备份和恢复 |
+| `access-control` | 用户权限、认证、访问策略 |
+| `ha-setup` | 高可用配置和管理 |
+
+### 数据分析（Assistant）
+
+| Skill | 功能 |
+|-------|------|
+| `schema-explore` | 库表结构与字段探索（实例数据） |
+| `data-profile` | 数据分布、质量、统计 |
+| `anomaly-detect` | 数据层面异常发现 |
+
+## StarRocks AI Native 四大核心能力
+
+| 能力 | 状态 | 指标 |
+|------|------|------|
+| **AI Function × 11** | 已上线 | 一条 SQL 调用大模型，MySQL 协议 100% 兼容 |
+| **AI 助手** | 已上线 | 问题主动发现，根因自动定位，运维效率从天级降至分钟级 |
+| **Agent Skills** | 已上线 | 开放标准化运维 Skill，客户 Agent 即插即用 |
+| **多模态混合检索** | 公测中 | 全文 + 向量 + 标量，一个引擎统一三种模态，<500ms |
+
+## StarRocks 实战场景
+
+### 场景一：金融实时风控 — 毫秒级交易异常检测
+
+**痛点**：50 亿行交易表 × 2000 万用户画像 JOIN 超时、风控规则天天改需 DBA 手动调优。
+
+**方案**：Skill 智能 SQL 调优 + 物化视图设计：
+- 自动分析执行计划：发现 Shuffle JOIN 瓶颈 → 建议 Colocate/Broadcast
+- 物化视图一键设计：滚动窗口预聚合近 10 笔交易特征
+- 窗口函数即写即优化：LAG/LEAD/SUM OVER 实时计算交易特征
+
+**效果**：8s → 200ms。
+
+### 场景二：集群健康巡检 — 拯救运维小哥的发际线
+
+**痛点**：几十个节点逐个检查、半夜告警翻日志翻到天亮、新同事只会重启大法。
+
+**方案**：`/starrocks-manage` 一键全链路诊断，30 秒输出结构化巡检报告：节点状态 + Tablet 健康 + Compaction 积压，异常项高亮 + 风险等级 + 修复建议。
+
+### 场景三：金融报表加速 — 告别 T+1，今天的数据今天看
+
+**痛点**：MySQL 分库分表查不动聚合、每接一个新报表需求排期两周、领导早会看到的是"昨天的昨天"。
+
+**方案**：Skill 智能 Schema 设计 + 入湖选型：
+- 一句话建表：自动推荐 Primary Key 模型、按天分区、HASH(user_id) 分桶
+- 入湖方式自动选型：MySQL → Flink CDC + Connector（< 5s 延迟）
+- 物化视图替代宽表：MV 自动增量刷新，报表实时可查
+
+### 场景四：MySQL → StarRocks 报表迁移
+
+**痛点**：20 张报表逐表导出 DDL (10min) → 手动改写 StarRocks 语法 (30min × 20) → 编写迁移脚本 (20min) → 全量导入校验 (15min)，总计 2-3 小时。
+
+**方案**：Skill 智能生成 StarRocks DDL + 自动比对：
+- 读取 MySQL Schema 后自动生成最优 StarRocks DDL
+- 根据业务特征自动生成分区裁剪、排序键、Colocate Join 等优化点
+- AI 搞定网络配置等工程问题
+
+## 从 Lakehouse 到 Agentic Lakehouse
+
+Agent 时代对大数据平台提出三个新要求：
+1. **更低门槛的调用方式**：从作业/SQL 配置 → API/能力调用
+2. **更统一的能力抽象**：数据处理、查询分析、系统运维 → 统一对外抽象成能力调用
+3. **更实时的响应能力**：支持 Agent 的即时决策与交互
+
+EMR 作为 **Agent 的数据与计算能力平台**，将三类核心能力 Skill 化：**数据处理 Skill**（Spark）、**实时分析 Skill**（StarRocks）、**系统运维 Skill**（集群管理）。
+
+已支持的 Agent 接入方式：DataWorks Agent / EMR Agent / Qoder / Claude Code / OpenClaw。
+
 ## EMR AI Native 展望
 
-- EMR Skills 支持 Spark 诊断与优化
-- Serverless Spark **Daft 集群 GA**，支持 Auto Scaling、GPU 调度和推理优化
-- Serverless StarRocks 基于 Lakehouse 向量检索 & 全文检索 GA
-- Ray 集群支持 Auto Scaling、GPU 调度和推理优化
-- 智能 AI 助手接入飞书等通信工具
-- EMR Skills 支持参数优化、索引/分区优化
-- Spark 多模态算子市场 GA
+- EMR AI 助手全面对接 IM 应用，支持自定义推送和巡检范围
+- Serverless StarRocks 全文检索 GA + 向量化检索 GA
+- Serverless Spark 多模态处理 GA + 多模态算子市场 GA
+- EMR AI 助手支持成本与资源优化
 
 ## 相关页面
 
 - [[dataworks-data-agent]] — DataWorks Data Agent 产品
+- [[dataworks-2026-0528-xialiaori]] — 2026-05-28 虾聊日全部分享内容汇总
 - [[maxcompute-skills]] — MaxCompute 同类 Skills 体系
 - [[hologres-skills]] — Hologres Skills
 - [[flink-skills]] — Flink Skills（Flink + EMR 联动）

@@ -1,11 +1,11 @@
 ---
 title: MaxCompute Skills
-description: MaxCompute 通过 MCMCP 服务 + Information Schema 语义包 + MaxFrame Coding Skill 构建的 Agent 可调用能力层——覆盖数仓运维、多模态开发、数据分析全场景
-aliases: [MaxCompute Skills, MCMCP, MC Skills]
+description: MaxCompute 通过 MCMCP 服务 + Information Schema 语义包 + MaxFrame Coding Skill 构建的 Agent 可调用能力层，配合 Delta Table/AutoMV/Blob 多模态存储与 MaxAgent 运营助手，覆盖数仓运维、多模态开发、数据分析全场景
+aliases: [MaxCompute Skills, MCMCP, MC Skills, MaxAgent]
 tags: [big-data, ai-agent, platform, tool]
-sources: [2026/05/12/03. 基于 MaxCompute Skills 简化数仓运维加速多模态开发.pdf, 2026/05/12/DataWorks DataAgent分享录音.md]
+sources: [2026/05/12/03. 基于 MaxCompute Skills 简化数仓运维加速多模态开发.pdf, 2026/05/12/DataWorks DataAgent分享录音.md, 2026/05/28/MaxCompute × Agent：从多模态存储到混合计算，突破数字员工的算力边界 20260528.pdf]
 created: 2026-05-12
-updated: 2026-05-12
+updated: 2026-05-29
 ---
 
 # MaxCompute Skills
@@ -83,25 +83,73 @@ information_schema/
 
 ## 多模态存储与计算
 
-### 存储（Blob 数据类型）
+MaxCompute 提供大规模多模态存储和计算能力，支持单表多模态数据一行多列混存，将音视频图文数据与元信息、标签统一存储，解决多引擎架构维护成本高、跨模态查询延迟高、缺乏 ACID 事务保障等问题。
+
+### Blob 数据类型
 
 | 特性 | 能力 |
 |------|------|
 | 单元格容量 | 5GB/cell |
-| 事务 | ACID 多模态数据集事务一致性 |
-| 托管优化 | Compaction、Tiering、Index Build、Merge、Backup |
 | IO 吞吐 | 相对 Object Table 提升 4X |
-| 点查过滤 | 数据集标签点查场景性能优于 String/Binary 类型 2X |
-| 表类型 | 支持 Append/PK Delta Table |
+| 事务 | ACID 多模态数据集事务一致性 |
+| 点查过滤 | 数据集标签点查场景性能优于 String/Binary 2X |
+| 托管优化 | Compaction、Tiering、Index Build、Merge、Backup |
+| 表类型 | Append / PK Delta Table |
+| 多写入接口 | SQL、MaxFrame 双路径读写，SDK 批量上传/下载，Object Table 从 OSS 批量导入 |
+
+### 四大应用场景
+
+| 场景 | 说明 |
+|------|------|
+| AI 训练数据集管理 | 图片/音频/视频与标注标签同表存储，SQL 过滤样本集 |
+| 多模态数据处理流水线 | 视频切帧、音频转文本、内容打标等多步骤中间结果统一存储 |
+| 多模态加工缓存层 | 作为 OSS 缓存层，提升 MaxFrame/SQL 并行计算吞吐，解决小文件 QPS 限制 |
+| 非结构化数据入湖 | 分散外部文件统一导入，扩展元信息建立企业非结构化资产库，获得事务和权限管控 |
+
+### 多模态开发体验
+
+- **拖拽导入**：上传文件夹自动识别路径、名称、类型元信息
+- **画布编排加工**：根据 DAG 和算子参数动态生成 SQL+UDF 执行语句
+- **预览下载**：图片/视频/音频/PDF 在线预览，看到内容而非二进制编码
+- **WebDAV 挂载**：Blob 表挂载成操作系统文件夹，SQL CRUD 映射为 List/Get/Put
+
+加工算子库覆盖：图像、视频、音频、PDF、Excel、Word、PPT、Markdown、HTML、中文文本。
 
 ### 计算（多模态算子）
 
-| 类型 | 能力 |
+| 类型 | 算子 |
 |------|------|
 | 图像/OCR | `IMG` |
 | 文档/解析 | `DOC` |
 | 音频/ASR | `AUDIO` |
 | 视频/切帧 | `VIDEO` |
+
+## MaxAgent 运营助手
+
+MaxAgent 覆盖资源管理、成本治理、业务分析全链路，免控制台登录、移动端操控闭环，打通钉钉、飞书、微信机器人，实现"聊天即服务"。
+
+### 四大运维场景
+
+| 场景 | 典型痛点 | MaxAgent 能力 |
+|------|---------|-------------|
+| **数据开发日常运维** | 作业失败/慢排查耗时长、查询性能瓶颈 | 作业运维与智能诊断、物化视图推荐与收益评估、Auto Cluster 聚簇优化 |
+| **资源管理员移动运维** | 项目配置繁琐、外出告警无法及时处理 | 项目配置与参数管理、Quota/路由/计划/分时配置、机器人移动端闭环处置 |
+| **降本增效** | 费用增长不知原因、Quota 利用率不明、存储大户不清 | 成本智能分析与趋势、计量成本归因与 Top 消费者、存储观测与分层推荐 |
+| **智能问数** | 不懂 SQL、无法定位目标表和业务逻辑、全表扫描 | NL2SQL 自然语言查数据、上下文追问深度分析、跨域联动（查询+诊断） |
+
+## Delta Table 与 AutoMV：Agent 时代的操作保障
+
+### Delta Table
+
+无惧 Agent 破坏数据：TimeTravel 随时回滚、ACID 事务表引擎、近实时写入、增量读取、自动调优、存储成本持平或更低。
+
+### AutoMV（自动物化视图）
+
+无惧 Agent 重复查询：自动物化，空间换时间降算力：
+- **作业特征分析**：从历史执行计划自动提取查询模式
+- **公共计算抽取**：跨 SQL 语义识别公共子查询
+- **全局最优推荐**：综合收益/成本评估，自适应存储阈值
+- **自动查询改写**：透明加速，用户无感知，零人工干预，确定性收益
 
 ## MaxFrame Coding Skill
 
@@ -144,6 +192,7 @@ information_schema/
 ## 相关页面
 
 - [[dataworks-data-agent]] — DataWorks Data Agent 整体产品
+- [[dataworks-2026-0528-xialiaori]] — 2026-05-28 虾聊日全部分享内容汇总
 - [[maxcompute-data-ai]] — MaxCompute Data+AI 四层架构
 - [[hologres-skills]] — Hologres 同类 Skills 体系
 - [[flink-skills]] — Flink Agent Skills

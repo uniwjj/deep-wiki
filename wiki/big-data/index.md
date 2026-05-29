@@ -5,7 +5,7 @@ aliases: [big-data, 大数据]
 tags: [big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-05-18
+updated: 2026-05-29
 ---
 
 # 大数据技术
@@ -18,6 +18,11 @@ updated: 2026-05-18
 - [[flink-skills]] — Flink Agent Skills 四层能力
 - [[emr-skills]] — EMR AI Native 与 Skills 全景
 - [[superetl]] — 菜鸟基于 Data Agent 的 SuperETL
+
+## 虾聊日活动
+
+- [[dataworks-2026-0528-xialiaori]] — 2026-05-28 虾聊日：DataWorks Data Agent 正式发布 & 五大产品 Skills 进展
+- [[taobao-live-data-dev-paradigm]] — 淘宝直播：AI 驱动的 R2C 数据研发范式升级
 
 ## 平台与产品
 

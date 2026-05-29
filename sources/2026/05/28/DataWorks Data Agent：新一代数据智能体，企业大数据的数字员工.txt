@@ -1,0 +1,55 @@
+DataWorks Data Agent
+双引擎驱动的全托管数据智能体 · 一句目标 · 数据链路端到端自动完成
+
+DATAWORKS · 2026 OFFICIAL LAUNCH
+
+两个真实场景 · 我们对 Agent 的诉求,从来都很具体
+周五 17:30 · 凌晨 2:47 — 两类工作过去消耗大量人力时间,今天由 Agent 自主完成
+
+从增强,到自主 —— 我们走过的路,跃迁的此刻
+五阶段演进 · 同一条曲线上的两种范式
+
+两个 Agent · 两类场景 · 一颗大脑
+代码 Agent · 运维 Agent · 共享同一份数据语义与上下文
+
+DataWorks Data Agent 产品架构
+新一代数据智能体，覆盖数据开发、数据治理、数据分析与引擎管控运维Agent，提供全新自然语言交互体验，企业大数据的“数字员工”
+
+DataAgent Core · 技术架构
+统一运行时内核 · 双执行器架构 · 数据语义层 · 企业级全托管
+
+CLI 模式 · 代码 Agent
+在 CLI 中自主完成代码任务 · 输入目标 · 获取交付
+
+Claw 模式 · 运维 Agent
+在企业 IM 群中通过自然语言指令 · 自主完成运维全流程
+
+一个 DataAgent · 多端协同触达
+统一智能内核 · 主场景与延伸触点协同 · 多端一致体验
+
+DataAgent CLI演示
+
+DataClaw 演示
+
+数据分析Agent演示
+
+Skill 开放生态 · 一次注册,处处可用
+基于 MCP 协议 · 引擎团队 / 合作伙伴 / 客户都能扩展
+
+全托管运行底座 · DataWorks 原生承载
+基于 DataWorks 资源组与云原生运行时 · 统一承载 Agent 的调度、执行与负载
+
+DataAgent 不是终点,是新的起点
+开放架构 · 可扩展生态 · 持续演进
+
+---
+ingested: 2026-05-29
+wiki_pages: [dataworks-data-agent, dataworks-2026-0528-xialiaori]
+---
+
+DataWorks Data Agent
+双引擎驱动的全托管数据智能体 · 一句目标 · 数据链路端到端自动完成
+
+接下来 — 真实场景:客户实践 | 扩展能力:大数据引擎团队
+
+

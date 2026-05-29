@@ -1,0 +1,710 @@
+---
+ingested: 2026-05-29
+wiki_pages: [hologres-skills, dataworks-2026-0528-xialiaori]
+---
+
+基于 Hologres Skills 完成
+广告素材智能生成与投放效果分析
+
+赵红梅（梅酱） | 阿里云智能集团产品专家
+
+Hologres走向AI的发展之路
+从 分析服务一体化（ Hybrid Serving/Analytics Processing，HSAP 1.0）
+到 分析检索一体化（ Hybrid Search/Analytics Processing， HSAP 2.0），打造一站式的AI数据分析平台
+
+2016
+
+Hologres诞生
+1.新型KV存储引擎 For
+
+Blink状态
+2.替换搜索Hbase
+3. 2018.10 Hologres成立
+4. 交互式分析 For
+MaxCompute
+
+2023
+
+2024
+
+2025全新升级
+
+Hologres 2.0-Serverless
+
+Hologres 3.0 一体化实
+时湖仓
+
+Hologres 4.0 - HSAP 2.0
+
+1. 计算组实例发布，隔离与
+
+1. 湖仓一体，原生支持数据湖
+
+1. 分析检索一体化 HSAP2.0，
+
+2. Dynamic Table 近实时增量
+
+2. 全面支持非结构化数据、AI
+
+加工分析服务一体，做深资
+
+Function、ChatBI，
+
+2020
+
+Hologres 1.0-HSAP
+
+1. 阿里云上正式商业化
+2. 架构论文首次提出分析服务
+一体化理念（HSAP）
+
+3. 发布顶会VLDB2020
+
+弹性
+2. 湖仓升级加速
+MaxCompute与OSS原生
+
+源隔离与弹性Data+AI一
+
+支持半结构化JSONB列式
+
+体，发布Copilot等能力
+
+存储
+
+3. 领先的向量、全文、混合检索能
+力
+4. 成为一站式的AI数据分析平台
+
+Hologres：多模融合的一站式AI数据检索分析平台
+多模态分析检索，大数据 + AI Function，“一份数据、一份计算、多模分析”
+统一SQL
+多模融合
+
+数
+据
+查
+询
+
+在线推荐
+
+BI报表
+
+点查
+
+OLAP分析
+
+检索分析
+
+RAG
+
+全文检索
+
+向量化
+
+向量检索
+
+混合检索
+
+ODS层
+
+DWD层
+
+多模数据
+
+多模态数据一键入仓，索引
+构建
+
+AI推理
+
+DWS层
+
+ADS层
+
+一键多模式数据计算
+一条SQL完成全增量近实时
+自动加工
+
+AI Function
+
+Rerank
+
+百炼模型
+
+Embedding
+模型
+
+Embedding
+
+Qwen- image
+模型
+
+chunking
+
+wan模型
+
+Qwen-vl
+模型
+
+parse_document
+
+AI节点模型
+（独享GPU）
+
+Dynamic Table
+湖上增量计算
+
+数
+据
+存
+储
+
+内容生成
+
+Dynamic Table增量计算
+
+数仓分层加工
+
+一份计算 数
+（Data+AI 据
+加
+）
+工
+
+一份多模态数据存储
+
+……
+
+Embedding
+模型
+
+Deepseek
+模型
+
+Object Table
+
+一键部署百炼模型
+AK一键部署百炼模型，开
+箱即用
+
+一站式AI数据分析
+向量
+
+文本
+
+JSON
+
+内部存储（结构化&半结构化数据）
+
+MaxCompute
+
+Paimon
+
+Iceberg
+
+数据湖（结构化&半结构化数据）
+
+图片
+
+PDF
+
+PPT
+
+OSS（非结构化数据）
+
+视频
+
+向量、全文、OLAP、点
+查、AI推理
+
+Hologres AI Function 一键调用百炼模型
+AI Function：将大模型的调用抽象成AI函数（如ai_embed、ai_gen、ai_translate），使用标准SQL在数仓内调用，在Hologre
+s控制台一键部署百炼模型，通过AI Function调用，助力业务多模数据处理、智能内容生成、AI推理、向量+全文混合检索等多
+个AI应用场景
+一键部署百炼大模型
+（用户API-KEY）
+
+支持的百炼模型一览表
+
+SQL调用AI Function
+
+文本推理类
+
+多模态推理
+
+• Qwen系列
+
+• Qwen3-VL
+
+• Qwen3系列
+• Deepseek系
+列
+• kimi
+
+系列
+• Qwen-VL系
+列
+
+向量化
+• Textembedding
+
+系列
+
+内容生成
+• Qwen-
+
+翻译类
+• Qwen-mt系
+
+image系列
+• Wan系列
+
+• Tongyiembedding
+系列
+
+适用场景
+
+方案优势
+
+• 智能搜索与推荐：商品语义检索、相似商品推荐
+• 实时风控与异常检测：违规内容识别、IOT设备故障报警
+• 智能内容生成：营销文案生成、广告视频素材是创作、语音
+合成
+• 语音处理与交互：语音转写、会议纪要生成等
+
+• 零代码集成 ：仅需 SQL 即可调用 AI 函数，分析师无需学习
+Python
+• 实时高性能 ：内核级函数调用，百亿级向量亚秒级响应
+• 数据零搬迁：直接在大数据系统中完成全流程，数据不出
+库，安全可管控
+• 灵活和低成本 — 内置多种百炼模型一键部署，按Token调用
+按需使用，低成本
+
+列
+
+广告素材生成的挑战
+以游戏行业为例，在广告素材生成流程中面临如下多个结构性瓶颈：
+
+创意产能瓶颈-做的慢
+
+效果验证瓶颈-测得慢
+
+全链路闭环瓶颈-转不动
+
+• 传统素材生成靠堆人，创意风格不一
+
+• 以来人工经验判断素材潜力，缺乏创新
+
+• 素材生产与效果数据割裂，缺乏有
+
+致，创意落地偏差大，沟通损耗严
+
+筛选机制，凭感觉堵爆款，试错成本高
+
+重，人工扩展边界成本高
+• 流水线成本高、周期长，素材迭代速
+度赶不上投放节奏
+
+• 测试素材池小，全链路周期10-15天，
+ROI难以提升，错过红利期
+
+效的下一轮创意指导
+• 投放优化依赖人工，全链路难以规
+模化，自动化迭代。
+
+基于Hologres AI Function的智能生成广告素材链路
+通过Hologres 4 步完成从原始素材到广告创意生产的全链路闭环
+
+01
+
+02
+
+03
+
+04
+
+标签生成和匹配
+
+智能生成创意素材
+
+投放与效果分析
+
+通过Object Table自动映
+
+利用Dynamic Table和
+
+基于标签匹配和提示词工程
+
+射OSS中的视频、图片、
+
+AI Function自动增量分
+
+基于创意素材，AI+人工审核
+
+，调用大模型智能生成广告
+
+文档等多模态素材，建立
+
+析素材，匹配多维度结
+
+后进行投放，并在Hologres
+
+文案、脚本和创意方案
+
+统一的素材资产库。
+
+构化标签体系。
+
+中进行实时数据分析
+
+素材采集和生成
+
+。
+
+Step1：原始素材采集和分析
+站外素材
+
+内部素材
+
+原始素材
+
+文档
+
+图片
+
+视频
+
+OSS
+
+创建 Object Table
+
+Hologres
+
+-- object table
+CREATE OBJECT TABLE video_object_table
+WITH (
+path='oss://ai-demo-datasets/unsplash-25k/part1/',
+"oss_endpoint" = 'oss-cn-beijing-internal.aliyuncs.com',
+"role_arn" = '***'
+);
+REFRESH OBJECT TABLE video_object_table;
+
+查看 Object
+Table
+-- 查看 object table
+SELECT * FROM video_object_table;
+
+更新元数据
+
+Object table 自动将OSS上的每个文件（图片、视频、文档）映射
+成一条Object table的记录，
+可以无缝对接AI Function、Dynamic Table增量加工等能力
+
+Step 2：动态智能标签匹配
+
+Step 3：智能生成创意素材
+基于 Qwen-Max 生成分镜脚本
+
+通义万象（Wan）模型生成视频
+
+Step 1: 游戏素材表
+
+Step 3: 通义万象生成视频
+
+游戏名称
+
+玩法介绍
+
+图片OSS地址
+
+风格
+
+原神
+
+开放世界冒险RPG元素反应
+战斗系统
+
+oss://ai-demo/genshin_cover.png
+
+二次元
+
+王者荣耀
+
+5v5 MOBA竞技多英雄策略
+对战
+
+oss://ai-demo/wangzhe_cover.png
+
+国风
+
+和平精英
+
+百人战术竞技真实射击体验
+
+oss://ai-demo/peace_cover.png
+
+写实
+
+蛋仔派对
+
+多人派对竞技休闲社交玩法
+
+oss://ai-demo/danzi_cover.png
+
+卡通
+
+Step 2: 生成分镜脚本
+定义 Prompt 模板 为游戏类视频定义统一的分镜生成提示词：
+
+"你是一位专业的游戏宣传视频导演，请为【{游戏名}】生成一段10秒宣传视频的分镜脚本，包含3-4个分镜
+头..."
+
+分镜头要求 (10s / 3-4 shots)
+
+Shot 1 (0-3s): 开场 — 游戏Logo + 标志性场景全景
+Shot 2 (3-6s): 玩法展示 — 核心战斗/操作画面
+Shot 3 (6-8s): 高光时刻 — 特效/大招/胜利瞬间
+Shot 4 (8-10s): 结尾 — Slogan + 下载引导
+
+调用 Qwen-Max 生成 SELECT ai_gen('qwen-max', prompt) AS script FROM
+game_materials;
+
+全流程 SQL 驱动
+
+-- Step 3: 调用通义万象模型生成视频
+SELECT
+ai_gen(
+'wan',
+-- 通义万象模型
+json_build_object(
+'prompt', script,
+-- 分镜脚本内容
+'reference_urls',
+-- 游戏素材图片
+material_list,
+'parameters', json_build_object(
+'size',
+'1280*720', -- 720P 分辨率
+'duration', 10,
+-- 10秒视频
+'shot_type', 'multi',
+-- 多分镜模式
+'audio', false,
+-- 无音频
+'watermark', true
+-- 加水印
+),
+'output_url',
+-- 输出到 OSS
+'oss://ai-demo-dataset/xxx/output/'
+)::text,
+to_file(
+'oss://ai-demo-dataset/xxx/man.png',
+'oss-cn-hangzhou-internal.aliyuncs.com',
+'acs:ram::***role'
+)
+), script
+FROM story_script;
+
+Step 4：素材审核以及投放效果分析
+素材自动审核
+
+广告投放实时分析
+
+SELECT
+material_id,
+oss_path,
+ai_gen(
+'qwen_image_2',
+json_build_object(
+'prompt', format(
+'审核素材%s：评估合规性/平台规范/品牌质量，返回JSON格式{"score":0100,"status":"approved/rejected","issues":[]}',
+oss_path
+),
+'parameters', json_build_object('temperature', 0.1)
+)::TEXT,
+NULL
+) AS review_result
+FROM creative_materials
+WHERE status = 'pending';
+
+基于 Qwen模型自动化分析生成的素材，从合规性、
+平台规范、质量、热点、爆款等多维度分析给出投放
+建议
+
+• 实时性：广告数据高并发实时写入Hologres，写入
+即可见
+• 复杂分析能力：Hologres内置多种函数，支持窗
+口、漏斗、留存、用户路径、触点归因等复杂计
+算，秒级响应
+• 弹性扩展：Hologers支持自动弹性，根据流量负载
+自动弹性扩缩容
+
+广告创意视频生成demo
+箭塔守汉中游戏广告素材的demo
+
+参考官网文档，
+可以复现完整流程：
+https://help.aliyun.com/
+zh/hologres/userguide/generate-gamepromo-video-using-aifunctions
+
+Hologres CLI & Skills：Agent Ready 的一站式实时数仓
+Hologres 支持丰富的 AI 智能体友好的工具与技能集
+
+Hologres CLI
+
+Hologres Skills
+
+内置安全防护措施，支持结构化输出，
+
+智能运维
+
+Agent友好
+
+• 表、视图等元数据管理
+• DQL执行与结果导出
+• 动态表管理
+
+• 备份与安全
+
+智能开发
+
+• Flink+Hologres搭建实时数仓
+
+• 实例管理、计算组管理
+
+• 数据库管理、用户授权
+
+最佳实践
+
+• Hologres专家权限模型授权
+慢Query分析
+SQL优化
+
+• RoaringBitmap长周期UV计算、实时
+UV精确去重
+• Bit-sliced Index行为标签计算
+• AI Function广告素材智能生成
+• 多模态数据分析与检索
+
+https://github.com/aliyun/hologres-ai-plugins/tree/main
+
+自然语言转DDL
+智能化建表
+
+Hologres Mem0：AI Agent 长记忆解决方案
+解决“养虾”人的痛点：历史记忆遗忘、跨设备从0开始
+openclaw plugins install @hologres/openclaw-mem0
+
+Hologres AI助手：数仓从入门到精通
+• 功能介绍：围绕Hologres实例，AI助手基于资深数仓专家沉淀的多个Skills，提供多agent协同支撑数仓全流程使用，包含知识问答、实
+
+例诊断、SQL调优、数仓开发等丰富的数仓场景，助力数仓从入门到精通，0代码，0门槛，开箱即用。
+• 收费情况：当前公测阶段，免费，后续会按照Token调用量收费（具体收费时间待定）
+
+多场景Agent覆盖
+知识问答
+
+AI助手
+
+实例资源
+诊断
+
+慢SQL
+诊断与优化
+
+数据智能
+分析
+
+SQL生成
+与优化
+
+开发、运维、诊断、数据分析多场
+景多Agent覆盖，一站解决
+Hologres全生命周期问题
+
+Holo Skills
+
+Holo
+Agent框架
+
+Qwen Code Agent
+
+零代码开箱即用
+
+Holo 元仓
+
+自然语言对话，无需懂SQL，无
+需写代码
+
+Holo知识库
+
+模型服
+务
+
+知识问答
+（QA Agent）
+•
+
+售前技术方案咨询
+• 产品规格推荐
+• 功能使用答疑
+
+Holo大账号调用
+
+内置专业Skills
+
+百炼大模型（qwen系列）
+
+多名资深数仓专家沉淀多个最专
+业skills，助力数仓从入门到精通
+
+数仓开发
+（Develop/Optimize Agent)
+•
+•
+•
+
+数仓搭建教程
+SQL调优建议
+功能开发最佳实践
+
+数仓运维
+（OPS Agent）
+•
+•
+
+实例资源诊断
+慢/错SQL诊断
+• 成本治理
+
+数据分析
+（Data Analyze Agent）
+自然语言访问数据
+• 报表可视化生成
+• 数据解读与趋势预测
+•
+
+资料参考
+
+最佳实践：基于 AI Function
+
+最佳实践：Hologres +
+
+Hologres CLI & Skills
+
+阿里云大数据智能体
+
+的游戏广告视频生成
+
+Mem0
+
+开源仓库
+
+养虾交流群
+
+实现 OpenClaw 长记忆增强
+
+THANKS
+
+

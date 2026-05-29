@@ -5,7 +5,7 @@ aliases: [ecosystem, Agent 生态]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-05-18
+updated: 2026-05-29
 ---
 
 # 工具生态与趋势
@@ -17,7 +17,8 @@ AI Agent 工具生态与趋势分析，共 15 篇。
 - [[opencode]] — OpenCode 完整源码架构
 - [[claw-code]] — Claw Code
 - [[hermes-agent]] — Hermes Agent
-- [[openclaw]] — OpenClaw
+- [[openclaw]] — OpenClaw 数字员工网关
+- [[openclaw-agentic-search-memory]] — OpenClaw Agentic Search & Memory 认知引擎
 
 ## 设计与 Agent 平台
 

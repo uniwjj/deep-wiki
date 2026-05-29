@@ -448,7 +448,19 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - report: 109 页面，95 源文件，0 critical（工具修复后），12 info（10 wanted-page + 2 根目录配置页引用），0 orphan
 - kept 12 wanted-page 链接作为未来页面发现机制
 
-## [2026-05-14] ingest | 网易人才观 & 面试方法
+## [2026-05-29] ingest | 阿里 DataWorks 2026-05-28 虾聊日分享内容（7篇PDF）
+
+- created `dataworks-2026-0528-xialiaori` — 虾聊日活动汇总页面，7场分享的核心内容、演讲人、关键趋势
+- created `openclaw-agentic-search-memory` — OpenClaw 两大认知引擎：Agentic Search（理解→规划→执行→反馈 四阶段研究闭环）与 Agentic Memory（Extract→Embed→Store→Retrieve→Fuse 五步工业级记忆流程），研究飞轮协同
+- created `taobao-live-data-dev-paradigm` — 淘宝直播 AI 驱动的数据研发范式升级：R2C 全流程（NL2DSL2SQL）、三层架构（应用层/AI能力层/基建层）、Multi-Agent 工厂流水线四角色（需求分析/Coordinator+Planner/Research Team/Reporter）、四阶段 Spec 链审计前置、DSL 全自动 100% + Data Agent 半自动 50-80% 双路径生码、三大基础设施（CDM 双产物/知识库双引擎/工程平台 4 模块）、24Q3-26Q2 演进时间线
+- updated `dataworks-data-agent` — 补充 2026 年正式发布信息与现场演示的三种模式
+- updated `emr-skills` — 新增从 Lakehouse 到 Agentic Lakehouse 概念、StarRocks Skills 六大类详细能力地图（领域知识/开发管理/性能分析/诊断/运维/数据分析）、四个真实场景（金融实时风控/集群巡检/报表加速/迁移）
+- updated `flink-skills` — 新增批量巡检诊断、品牌舆情实时监控两个详细场景，补充"大促不怕炸，巡检靠拼装"的 Skill 组合编排理念
+- updated `maxcompute-skills` — 新增 MaxAgent 运营助手四大场景、Delta Table/AutoMV Agent 时代保障机制、Blob 四大应用场景与多模态开发体验（拖拽/画布/预览/WebDAV）
+- updated `hologres-skills` — 新增 HSAP 1.0→4.0 演进时间线、四步广告素材生成全链路（带 SQL 示例）、AI 助手四 Agent 协作架构
+- updated `ai-agent/ecosystem/index` — 新增 [[openclaw-agentic-search-memory]] 链接
+- updated `big-data/index` — 新增虾聊日活动板块 + [[taobao-live-data-dev-paradigm]] 链接
+- 7 PDF 源文件 + 7 TXT 提取文件归档至 sources/2026/05/28/（淘宝直播 PDF 为纯图片，通过 tesseract OCR 提取）
 - created `product/netease-tasted-model` — 网易 TASTED 六力模型（审美/洞察/标准/结构/判断/自驱）
 - created `product/netease-tasted-interview` — SBO 行为面试法的六力追问实战手册
 

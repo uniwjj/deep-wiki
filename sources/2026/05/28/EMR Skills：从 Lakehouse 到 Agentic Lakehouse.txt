@@ -1,0 +1,789 @@
+---
+ingested: 2026-05-29
+wiki_pages: [emr-skills, dataworks-2026-0528-xialiaori]
+---
+
+EMR Skills：从 Lakehouse 到 Agentic Lakehouse
+数据智能化的新一站
+
+畅含 | EMR 产品经理 | 计算平台事业部
+
+目录
+content
+
+01
+02
+03
+
+EMR AI Native 全景图
+EMR Skills 能力
+
+EMR StarRocks Skills能力介
+绍
+开发 ·诊断 ·管控，五大场景全覆盖
+
+04
+
+EMR AI Native 展望
+
+01 / EMR AI NATIVE 全景图
+
+什么是EMR? 什么是Lakehouse?
+阿里云EMR：基于开源框架的一站式大数据处理服务，是运行大数据任务的“操作系统”或“基础设施平台”，帮你搞定底层复杂性，让你专注于数据本
+身。
+Lakehouse：一份数据、多引擎协同。通过引入元数据层和事务机制，实现数仓级别的管理能力。EMR Serverless Spark + StarRocks + DLF（统一元数据）。
+
+如何构建一个面向 Agent 协作的数据平台
+
+所以，如何构建一个面向"智能体协作"的大数据平台？
+
+Agent 时代，对大数据平台提出了新的要求
+从"支持人分析"，走向"支持 Agent 自主调用"
+
+新要求
+更低门槛的调用方式
+从作业/SQL配置，走向 API / 能力调用
+
+更统一的能力抽象
+数据处理、查询分析、系统运维，需要统一对外抽象成能力调用
+
+更实时的响应能力
+支持 Agent 的即时决策与交互
+
+能力 Skill 化
+数据处理 Skill
+
+查询分析 Skill
+
+系统运维 Skill
+
+Agent 无需理解底层系统
+
+EMR：面向 Agent 的数据与计算能力平台
+EMR 不再只是一个"集群产品"，它对外提供的是三类核心能力：
+
+数据处理 Skill
+全托管 Spark 能力，Agent 可直接提交数据处理任务，无需关心集群配置
+
+EMR 平台
+
+实时分析 Skill
+全托管 StarRocks 查询能力，Agent 可即时获取分析结果，支撑实时决策
+
+系统运维 Skill
+集群管理与自动化运维能力，Agent 可自主完成资源调度与故障恢复
+
+EMR AI Native 大图将回答以下问题：
+1. Agent 时代大数据平台需要具备哪些关键能力
+2. EMR 如何把这些能力"Skill 化"，对外提供统一接口
+3. 这种模式在真实业务场景中能带来什么变化
+
+EMR AI Native 产品功能大图
+SQL 层原生大模型调用 · 百炼 MaaS 深度集成 · 全栈 Serverless 免运维
+智能数据分析
+应用
+场景层
+
+智能数据开发
+
+自然语言查数据
+
+SQL 自动优化
+
+智能运维管理
+
+多模态数据处理
+
+SQL Copilot 辅助
+
+作业性能调优
+
+集群健康巡检
+
+异常诊断
+
+文档 / 图像智能处理
+
+企业知识库 RAG
+
+SQL 方言转换
+
+代码生成
+
+根因分析
+
+成本优化建议
+
+多模检索
+
+音视频内容理解
+
+查询结果可视化
+
+预测式扩缩容
+
+AI Function 体系
+AI
+能力层
+
+AI
+基础设
+施
+
+图片打标
+
+embedding
+
+图像处理
+
+数据脱敏
+
+语义提
+
+音频处理
+
+时序预测
+
+内容安全
+
+模型服务
+
+非结构化数据加工
+
+批量模型推理
+
+Embedding
+全文检索 Beta
+
+向量检索 Beta
+
+混合检索 Beta
+
+EMR AI 助手
+
+智能开发助手
+
+集群/实例管理
+
+作业管理
+
+实例管理
+
+任务诊断优化
+
+错误根因分析
+
+SQL 智能生成
+
+弹性管理
+
+资源管理
+
+健康巡检
+
+产品咨询
+
+代码生成
+
+SQL 方言迁移
+
+运维管理
+
+SQL 执行
+
+元数据查询
+
+智能诊断
+
+成本优化
+
+执行计划诊断
+
+参数优化
+
+安全合规
+
+推理优化
+
+Token 管控
+百炼 Qwen 系列
+
+用量仪表盘
+
+批量推理
+
+模型内容安全
+
+自定义模型接入
+
+按量计费
+
+异步调用
+
+审计日志
+
+EMR on ECS / ACK
+计算
+引擎层
+
+Agent Skills
+
+多模态处理引擎
+
+Serverless StarRocks
+
+Serverless Spark
+
+集群化部署
+
+大规模批处理
+
+实时数据查询
+
+毫秒级 OLAP
+
+AI Function 推理
+
+批量多模态数据加工
+
+Ray 分布式计算
+
+弹性伸缩
+
+多引擎支持
+
+向量检索 Beta
+
+全文检索 Beta
+
+混合检索 Beta
+
+AI Function 推理
+
+Daft 多模态处理
+
+GPU/GPU 资源支持
+
+数据
+底座层
+
+统一存储
+OSS
+
+统一 Catalog
+NAS
+
+自下而上构建：底层能力支撑上层产品，最终服务于四大应用场景
+
+CPFS
+
+DLF（Data Lake Formation）
+
+湖格式
+Paimon
+
+Iceberg
+
+Fluss
+
+02 / EMR SKILLS 能力介绍
+
+EMR Skill 能力全景图
+三大子产品通过 Skills 接入 Agent，覆盖集群管理、计算作业、分析数据的全场景
+EMR Serverless Spark
+
+EMR Serverless StarRocks
+
+EMR on ECS 集群管理
+
+alibabacloud-emr-starrocks-manage + assistant
+
+alibabacloud-emr-cluster-manage
+
+管理 StarRocks 实例全生命周期 + 开发运维助手：建表设计、SQL
+调优、数据导入、集群诊断
+
+管理 EMR 集群全生命周期：创建、扩缩容、续费、状态查询
+
+alibabacloud-emr-spark-manage
+
+管理 Spark 工作空间全生命周期：创建工作空间、提交作业、
+Kyuubi 交互式查询、资源扩缩容
+
+1
+
+2
+
+3
+
+4
+
+工作空间管理
+创建、查询、删除工作空间，查询可用引擎版本
+
+作业提交与监控
+提交 Spark 作业（JAR/PySpark/SQL）、查询状态与日志、取消作
+业
+
+Kyuubi 交互式查询
+创建/启停 SQL 网关、JDBC 连接、Token 管理、取消查询
+
+资源队列扩缩容
+资源队列 CU 扩缩容、查询队列状态，按需弹性调整计算资源
+
+用法
+
+“帮我建个 Spark 工作空间
+
+1
+
+2
+
+3
+
+实例生命周期管理
+创建（存算一体/分离）、查询状态、释放、恢复暂停
+
+弹性扩缩容
+节点/磁盘扩缩容、计算组节点增减，均支持预检
+
+SQL 开发与调优 [assistant]
+
+慢 SQL 诊断、Profile 分析、Join 策略优化、改写验证
+
+4 建表设计与数据导入 [assistant]
+
+分区分桶策略、Stream/Routine Load、Schema 设计
+
+用法
+
+“跑个 PySpark 任务，数据在 OSS 上
+
+诊断优化（作业失败分析、性能瓶颈定位、参数优
+化建议）
+
+“这条SQL跑了30秒，帮我优化
+
+、删除
+
+2
+
+3
+
+4
+
+节点组管理与扩缩容
+5 种节点角色(MASTER/CORE/TASK 等)、新建节点组、手动扩缩容
+
+弹性伸缩
+定时策略与指标策略(CPU/内存/YARN 负载触发)、伸缩活动历史查
+询
+
+运维与诊断
+集群与节点巡检、续费管理、属性修改、创建失败诊断
+
+用法
+“帮我建个存算分离的StarRocks，
+再扩2个节点
+
+诊断优化（慢查询分析、Profile 定位、表结构优
+化、Colocate Join、调参建议）
+
+已支持接入：EMR Agent/Dataworks Agent/Qoder/Claude
+
+集群生命周期管理
+1 5 种集群类型、HA/普通部署、存算分离/一体架构、状态查询、克隆
+
+“帮我建个高可用数据湖集群
+
+“请帮我扩容节点G的到10台
+
+故障与诊断（智能定位、根因分析、优化建议、
+自动调参）
+
+已支持多种接入方式，生态产品已预装Skills
+阿里云Skills门户/Qoder/Claude Code/OpenClaw · Dataworks Data Agent·EMR AI助手
+
+03 / EMR STAROCKS SKILLS 能力
+介绍
+
+AI Native：能力全景
+
+AI Function × 11
+
+AI 助手
+
+Agent Skills
+
+多模态混合检索
+
+一条 SQL 调用大模型
+商用 SQL 原生 AI
+
+问题主动发现，根因自动定位
+运维效率从天级降至分钟级
+
+开放标准化运维 Skill
+客户 Agent 即插即用
+
+全文 + 向量 + 标量
+一个引擎统一三种检索模态
+
+已上线
+
+已上线
+
+已上线
+
+公测中
+
+<500ms
+
+100%
+
+11
+
+内置 AI 函数
+
+单次推理延迟
+
+MySQL 协议兼容
+
+3
+多模态混合检索
+
+AI Native：StarRocks Skill 能力地图
+阿里云Agent Skills官方输出，按用户意图拆分，满足多角色用户（DBA/SRE、数据工程师/分析师、应用开发者）所需能力
+
+Skills分类
+
+SR领域知识 - Assistant/
+
+SR开发管理 - Assistant/
+
+SR性能分析 - Assistant/
+
+意图识别
+
+「我想了解 StarRocks」
+
+「我要构建」
+
+「我要优化系统」
+
+• knowledge-qa-skill — 文档查询、概念解释、功能了解
+• config-guide-skill — 配置项含义和推荐值
+
+渐进披露
+
+• sql-assistant-skill — 写 SQL、改 SQL、理解 SQL
+• schema-design-skill — 建表、分区分桶、索引设计
+• data-import-skill — 数据导入方式选择和实施
+
+• query-tune-skill — 单条 SQL 执行瓶颈分析
+• workload-tune-skill — 系统级资源和负载调优
+• workload-analysis-skill — 系统负载统计（Top SQL、
+pattern、趋势）
+
+SR诊断 - Assistant/
+
+SR运维 - Manage/
+
+SR数据分析 - Assistant/
+
+「我遇到问题了」
+
+「我要执行运维操作」
+
+「我要理解数据」
+
+• error-fix — 无法归类领域的通用报错兜底
+• bug-search — 搜社区已知 bug 和修复
+• health-diagnose — 深度根因分析与修复建议
+• health-inspect — 主动巡检、发现潜在风险
+
+• instance-manage — 查看/管理实例信息
+• migration-execute — 执行数据或集群迁移
+• cluster-upgrade — 执行版本升级
+• backup-recovery — 执行备份和恢复
+• access-control — 用户权限、认证、访问策略
+• ha-setup — 高可用配置和管理
+
+• schema-explore — 库表结构与字段探索（实例数据）
+• data-profile — 数据分布、质量、统计
+• anomaly-detect — 数据层面异常发现
+
+核心优势
+Agent 原生集成
+
+核心场景 覆盖
+
+安全合规
+
+Serverless 免运维
+
+生产级稳定性
+
+一键添加 Skill
+
+覆盖开发、诊断、运维、数据分析、领
+
+基于 RAM 权限体系
+
+无需管理基础设施
+
+企业级可靠性保障
+
+开箱即用，无需额外开发
+
+域知识、性能分析六大管理场景
+
+细粒度访问控制
+
+弹性能力
+
+完善的容错与重试机制
+
+场景一：金融实时风控 — 毫秒级交易异常检测
+痛点
+• 反欺诈需实时聚合用户近 N 笔交易特征（金额突增、频次异常），T+1 跑批来不及
+
+/starrocks-assistant 这条风控 SQL 跑了 8 秒，帮我优化下。需要实时算每个用户最近
+
+10 笔交易的金额标准差
+
+• 风控规则涉及多表 JOIN（交易流水 × 用户画像 × 黑名单），查询超时影响拦截
+• 业务方天天改规则，每次都要 DBA 手动调 SQL + 建物化视图，响应慢
+
+分析执行计划... 发现瓶颈：
+问题：transaction_detail (50亿行) 与
+user_profile (2000万) 使用了 Shuffle JOIN
+建议 1：改为 Colocate JOIN（同分布键 user_id）
+
+方案：StarRocks Skill 智能 SQL 调优 + 物化视图设计
+• 自动分析执行计划：发现 Shuffle JOIN 瓶颈 → 建议 Colocate / Broadcast
+
+建议 2：创建异步物化视图预聚合近 10 笔特征
+优化后 SQL：
+WITH recent_txn AS (
+
+• 物化视图一键设计：根据高频查询模式自动推荐 MV，滚动窗口预聚合
+
+SELECT user_id, amount,
+
+• 窗口函数即写即优化：LAG / LEAD / SUM OVER 实时计算交易特征
+
+PARTITION BY user_id
+
+STDDEV(amount) OVER (
+ORDER BY txn_time
+
+ROWS 9 PRECEDING
+) AS amt_stddev
+FROM transaction_detail_colocate)
+预计耗时：8s → 200ms
+
+说出你想要的，Qoder会决定接下来怎么做
+
+场景二：集群健康巡检 — 拯救运维小哥的发际线
+痛点
+• StarRocks 集群几十个节点，逐个检查 FE/BE/CN 状态、Tablet、Compaction？
+
+/starrocks-manage 帮我巡检下 StarRocks 集群健康状态
+
+• 半夜告警响了，打开控制台翻日志翻到天亮
+• 新同事不熟悉诊断命令，出问题只会重启大法
+
+集群巡检报告
+架构：Shared-Data（存算分离）
+
+方案：StarRocks Skill 一键全链路诊断
+• "帮我巡检集群" — 自动执行 SHOW FRONTENDS / BACKENDS 全套诊断
+• 30 秒输出结构化巡检报告：节点状态 + Tablet 健康 + Compaction 积压
+
+• 异常项高亮 + 风险等级 + 修复建议，运维照着做就行
+
+FE：3 节点
+
+全部 Alive
+
+CN：5 节点
+
+cn-004 LastHeartbeat > 60s
+
+Tablet 健康：
+总计 128,394 | 健康 128,102 | 异常 292
+292 tablets 副本不足
+Compaction：
+cn-003 积压 1,247 pending（阈值 500）
+建议操作：
+
+1. 检查 cn-004 网络连通性
+2. cn-003: SET compaction_max_concurrent=8
+3. 失败 Load：增大 timeout 或拆分分片
+需要我帮你执行修复操作吗？
+
+说出你想要的，Qoder会决定接下来怎么做
+
+场景三：金融报表加速 — 告别 T+1，今天的
+数据今天看
+痛点
+
+/starrocks-assistant 我有一张 MySQL 交易流水表，5000 万行/天，想做实时报表。
+
+帮我设计表结构和入湖方案
+
+• 监管报表、经营日报依赖 T+1 跑批，领导早会看到的是"昨天的昨天"
+• MySQL 分库分表查不动聚合，BI 工具超时转圈
+• 接一个新报表需求就要写 ETL + 建宽表，排期两周起步
+
+Schema 设计建议：
+表模型：Primary Key（支持 CDC 实时更新）
+分区：PARTITION BY RANGE(txn_date) 按天
+分桶：DISTRIBUTED BY HASH(user_id) BUCKETS 32
+排序键：(user_id, txn_date, txn_time)
+
+方案：StarRocks Skill 智能 Schema 设计 + 数据入湖选型
+• 一句话建表：描述业务场景 → 自动推荐表模型、分区分桶策略
+• 入湖方式自动选型：MySQL CDC → Flink CDC + Connector；文件 → Broker Load
+
+• 物化视图替代宽表：无需手动 ETL，MV 自动增量刷新，报表实时可查
+
+入湖方案：
+MySQL → Flink CDC → StarRocks Connector
+全量 + 增量自动切换
+Exactly-Once 语义
+延迟 < 5s
+报表加速：
+CREATE MATERIALIZED VIEW mv_daily_summary
+REFRESH ASYNC EVERY (INTERVAL 1 MINUTE) AS
+SELECT txn_date, branch_id,
+COUNT(*), SUM(amount) ...
+领导早会看实时数据，不再是"昨天的昨天"。
+
+说出你想要的，Qoder 会决定接下来怎么做
+
+场景四：MySQL → StarRocks 报表迁移
+痛点
+•团队有 20 张业务报表跑在 MySQL（RDS）上，覆盖订单、商品、客户、营销等核⼼域。随着数
+
+据量增⻓，复杂聚合查询越来越慢。业务⽅要求做分析加速，同时保留 MySQL 作为业务写⼊源
+•传统做法：逐表导出 MySQL DDL（10 分钟）→ ⼿动改写为 StarRocks 语法并调优分区分桶策
+略（30 分钟 × 20张表）→ 编写数据迁移脚本（20 分钟）→ 全量导⼊并校验⼀致性（15 分
+钟）。总计约 2-3 ⼩时，且 DDL 改写过程中极易遗漏 StarRocks 的分区裁剪、排序键、
+Colocate Join 等优化点。
+
+方案：StarRocks Skill 智能 生成StarRocks DDL+ 自动比对
+•读取 MySQL Schema 后⾃动⽣成最优 StarRocks DDL；
+•无需担心网络等配置问题，AI帮你搞定工程问题
+• 根据业务特征，自动生成StarRocks 的分区裁剪、排序键、Colocate Join 等优化点
+
+StarRocks AI Function + Agent Skills = 对话式智能分析
+数据不出库，AI 分析在 SQL 内完成；运维操作对话触发，零界面切换
+
+应用架构：
+
+[1] 控制与编排层
+DataWorks Data Agent
+
+[2] 计算引擎 StarRocks
+接收 Agent 提交的 SQL
+
+Skills Library:
+• StarRocks Assistant
+
+• StarRocks Manage
+
+[4] 模型服务层
+
+[3] 数据 & 向量存储
+
+Qwen3.6-Plus / 百炼
+
+retail_demo 数据库
+1. AI Function 内置推理
+
+输入：
+
+- ai_sentiment()
+
+• 客户评价
+
+- ai_classify()
+
+• 订单流水（分区表）
+
+Action:
+
+- ai_filter()
+
+• 客户画像
+
+1. 理解用户意图
+
+- ai_complete()
+
+• 商品信息
+
+2. 生成 SQL / 调用 API
+
+2. 向量检索 + 全文检索(开发中)
+
+3. 返回分析结果
+
+3. 混合排序返回结果(开发中)
+
+• SQL 内文本字段
+
+输出：
+• 情感/分类/摘要
+
+• 促销活动
+
+核心流程：
+
+意图识别
+
+SQL 生成
+
+引擎执行
+
+模型推理
+
+结果返回
+
+用户对话输入
+自然语言需求
+
+Agent 调用 Skills
+生成 AI Function SQL
+
+StarRocks 执行
+AI+向量+全文检索
+
+内置调用 LLM
+完成智能分析
+
+结构化结果
+回传 Agent 展示
+
+04 / EMR AI NATIVE 展望
+
+EMR AI Native 能力展望
+
+• EMR AI助手 全面对接 IM 应用，支持自定义推送范围
+和巡检范围
+
+• EMR Serverless Starrocks 全文检索 GA
+
+• EMR Serverless Spark 多模态处理 GA
+
+• EMR Serverless Spark 多模态算子市场GA
+
+• EMR Serverless Starrocks 向量化检索 GA
+
+• EMR AI助手 支持成本与资源优化
+
+THANKS
+
+

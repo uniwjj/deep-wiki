@@ -1,0 +1,783 @@
+---
+ingested: 2026-05-29
+wiki_pages: [maxcompute-skills, dataworks-2026-0528-xialiaori]
+---
+
+MaxCompute × Agent
+从多模态存储到混合计算，突破数字员工的算力边界
+
+孙戴博（六稻） | MaxCompute PD
+
+目录
+content
+
+01
+
+MaxCompute为数字员工提供
+丰富的接入方式
+
+02
+
+通过语义层实现认知对齐
+
+03
+
+多模态存储与混合计算方案
+
+04
+
+章节副标题文案信息（44pt)
+添加小标题文字
+
+Agentic 时代，MaxCompute为数字员工提供丰富的接入方式
+MaxCompute 通过 MCMCP 与 Skills 结合的方式，将底层元数据、计算和存储服务封装成 Agent 可理解、可执行的统一能力接入层，让企业级客户可
+以通过Agent完成超大规模数据分析、高性价比多模数据加工处理和智能化运维。
+用户 Agent 生态
+OpenClaw
+
+Dataworks Agent
+
+Qwen Code
+
+QoderWork
+
+MaxAgent
+
+MC Skills 集合
+
+↓
+
+Agent通用，包含：语义包、常用命令、开发模板、使用限制
+
+MCMCP服务
+把 MaxCompute OpenAPI / StorageAPI / CatalogAPI 封装成可被 Agent 直接调用的结构化工具
+
+↓
+MaxCompute
+Metadata
+Catalog / Schema / Table / Partition
+授权
+
+审计
+
+数据发现
+
+脱敏
+
+敏感等级
+
+行级权限
+
+数据共享
+
+Storage
+
+Compute Engines
+MC SQL
+
+MaxFrame
+
+MC Spark
+
+异构算了 CU / GU
+
+AI Function
+
+模型
+
+Table
+
+数据类型
+
+（Append / PK Delta Table）
+
+（Blob / JSON / ARRAY / MAP / STRUCT）
+
+冷热分层
+
+多副本
+
+多AZ容灾
+
+回收站/Time Travel
+
+数据快照
+
+存储加密
+
+MCMCP + Skills
+MCMCP是MaxCompute提供的Model Context Protocol（MCP）服务，用户可以使用丰富的Agent生态配置接入MCMCP，接入后用
+户可通过自然语言对话方式管理和分析PB、EB级数据。
+
+方法分组
+身份与权限确认
+
+生产就绪
+→
+
+check_access
+
+安全、Agent友好
+1. 丰富的认证方式，支持 AK/SK、STS、Credentials URI等无AK方式
+
+元数据
+
+Knowledge Catalog
+
+→
+→
+
+list projects / schemas / tables /
+partitions
+
+2. 元数据搜索服务，帮用户自然语言找表
+
+search_meta_data
+
+4. 执行SQL前可以走成本评估审批
+
+3. 执行SQL可以约束仅允许只读查询
+5. 建表时提供表属性选项（生命周期、主键、部分列更新等）
+
+分析计算
+
+数据管理
+
+→
+
+→
+
+cost_sql
+execute_sql
+get_instance_status
+get_instance
+create_table
+insert_values
+
+配套Skills
+n Sql-Generation
+n Maxframe-Coding
+n Information-Schema
+n Project-Qouta-Manage
+
+开放能力与Agent接入口
+同一套MaxCompute平台能力，不止一种Agent工作入口。用户可以按任务类型和使用习惯通过更多方式接入工作流。
+
+01
+
+MaxCompute CLI
+
+02
+
+结构化命令入口
+
+MaxCompute AI数据探索客户端
+桌面级客户端
+
+03
+
+🦞龙虾实操 MaxCompute
+Specialist Sub-Agent 对接OpenClaw
+
+方案
+
+CLI workspace mock
+$ maxc bootstrap
+
+Run config
+
+$ maxc whoami --json
+
+Auth: AKSK / STS
+
+{"identity":"ram_role","auth":"ncs"}
+
+$ maxc skill install maxframejob-coding
+
+OpenClaw 做“总控”，
+Sub-Agent 做“专业分析执
+行器”。
+
+Output: json
+Profile: workspace-default
+
+优势
+Sub-Agent中证据链完整
+
+bootstrap
+
+whoami --json
+
+AKSK / STS
+
+•
+
+Plan 执行计划
+
+环境引导
+
+结构化身份输出
+
+多认证方式
+
+•
+
+Act 执行过程
+
+•
+
+Result 中间结果、报告等
+
+•
+
+Bootstrap启动过程引导，配置环境依赖和认证
+
+•
+
+Json结构化输出，更适合Agent消费
+
+•
+
+常用命令，如构建元数据缓存，获取数据采样
+
+•
+
+产物
+
+快速还原工作现场：数据连接、SQL 脚本、可视化分析、
+用户偏好等状态在本地持久化，无惧断网和延迟。
+
+•
+
+提升多模态开发体验：支持文件导入导出、管理和预览。
+
+•
+
+AI驱动数据探索，AI推断数据导入DDL，作为Specialist
+Sub-Agent 被调用。
+
+•
+
+诊断、路由、审计
+
+操作数据有保障，底层Table Format做支撑
+Delta Table 与 AutoMV：面向 Agent 时代的近实时事务引擎和自动物化视图，让重复查询自动加速、数据回滚随时可用。
+Delta Table
+
+AutoMV
+
+无惧Agent破坏数据，TimeTravel 随时回滚
+
+无惧Agent重复查询，自动物化，空间换时间降算力
+
+ACID 事务表引擎 近实时写入 增量读取 自动调优 存储成本持平或更低
+
+基于执行计划自动发现公共子查询 自动推荐创建 自动查询改写 确定性收益
+
+基础 DML
+
+实时增量
+
+自动调优
+
+INSERT / UPDATE / DELETE
+
+TimeTravel/Snapshot
+
+动态分桶免配置
+
+MERGE INTO
+
+Incremental Read
+
+Clustering 排序加速
+
+Streaming Insert 流式写入
+
+Delta Live MV
+
+Schema Evolution
+
+Auto Partition 自动分区
+
+增量 ReClustering
+
+Realtime Compaction
+
+ACID 事物
+
+Incremental ReClustering
+
+基础读写性能无回退
+
+性能提升
+
+存储成本下降
+
+Bucket裁剪获得更优查询性能
+
+数据更有序，列存压缩比高， 分层存储
+
+作业特征分析
+
+从历史执行计划自动提取查询模式
+
+公共计算抽取
+
+跨 SQL 语义识别公共子查询，无需大海捞针
+
+全局最优推荐
+
+综合收益/成本评估，自适应存储阈值
+
+AutoMV
+
+MV 智能推荐
+
+精确匹配
+
+模糊匹配
+
+自动查询改写
+自动发现
+
+透明加速，用户无感知
+
+零人工干预
+
+确定性收益
+
+MaxAgent 运营助手
+覆盖资源管理、成本治理、业务分析全链路。
+免控制台登录、移动端操控闭环，打通钉钉、飞书、微信机器人通道，实现“聊天即服务”的交互。
+
+01
+
+数据开发日常运维
+
+02
+
+资源管理员移动运维
+
+03
+
+痛点
+
+痛点
+
+4
+
+降本增效
+
+智能问数
+痛点
+
+痛点
+
+•
+
+作业失败/慢，排查耗时长
+
+•
+
+项目配置繁琐，参数易遗漏
+
+•
+
+费用增长不知原因
+
+•
+
+不懂 SQL，依赖数据团队
+
+•
+
+查询性能瓶颈，不知如何优化
+
+•
+
+Quota 利用率不明，扩容凭感觉
+
+•
+
+存储大户不清，优化无方向
+
+•
+
+无法定位和识别目标表和数据业务逻辑
+
+•
+
+全表扫描浪费资源
+
+•
+
+外出告警无法及时处理
+
+•
+
+优化手段单一，收益不可量化
+
+•
+
+日常报表手动制作
+
+MaxAgent能力
+
+MaxAgent能力
+
+MaxAgent能力
+
+MaxAgent能力
+
+•
+
+作业运维与智能诊断
+
+•
+
+项目配置与参数管理
+
+•
+
+成本智能分析与趋势
+
+•
+
+NL2SQL 自然语言查数据
+
+•
+
+物化视图推荐与收益评估
+
+•
+
+Quota/路由/计划/分时配置
+
+•
+
+计量成本归因与Top消费者
+
+•
+
+上下文追问深度分析
+
+•
+
+Auto Cluster 聚簇优化
+
+•
+
+机器人移动端闭环处置
+
+•
+
+存储观测与分层推荐
+
+•
+
+跨域联动：查询+诊断
+
+通过语义层实现认知对齐：语义结构举例
+Information_Schema 是系统级运维（Ops）语义包，基于 MaxCompute 租户级的 INFORMATION_SCHEMA 元数据视图构建。
+它旨在为数据团队提供全方位的项目审计、用量分析与运维观测能力，将复杂的底层元数据转化为可自然语言查询的指标和对象。
+54 术语
+
+34 实体
+
+16 关联
+
+口语到治理概念映射
+
+表 / 字段 / 任务 / Quota / Tunnel
+
+可把对象关系串起来分析
+
+35 指标
+
+17 场景
+
+38 SQL
+
+存储 / 成本 / 资源 / 安全
+
+playbook 直连常见治理问题
+
+已验证查询模板可直接复用
+
+指标举例
+• CU时 SUM(cost_cpu / 100 / 3600)
+• 任务 P99 运行时长 PERCENTILE(DATEDIFF(end_time, start_time, 'ms'), 0.99)
+
+场景Playbook
+•
+
+语义包中不是 prompt，而是 Knowledge Catalog
+information_schema/
+├── terms.json
+├── entities.json
+├── metrics.json
+├── joins.json
+├── verified-queries.json
+└── playbooks.json
+
+存储占用诊断 ：盘点TOP存储空间占用的表 / 检查分区数量、粒度与潜在分区膨胀风险 / 检查数据更
+新时间，识别陈旧资产
+
+从问题到动作
+Skill 让 Agent 不再只会查系统表，而是能按场景组织诊断。
+
+用户提问：为什么这个月成本上涨？
+
+实体关系
+•
+
+实体：Task / Quota / User / Role / Catalog / Schema / Table / Partition / Column
+
+•
+
+关系：UDFS → UDF_PRIVILEGES Join条件 udfs.udf_name = udf_privileges.udf_name
+
+匹配场景：cost_pressure_diagnosis
+读取术语 / 指标 / 关联 / SQL 模板
+返回诊断结论 + 下一步建议
+
+Information Schema 语义包应用场景举例
+结合Information_Schema 语义包，不用铺垫即可直接让Agent回答真实运维和治理问题
+存储压力
+
+成本压力
+
+典型提问
+
+典型提问
+
+哪些表最近占用的存储最高？
+
+为什么这个月成本比上月涨得快？
+
+识别存储 TOP 表和分区膨胀。
+
+按 owner / project / task_type 拆解 CU时。
+
+定位生命周期异常与冷热失衡。
+
+回溯 cu_hour_consumed 的资源消耗来源。
+
+权限审计
+
+传输审计
+
+典型提问
+
+典型提问
+
+哪些表的权限暴露面更大？
+
+最近有哪些公网下载行为值得追踪？
+
+审计 LABEL 保护表与字段级授权。
+
+基于 TUNNELS_HISTORY 与 client_ip 回溯。
+
+识别高风险主体和暴露链路。
+
+锁定异常传输与下载溯源对象。
+
+失败激增
+
+Quota 监控
+
+典型提问
+
+典型提问
+
+最近 7 天失败任务为什么突然变多？
+
+哪些 Quota 已经接近资源瓶颈？
+
+结合近 14 天 TASKS_HISTORY 对比。
+
+查看 CPU、内存和弹性配额占用。
+
+定位时段、Owner、状态与任务类型异常。
+
+直接给出 quota_bottleneck 判断。
+
+多模态存储与混合计算方案
+MaxCompute 提供大规模多模态存储和计算能力，支持单表多模态数据一行多列混存，将音视频图文数据与其元信息、标签统一存储，支撑
+AI推理和AIGC应用等场景。
+解决问题
+多模态数据的原始文件、元信息、标注信息经常分散在对象存储、湖仓等多引擎中，多引擎架构维护成交本高。
+数据使用和开发成本高，如跨模态查询延迟高，缺乏 ACID 事务保障，数据一致性管理困难。
+计算
+
+存储
+
+Blob 数据类型
+
+多模态计算
+
+应用场景：百万图片小文件数据集，大规模HTML片段、JSON会话的文本类数据集管理
+
+MaxFrame + SQL UDF 让图片、文档、音视频等对象在平台内继续做预处理、推理。
+
+5GB / cell
+
+4X
+
+一个单元格可存大对象
+
+相对 Object Table 访问对象存储IO吞吐收益
+
+ACID
+
+2X
+
+多模态数据集事务一致性
+
+数据集标签点查过滤场景性能优于 String、Binary 类型
+
+IMG
+
+DOC
+
+AUDIO
+
+VIDEO
+
+图像 / OCR
+
+文档 / 解析
+
+音频 / ASR
+
+视频 / 切帧
+
+接口
+
+全托管优化能力覆盖 Compaction、Tiering、Index Build、Merge、Backup。
+支持 Append / PK Delta Table。
+
+多条数据接口
+开发者可从 SQL、MaxFrame 多条路径读写 Blob
+SDK批量上传和下载，通过Object Table从对象存储批量导入
+
+Blob数据类型与多模态存储
+Blob（Binary Large Object）数据类型是MaxCompute提供的一种用于在表中存储图片、音频、视频、文档等非结构化二进制大对象的数据类型。通
+过 Blob 类型，可以将多模态数据的原始文件、元信息和标注信息统一存储在同一张MaxCompute表中，使用 SQL 统一查询和维护，通过MaxFrame
+和 SQL UDF 批量加工处理。
+1
+
+AI 训练数据集管理
+将图片、音频、视频与标注标签存储在同一张表
+中，通过 SQL 过滤所需样本数据集。
+
+2
+
+多模态数据处理流水线
+视频切帧、音频转文本、内容打标等多步骤流水
+线的中间结果和最终产物统一存储。
+
+3
+
+多模态加工缓存层
+作为对象存储等数据源的缓存层，提升 MaxFrame、
+SQL 大规模并行计算的吞吐性能，解决小文件批量
+请求的 QPS 限制。
+
+4
+
+非结构化数据入湖
+将分散在外部存储中的文件统一导入 MaxCompute，
+扩展元信息建立企业非结构化资产库，获得事务保
+障和统一权限管控。
+
+https://help.aliyun.com/zh/maxcompute/user-guide/blob-data-type-and-multimodal-storage
+
+场景：多模态开发调试与加工体验
+Blob 具备文件系统式的可操作性，支持文件拖拽式批量导入、文件预览方式查看和下载、挂载到用户操作系统。
+Blob 多模态加工算子库已经覆盖图像、视频、音频、PDF、Excel、Word、PPT、Markdown、HTML、中文文本等多个方向。
+挂载为操作系统文件夹
+
+多模态加工画布
+
+图像 / 视频 / 音频 / 文档算子库
+
+拖拽导入
+
+编排加工
+
+预览下载
+
+挂载共享
+
+上传文件夹和音视频，自动识别路径
+、名称、类型等元信息。
+
+画布根据 DAG 和算子参数动态生成
+SQL + UDF 执行语句。
+
+图片、视频、音频、PDF 可在线预览
+，用户看到内容而不是二进制编码。
+
+WebDAV 将 Blob 表挂载成文件夹，
+SQL CRUD 映射为 List / Get / Put。
+
+音频Blob -> 【语音转写文字】 -> 英文记录String -> 【Ai_Function翻译】 -> 中文记录String
+原始图片Blob -> 【图片增强】 -> 黑白图片Blob -> 【图片水印与合成】 -> 带水印黑白图片Blob
+
+MaxFrame Coding Skill 加速多模态算子开发与交付
+MaxFrame Coding Skill 可以集成到主流 AI 编程助手中，将 MaxFrame 分布式数据处理知识体系注入 Vibe Coding，包含从会话管理、数
+据读写、算子选择到结果输出的开发全流程，帮助开发者大幅降低分布式数据处理的开发门槛，显著提升编码效率。
+算子
+
+已有能力
+
+多模态算子举例
+
+MaxFrame Coding Skill
+
+逐行文件处理可用 df.apply(axis=1)；模型批推理优先 df.mf.apply_chunk()；视
+频切帧可用 df.mf.flatmap()；音频合并适合 df.mf.map_reduce()；并行调优可用
+df.mf.rebalance()。
+
+让 Agent 生成更接近可运行、可交付的分布式开发代码。
+
+Operator Selector
+
+API 校验
+
+自动推荐更合适的算子与处理方式
+
+实时验证 API 是否真实存在
+
+模式
+3 阶段
+
+10 模板
+
+确认需求 → 确认方案 → 生成代码
+
+生产级示例覆盖常见开发场景
+
+多模态开发模式
+生成代码的最低生产约束
+
+访问 OSS 常配合 @with_fs_mount，模型加载使用 _ctx 缓存，既减少重复加载
+，也更适合分布式 Worker 批处理。
+
+session = new_session(...)
+df = df.mf.apply_chunk(...)
+result.execute()
+finally: session.destroy()
+
+演进
+
+基座 + 专业 Skill
+已有 maxframe-job-coding 作为基座；多模态处理、AI Function、GPU / 资源调
+度是正在演进的专业方向。
+
+THANKS
+
+
