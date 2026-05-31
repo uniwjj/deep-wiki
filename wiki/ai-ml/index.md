@@ -5,10 +5,14 @@ aliases: [ai-ml, AI, ML, LLM]
 tags: [ai-ml, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-05-18
+updated: 2026-05-31
 ---
 
 # AI/ML/LLM
+
+## 核心概念
+
+- [[ontology]] — 本体论：从哲学到 AI 基石，五要素框架与 AI 幻觉解决方案
 
 ## RAG 与检索
 

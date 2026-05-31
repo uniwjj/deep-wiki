@@ -36,5 +36,7 @@ package-lock.json
 .obsidian/appearance.json
 .trash/
 
-
+# Superpowers
+docs/superpowers/
+.superpowers/
 

@@ -2,6 +2,11 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-31] ingest | 别再卷大模型了：Palantir 告诉我们，AI 的进阶是"本体论"
+- created `ontology` — 本体论核心概念（五要素框架、AI 幻觉解决方案、数据巴别塔、Neuro-Symbolic 关系）
+- updated `ai-ml/index` — 新增核心概念分类与 [[ontology]] 条目
+- updated `taobao-live-data-dev-paradigm` — 本体论段落添加 [[ontology]] wikilink
+
 ## [2026-05-31] ingest | DataWorks 虾聊日 0528 录音-修正版.md（re-ingest，整场录音文字稿）
 - 通读 444 行完整录音转写稿，与 7 份 PDF 视觉复核结果双源对照
 - expanded `dataworks-2026-0528-xialiaori` — 重写为整场议程版：补全开场王子军 OPC 引主机制（PDF 集合中无对应 deck，仅录音保留：800+BP 收件、入选率<10%、17 场路演、I have a demo 三创始人、四角色协同的引主机制、Airtouch 案例）；扩展每场分享的演讲人完整称谓（孙文强/丁源/孙戴博/赵红梅/李昊哲/畅含/陈梦成）+ 录音独有的原话/demo 细节

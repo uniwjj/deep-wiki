@@ -38,14 +38,20 @@
     },
     "wiki/ai-ml/index.md": {
       "path": "wiki/ai-ml/index.md",
-      "mtime": 1779086221881.6333,
-      "contentHash": "17ae242947c6d295",
+      "mtime": 1780241787541.1804,
+      "contentHash": "156e219cd5282b08",
       "lastSynced": "2026-05-31"
     },
     "wiki/ai-ml/llm-cost-optimization.md": {
       "path": "wiki/ai-ml/llm-cost-optimization.md",
       "mtime": 1779081059360.039,
       "contentHash": "de88072d45877262",
+      "lastSynced": "2026-05-31"
+    },
+    "wiki/ai-ml/ontology.md": {
+      "path": "wiki/ai-ml/ontology.md",
+      "mtime": 1780241778384.822,
+      "contentHash": "d53db19efcb60a09",
       "lastSynced": "2026-05-31"
     },
     "wiki/ai-ml/prompt-engineering.md": {
@@ -182,8 +188,8 @@
     },
     "wiki/big-data/taobao-live-data-dev-paradigm.md": {
       "path": "wiki/big-data/taobao-live-data-dev-paradigm.md",
-      "mtime": 1780219390942.3745,
-      "contentHash": "b8f98f1610c59bcd",
+      "mtime": 1780241794831.5552,
+      "contentHash": "e119f956e4320786",
       "lastSynced": "2026-05-31"
     },
     "wiki/distributed/index.md": {
@@ -1516,6 +1522,12 @@
       "path": "sources/2026/05/28/DataWorks虾聊0528录音-修正版.md",
       "mtime": 1780219649956.104,
       "contentHash": "ae4a9794e9dc5f2a",
+      "lastSynced": "2026-05-31"
+    },
+    "sources/2026/05/29/别再卷大模型了_Palantir 告诉我们，AI 的进阶是_本体论_.md": {
+      "path": "sources/2026/05/29/别再卷大模型了_Palantir 告诉我们，AI 的进阶是_本体论_.md",
+      "mtime": 1780241820204.0977,
+      "contentHash": "eb5fde7d26e092fa",
       "lastSynced": "2026-05-31"
     }
   },
