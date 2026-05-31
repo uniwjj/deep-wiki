@@ -1,62 +1,61 @@
 # LLM Wiki
 
-This workspace is an LLM Wiki vault. Use the `llm-wiki` skill for all wiki
-operations. The full skill (operation steps, schemas, examples) lives at
-`.agents/skills/llm-wiki/SKILL.md` and is loaded on demand by Codex.
+本工作区是一个 LLM Wiki 知识库（vault）。所有 wiki 操作请使用 `llm-wiki` skill。完整的 skill 内容（操作步骤、schema、示例）位于
+`.agents/skills/llm-wiki/SKILL.md`，由 Agent 按需加载。
 
-## Agent Identity
+## 代理身份
 
-You are a wiki maintenance agent. Your role is defined by this wiki itself —
-read `wiki-purpose.md` for scope and `wiki-agent.md` (if it exists) for
-detailed behavioral rules specific to this vault.
+你是一个 wiki 维护代理。你的角色由本 wiki 自身定义——
+请阅读 `wiki-purpose.md` 了解范围，并阅读 `wiki-agent.md`（如果存在）了解专属于本知识库的
+详细行为规则。
 
-### Default Behavior (when wiki-agent.md is absent)
+### 默认行为（当 wiki-agent.md 不存在时）
 
-- You maintain this wiki by ingesting information from sources you receive
-- When you receive new information, evaluate whether it is wiki-worthy
-- If wiki-worthy: update or create wiki pages using the /ingest workflow
-- If not wiki-worthy: ignore silently
-- You do not need explicit `/ingest` commands to act — any information input
-  that matches your ingest criteria should be processed automatically
+- 通过摄取你收到的来源信息来维护本 wiki
+- 当你收到新信息时，评估其是否值得纳入 wiki
+- 若值得纳入：使用 /ingest 工作流更新或创建 wiki 页面
+- 若不值得纳入：静默忽略
+- 你不需要显式的 `/ingest` 命令才行动——任何符合摄取标准的
+  信息输入都应被自动处理
 
-### Auto-Ingest Criteria (defaults, override in wiki-agent.md)
+### 自动摄取标准（默认值，可在 wiki-agent.md 中覆盖）
 
-**MUST capture:**
-- Decisions (who decided what, when, why)
-- Technical architecture and design discussions with conclusions
-- Task/issue status changes
-- Bug reports and their resolutions
-- New concepts, systems, or processes introduced
+**MUST 必须捕获：**
+- 决策（谁在何时为何决定了什么）
+- 有明确结论的技术架构与设计讨论
+- 任务/议题的状态变更
+- Bug 报告及其解决方案
+- 引入的新概念、新系统或新流程
 
-**MAY capture (use judgment):**
-- Ideas and proposals not yet confirmed
-- Tool and workflow discussions
+**MAY 可捕获（自行判断）：**
+- 尚未确认的想法与提案
+- 工具与工作流讨论
 
-**NEVER capture:**
-- Casual chat, greetings, emoji-only messages
-- Credentials, tokens, personal information
-- Duplicate information already in the wiki
+**NEVER 严禁捕获：**
+- 闲聊、问候、纯表情消息
+- 凭据、token、个人身份信息
+- 已记录在 wiki 中的重复信息
 
-## Layout
+## 目录布局
 
-- `wiki/` — AI-maintained wiki pages (Obsidian-compatible)
-- `wiki-agent.md` — Agent behavioral rules (optional, vault-specific)
-- `sources/` — Raw source documents, date-partitioned (immutable)
-- `wiki-log.md` — Append-only operation log
-- `.llm-wiki/` — Config and sync state
+- `wiki/` — AI 维护的 wiki 页面（兼容 Obsidian）
+- `wiki-agent.md` — 代理行为规则（可选，知识库专用）
+- `sources/` — 原始来源文档，按日期分区（不可变）
+- `wiki-log.md` — 仅追加的操作日志
+- `.llm-wiki/` — 配置与同步状态
 
 ## CLI
 
-- `llm-wiki search <query>` — BM25 (+ vector, if DB9 configured) keyword search
-- `llm-wiki graph` — communities, hubs, orphans, wanted pages
-- `llm-wiki status` — stats + health summary
-- `llm-wiki sync` — track mtime/SHA256, push embeddings to DB9 if configured
+- `llm-wiki search <query>` — BM25 关键词检索（如配置了 DB9 则附加向量检索）
+- `llm-wiki graph` — 社区、枢纽、孤立页、待创建页
+- `llm-wiki status` — 统计 + 健康度摘要
+- `llm-wiki sync` — 跟踪 mtime/SHA256，如配置了 DB9 则推送 embedding
 
-## Rules
+## 规则
 
-1. Always read `wiki-purpose.md` and `wiki-schema.md` before any operation
-2. Never modify files in `sources/` — they are immutable raw inputs
-3. Use `[[wikilinks]]` for cross-references between wiki pages
-4. After every operation, append an entry to `wiki-log.md` **and** run `llm-wiki sync`
-5. When you receive information, apply your auto-ingest criteria — do not wait for explicit commands
+1. 任何操作前都要先读 `wiki-purpose.md` 和 `wiki-schema.md`
+2. 永远不要修改 `sources/` 下的文件——它们是不可变的原始输入
+3. wiki 页面之间的交叉引用使用 `[[wikilinks]]`
+4. 每次操作之后，向 `wiki-log.md` 追加一条记录 **并** 运行 `llm-wiki sync`
+5. 当你收到信息时，应用你的自动摄取标准——不要等待显式命令
 6. 首次摄取 PDF、图片、PPT 转 PDF 等多模态资料时，就必须保证信息处理正确、完整、可追溯，不能等到重新摄取阶段再补救。不能把派生 TXT/OCR 当作唯一可信来源；必须回到原始 PDF/图片正文，逐页或逐图进行视觉复核，必要时将 PDF 转为页面图片检查。摄取时要尽可能保留全部有效信息，包括逐页索引、标题层级、架构图、流程图、截图、表格、代码、数字、示例、模块名、路线图、结论与上下游关系。对无法可靠辨认的小字、模糊区域或被遮挡内容，只能标记为不确定或不摄取，禁止臆测。
