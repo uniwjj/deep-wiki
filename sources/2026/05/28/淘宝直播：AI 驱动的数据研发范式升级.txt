@@ -1,850 +1,600 @@
 ---
-ingested: 2026-05-29
+ingested: 2026-05-31
+re_ingested: 2026-05-31
+note: 之前的 OCR 派生 txt 因质量太差被删除，本文为基于 PDF 图像视觉识别后的纯净文本派生
 wiki_pages: [taobao-live-data-dev-paradigm, dataworks-2026-0528-xialiaori]
 ---
 
-=== page-01.png ===
-阿里云大数据智能体"虾" 聊日
+# 淘宝直播：AI 驱动的数据研发范式升级
 
-淘宝直播 X DataWorks Dat
+阿里云大数据智能体"虾"聊日 · 淘宝直播 × DataWorks Data Agent · 构建数据领域的数字员工 · 2026.05
 
-Al 驱动的
-数据研发范式升级
+---
 
-构建数据领域的数字员工
+## P2 · 一句话主线 · 长期主义
 
-2026.05
-=== page-02.png ===
-一句话主线 ， 友舰主义
+**用工程的确定性，接管（暂时）大模型的不确定性**——AI 不确定 → [工程接管区] → 可用 AI 结果。
 
-可用 AI 结果
+### 三层架构
+- 应用层：多 Agent 协同 + 中心化 AI Native + 本地化 AI Native（用得好 AI）
+- AI 能力层：Skill + SDD + AI Coding（管得住 AI）
+- 基建层：CDM + 知识库 + 工程平台（喂得饱 AI）
 
-用工程的确定性. 接管(暂时) 大模型的不确定性
+### AI 角色演进
+01. 经验执行者（早期）→ 02. 经验生产者（当下）→ 03. SuperAgent / HarnessAgent（未来）
 
-”三层架构
+---
 
-此用层                                                                EC
+## P3 · AI 时代对数据研发的挑战
 
-多 Agent 协同 + 中心化 Al Native + 本地化 Al Native
-用得好 Al
+不只是工具和效率的升级，而是生产力的质变和生产模式的突破。
 
-Al 能力层
+01. **准确率是红线**：100% 准确才能上线，人 review 跟不上 AI 输出速度，红线必须硬约束
+02. **知识库是标配**：传统模式下经验都在员工脑子里，AI 时代必须全部线上化，领域模型的体系化构建异常重要
+03. **消费场景复杂**：不只给下游 ADS 同学用，AI 也要吃数据 — 命名 / 枚举 / 口径无二义性成硬约束
+04. **协同模式重构**：人干需求 → 多 Agent 并行，人退出执行环节、只守关键决策点
+05. **生产关系重塑**：生产力的质变必将带来生产模式和生产关系的变化
 
-Skill + SDD + Al Coding
-管得住 Al
+> AI 时代下，数据研发的最终目标不是「AI 替代人」，**而是让 AI 产生的数据和经验，能被 AI 持续消费**。
 
-基建层
+---
 
-CDM + 知识库 + 工程平台
-喂得饱 Al
+## P4 · AI Native: R2C，不只是 NL2SQL
 
-”Al 角色演进
-fo 1
-eeeeeee       \o1 /
-eeeg@ee        -一
-和 雪 和
-经验执行者
-早期
+**NL2DSL2SQL 是整个体系最核心的技术决策**。
 
-经验生产者
-当下
+R2C = Requirements To Consign · 从需求到交付的完整闭环。不只是写 Code，覆盖：技术方案 / 代码生成 / 数据验证 / 数据回刷 / 基线挂载。
 
-SuperAgent / HarnessAgent
-未来
-=== page-03.png ===
-Al 时代对数据研发的挑战有哪些
+| | NL2SQL（×） | NL2DSL2SQL（✓ 准确率 100%） |
+|---|---|---|
+| 流程 | 自然语言 → ??? 黑盒 → SQL ?! | 自然语言 → JSON DSL（√校验/√单测/√补常识）→ SQL ✓ |
+| 缺点/优点 | 天花板低 / 出错难修 / 用户难干预 | 工程兜底 / 分段调试 / 全过程可审计 / 白盒化 |
+| 出错处理 | 出错只能整段重写 | — |
 
-| 不只是工具和效率的升级,而是 生产力的质变 和.生产模式的突破
+**关键设计**：AI 调 DSL 的 check 接口 · 反馈驱动优化——AI 写错了，工程层告诉它哪里错，AI 自己修正。
 
-oa      准确率是红线              100% 准确才能上线,人 review 跟不上 Al 输出速度,红线必须硬约束
-oa      o迪“知识库是标配               传统模式下经验都在员工脑子里,Al 时代必须全部线上化,领域模型的体系化构建异常重要
-个     吕 消费场景复杂             不只给下游 ADS 同学用,Al 也要吃数据 一 命名 / 枚举 / 口径无二义性成硬约束
-人@     S 协同模式重构            人和干需求 ~” 多 Agent 并行,人退出执行环节、只守 关键决策点
-os      包 ”生产关系重塑              生产力的质变必将带来生产模式和生产关系的变化
-ea                                  Al 时代下,数据研发的最终目标不是 -AH-蔡代大-二
+### 四步走 · 先地基后建筑
+- L01 数据层：标准化数仓
+- L02 流程层：规范化 Pipeline（研发范式）
+- L03 平台层：服务化平台
+- L04 智能层：多 Agent 协同
 
-[ 而是 | 让 ,AL产生的数据和经验, 能被 Al持续消费
+> 核心思想：用工程的确定性 接管（暂时）大模型的不确定性。
 
-=== page-04.png ===
-Al Native: R2C ,不只是 NE2SQGL
+---
 
-| NL2DSL2SQL 是整个体系最核心的技术决策
+## P5 · 这一年跑出了什么
 
-R2C      Requirements To Consign .
+从工具到"同事"的跨越。
 
-XU NE2SG五
+### DSL 生码（资产维护成本高）
+- **75%** AI 代码占比（vs 手写已成剪刀差）
+- **100%** 数据准确率（直播 360 真实案例）
 
-自然语言
+### DataWorks Data Agent 生码（无维护成本 · 上手快）
+- **24h** 需求交付（文档清晰临时取数）
+- **50% → 80%** Data Agent 生码准确率（复杂需求生码）
 
-天花板低     出错难修     用户难干预
+### 剪刀差曲线 · AI 代码 vs 手写代码
+- 24Q3 → 25H1 → **25Q4 交叉** → 26Q1 → 26Q2
+- AI 自动代码 ↑ ；手写代码 ↓
 
-出错只能整段重写        从 NL2DSL2SoOL
+### 直播 360 真实案例 · 交易模块（AI Native 全自动交付）
+- 56 个口径
+- 6 基础模型
+- 2 融合任务
+- 2 同步任务
+- 1500+ 行代码 · 全 AI 产出
 
-从需求到交付的完整闭环。不只是写 Code,履盖 技术方案 / 代码生成 / 数据验证 / 数据回刷 / 基线挂载
+### 综合指标
+- ~80% 资产答疑准确率
+- ~95% R2C 召回准确率
+- ~90% 资产助手准确率
+- 150+ UV 用户
 
-       JSON DSL       二
+> 一年的基建投入，换来的是 AI 从「工具」→「同事」的跨越。
 
-Y 全过程可审计     Y 白盒化
+---
 
-和率 1oox | 100%
+## P6 · 演进时间线 — 先地基后建筑
 
--一四步走'先地基后建筑
+从 24Q3 到 26Q2 的持续演进。
 
-L01 。 数据层
-标准化数仓
+| 时间 | 阶段 | 里程碑 |
+|---|---|---|
+| 24Q3 | 基建期 | 平台 + AI 筹划 · 服务化平台启动 |
+| 25H1 | 基建期 | CDM 标准化 · 研发平台原型 · 规范履约 |
+| 25H2 | 流程期 | R2C 首个 Demo · 初版研发范式 · LightRag 构建 |
+| 25Q4 | 流程期 | R2C 深度应用 · RAG 落地 · 多租户 |
+| 26Q1 | 应用期 | OpenClaw 数字员工 · 中心化 VS 本地化 AI Native |
+| 26Q2 | 应用期 | Skill 化 · copilot_req2sql · verify-data |
 
-|    核心 思想
+> 基建半年（标准化 + 平台）→ 再做 RAG → 最后多 Agent / 数字员工
 
-包宝直播 x DataWorks Data Agent ”Al
+### 三大原则
+- 长期主义：基建半年 + 流程半年 — 不抄近路，先把地基打牢
+- 持续保鲜：数据资产 / 知识库 / Memory 持续迭代，不积累就废
+- 紧跟前沿：Skill / Agent / LightRag / SDD 新范式第一时间引入
 
-规范化 Pipeline(研发范式)             服务化平台
+> 先地基后建筑——这是所有想做 AI + 业务系统团队的必经之路。
 
-L04 。 智能层
+---
 
-” 多Agent 协同
+## P7 · R2C 架构图 · 以 DataWorks Data Agent 为基座
 
-用 工程的确定性，接管(暂时) 大模型的 不确定性
+**本体论 — "压住 AI 幻觉"的符号锚点 · Harness — "调度 AI 能力 + 管住上下文"的运行时锚点**
 
-P4
-=== page-05.png ===
-这一年跑出了什么
+### Agent 应用层
+- 多 Agent 协同：Coordinator / Planner / Research / Reporter
+- 端到端 AI Native：中心化 / 本地化
+- Harness · AI Runtime：Skill 加载 / Tool 调度 / Hooks / 上下文管理
+- 通道入口：DataWorks / 钉钉 / 悟空 / Qoder / QoderWork / CC / OpenClaw
 
-从 工具 到 "同事” 的跨越
-一， DSL 生码 ， [赣过维护成未高 -----------------------    Wor|  a。 Agent 生码 .无维护成本 :上手快
+### AI 能力层
+- **Skill · 能力封装**（沉淀 Skill · 通往 Agentic）
+  - 新 Skill / 原有 Agent → Skill / 原有范式 → Skill
+- **SDD · 共享方法论**（跨场景规约共享）
+  - 360 需求 Spec / 次抛需求 Spec / 垂直场域 Spec
+- **Memory · 共享记忆**（反哺本体论演化）
+  - SOUL · 价值观 / AGENTS · 角色 / KNOWLEDGE · 知识 / lessons-learned · 踩坑库
+  - 未来核心演进方向：个人记忆 → 团队记忆 的提炼
+- **AI Coding 双协议**
+  - DSL 生码：全自动 · 可单测 · 准确率 100%（Agent → JSON DSL → 平台 → SQL）
+  - DataWorks Data Agent 生码：半自动 · 准确率 50% → 80%（Skill → Prompt → Data Agent → SQL）
 
-75o%6               100%6                          50%一80%6
+### 基建层
+- **工程平台 · 4 模块**：语义层管理 / DSL 生码 / 研发后链路（发布/验数/回刷/DQC/上线/基线）/ 中间件 MCP OR 代理
+- **知识库 · 双引擎**：业务 WIKI（业务语义，黑话翻译/口径文档/枚举字典/业务知识，"AI 听得懂人话"）+ LightRag（结构化召回，表/字段/指标/维度的 GraphRag，"AI 找得到表"）
+  - 未来核心演进方向：知识库的本地化部署
+- **CDM · 双产物**：数仓骨架（分层建模，基础数仓 & 主题数仓 领域建模 · 30+ DWD · 35+ DIM · 50+ DWS）+ AI 化产出（喂得饱 AI · 资产持续保鲜 · 100+ 资产 · 800+ 维度 · 900+ 指标）
+  - 未来核心演进方向：AI 自动建模引擎 基于 SPEC / OneData / 业务建模知识库
 
-AI 代码占比                       数据准确率                                       Data Agent 生码 准确率
+### 核心依赖
+DataWorks Data Agent
 
-，》 剪刀差曲线 ， Al 代码 vs 手写代码                                          ， 直播 360 真实案例
-Al 自动代码              交易模块 (4/ Native/)全自动交付
+### 本体论 ★ Ontology · Neuro-Symbolic
+实体 Entity / 关系 Relation / 属性 Attribute / 语义约束
+对应：CDM · 实例化 / LightRag · 可计算化 / SPEC · 公理化 / 业务 WIKI · 领域化 / Memory · 语义化
 
-56 个口径               6 基础模型
+### 右侧治理：Human · 关键节点
+治理 / 监控 / 红线 / 踩坑
 
-融合任务               2 同步任务
+---
 
-1500+ 行代码 . 全 Al 产出
+## P8 · Agent 应用层
 
-六 ~809p         Q ~959p         站 ~909p         o) 150+
+**中心化 AI Native（现阶段） VS 本地化 AI Native（未来演进方向）**
 
-资产答疑准确率                           R2C 召回准确率                           资产助手准确率                           UV 用户
+> 两种用户体验范式 · 一种偏统一入口，一种偏定制工作流
 
-一年的.基建投入.,换来的是 Al 从 :工具
+---
 
-=== page-06.png ===
-演进时间线 一 先地基后建筑                                   /
+## P9 · 直播数据 — 研发范式
 
-| 从 24Q3 到 26Q2 的持续演进                                                                           |
+构建从需求对焦到需求交付的全链路直播数据研发范式。
 
-24Q3                 25H1                 25H2                25Q4                 26Q1                 26Q2
+### 全链路
+需求对焦 → 需求分析 → ADS 建模 → 模型融合 → 数据同步 → 接口配置 → 产品能力配置 → 需求发布
 
-平台 + Al 筹划                  CDM 标准化                 R2C 首个 Demo                R2C 深度应用               OpenClaw 数字员工                 Skill 化
-服务化平台启动             研发平台原型 规范履约         初版研发范式:LightRag 构建          RAG 落地 多租户            中心化 VS 本地化 Al Native       copilot_req2sql . verify-data
+### 各环节细节
+- 需求对焦：维度&指标确定性 / QPS & RT 要求 / 数据回刷要求 / 稳定性保障 SLA
+- 需求分析：需求 Aone 模板 / 完整技术方案 / 直接进入开发 / 服务化配置之后进入开发 / CDM 建模&服务化配置之后进入开发 / 不可通过此流程进入开发
+- ADS 建模：ODPS SQL / Dynamic Table（HOLO）/ OLAP（HOLO）
+- 模型融合：ODPS / HOLO / UNION ALL / JOIN（中控台需要多次融合）/ 存量物理表 / 建模逻辑表
+- 数据同步：ODPS → Lindorm / ODPS → ADB / ODPS → Holo
+- 接口配置：HSF API / FBI 数据集
+- 产品能力配置：服务端联调 / FBI 报表搭建
+- 需求发布：数据回刷 / 基线配置 / DQC 配置 / 数据验证
 
-基建期                                             ，流 程 期                                             ”应 用 期
+### 6 大研发支柱
+- 技术方案：抽象 & 标准化需求交付流程，简化技术方案设计
+- 模型建设：标准化 CDM 建设，固化指标 SQL 模板，缩短 ADS 依赖深度
+- 代码生成：全自动生成 · 不允许手改 · 统一风格，降低 CR / Bug / 测试成本
+- 关键信息：全流程线上化，主键 / 关联键 / 分布键自动识别 & 判定
+- DDL 变更：自动建表 + DDL 变更，无需中间件后台跳转 / 手动操作
+- 兜底监控：研发 SOP + DQC 兜底监控，保障线上稳定与数据准确
 
-AN
+### CDM 建模 · 服务化元信息录入
+基础数仓 / 明细表 / 主题数仓 / DWS 矩阵 / 基础维表 / Tag 维表
+配套：CDM 表配置 / 维度配置 / 指标(组)配置 / 提供 Mock 配置能力
 
-\
+### 研发后链路
+- 流程管控：值班机制 / 应急响应机制 / 流量预估 / 发布/变更机制 / 预案准备 / 促前检查
+- 治理机制：模型治理 / 慢 Query 治理 / 任务治理 / 依赖治理 / API/FBI 治理 / 集群水位监控 / 回刷机制
+- 监控体系：CDM 管控 / 数据质量监控 / API/FBI 监控 / 产品能力使用 / 核心数据监控
+- data-rider：全链路血缘 / 主备切换 / 同环比 / 灰度切流 / 通用接口 API / 同行同层占比 / 饼图分布 / 底表切换 / API 浏览 / 任务区
 
-      \
+> 需求对焦 → 需求发布 全链路 · 服务化平台 + AI 建设 + 治理基础 = 稳定可控的研发范式
 
-取 上
+---
 
-基建半年(标准化 + 平台) 一 再做 RAG - 最后多 Agent / 数字员工
+## P10 · Multi-Agent 协同
 
-略                  狗
-长期主义                             持续保鲜                             紧跟前沿
-基建半年 + 流程半年 一 不抄近路,先把地基打牢                        数据资产 / 知识库 / Memory 持续迭代,不积累就废                      Skill / Agent / LightRag / SDD 新范式第一时间引入
+**有明确角色分工的工厂流水线 — 不是 Agent 互相聊天**
 
-一 这是所有想做 Al + 业务系统团队的忆
+### 阶段①：澄清阶段（不写代码，只用元数据反复校验需求）
+- 调元数据校准
+- 口径确认 + 黑话翻译
+- 场景模板沉淀
+- **输出：双方认可的技术方案**
 
-=== page-07.png ===
-R2C 架构图 . 以 DataWorks _ Data_Agent_ 为基座
+→ 中间锚点【技术方案 ✓ 已签收】→
 
-| 本体论 一"压住 Al 幻觉"的符号锚点 : Harness 一"调度 Al 能力 + 管住上下文"的运行时锚点
+### 阶段②：执行阶段（动手，但已经没有歧义）
+- 输入：完整需求技术方案
+- DSL 生成 → SQL 翻译
+- 任务发布 + 验数 + 上线
+- 全程 AI 驱动，人只检查确认
 
-Agent 应用层                                                                                                                                                  N\
+### 4 角色分工
+需求分析（出方案） | Coordinator + Planner（出计划） | Research Team（执行） | Reporter（归档）
 
-和
+### Pipeline 流程
+需求分析 Agent（360 / data_card 等）
+   → Coordinator + Planner（★ HITL）
+   → Research Team（并行调度 · HITL 每节点 · model Agent / sync Agent / api Agent · 各节点 ★）
+   → Reporter（总结存档）
 
-用                      端到端 Al Native           Harness . Al Runtime                     人
+各环节产物：输出技术方案文本 → 生成执行计划 → 调度执行 · 文本→DSL→平台 → 总结归档
 
-    0 / Planner / Research /              7                    Skill 加载 / Tool 调度 / Hooks / 上下文管理               DataWorks / 钉钉 / 悟空 / Qoder / QoderWork / CC /
+### ★ HITL · 每个节点可人工 confirm
+**HITL 不是降级方案，是设计目标 — 人保留在关键决策点，其他全部交给 Agent**
 
-，     eporter                                                                                                                             OpencClaw
+---
 
-人
+## P11 · 为什么是本地化的 AI Native
 
-二             ie                           5                        Al Coding 双协议
+**从"每天清空记忆的实习生"到"越来越懂业务的老员工"**
 
-1      Memory      1                    4                                                                                、
+### 中心化 AI Native 的缺点
+01. Agent 依赖的 DSL 的迭代速度成为单点
+02. Memory 无法轻易反哺到 Agent 的进化
+03. SKILL 的出现让 AI Agent 的能力逐步平权
+04. 每次 RAG 召回都要全量召回，精准率和效率都比较低
 
-      Skill : 能力封装             4 沉泥 Ski1 : 通往 Agentic              7                            人                  。      ie        。
+### 中心化 vs 本地化 AI Native
 
-|                                                                  [sour .价值观          ] [ASENTS -角色         ]       DSL 生码 全自动，可单测， 准确率 100%
+| | 中心化（实习生） | 本地化（老员工） |
+|---|---|---|
+| 记忆 | 每天清空 | 持续累积 |
+| 经验 | 每次重学 | 可调用 |
+| 错误 | 重复犯 | 不再犯 |
+| 协同 | 从头交接 | 继承上下文 |
 
-| | ‖ (晰 skin ] ( 厦有 Agent ~* Skill ] ( 原有范式 * Skill ]                                                                       ( Asent )-( JsoNpsL )-( 各 )”( sa
-治 是                                          | | CNowrEpeE -和R ，] | 人 eee  |                                                      j
-理     |      SDD 共享方法论                     4 辟场费规约共误                                                                    DataWorks Data Agent 生码 半自动.准确率 50% 一 80%
-有
-灶 本
-站 工程平台 :4 模块，全和和、 知识库 ， 双引甘 ER cpDM . 双产物 ee一
-| ， ;| 语文层管理             |   DSL 生码              | | | 王务 wk . 业务语义        LightRag 结构化召回           数仓骨架 . 分层建模                Al 化产出， 喂得饱 Al
+### ★ 最佳案例 · OpenClaw · 三 Agent 协作（SDD.md 文件协议）
 
-是|                                                                 上 上 | rAl 听得民人话1                  TAI 找得到表4                        基础数仓 & 主题数仓 领域建模              资产持续保鲜
+🔍 **小需** · 需求分析 → 🛠️ **小模** · 建模 · DDL → 👓 **小码** · SQL & 自检
 
-时|                                                        上 1 |‖ 黑话翻译' 口径文档 枚举字     表/字段/指标/维度的                30+ DWD ' 35+ DIM ' 50+ DWS         100+ 资产 800+ 维度， 900+ 指标
+📝 记忆系统 · 踩坑沉淀 · 不再犯
 
-昌   研发后链路发布/验数/回刷/DQC/上线/基线             | 1 上 |‖ 典， 业务知识                GraphRag
+成果：
+- ⟨⟩ 0 手写代码
+- 🔌 0 平台依赖
+- ⏱ ETL 3 天 → 3 小时
 
-|  |
+主 Agent（总协调）：接收需求 → 判断类型 → 调度子 Agent → 审查产出 → 推进流程
+- 小需 🔥 需求分析（覆盖 ①②③）
+- 小模 🛠 数仓建模（覆盖 ④⑤）
+- 小码 ⚡ SQL 开发（覆盖 ⑥⑦）
 
-  !  -  中间件 MCP OR 代理                                         屋:                                                                                              SPEC ) OneData    业务建模知识库
+> 可继承的差异 = 可演化的组织 — 这是"从工具到员工"的关键技术差异
 
-核心依赖
+---
 
-恒玉且描xDatawWorks Data Agent :” Al 此动的效气铺友泄取知级
-=== page-08.png ===
-Agent 应用层
+## P12 · AI 能力层
 
-中心化   (vs)   本地化
+```
+Skill（能力封装） → SDD（共享方法论） → AI Coding（输出协议）
+```
+直播数据团队的 AI 能力层。
 
-两种 ,用户体验. 范式 ， 一种偏 .统一入口.,一种偏 .定制工作流
+---
 
-@@@
-@@ @
-全 和二
-中 @@ @@
-全 @@ 全
-人全@
-人四国
-全 @ 起
+## P13 · 沉淀 Skill · 通往 Agentic
 
-淘宝直播 x DataWorks Data Agent ， Al 驱动的数据研发范式升级                                                                                  P8
-=== page-09.png ===
-直播效据, -
+从 0 到 1 · 从 Agent · 从 范式 — 三种来源，统一 Skill 输出，为全面 Agentic 化打下坚实基础
 
-| 构建从 需求对焦 到 需求交付 的全链路直播数据研发范式
+### 方式 ① · 新 Skill：语义层 Skill
+无 Agent / 无原范式可借鉴 · 围绕具体业务痛点从头建
 
-| ANatve采委 ”| | 部押研发手持 。。 | 服务化平台配置&Al建设 | | 。 各定性保承
-一一一                      二直接台需要多次台合-…
- 需求对焦       需求分析          ADS建模    模型融合     数据同步”一 > 接口配置 一产品能力本县 需求发布 |
-      |                                                Y
-需求hone模板 "完整技术方案            | oopssar     | oops           opps>tndom|    HSFAPI |    到务呈调|     数据回剧 |
-直接进入开发                    UNION ALL
-re     |  HoLo                ODPS->ADB ]     FBI 数据集 |    FB表和建 |       基线配置 |
-服务化配置                     ON
-|     [|            | es ]
-|                                               ODPS -> Holo                      DQC配置
-         CDM建模&服务化配置    Cl      存量物理表
-站              FE                                     | mm |
-数据验证
-本                                              不可通过此流程         |                                                     建模运辑到
-进入开发
-数据回剧要求
-服务化平台                         |
-稳定性保障SLA                      快速选取维度、指标、 | 代码自动生成 |  预校验能力  |  质本管理  |  发布信息  |      | 人
-和  |
-1   |
-中 cDM奸柜上|一|服务优天信息| …“人 儿和和               流程管控       治理机制     | 监控体系        datarrder
+流程：痛点定义 → 流程拆解 → SKILL.md → 迭代沉淀
 
-CDM表配置
+- 需求驱动：从一个具体场景痛点出发，先跑通最小闭环，再扩展边界
+- 渐进式披露：主 SKILL.md 仅路由 + references 按需加载，避免上下文爆炸
+- HITL：关键节点强制人工确认 · 红线机制兜底，**不是建议**
 
-[二
+### 方式 ② · 原有 Agent → Skill：verify-data
+原本是独立验数 Agent · 沉淀为通用 Skill · 一句话触发评审级证据链
 
-DWS和矩阵
+流程：基准发现 → SQL 生成 → 跨表对比 → 红线检查 → 钉钉发布 ✓
 
-基础维表
+- SQL 模板：8 种常规验数模板 & 2 种高频出错模板
+- 验证红线：不靠字段名猜映射 · 不跳基准表 · 不隐式聚合掩盖膨胀 · 不用 LIMIT 替代全量
+- 踩坑沉淀：覆盖 5 类场景 — 新表 / 迭代 / 监控 / 业务质疑 / 口径迁移 · 效率 2-4h → 30min
 
-IUD
+### 方式 ③ · 原有范式 → Skill：copilot_req2sql
+把 R2C 主流程的「需求澄清范式」抽离 · 最小可复用单元 · 24h 交付
 
-淘宝直播 x DataWorks Data Agent
+流程：P1 需求澄清 ★ → P2 资源梳理 → P3 模型设计 ★ → P4 Data Agent 输入
 
-上
+- 渐进式披露：主 SKILL.md 200 行只放路由，细节 references/p1-p4.md 按阶段加载
+- HITL：P1 口径确认、P3 模型 CR 强制人工节点 — 不是形式，是质量底线
+- 模式可迁移：「需求 → 产出」类领域均可套用 · Data Agent 生码 准确率 50% → 80% · 多需求并行
 
-指标 (组) 配置
+> 不同来源 · 殊途同归 — Skill 化是 AI 能力沉淀的共同范式
 
-” Al 驱动的数据研皮范式升级
+---
 
-全链路 :服务化平台 + Al 建设 + 治理基础 =
+## P14 · SDD · 共享方法论
 
-产品能力使用
+**Skill 和 Agent 都基于同一套规约工作 — 审计前置，不是事后 Review**
 
-通用接口APl
-主
-同环比
-区度切流 |
-同行同层占比
-API限流
+### 4 阶段 Spec 链 · 审计前置
+- P1 需求澄清（★ HITL）· p1.md
+- P2 资源梳理 · p2.md
+- P3 模型设计（★ Human CR）· p3.md
+- P4 Data Agent 输入 · p4.md
 
-山上号
+### 渐进式披露
+SKILL.md（主文件 ~200 行）
+└─ references/
+   ├─ p1.md 仅 P1 加载
+   ├─ p2.md 仅 P2 加载
+   ├─ p3.md 仅 P3 加载
+   └─ p4.md 仅 P4 加载
 
-饼图分布
-底表切换
+按阶段按需加载，避免长上下文迷失。
 
-日
+### 示例 references/p1.md（P1 · 需求澄清，强制 HITL）
+```
+# 需求澄清 <!-- 强制 HITL -->
+## 业务  - 场景  "近 7 天打赏 TOP10 主播"
+## 口径  - gmv = 礼物 GMV · 排除测试
+       - 窗口 [T-7, T-1] · 不含当日
+## ✓ HITL @yourname  2026-05-25
+```
 
-技术方案
-抽象 & 标准化需求交付流程,简化技术方案设计
+### 示例 references/p3.md（P3 · 模型设计，强制 Human CR）
+```
+# 模型设计 <!-- 强制 Human CR -->
+## 目标  dws_ctlive_anchor_gmv_di · DWS
+       - 主键  anchor_id + ds
+## 上游  - 引用 dwd_ctlive_gift_di
+       - 聚合 SUM gift_gmv  // 业务过程一致
+## ✓ Human CR @architect · 通过 → P4
+```
 
-模型建设
-标准化 CDM 建设,固化指标 SQL 模板,缩短 ADS 依赖深度
+### AI 的边界 · SDD 降低沟通成本，不降低问题复杂度
 
-代码生成
-全自动生成 不允许手改:统一风格,降低 CR / Bug / 测试成本
+CAN（AI 能做）：
+- ✓ 上下文管理 — 跨长流程不丢线索
+- ✓ 过程追溯 — 每一步都有 Spec 留痕
+- ✓ Review 前移 — 写之前先对齐
+- ✓ 模板化执行 — 标准化 SQL / DSL 生成
 
-关键信息
-全流程线上化,主键 / 关联键 / 分布键自动识别 & 判定
+CAN'T（AI 不能做）：
+- ✗ 数据建模决策 — 需要人的全局判断
+- ✗ 指标口径判断 — 业务语义的最终拍板
+- ✗ 复杂业务翻译 — 隐性规则没法穷举
+- ✗ SQL 正确性保证 — 最终责任在人
 
-DDL 变更
-自动建表 + DDL 变更,无需中间件后台跳转 / 手动操作
+---
 
-兜底监控
-研发 SOP + DQC 兜底监控,保障线上稳定与数据准确
+## P15 · AI Coding · 双协议（关键）
 
-的研发范式
+**DSL 生码 + DataWorks Data Agent 生码 双路径 · 都从 SDD 取上游**
 
-E 半
-=== page-10.png ===
-Multi-Agent 协同                                                     /
+### 路径 A · DSL 生码（全自动）
+```
+SDD（共享方法论）P3/P4
+   → Agent · R2C 主流程
+   → JSON DSL · 结构化中间态
+   → 服务化平台 · DSL2SQL
+   → SQL ✓ 最终代码产出
+```
+**✓ 全自动 · 可单测 · 100% 准确率**
 
-| 有明确角色分工的工厂流水线 一 不是 Agent 互相聊天
+### 路径 B · DataWorks Data Agent 生码（半自动）
+```
+SDD P3/P4
+   → Skill · copilot_req2sql
+   → 结构化 Prompt · P4 产出
+   → 人工粘贴
+   → DataWorks Data Agent
+   → SQL ✓
+```
+**○ 半自动 · 人工 · 50% → 80%**
 
->                                                                                 -从  F                   本 硬                                                                                 二
-Q ， 阶段 中                                                                      ， 阶段 @
-澄清阶段     如 执行阶段
-写作   只   元          难需3                                                                                                    也   了? 局  经5
-不写代码,只用元数插反复花验需丈                                               4     技术方案  动玫但已经没有此义                                                           _
-e 调元数据校准                                                             中间锚点          e。 输入: 完整需求技术方案                                                -一
-e 口径确认 + 黑话翻译                                                                                         必收             e DSL 生成 ~” SQL 翻译
-。 场景模板沉淀                                                                                            V 已蔚                。 任务发布 + 验数 + 上线
-。 .输出: 双方认可的技术方案                                                                                                            s 全程 Al 驱动,人只检查确认.
-刀                                                                                  By                   的                                                                                 光
-4 角色分工: 需求分析(出方案)     Coordinator + Planner(出计划)     Research Team(执行)     Reporter(归档)
-，》输出技术方案文本                   ”生成执行计划                     ”调度执行 : 文本一DSL一平台                        总结归档
-全全全
-1               Research Team
-人          并行调度 .HITL 每节上          1
-|
-二                                              ，                        I                                              1
-需求分析 Agent                        Coordinator                                              :
-360 / data_card 等                          + Planner                    1      0         局          叶吉                     总结存档
-1       Agent         Agent         Agent
-1                                              1
-1                                              |
-        名           @           @
-CR和
-HITL
+### 代码示例
 
-一 人保留在关键决策点,其他全部交给 Agent
+**trade.dwd.json（DSL · 路径 A）**
+```json
+{
+  "model": "dwd_ctlive_trade_di",
+  "layer": "DWD",  // 明细层
+  "sources": ["ods_pay", "dim_user"],
+  "fields": [
+    { "name": "gmv", "type": "DECIMAL" },
+    { "name": "order_cnt", "type": "BIGINT" }
+  ]
+}
+```
 
-淘宝直播 x DataWorks Data Agent ， Al 驱动的数据研发范式升级                                                                              P10
-=== page-11.png ===
-为什么是本地化的 Al Native
-
-| 从“每天清空记人的实习生" 到“墟来越米业务的老员工"
-
-”中心化 Al Native 的缺点
-
-  Agent 依赖的 DSL 的 迭代速度成为单点
-
-  Memory 无法轻易反哺 到 Agent 的进化
-
-  SKILL 的出现让 Al Agent 的能力 逐步平权
-
-区 每次 RAG 召回都要 全量召回 ,精准率和效率都比较低
-
-AS
-
-， 中心化 vs 本地化 AL Native
-
-奋          的
-                    轧
-
-中心化                 本地化
-记忆”每天清空       本      记忆 持续昧积
-经验 每次重学              经验 ”可调用
-错误”重复犯               错误“不再犯
-协同”从头交接              协同”继承上下文
-
-人 @@ @@  二 四 和
-@@ 全国@@
-写 @
-
-OpencClaw . 三 Agent 协作( SDD.md 文件协议)
-
-CA 小需 需求分析 一 | 僵 小模 建模 . DDL    一 ee 小码 SQL & 自检
-
-|  图 记忆系统 : 踩坑沉淀 不再犯
-
-《> 0 手写代码
-
-用户 / 业务方
-
-“帮有我加几个指标
-和短选维度”
-
-出 0 平台依赖         CO ETL 3 天”3 时
-
-| 回主Agent (总协调)
-局 接收需求
- 判断类型
-Do 了 Agent
-
--2
-
-=== page-12.png ===
-人 @@
-
-Al 能力层
-
-@ 二
-全 二
-和
-二 二 二
-
-x DataWorks Data Agent
-
-二
-Skill
-能力封装
-本
-
-” Al 驱动的数据研发范式升级
-
-\
-
-SDD
-
-共享方法论
-
-区
-
-直播数据团队的 Al 能刀层
-
-于
-
-Al Coding
-
-输出协议
-
-民治委
-=== page-13.png ===
-| mm |
-
-沉淀 Skill . 通往 Agentic
-
-Skill 输出,为全面 Agentic 化打下坚实基础
-
-| 从0到1 .从Agent' 从范式一三种来源,统一
-
-方式四:新 Skill
-
-司     有                  生
-语义层 Skill
-无 4gent / 无厦落各可人瞧，夸绕具体业务痛点从头什
-
-| 痛点定义 ] ~ | 流程拆解 ] ~ | SKILL.md | ~ | 和迭代沉淀 |
-
-从一个具体场景痛点出发,先跑通最小闭环,再扩展
-边界
-
-主 SKILL.md 仅路由 + references 按需加载,避
-免上下文爆炸
-
- 关键节点强制人工确认 红线机制兜底,不是建议
-
-ES
-
-天
-
-， 方式 @O . 原有 Agent 一 Skill
-Verifty-dqata
-
-原木是逆立验数 Agent“' 沉沱为通用 Skill 一包霹船发评启级这握
-链
-
-| 基准发现 ] ~ | sQL 生成 ] ~ | 跨表对比 ] ~ | 红线检查 ] ~
-
-  8 神 常规验数模板 & 2 神 高频出错模板
-
-不靠字段名猜映射， 不跳基准表， 不隐式聚合掩
-盖膨胀， 不用 LIMIT 替代全量
-
-覆盖 5 类场景 一 新表 / 迭代 / 监控 / 业务质疑
-/ 口径迁移 . 效率 2-4h 一 30min
-
-”方式 加 : 原有范式 一 Skill
-Copi1lot_red2sdl1
-
-怒 P2C 二流程的 /需求澄清范式/ 霓离最从可复用单元 ，24h 交
-他
-
-| P? 需求澄清 二 | ~ | P2 资源棋理 ] ~ | Ps3 模型设计 六 | -，
-
-[ P4 Data Agent 输入 ]
-
-主 SKILL.md 200 行只放路由,细节
-渐;
-汪  references/p1-p4.md 按阶段加载
-
-是形式,是质量底线
-
-  [需求 ~ 产出」 类领域均可套用 Data Agent
-生码 准确率 50% 一 80% ' 多需求并行
-
-省XDataWorks
-
-Data Agent ”Al 驱动的数据研上范式升乡
-
-一 Skill 化是 Al 能力沉淀的
-
-=== page-14.png ===
-| skill 和 Agent 都基于 同一套规约 工作 一 审计前置,不是事后 Review
-
-7
-
-4 阶段 Spec 链 ， 审计前置                                                                ，渐进式披露
-
-4 SKILL.md (主文件 ~266 行)
-
-上 references/
-需求澄清        一        资源梳理        -一        模型设计        一| Data Agent 输入
-
-上 p2，
-
-4,.md                           上 pb
-p3.md                p4，                             记 p4。
-
-pl1.md                         p2,.md
-
-全 @    references/p1L.md
-
-全 @   references/p3.md                         P3 ， 模型设计
-
-# 模型设计
-## 目标     到
-- 主键
-
-# 需求澄清
-寿 业务 ，- 场景 “近 7 天打赏 TOP10 主播"
-
-# 口径    gmv = 礼物 GMV ' 排除测试
-|   [T=7，T=1]  ， 不含当日
-
-## 上游 - 引用 【dwdLctUive gift di
-考 v HITL eyourname ， 肥626505525
-
-- 聚合 SUM gift_gmv
-## vv Human CR Garchitect ，
-
-一 Al 的边界 SDD 降低沟通成本,不降低问题复杂度
-
-  Al 能做
-,YY 上下文管理 一 跨长流程不丢线索
-w ”过程追溯 一 每一步都有 Spec 留痕
-w Review 前移 一 写之前先对齐
-wy ”模板化执行 一 标准化 SQL / DSL 生成
-
-Al 不能做
-
-数据建模决策 一 需要人的全局判断
-指标口径判断 一 业务语义的最终拍板
-复杂业务翻译 一 隐性规则没法穷举
-SQL 正确性保证 一 最终责任在人
-
-=== page-15.png ===
-人
-
-大
-
-| DSsL 生码 + DataWorks Data Agent 生码 双路径 . 都从 SDD 取上游
-
-鸣 |    SS
-
-UP4.赤
- 国
-
-Prompt 输!
-
-@@@@ trade.dwd.json
-
-"modelL”:
-
-”Layer"”: "”DWD”，
-
-”Sources”:
-下主63ds UL[
-
-”name”:
-
-呈
-
-了
-飞
-了
-飞
-
-name”:
-
-] 天
-
-"dwd_cttLive _ trade di"，
-// 肪鸳层
-
-["ods_pay"”，"dim_user"] ，
-
-"gmv”，
-"order_ cnt-…，
-
-一条
-
-“type”:
-
-"DECIMAL'"” }，
-
-"七ype”:
-
-DSL 全自动
-
-"BIGCINT” 上
-
-A
-
-通往 R2C 主路, 一条
-
-人
-广              一         六                   n\        一                 ]
-|    Agent         |   JSON DSL   |     >   服务化平台   时
-本 |   R2C 主流程          |     构化中间      j      |     DSL2SQL     | \R
-                                                              AN
-\               )                                                          NS
-本
-最终代码产出
-ww
-本                                                                                      iv
-路径B .DataWorks Data Agent 生码 (半自动)                                       达
-和                                                                                 大
-入 本因本本惠 、          WE          5二2
-1                         1                        米
-:                              同和           1 人工粘贴        ee     和
-昌      Skill      KE   结构化 Prompt 下__--吕    DataWorks    K
-1 copilot req2sql    出     Data Agent
-和本本         和本本本)        和本本本上1
-
-@@@@ copiLot_req2sqL.prompt
-
--- 需丈:这 7 天让允盯览 GMV TO0PI16 主播
--- 表:dws_ctlLive_anchor_gmv_di ， 维度:anchor _id
+**copilot_req2sql.prompt（Data Agent · 路径 B）**
+```sql
+-- 需求：近 7 天直播打赏 GMV TOP10 主播
+-- 表：dws_ctlive_anchor_gmv_di · 维度：anchor_id
 SELECT
-anchor_id，SUM(gift_gmv) AS totalL_gmv
-FROM dws_ctLive_anchor_gmv_di
-WHERE ds >= DATE_SUB(CURRENT_DATE，7)
+  anchor_id, SUM(gift_gmv) AS total_gmv
+FROM dws_ctlive_anchor_gmv_di
+WHERE ds >= DATE_SUB(CURRENT_DATE, 7)
 GROUP BY anchor_id
-ORDER BY totalL_gmv DESC
+ORDER BY total_gmv DESC
+```
 
-DataWorks Data Agent 半自动    和7底临时取数 一 主从配合
+> 一条 DSL 全自动通往 R2C 主路，一条 DataWorks Data Agent 半自动兜底临时取数 — 主从配合，覆盖全场景
 
-100% 准确率
+---
 
-50% 一 80%
+## P16 · DataWorks Data Agent 深度实践
 
-Data Agent ， 路径 B
+补位 R2C 覆盖盲区（次抛 / 临时取数 / 历史任务 / CDM 层）· **50% → 80% 准确率 + 少量人工修改 = 24h 交付**
 
-=== page-16.png ===
-DataWorks
+### 关键指标
+- **72%** 代码采纳率（采纳代码对话数 / 全部对话数）
+- **24.63%** 代码渗透率（Data Agent 生码 / 总提交代码）
+- **2.91** 平均对话轮次（单任务交互成本低）
+- **52%** 月均使用团队占比（3 月生码 > 1w 行）
 
-补位 R2C 帮盖盲区(次抛 / 临时取数 / 历史任务 / CDM 层): 50% ~” 80% 准确率 + 少量人工修改 = 24h 交付
+### 研发规范（Rules · 总是应用）
+- 全局规范：表 / 字段 / 主题域 / 业务过程 / 命名 / 缩写 / 指标体系
+- 业务域定制：点淘等业务有专属补充规范
+- SQL 结构：CTE 分层 + UNION ALL + INSERT OVERWRITE
+- 项目级 Rules：业务同学也能用 Agent 模式找表 + 生码
 
-7Z29%6
+### 交互范式（Prompt 模板）
+```
+# 目标：表名 + 注释 + 生命周期
+# 主要步骤：按需填写
+# 二次加工字段：按需填写
+# 特殊要求：防膨胀 / 排除逻辑
+# 全局过滤逻辑：按需填写
+# 相关 CTE 参考代码：按需填写
+```
+把模糊业务语义 → 精准数据语义翻译。
 
-代码采纳率
+### 3 大核心原则
+01. **精准提示**：Prompt 质量 = 代码质量，不直接复制 Aone 原文
+02. **严格 CR**：LLM 幻觉不可避（虚假表/字段/规范），必须逐行 CR
+03. **追求实用**：50% → 80% 准确率即可，少量人工修改 + 人模协同
 
-24.63%                      之.避]
+> 瓶颈从代码研发转移到需求澄清 — 更清晰的需求 = 更高的 AI 提效
 
-代码渗透率                                                                  平均对话轮次
+---
 
-和信                                                                         \
-，研发规范 (Rules ' 总是应用)                                    ，交互范式 (Prompt 模板)
-回 全局规范 . 表 / 字段 / 主题域 / 业务过程 / 命名 / 缩写 / 指标体系                       # 目标:表名 + 注释 + 生命周期
-## 主要步骤 :按需填写
-@+- 业务域定制 ' 点淘等业务有专属补充规范                                  # 二次加工字段 :按需填写
-## 特殊要求:防膨胀 / 排除逻辑
-SQL 结构 .CTE 分层 + UNION ALL + INSERT OVERWRITE
-## 相关 CTE 参考代码:按需填写
-刀 项目级 Rules 业务同学也能用 Agent 模式找表 + 生码
-a                                                                                          如模糊尼务苯义 一 六准数将语义翻译
-立                                                                          2   相
+## P17 · 基建层
 
-代码研发. 转移到 需求澄清. 一 更清晰的需求 = 更高的 .Al_提效
+```
+CDM（数仓建模）+ 知识库（双引擎召回）+ 工程平台（4 模块编排）
+```
+支撑 AI Native 数据研发的三大基础设施。
 
-52%6
+---
 
-月均使用团队占比
+## P18 · CDM · 双产物 + AI 自动建模引擎（强化）
 
-Prompt 质量 = 代码质量,不直接复制 Aone
-原文
+**OneData 体系 + AI Friendly 交付 + 自动构建能力 — AI 时代 CDM 不只是数仓，是"双产物 + 一个引擎"的组合**
 
-LLM 幻觉不可避(虚假表/字段/规范),必须逐
-行 CR
+### CDM · 双产物
 
-50% 一 80% 准确率即可,少量人工修改 + 人
-模协同
+#### ① OneData 体系（分层建模）
+- 结构：基础数仓 + 主题数仓
+- 关系：4 种 — 引用 / 聚合 / 组合 / 拓展
+- 范式：OneData 维度建模 · 命名一致性
 
-=== page-17.png ===
-基建层
+分层骨架：
+- ADS — 应用层 · 直接服务业务
+- DWS — 汇总层 · 50+ 矩阵
+- DWD — 明细层 · 30+ 事实
+- ODS — 操作层 · 原始入仓
 
-DataAgent
+规模：7 业务过程 · 30+ DWD · 35+ DIM · 50+ DWS · 20+ 主题域
 
-人
+#### ② AI Friendly 交付（喂得饱 AI）
+- 载体：资产平台 + 高质量 RAG 语料
+- 标准：命名 / 枚举 / 口径 无二义性
+- 节奏：持续保鲜 · 喂得饱 AI
 
-_A    相
+交付链路：资产平台（100+ 录入）→ RAG 语料（命名/枚举/口径）→ AI 消费（无二义性）
 
-三
+规模：100+ 资产录入 · 800+ 维度 · 900+ 指标 · ∞ 资产保鲜
 
-知识库
+### AI 自动建模引擎（驱动上方双产物）
+基于 SPEC + OneData 理论基础 + 业务建模知识库
 
-双引擎召回
+> CDM = 双产物 + 一个引擎 — 这是 AI 时代快速扩展数仓的核心机制
 
-A/
+---
 
-支撑 Al Native 数据研发的
+## P19 · 知识层 · 双引擎
 
-\
+**LightRag 结构化召回 + 业务 WIKI 业务语义 — 两者职责互补，缺一不可**
 
-人
-5小:
-Q            人
+### LightRag · 结构化召回
+数仓模型的 GraphRag 检索 — 表 / 字段 / 指标 / 维度的实体关系网络
 
-ES
+内容形态：表 / 字段 / 指标 / 维度 / 实体关系图谱
 
-工程平台
-4 模块编排
+实体关系图谱 · t* 业务过程 / b* 业务对象（图中可见 acvt_*、pay、post、basic、ib_center、3600、jiangdo、page、read、sns、confirm_excl_rfd_lock、acvt_redpacket_pay/award、acvt_tool_p 等大量节点）
 
-三大基础设施
-=== page-18.png ===
-CDM 双产物 + Al 自动建模引擎 E                            /
+→ "AI 找得到表"
 
-| OneData体系 + Al Friendly交付 + 自动构建能力 一 Al 时代 CDM 不只是数仓,是"双产物 + 一个引擎"的组合
+### 业务 WIKI · 业务语义
+业务黑话翻译 + 口径文档 + 枚举字典 — 承载 query 改写和业务知识
 
-\
-后(| cDM : 双产物  j
-(GD onepata体系    CO) Al Friendly交付
-        本 基而玫他 + 主题数他  资产平台 + 高质量 RAG 语料
-     4 种 :引用/ 聚合/ 组合 / 拓展 命名 / 枚举 / 口径 无二义性
-  OneData 维度建模 命名一臻性  持续保鲜 ， 喂得饱 Al
-        Le                                                                           交付链路
-        ADS Eee                                 应用层， 直接服务业务                   (@)              |
-|        D VS “ii                      汇总层 ， 50+ 和矩阵                                                                                            |
-上                                                                                                               一人                       一                             1
-|         D W DR                明细层 ， 30+ 事实                           资产平台                    RAG 语料                    Al 消费                |
-|         ODS ”ET      操作层 ， 原始入仓                         100+ 录入                 命名/枚举/口径                 无二义性               |
-            7            30+           35+           50+                                 100+             800+             900+               oo
-|          业务过程           DWD            DIM            DWS                                  资产录入               维度                指标               资产保鲜           1
-T                                                                                 区                                                                                 区  |
+内容形态：业务黑话翻译 / 口径文档 / 枚举值字典 / query 改写
 
-一 这是 Al 时代 快;         的核心机制
+llm-wiki-v2 目录结构：log / pre / raw（archive / pending / ready / apis...）/ wiki
 
-=== page-19.png ===
-知识层 ， 双引车
+→ "AI 听得懂人话"
 
-| FightRag 结构化召回 + 业务 WIKI 业务语义 一 两者职责互补,缺一不可
+> 这是 R2C 能做到 24h 交付的底层逻辑 — 早期只有 LightRag 时，需求理解的所有压力都堆在 Skill 自己身上
 
-罗    LightRag
-结构化召回
-数合模型的 GraphPag 枪卖 一表/ 他眉/ 此新 /维度的实余关系网络
+---
 
-”内容形态:
+## P20 · 工程平台 · 工程原子能力与 Pipeline 编排
 
-| 胡 ]| 字段 ] | 指标 ] | 维度 ] | 实体关系图谱 ]
+**自研直播数据服务化平台 — 一站式原子能力：为数据同学提效，也为 AI 调用提供工程底座**
 
-acvt_redpacket Lpaytb4本
-@                                acvt_redpacket_award(b45)                         过
+### ① 语义层管理（研发前）
+模型 / 口径 · 指标 / 维度 · 枚举字典 · 版本管理
 
-acvt_tool 和
+### ② DSL 生码（研发中）
+代码生成 · SQL 预校验 · DDL 变更 · 任务发布
 
-8  全
+### ③ 研发后链路（研发后）
+发布 · 验数 · 回刷 · DQC · 上线 · 基线
 
-liangueti189)                                        CC
-图 in    )           合     】                       入     名
-~起                    例
-ES。                   伟
-basictt1
-甩                    Se 使
-[9      全:二       NS
-@           @@                   Xe
-全                      二 ib_centertt185)         登    @@              过    -全     记        全
-0 人                    Chfirm_excl_rfd_lock(b190)
+### ④ 中间件 · MCP / 代理（底层）
+已打通：DataWorks · Holo · Lindorm · ADB · Dataphin · Flink 实时生码 · 图治平台 · 自动校验 / 回刷
 
-rictbl91) 国) xisb宇
+### AI Native · Pipeline 编排
+```
+__start__
+  → super_router
+  → (360 / data_card)
+  → require_feedback
+  → coordinator
+  → planner
+  → human_feedback
+  → research_team (api / model / sync)
+  → reporter
+  → loop_feedback
+  → __end__
+```
 
->”六。罗。。
+> 服务化平台只提供原子能力 · 不编排 pipeline — pipeline 由 AI Native 来编排
 
-实体关系图谱 't* 业务过程 / b* 业务对象 己
+---
 
-业务 WIKI
-山
-尼务黑帮盘音 + 局径文档 + 帮举字典 一 项裁 guery 改写和业务知识
+## P21 · 总结 & 未来规划
 
-| 业务黑话翻译 | | 口径文档 ] | 枚举值字典 |]| query 改写 ]
+**R2C 全流程已跑通 · 下一站是 ChatBI：从数据研发走向数据消费**
 
-Im-wiki-Vv2
+### 总结
+✓ 从 0 到 1 完成数据研发的 R2C 全流程：需求 → Spec → 代码 → 交付 ✅
 
-Te
+### 未来规划
+🚀 以 ChatBI 为切入点的 数据消费 / 分析 探索
 
-llIm-wiki-v2 . raw /wiki 双层结构
+示例：
+- 用户："上月直播 GMV?"
+- AI 回答 + 数据可视化：1.2 亿 ↑ 18%
 
-|             Al 听得懂人话
+> R2C 闭环只是起点 — ChatBI 是下一个「从 0 到 1」
 
-到.24h 交付. 的底层逻辑 一 早期只有 LightRag 时，需求理解的所有压力都堆在 Skill 自己身上
+---
 
-=== page-20.png ===
-工程平台 . 工程原子能力与 Pipeline 编排                        /
+## P22 · 谢谢 · Thanks · Q & A
 
-| 自研直播数据服务化平台 一 一站式厦子能力:为数据同学提效,也为 A/ 凋爵提供工程底座                                          |
-
-和 GD 语义层管理     @) DSL 生码
-        模型 / 口径 || 指标 / 维度 | 枚举字典 || 版本管理                代码生成 | SQL 预校验 | DDL 变更 | 任务发布
-|                                                                                                        1                          Super_router  ]
-和 @) 研发后链路                                                                研发后                    一| >
-1                                                                                                        !                     360  ]    data_card
-      发布 | 验数 | 回刷 | DQC | | 上线 || 基线                         v |
-|                                                                                                     攻  |                    |  require_feedback  ]
-    外 中间 件 ” MCP 7/ 代理                                                          | 底层 |    |                      coordinator
-     已打通 DataWorks    Holo    Lindorm    ADB    Dataphin ， Flink 实时生码    图治平台 . 自动校验 / 回刷            |                        PR
-<--<-------=--------------------------------------------------------------------------------------------------------=------------------------------------                      human_feedback
-           和
-|  reporter  ]     api      model   |  Sync
-”模块 D 语义层管理                 ，模块 @ . DSL 生码                 ，模块 加 . 研发后链路                        2
-着   昌            We                时 旭 时
-2                                | mm                        二                                                本                                                                          loop_feedback
-
-不编排 pipeline 一 pipeline 由 ，
-
-久宝直播 Xx DataWorks Data Agent ， Al 驱动的数据研上范式升级                                                                                                                                                                         P20
-=== page-21.png ===
-总结 & 未来规划       帮
-
-| B2C 会流程 已哆通 .下一共是 ChatB/:人数据研发走向数据游荔                                                 \
-
-3 人 二， 丽人OO全
-
-GO 从0到1完成数据研发的 R2C 全流程
-
-88 未来规划
-启 以 ChatBl 为切入点的 数据消费 / 分析 探索               | 认具7  |
-
-闭环只是起点 一 ChatBl 是下一个 (从 0 到 11
-
-=== page-22.png ===
-淘宝直播 x DataWorks Data Agent
-
-圳 圳
-
-Thanks
-
-一QR&A 一
-
-和@ 全国国@
-起 四和
+淘宝直播 × DataWorks Data Agent

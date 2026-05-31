@@ -1,6 +1,8 @@
 ---
 ingested: 2026-05-29
+re_ingested: 2026-05-31
 wiki_pages: [openclaw-agentic-search-memory, dataworks-2026-0528-xialiaori]
+note: 2026-05-31 重新摄取，按 CLAUDE.md 多模态首次摄取规则改用 PDF 页面图片视觉复核（24 张），修正了演讲人（陈梦成）、4 章议题脉络、Agentic Search 第 5 项能力（标准交付模式）、两引擎角色对照、双层记忆体系架构图（User Interaction + Agentic Memory Layer，含 Extractor/Embedding Engine/ElasticSearch VectorStore）、AgenticMemory 三模式（In-session/Cross-session/Self-evolution）、5 阶段价值跃迁时间线等偏差。
 ---
 
 Agentic Search + Memory，

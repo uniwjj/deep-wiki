@@ -1,6 +1,8 @@
 ---
-ingested: 2026-05-29
+ingested: 2026-05-31
+re_ingested: 2026-05-31
 wiki_pages: [emr-skills, dataworks-2026-0528-xialiaori]
+note: 2026-05-31 重新摄取，按 CLAUDE.md 多模态首次摄取规则改用 PDF 页面图片视觉复核（22 张），修正了演讲人姓名（畅含）、副标题（新一站）、AI Function 子项、EMR AI 助手/智能开发助手能力清单、能力展望六项、P4 Lakehouse 数据流图、P8 应用场景层 16 子能力等偏差。
 ---
 
 EMR Skills：从 Lakehouse 到 Agentic Lakehouse

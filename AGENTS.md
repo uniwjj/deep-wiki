@@ -59,3 +59,4 @@ detailed behavioral rules specific to this vault.
 3. Use `[[wikilinks]]` for cross-references between wiki pages
 4. After every operation, append an entry to `wiki-log.md` **and** run `llm-wiki sync`
 5. When you receive information, apply your auto-ingest criteria — do not wait for explicit commands
+6. 首次摄取 PDF、图片、PPT 转 PDF 等多模态资料时，就必须保证信息处理正确、完整、可追溯，不能等到重新摄取阶段再补救。不能把派生 TXT/OCR 当作唯一可信来源；必须回到原始 PDF/图片正文，逐页或逐图进行视觉复核，必要时将 PDF 转为页面图片检查。摄取时要尽可能保留全部有效信息，包括逐页索引、标题层级、架构图、流程图、截图、表格、代码、数字、示例、模块名、路线图、结论与上下游关系。对无法可靠辨认的小字、模糊区域或被遮挡内容，只能标记为不确定或不摄取，禁止臆测。

@@ -1,6 +1,8 @@
 ---
 ingested: 2026-05-29
+re_ingested: 2026-05-31
 wiki_pages: [maxcompute-skills, dataworks-2026-0528-xialiaori]
+note: 2026-05-31 重新摄取，按 CLAUDE.md 多模态首次摄取规则改用 PDF 页面图片视觉复核（14 张），修正了 MCMCP 方法分组（身份与权限确认）+ 4 个配套 Skills（Sql-Generation/Maxframe-Coding/Information-Schema/Project-Qouta-Manage）、第 3 个接入口实为"龙虾实操 Specialist Sub-Agent · OpenClaw"实战示例、Delta Table 细项、Blob Pipeline 架构对比、Information Schema 语义包结构与场景示例等偏差。
 ---
 
 MaxCompute × Agent

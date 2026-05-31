@@ -2,6 +2,57 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-05-31] ingest | DataWorks 虾聊日 0528 录音-修正版.md（re-ingest，整场录音文字稿）
+- 通读 444 行完整录音转写稿，与 7 份 PDF 视觉复核结果双源对照
+- expanded `dataworks-2026-0528-xialiaori` — 重写为整场议程版：补全开场王子军 OPC 引主机制（PDF 集合中无对应 deck，仅录音保留：800+BP 收件、入选率<10%、17 场路演、I have a demo 三创始人、四角色协同的引主机制、Airtouch 案例）；扩展每场分享的演讲人完整称谓（孙文强/丁源/孙戴博/赵红梅/李昊哲/畅含/陈梦成）+ 录音独有的原话/demo 细节
+- updated `dataworks-data-agent` — 补回演讲人孙文强、现场两个故事（周五加表+凌晨故障）、三句金句（共用一颗大脑/共享数据语义层/AI 不是写代码快而是任务串联变化）
+- updated `taobao-live-data-dev-paradigm` — 补回演讲人丁源（淘天集团高级数据专家、淘宝直播数据研发负责人）、NL2DSL2SQL 与 R2C 现场口语版定义、中心化转本地化的 4 个原因、verify-data Skill 已在阿里云公众号发布
+- updated `hologres-skills` — 修正演讲人为赵红梅（梅酱）（之前误写"骆撷冬"，与 PDF P1 复核冲突）；补充开场即跑 demo（OpenClaw 后台跑刘备/吕布广告素材生成→视频→投放→分析全链路）
+- updated `flink-skills` — 补充 4 个现场 demo（作业调优/批量巡检/跨产品组合/舆情分析）+ 阿里云 69 个官方 Skill 覆盖 6 大云领域
+- updated `maxcompute-skills` — 补充元梗式开场、银行账户客户端金句、Time Travel 7 天回滚、AutoMV 多 Agent 同查节流、MaxAgent 移动端典型场景
+- updated `openclaw-agentic-search-memory` — 补充核心矛盾原话、3 个 demo 现场（中考试卷/NVIDIA 169 页/Rick and Morty）、Self-evolution 借鉴 Hermes Agent
+- 源文件 frontmatter 标注 re_ingested: 2026-05-31
+
+## [2026-05-31] ingest | OpenClaw Agentic Search & Memory（re-ingest，PDF 视觉复核）
+- 按 CLAUDE.md 多模态首次摄取规则，使用 `pdftoppm -r 150 -png` 转出 24 张页面图片逐页视觉复核，不再以派生 TXT/OCR 为唯一依据
+- updated `openclaw-agentic-search-memory` — 修正演讲人（陈梦成）、补全议题主标题"Agentic Search + Memory，OpenClaw 企业研究更智能"+ 副标题"从搜索工具到企业认知引擎"+ 4 章议题脉络；补回 Agentic Search 第 5 项能力"标准交付模式（Skills 透出 / 开源 ACP 协议透出）"
+- expanded `openclaw-agentic-search-memory` — 新增 24 页逐页摄取索引；新增 P7 两大引擎角色对照表（注重研究质量 vs 解决知识复用）；新增 P20 OpenClaw 双层记忆体系架构图（User Interaction Layer + Agentic Memory Layer，Extractor → Embedding Engine → ElasticSearch VectorStore，Generate Vectors for Facts and Skills 双向回路）；新增 P21 AgenticMemory 三模式（In-session / Cross-session / Self-evolution）；新增 P24 5 阶段研究范式升级时间线
+- 源文件 frontmatter 标注 re_ingested: 2026-05-31
+
+## [2026-05-31] ingest | MaxCompute × Agent：从多模态存储到混合计算（re-ingest，PDF 视觉复核）
+- 按 CLAUDE.md 多模态首次摄取规则，使用 `pdftoppm -r 150 -png` 转出 14 张页面图片逐页视觉复核，不再以派生 TXT/OCR 为唯一依据
+- updated `maxcompute-skills` — 修正 MCMCP 方法分组（"身份与权限"→"身份与权限确认"），补回 `get_instance` 方法，新增"配套 Skills"清单（Sql-Generation/Maxframe-Coding/Information-Schema/Project-Qouta-Manage）；纠正第 3 个 Agent 接入口实为"龙虾实操 Specialist Sub-Agent · OpenClaw"实战示例（OpenClaw 总控 + Specialist Sub-Agent 执行，证据链 Plan→Act→Result）
+- expanded `maxcompute-skills` — 新增 14 页逐页摄取索引；补全 P3 接入大图四层（Metadata/Compute Engines/Storage 各列详细子项）、P6 Delta Table 细项（基础 DML / 自动维护拆分）、P9 控制台调用示例（task_344 失败率 70.6%）、P11 Blob Pipeline 架构对比（传统多引擎 vs MaxCompute Blob 模式）、P12 多模态算子 SQL 示例
+- 源文件 frontmatter 标注 re_ingested: 2026-05-31
+
+## [2026-05-31] ingest | EMR Skills：从 Lakehouse 到 Agentic Lakehouse（re-ingest，PDF 视觉复核）
+- 按 CLAUDE.md 多模态首次摄取规则，使用 `pdftoppm -r 150 -png` 转出 22 张页面图片逐页视觉复核，不再以派生 TXT/OCR 为唯一依据
+- updated `emr-skills` — 修正首次摄取的若干偏差：演讲人姓名（"董亚军"/"畅舍" → 畅含｜EMR 产品经理｜计算平台事业部）、副标题（"新站" → 新一站）、AI Function 体系子项（更正为图片打标/embedding/图像处理/数据脱敏/语义提取/音频处理/时序预测/内容安全）、EMR AI 助手（补"产品咨询"）、智能开发助手（补"参数优化"）、能力展望六项分列
+- expanded `emr-skills` — 补全 P4 Lakehouse 数据流图（数据源 →（Flink）→ ODS/DWD/DWS/ADS·Paimon Table·Spark·DLF）、P8 应用场景层 16 个子能力、P10 三大子产品对照式细节、P11 三张产品截图、P14 渐进披露用户意图分类、P15-P19 场景/对话/架构页的具体数字与 SQL 片段
+- 源文件 frontmatter 标注 re_ingested: 2026-05-31
+
+## [2026-05-31] ingest | 淘宝直播：AI 驱动的数据研发范式升级（page-complete re-ingest）
+- updated `taobao-live-data-dev-paradigm` — 按 PDF 22 页新增逐页摄取索引，确保 P1-P22 每页信息均有落点
+- expanded `taobao-live-data-dev-paradigm` — 补充 P11 OpenClaw 主/子 Agent 分工，P14 SDD p1/p3 示例，P15 DSL/Prompt 示例，P19 LightRag 图谱节点与 llm-wiki-v2 目录结构，P21 ChatBI 示例
+- verified source shape — PDF 为 22 页图片型文件，`pdftotext` 无可抽取文本，继续以现有视觉识别派生 TXT 为重摄取依据
+- correction — 用户指出 TXT 不可信后，重新从 PDF 本体转出 22 张页面图片逐页视觉复核；更新 `taobao-live-data-dev-paradigm` 标注 TXT 不作为可信依据，并收敛 P19 低置信度图谱节点描述
+- expanded `taobao-live-data-dev-paradigm` again — 补全 P7 高密度 R2C 架构图：两侧护栏、Agent 应用层、AI 能力层、基建层、Memory/Skill/SDD 演进方向、Ontology 映射、核心依赖；同时新增 P1-P22 逐页复核补充，逐页记录 PDF 图中细项
+
+## [2026-05-31] query | 淘宝直播分享总结
+- answered from `taobao-live-data-dev-paradigm` — 总结淘宝直播 AI 驱动数据研发范式升级分享的主旨、架构、方法论、落地路径与结果
+
+## [2026-05-31] query | 淘宝直播中心化到本地化 AI Native 演进
+- answered from `taobao-live-data-dev-paradigm` — 强调该分享的重要主线之一是从中心化 AI Native 向本地化 AI Native 演进：统一入口到定制工作流、短期无记忆到长期可继承记忆、工具到员工
+
+## [2026-05-31] query | 淘宝直播分享要点核对清单
+- answered from `taobao-live-data-dev-paradigm` — 按主题列出淘宝直播分享覆盖的主线、架构、演进、研发范式、Agent 协同、Skill/SDD/AI Coding、基建、成果与未来规划，供人工核对是否遗漏
+
+## [2026-05-31] ingest | 淘宝直播：AI 驱动的数据研发范式升级（re-ingest）
+- 重新摄取，原因：之前的 OCR 派生 txt 质量太差（大量乱码），用户已删除
+- 直接读取 PDF（22 页，已转 PNG）通过视觉重新提取，重写派生 txt
+- 重写 `taobao-live-data-dev-paradigm` — 修正多处错误数据：代码采纳率 72.9%→72%，代码渗透率 24.6%→24.63%，平均对话轮次 5 轮→2.91；补充直播 360 真实案例（56 口径/6 模型/2 融合/2 同步/1500+ 行代码）；补充本体论 Neuro-Symbolic 设计；补充 P9 直播研发范式 6 大支柱；补充 P16 三大核心原则；补充 Pipeline 编排详细流程；补充 SDD references 加载机制
+- 源文件 frontmatter 标注 re_ingested: 2026-05-31
+
 ## [2026-05-24] ingest | SDD 实践：OpenSpec + Superpowers 整合创建自定义工作流（re-ingest）
 - 源文件已归档至 sources/2026/05/24/，内容与 2026-05-17 首次摄入一致，无新增 wiki 页面
 - 已有页面 `sdd-custom-workflow.md` 已完整覆盖此文内容
@@ -448,6 +499,12 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - report: 109 页面，95 源文件，0 critical（工具修复后），12 info（10 wanted-page + 2 根目录配置页引用），0 orphan
 - kept 12 wanted-page 链接作为未来页面发现机制
 
+## [2026-05-29] ingest | DataWorks虾聊0528录音修正版
+
+- 原始录音文件经过多轮 SubAgent 并行检查 + 主Agent 汇总修正，修正了约 160+ 处语音识别错误
+- 修正范围：产品名称/技术术语/演讲者姓名/乱码恢复/重复文本清理/语义修正
+- 源文件归档至 sources/2026/05/28/DataWorks虾聊0528录音-修正版.md
+
 ## [2026-05-29] ingest | 阿里 DataWorks 2026-05-28 虾聊日分享内容（7篇PDF）
 
 - created `dataworks-2026-0528-xialiaori` — 虾聊日活动汇总页面，7场分享的核心内容、演讲人、关键趋势
@@ -468,3 +525,16 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - created 10 stub pages — 补全断链目标页（`wiki-purpose`, `wiki-schema`, `agent-autonomous-planning`, `ai-agent-security`, `digital-employee`, `glm5-model`, `ai-governance`, `ai-knowledge-base`, `llm-cost-optimization`, `prompt-engineering`）
 - updated `product/index` — 链入 `netease-tasted-model` 和 `netease-tasted-interview`，消除孤立簇
 
+## [2026-05-31] ingest | 基于 Hologres Skills 完成广告素材智能生成与投放效果分析（逐页重摄取）
+- updated `hologres-skills` — 按淘宝直播 PDF 高密度摄取标准，从 PDF 页面图片重新复核 16 页，忽略既有 TXT，补充逐页索引、P2-P16 逐页复核、架构图/流程图/Demo/代码参数/二维码页信息
+- source reviewed: `2026/05/28/基于 Hologres Skills 完成广告素材智能生成与投放效果分析.pdf`
+
+## [2026-05-31] update | 高密度 PPT-to-PDF 摄取规则
+- updated `AGENTS.md` — 新增规则：DataFun/虾聊日等高密度 PPT 转 PDF 必须从 PDF 页面图片逐页视觉复核，不能信任派生 TXT/OCR；需捕获逐页索引、架构/流程图、截图、代码、数字、示例、模块名和路线图，不可靠小字不得臆测
+
+## [2026-05-31] update | 多模态资料首次摄取规则修正
+- updated `AGENTS.md` — 将规则修正为中文，并明确要求首次摄取 PDF、图片、PPT 转 PDF 等多模态资料时即保证正确性、完整性和可追溯性；派生 TXT/OCR 不能作为唯一可信来源，必须回到原始 PDF/图片正文逐页或逐图复核，避免信息丢失
+
+## [2026-05-31] ingest | DataWorks Data Agent：新一代数据智能体，企业大数据的数字员工（逐页重摄取）
+- updated `dataworks-data-agent` — 按多模态资料首次摄取规则，从 PDF 页面图片重新复核 17 页，忽略派生 TXT/OCR，补充逐页索引、P2-P17 逐页复核、产品架构、DataAgent Core、CLI/Claw 双模式、演示截图、Skill 开放生态、全托管运行底座和路线图信息
+- source reviewed: `2026/05/28/DataWorks Data Agent：新一代数据智能体，企业大数据的数字员工.pdf`
