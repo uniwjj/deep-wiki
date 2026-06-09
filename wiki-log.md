@@ -2,6 +2,9 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-06-08] ingest | How Anthropic enables self-service data analytics with Claude
+- created `agentic-analytics-anthropic` — Anthropic 利用 Claude 构建自服务分析平台的完整架构（四层 stack：数据基础→真相源→Skills→验证），三大失败模式与最佳实践
+
 ## [2026-05-31] ingest | 别再卷大模型了：Palantir 告诉我们，AI 的进阶是"本体论"
 - created `ontology` — 本体论核心概念（五要素框架、AI 幻觉解决方案、数据巴别塔、Neuro-Symbolic 关系）
 - updated `ai-ml/index` — 新增核心概念分类与 [[ontology]] 条目
