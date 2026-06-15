@@ -73,4 +73,4 @@ Claude Code 的完整源码级理解，共 34 篇分析。
 
 - [[ai-agent/index]]
 - [[opencode]]
-- [[sdd]]
+- [[ai-agent/sdd/index]]

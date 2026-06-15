@@ -50,8 +50,8 @@
     },
     "wiki/ai-ml/ontology.md": {
       "path": "wiki/ai-ml/ontology.md",
-      "mtime": 1780241778384.822,
-      "contentHash": "d53db19efcb60a09",
+      "mtime": 1781502631912.069,
+      "contentHash": "46bb83871ec6136f",
       "lastSynced": "2026-06-15"
     },
     "wiki/ai-ml/prompt-engineering.md": {
@@ -86,8 +86,8 @@
     },
     "wiki/big-data/agentic-data-cloud.md": {
       "path": "wiki/big-data/agentic-data-cloud.md",
-      "mtime": 1781495650183.3064,
-      "contentHash": "8056576b5a84cfa7",
+      "mtime": 1781502574577.6294,
+      "contentHash": "83fe6c2ef8e4e3da",
       "lastSynced": "2026-06-15"
     },
     "wiki/big-data/code-agent-vs-data-agent.md": {
@@ -160,6 +160,12 @@
       "path": "wiki/big-data/hologres-skills.md",
       "mtime": 1780219468453.4626,
       "contentHash": "cd5e396ba59292b6",
+      "lastSynced": "2026-06-15"
+    },
+    "wiki/big-data/iceberg.md": {
+      "path": "wiki/big-data/iceberg.md",
+      "mtime": 1781502620179.892,
+      "contentHash": "8554905e2d8115eb",
       "lastSynced": "2026-06-15"
     },
     "wiki/big-data/index.md": {
@@ -326,8 +332,8 @@
     },
     "wiki/ai-agent/agent-core/index.md": {
       "path": "wiki/ai-agent/agent-core/index.md",
-      "mtime": 1779075481051.5386,
-      "contentHash": "bf1fa6634d7e587e",
+      "mtime": 1781502695301.3835,
+      "contentHash": "ef9fde49006b53f6",
       "lastSynced": "2026-06-15"
     },
     "wiki/ai-agent/agent-core/meta-jit-testing.md": {
@@ -566,8 +572,8 @@
     },
     "wiki/ai-agent/claude-code/index.md": {
       "path": "wiki/ai-agent/claude-code/index.md",
-      "mtime": 1779075481040.8943,
-      "contentHash": "90875099eb73c03c",
+      "mtime": 1781502695339.1,
+      "contentHash": "3730150a21382092",
       "lastSynced": "2026-06-15"
     },
     "wiki/ai-agent/context-eng/claude-md-best-practices.md": {
@@ -584,8 +590,8 @@
     },
     "wiki/ai-agent/context-eng/index.md": {
       "path": "wiki/ai-agent/context-eng/index.md",
-      "mtime": 1779075481054.6787,
-      "contentHash": "378bf1e3ac8ca713",
+      "mtime": 1781502695363.8457,
+      "contentHash": "01b7f65807b9c2b2",
       "lastSynced": "2026-06-15"
     },
     "wiki/ai-agent/context-eng/manus-context-engineering.md": {
@@ -596,14 +602,14 @@
     },
     "wiki/ai-agent/ecosystem/agentic-analytics-anthropic.md": {
       "path": "wiki/ai-agent/ecosystem/agentic-analytics-anthropic.md",
-      "mtime": 1780909118640.9849,
-      "contentHash": "f58f5d068e24e73f",
+      "mtime": 1781502631850.2307,
+      "contentHash": "4cadfb6600dc4541",
       "lastSynced": "2026-06-15"
     },
     "wiki/ai-agent/ecosystem/agentic-skills.md": {
       "path": "wiki/ai-agent/ecosystem/agentic-skills.md",
-      "mtime": 1781495126668.3706,
-      "contentHash": "4f1a02c74126160a",
+      "mtime": 1781502574551.3577,
+      "contentHash": "5ae5bfb2f0f79845",
       "lastSynced": "2026-06-15"
     },
     "wiki/ai-agent/ecosystem/ai-agent-ecommerce-content.md": {
@@ -674,8 +680,8 @@
     },
     "wiki/ai-agent/ecosystem/index.md": {
       "path": "wiki/ai-agent/ecosystem/index.md",
-      "mtime": 1780033788656.477,
-      "contentHash": "78cf708ae857c8f0",
+      "mtime": 1781502695391.7776,
+      "contentHash": "18c01eb68321f55d",
       "lastSynced": "2026-06-15"
     },
     "wiki/ai-agent/ecosystem/log-diagnosis-skill.md": {
@@ -764,8 +770,8 @@
     },
     "wiki/ai-agent/harness/index.md": {
       "path": "wiki/ai-agent/harness/index.md",
-      "mtime": 1779075481053.965,
-      "contentHash": "87dd1a40b11e7d78",
+      "mtime": 1781502695415.4968,
+      "contentHash": "1a5526d37060dc2e",
       "lastSynced": "2026-06-15"
     },
     "wiki/ai-agent/knowledge-base/ai-knowledge-base.md": {
@@ -776,8 +782,8 @@
     },
     "wiki/ai-agent/knowledge-base/index.md": {
       "path": "wiki/ai-agent/knowledge-base/index.md",
-      "mtime": 1779075481053.3713,
-      "contentHash": "2c2fbc134e0d2a7c",
+      "mtime": 1781502695441.927,
+      "contentHash": "9611ee541f4c4b43",
       "lastSynced": "2026-06-15"
     },
     "wiki/ai-agent/knowledge-base/karpathy-agent-obsidian-os.md": {
@@ -854,8 +860,8 @@
     },
     "wiki/ai-agent/sdd/index.md": {
       "path": "wiki/ai-agent/sdd/index.md",
-      "mtime": 1779630332933.557,
-      "contentHash": "dc18ba4ce98937fc",
+      "mtime": 1781502695465.1377,
+      "contentHash": "1c6481259ace2c3e",
       "lastSynced": "2026-06-15"
     },
     "wiki/ai-agent/sdd/openspec-sdd-practice.md": {

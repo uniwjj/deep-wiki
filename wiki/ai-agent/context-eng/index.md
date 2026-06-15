@@ -21,5 +21,5 @@ updated: 2026-05-18
 ## 相关页面
 
 - [[ai-agent/index]]
-- [[agent-core]]
-- [[knowledge-base]]
+- [[ai-agent/agent-core/index]]
+- [[ai-agent/knowledge-base/index]]

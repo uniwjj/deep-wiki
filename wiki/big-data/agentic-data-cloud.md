@@ -96,5 +96,5 @@ Agentic Data Cloud 代表了云数据平台的下一代范式：
 - [[google-data-agent-kit]] — Agentic Data Cloud 战略中"Agentic-First 体验"的核心落地产品
 - [[agentic-skills]] — Agentic Skills 概念，Data Agent Kit 的核心抽象单元
 - [[agentic-analytics-anthropic]] — Anthropic 的自服务分析平台，类似的 Agent 化数据分析思路
-- [[mcp]] — MCP 协议，Agentic Data Cloud 的统一连接标准
+- [[agent-mcp-protocol|MCP]] — MCP 协议，Agentic Data Cloud 的统一连接标准
 - [[iceberg]] — Apache Iceberg，跨云 Lakehouse 的开放表格式基础

@@ -41,4 +41,4 @@ updated: 2026-05-24
 
 - [[ai-agent/index]]
 - [[claude-code]]
-- [[harness]]
+- [[ai-agent/harness/index]]

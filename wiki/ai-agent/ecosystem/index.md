@@ -46,4 +46,4 @@ AI Agent 工具生态与趋势分析，共 15 篇。
 ## 相关页面
 
 - [[ai-agent/index]]
-- [[agent-core]]
+- [[ai-agent/agent-core/index]]

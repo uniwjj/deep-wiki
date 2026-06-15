@@ -6,6 +6,13 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - saved `sources/2026/06/15/Google Cloud Data Agent Kit 深度解析.html` — 中文深度分析原文（含 SVG 架构图）
 - expanded `big-data/google-data-agent-kit` — 整合三大来源（Twitter 官宣 + 官方博客 + 中文分析），新增：预置 Agents 详表（Data Engineering/Data Science/DB Observability + GA/Preview 状态）、意图驱动开发完整示例（交易日志→欺诈检测→Spanner 全链路）、逆向下沉战略分析（控制点从算力存储迁移到开发者工具链）、HITL→HOTL 数据运维自主化演进、竞争格局对比表（Google vs AWS vs Databricks）、对 Hive/Spark 数仓团队的实践启示（MCP + YAML Spec 投喂层）
 
+## [2026-06-15] optimize | 知识库健康度优化——断链修复 + 桩页面 + 索引完善
+- fixed 8 short-name wikilinks → full path (e.g. `[[context-eng]]` → `[[ai-agent/context-eng/index]]`) in 7 index pages
+- fixed 2 `[[mcp]]` → `[[agent-mcp-protocol|MCP]]` (agentic-skills + agentic-data-cloud)
+- created `big-data/iceberg` stub — Apache Iceberg 开放表格式基础页
+- removed 3 speculative wikilinks (claude-code-skills-system, ISO-GQL, 知识图谱) → kept as plain text
+- result: 14 broken wikilinks → 0, 156 pages, all cross-references valid
+
 ## [2026-06-15] ingest | Google Cloud 官方博客：Data Agent Kit 详解 + Agentic Data Cloud 战略
 - saved `sources/2026/06/15/Data Agent Kit brings data skills and tools to your IDE or CLI - Google Cloud Blog.html` — 官方博客原文（284KB）
 - saved `sources/2026/06/15/What's New in the Agentic Data Cloud - Google Cloud Blog.html` — 官方博客原文（258KB）
