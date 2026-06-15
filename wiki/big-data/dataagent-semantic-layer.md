@@ -132,4 +132,5 @@ SKILL 示例 SQL 中使用但未显式定义的写法：
 - [[flink-skills]] — Flink Agent Skills
 - [[emr-skills]] — EMR Skills
 - [[openai-data-agent]] — OpenAI 内部 Data Agent（对照语义正确性问题）
+- [[ontological-semantic-layer]] — 本体化语义层，DataAgent 语义层的上层概念框架与战略视角
 - [[specialized-knowledge-search]] — 语义层作为 Data Agent 搜索基础设施

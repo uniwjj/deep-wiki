@@ -580,3 +580,8 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 ## [2026-05-31] ingest | DataWorks Data Agent：新一代数据智能体，企业大数据的数字员工（逐页重摄取）
 - updated `dataworks-data-agent` — 按多模态资料首次摄取规则，从 PDF 页面图片重新复核 17 页，忽略派生 TXT/OCR，补充逐页索引、P2-P17 逐页复核、产品架构、DataAgent Core、CLI/Claw 双模式、演示截图、Skill 开放生态、全托管运行底座和路线图信息
 - source reviewed: `2026/05/28/DataWorks Data Agent：新一代数据智能体，企业大数据的数字员工.pdf`
+
+## [2026-06-15] ingest | 大数据基建如何迈向 AI Infra（上+下）
+- created `ontological-semantic-layer` — 本体化语义层核心概念、六类能力框架、七项落地准备、Data Infra 团队角色重定义
+- updated `ontology` — 添加本体化语义层交叉引用
+- updated `dataagent-semantic-layer` — 添加本体化语义层作为上层概念框架

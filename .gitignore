@@ -40,3 +40,10 @@ package-lock.json
 docs/superpowers/
 .superpowers/
 
+# 避免下载的文章被提交
+article-downloads/
+
+
+
+
+

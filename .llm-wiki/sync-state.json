@@ -50,8 +50,8 @@
     },
     "wiki/ai-ml/ontology.md": {
       "path": "wiki/ai-ml/ontology.md",
-      "mtime": 1781503422306.9087,
-      "contentHash": "46bb83871ec6136f",
+      "mtime": 1781508077145.4204,
+      "contentHash": "5042419a0719ea06",
       "lastSynced": "2026-06-15"
     },
     "wiki/ai-ml/prompt-engineering.md": {
@@ -110,8 +110,8 @@
     },
     "wiki/big-data/dataagent-semantic-layer.md": {
       "path": "wiki/big-data/dataagent-semantic-layer.md",
-      "mtime": 1781503422308.1194,
-      "contentHash": "eda15017dbb6316a",
+      "mtime": 1781508077203.3438,
+      "contentHash": "9aad3921868075a6",
       "lastSynced": "2026-06-15"
     },
     "wiki/big-data/databricks-genie.md": {
@@ -190,6 +190,12 @@
       "path": "wiki/big-data/maxcompute-skills.md",
       "mtime": 1781503422309.615,
       "contentHash": "ca3648f4a21b7468",
+      "lastSynced": "2026-06-15"
+    },
+    "wiki/big-data/ontological-semantic-layer.md": {
+      "path": "wiki/big-data/ontological-semantic-layer.md",
+      "mtime": 1781508070307.55,
+      "contentHash": "279ba770ada15a05",
       "lastSynced": "2026-06-15"
     },
     "wiki/big-data/openai-data-agent.md": {
