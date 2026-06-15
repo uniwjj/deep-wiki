@@ -5,7 +5,7 @@ aliases: [big-data, 大数据]
 tags: [big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-05-29
+updated: 2026-06-15
 ---
 
 # 大数据技术
@@ -13,6 +13,8 @@ updated: 2026-05-29
 ## Data Agent 生态
 
 - [[dataworks-data-agent]] — DataWorks Data Agent 核心产品
+- [[google-data-agent-kit]] — Google Cloud 开源 Data Agent Kit
+- [[agentic-data-cloud]] — Google Cloud Agentic Data Cloud 战略架构（System of Action）
 - [[maxcompute-skills]] — MaxCompute MCMCP 与 Skills 体系
 - [[hologres-skills]] — Hologres CLI/Skills/AI Function
 - [[flink-skills]] — Flink Agent Skills 四层能力

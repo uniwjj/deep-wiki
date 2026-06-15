@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Cloud Data Agent Kit 深度解析</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg2: #f7f6f3;
+    --bg3: #f0efe9;
+    --text: #1a1a18;
+    --text2: #5a5a56;
+    --text3: #888780;
+    --border: rgba(0,0,0,0.1);
+    --purple-fill: #EEEDFE;
+    --purple-stroke: #534AB7;
+    --purple-text: #3C3489;
+    --teal-fill: #E1F5EE;
+    --teal-stroke: #0F6E56;
+    --teal-text: #085041;
+    --blue-fill: #E6F1FB;
+    --blue-stroke: #185FA5;
+    --blue-text: #0C447C;
+    --amber-fill: #FAEEDA;
+    --amber-stroke: #854F0B;
+    --amber-text: #633806;
+    --gray-fill: #F1EFE8;
+    --gray-stroke: #5F5E5A;
+    --gray-text: #444441;
+    --accent: #534AB7;
+    --code-bg: #f0efe9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1a;
+      --bg2: #242422;
+      --bg3: #2c2c2a;
+      --text: #e8e6df;
+      --text2: #a8a69f;
+      --text3: #6e6d67;
+      --border: rgba(255,255,255,0.1);
+      --purple-fill: #26215C;
+      --purple-stroke: #AFA9EC;
+      --purple-text: #CECBF6;
+      --teal-fill: #04342C;
+      --teal-stroke: #5DCAA5;
+      --teal-text: #9FE1CB;
+      --blue-fill: #042C53;
+      --blue-stroke: #85B7EB;
+      --blue-text: #B5D4F4;
+      --amber-fill: #412402;
+      --amber-stroke: #EF9F27;
+      --amber-text: #FAC775;
+      --gray-fill: #2C2C2A;
+      --gray-stroke: #888780;
+      --gray-text: #B4B2A9;
+      --accent: #AFA9EC;
+      --code-bg: #2c2c2a;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.75;
+    padding: 0;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 56px 48px 80px;
+  }
+
+  /* Header */
+  .doc-header {
+    margin-bottom: 48px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .doc-header h1 {
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .doc-meta {
+    font-size: 13px;
+    color: var(--text3);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .doc-meta span::before { content: "· "; }
+  .doc-meta span:first-child::before { content: ""; }
+
+  /* Section headings */
+  h2 {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    margin: 48px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    margin: 28px 0 10px;
+  }
+
+  p { margin-bottom: 14px; color: var(--text); }
+
+  /* Lists */
+  ul, ol {
+    padding-left: 20px;
+    margin-bottom: 14px;
+  }
+  li { margin-bottom: 6px; color: var(--text); }
+
+  /* Blockquote */
+  blockquote {
+    border-left: 3px solid var(--accent);
+    margin: 20px 0;
+    padding: 12px 18px;
+    background: var(--bg2);
+    border-radius: 0 6px 6px 0;
+    color: var(--text2);
+    font-style: italic;
+  }
+
+  /* Code */
+  code {
+    font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+    font-size: 13px;
+    background: var(--code-bg);
+    color: var(--text);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+  pre code {
+    background: none;
+    padding: 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  th {
+    background: var(--bg2);
+    font-weight: 500;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg2); }
+
+  /* Badge */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.02em;
+  }
+  .badge-ga { background: var(--teal-fill); color: var(--teal-text); }
+  .badge-preview { background: var(--amber-fill); color: var(--amber-text); }
+
+  strong { font-weight: 500; }
+
+  /* Architecture SVG card */
+  .arch-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 28px 0;
+    background: var(--bg2);
+  }
+  .arch-card-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg3);
+  }
+  .arch-card svg { display: block; width: 100%; }
+
+  /* Pillar diagram */
+  .pillar-stack {
+    margin: 20px 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .pillar-item {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+  }
+  .pillar-item:last-child { border-bottom: none; }
+  .pillar-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .pillar-label { font-weight: 500; font-size: 14px; flex: 1; }
+  .pillar-desc { font-size: 13px; color: var(--text2); }
+  .pillar-tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* Arrow between pillars */
+  .pillar-arrow {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text3);
+    padding: 4px 0;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Divider */
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  /* Footer */
+  .doc-footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text3);
+  }
+  .doc-footer a { color: var(--accent); text-decoration: none; }
+  .doc-footer a:hover { text-decoration: underline; }
+
+  /* Section number pill */
+  .section-num {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--accent);
+    color: #fff;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  /* Print */
+  @media print {
+    body { background: #fff; color: #000; }
+    .arch-card { break-inside: avoid; }
+    h2 { break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <h1>Google Cloud Data Agent Kit 深度解析</h1>
+    <div class="doc-meta">
+      <span>整理自 Google Cloud Next 2026 发布内容及行业分析</span>
+      <span>更新时间：2026-06</span>
+    </div>
+  </div>
+
+  <!-- 一、是什么 -->
+  <h2><span class="section-num">一</span>是什么</h2>
+  <p>Google Cloud Data Agent Kit 是一个统一的<strong>开源数据工程与数据科学能力套件</strong>，由 Skills（预编码技能）、MCP Tools（协议工具）和预置 Agents 三层组成，可直接集成到开发者已在使用的工具环境中：VS Code、Claude Code、Codex、Gemini CLI、Antigravity CLI。</p>
+  <p>它是 Google 在 <strong>Google Cloud Next 2026</strong> 上发布的 Agentic Data Cloud 三大支柱之一。本质上是一个<strong>可移植的 AI 能力包</strong>——不引入新界面，而是把数据开发智能注入你已有的 IDE 或终端。</p>
+
+  <!-- 架构图 -->
+  <div class="arch-card">
+    <div class="arch-card-title">架构全景图 · Data Agent Kit</div>
+    <svg viewBox="0 0 680 580" xmlns="http://www.w3.org/2000/svg" style="font-family:-apple-system,'PingFang SC','Hiragino Sans GB',sans-serif">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- 顶层：开发环境 -->
+      <rect x="30" y="30" width="620" height="100" rx="14" fill="var(--teal-fill,#E1F5EE)" stroke="var(--teal-stroke,#0F6E56)" stroke-width="0.5"/>
+      <text x="340" y="58" text-anchor="middle" font-size="14" font-weight="500" fill="var(--teal-text,#085041)">开发环境接入层（IDE / CLI）</text>
+      <text x="340" y="76" text-anchor="middle" font-size="12" fill="var(--teal-text,#085041)" opacity="0.8">开发者无需切换工具，Data Agent Kit 将能力直接注入现有工作环境</text>
+
+      <rect x="50"  y="86" width="96"  height="34" rx="8" fill="var(--teal-fill,#E1F5EE)" stroke="var(--teal-stroke,#0F6E56)" stroke-width="0.5"/>
+      <text x="98"  y="107" text-anchor="middle" font-size="13" font-weight="500" fill="var(--teal-text,#085041)">VS Code</text>
+
+      <rect x="160" y="86" width="100" height="34" rx="8" fill="var(--teal-fill,#E1F5EE)" stroke="var(--teal-stroke,#0F6E56)" stroke-width="0.5"/>
+      <text x="210" y="107" text-anchor="middle" font-size="13" font-weight="500" fill="var(--teal-text,#085041)">Claude Code</text>
+
+      <rect x="274" y="86" width="90"  height="34" rx="8" fill="var(--teal-fill,#E1F5EE)" stroke="var(--teal-stroke,#0F6E56)" stroke-width="0.5"/>
+      <text x="319" y="107" text-anchor="middle" font-size="13" font-weight="500" fill="var(--teal-text,#085041)">Gemini CLI</text>
+
+      <rect x="378" y="86" width="74"  height="34" rx="8" fill="var(--teal-fill,#E1F5EE)" stroke="var(--teal-stroke,#0F6E56)" stroke-width="0.5"/>
+      <text x="415" y="107" text-anchor="middle" font-size="13" font-weight="500" fill="var(--teal-text,#085041)">Codex</text>
+
+      <rect x="466" y="86" width="118" height="34" rx="8" fill="var(--teal-fill,#E1F5EE)" stroke="var(--teal-stroke,#0F6E56)" stroke-width="0.5"/>
+      <text x="525" y="107" text-anchor="middle" font-size="13" font-weight="500" fill="var(--teal-text,#085041)">Antigravity CLI</text>
+
+      <!-- 箭头 -->
+      <line x1="340" y1="132" x2="340" y2="158" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+      <!-- 中层核心 -->
+      <rect x="30" y="160" width="620" height="50" rx="14" fill="var(--purple-fill,#EEEDFE)" stroke="var(--purple-stroke,#534AB7)" stroke-width="0.5"/>
+      <text x="340" y="182" text-anchor="middle" font-size="14" font-weight="500" fill="var(--purple-text,#3C3489)">Data Agent Kit 核心（开源，Preview）</text>
+      <text x="340" y="200" text-anchor="middle" font-size="12" fill="var(--purple-text,#3C3489)" opacity="0.8">统一数据开发能力套件：Skills + MCP Tools + Plugins</text>
+
+      <!-- 三列 -->
+      <!-- 列1: Agentic Skills -->
+      <rect x="30" y="228" width="192" height="200" rx="12" fill="var(--purple-fill,#EEEDFE)" stroke="var(--purple-stroke,#534AB7)" stroke-width="0.5"/>
+      <text x="126" y="256" text-anchor="middle" font-size="14" font-weight="500" fill="var(--purple-text,#3C3489)">Agentic Skills</text>
+      <text x="126" y="274" text-anchor="middle" font-size="12" fill="var(--purple-text,#3C3489)" opacity="0.75">预编码数据操作技能</text>
+
+      <rect x="46" y="286" width="160" height="30" rx="6" fill="var(--gray-fill,#F1EFE8)" stroke="var(--gray-stroke,#5F5E5A)" stroke-width="0.5"/>
+      <text x="126" y="305" text-anchor="middle" font-size="12" fill="var(--gray-text,#444441)">SQL 优化 / ELT</text>
+
+      <rect x="46" y="322" width="160" height="30" rx="6" fill="var(--gray-fill,#F1EFE8)" stroke="var(--gray-stroke,#5F5E5A)" stroke-width="0.5"/>
+      <text x="126" y="341" text-anchor="middle" font-size="12" fill="var(--gray-text,#444441)">ML 最佳实践</text>
+
+      <rect x="46" y="358" width="160" height="30" rx="6" fill="var(--gray-fill,#F1EFE8)" stroke="var(--gray-stroke,#5F5E5A)" stroke-width="0.5"/>
+      <text x="126" y="377" text-anchor="middle" font-size="12" fill="var(--gray-text,#444441)">数据治理 / 漂移检测</text>
+
+      <rect x="46" y="394" width="160" height="26" rx="6" fill="var(--gray-fill,#F1EFE8)" stroke="var(--gray-stroke,#5F5E5A)" stroke-width="0.5"/>
+      <text x="126" y="411" text-anchor="middle" font-size="12" fill="var(--gray-text,#444441)">故障排查</text>
+
+      <!-- 列2: MCP Tools -->
+      <rect x="244" y="228" width="192" height="200" rx="12" fill="var(--purple-fill,#EEEDFE)" stroke="var(--purple-stroke,#534AB7)" stroke-width="0.5"/>
+      <text x="340" y="256" text-anchor="middle" font-size="14" font-weight="500" fill="var(--purple-text,#3C3489)">MCP Tools</text>
+      <text x="340" y="274" text-anchor="middle" font-size="12" fill="var(--purple-text,#3C3489)" opacity="0.75">安全连接云数据平台</text>
+
+      <rect x="260" y="286" width="160" height="30" rx="6" fill="var(--gray-fill,#F1EFE8)" stroke="var(--gray-stroke,#5F5E5A)" stroke-width="0.5"/>
+      <text x="340" y="305" text-anchor="middle" font-size="12" fill="var(--gray-text,#444441)">BigQuery MCP</text>
+
+      <rect x="260" y="322" width="160" height="30" rx="6" fill="var(--gray-fill,#F1EFE8)" stroke="var(--gray-stroke,#5F5E5A)" stroke-width="0.5"/>
+      <text x="340" y="341" text-anchor="middle" font-size="12" fill="var(--gray-text,#444441)">AlloyDB MCP</text>
+
+      <rect x="260" y="358" width="160" height="30" rx="6" fill="var(--gray-fill,#F1EFE8)" stroke="var(--gray-stroke,#5F5E5A)" stroke-width="0.5"/>
+      <text x="340" y="377" text-anchor="middle" font-size="12" fill="var(--gray-text,#444441)">Spanner MCP</text>
+
+      <rect x="260" y="394" width="160" height="26" rx="6" fill="var(--gray-fill,#F1EFE8)" stroke="var(--gray-stroke,#5F5E5A)" stroke-width="0.5"/>
+      <text x="340" y="411" text-anchor="middle" font-size="12" fill="var(--gray-text,#444441)">Cloud Storage MCP</text>
+
+      <!-- 列3: Prebuilt Agents -->
+      <rect x="458" y="228" width="192" height="200" rx="12" fill="var(--purple-fill,#EEEDFE)" stroke="var(--purple-stroke,#534AB7)" stroke-width="0.5"/>
+      <text x="554" y="256" text-anchor="middle" font-size="14" font-weight="500" fill="var(--purple-text,#3C3489)">预置 Agents</text>
+      <text x="554" y="274" text-anchor="middle" font-size="12" fill="var(--purple-text,#3C3489)" opacity="0.75">开箱即用的数据智能体</text>
+
+      <rect x="474" y="286" width="160" height="36" rx="6" fill="var(--amber-fill,#FAEEDA)" stroke="var(--amber-stroke,#854F0B)" stroke-width="0.5"/>
+      <text x="554" y="302" text-anchor="middle" font-size="12" font-weight="500" fill="var(--amber-text,#633806)">Data Engineering Agent</text>
+      <text x="554" y="317" text-anchor="middle" font-size="11" fill="var(--amber-text,#633806)" opacity="0.8">GA</text>
+
+      <rect x="474" y="328" width="160" height="36" rx="6" fill="var(--amber-fill,#FAEEDA)" stroke="var(--amber-stroke,#854F0B)" stroke-width="0.5"/>
+      <text x="554" y="344" text-anchor="middle" font-size="12" font-weight="500" fill="var(--amber-text,#633806)">Data Science Agent</text>
+      <text x="554" y="358" text-anchor="middle" font-size="11" fill="var(--amber-text,#633806)" opacity="0.8">GA</text>
+
+      <rect x="474" y="370" width="160" height="50" rx="6" fill="var(--amber-fill,#FAEEDA)" stroke="var(--amber-stroke,#854F0B)" stroke-width="0.5"/>
+      <text x="554" y="390" text-anchor="middle" font-size="12" font-weight="500" fill="var(--amber-text,#633806)">DB Observability Agent</text>
+      <text x="554" y="408" text-anchor="middle" font-size="11" fill="var(--amber-text,#633806)" opacity="0.8">Preview</text>
+
+      <!-- 向下箭头 -->
+      <line x1="340" y1="430" x2="340" y2="456" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+      <!-- 底层：GCP 数据底座 -->
+      <rect x="30" y="458" width="620" height="98" rx="14" fill="var(--blue-fill,#E6F1FB)" stroke="var(--blue-stroke,#185FA5)" stroke-width="0.5"/>
+      <text x="340" y="484" text-anchor="middle" font-size="14" font-weight="500" fill="var(--blue-text,#0C447C)">Google Cloud 数据底座</text>
+      <text x="340" y="502" text-anchor="middle" font-size="12" fill="var(--blue-text,#0C447C)" opacity="0.8">智能路由选择最优计算引擎，统一视图管理全生命周期</text>
+
+      <rect x="48"  y="512" width="88"  height="32" rx="6" fill="var(--blue-fill,#E6F1FB)" stroke="var(--blue-stroke,#185FA5)" stroke-width="0.5"/>
+      <text x="92"  y="532" text-anchor="middle" font-size="12" fill="var(--blue-text,#0C447C)">BigQuery</text>
+
+      <rect x="148" y="512" width="100" height="32" rx="6" fill="var(--blue-fill,#E6F1FB)" stroke="var(--blue-stroke,#185FA5)" stroke-width="0.5"/>
+      <text x="198" y="532" text-anchor="middle" font-size="12" fill="var(--blue-text,#0C447C)">Apache Spark</text>
+
+      <rect x="260" y="512" width="80"  height="32" rx="6" fill="var(--blue-fill,#E6F1FB)" stroke="var(--blue-stroke,#185FA5)" stroke-width="0.5"/>
+      <text x="300" y="532" text-anchor="middle" font-size="12" fill="var(--blue-text,#0C447C)">Spanner</text>
+
+      <rect x="352" y="512" width="80"  height="32" rx="6" fill="var(--blue-fill,#E6F1FB)" stroke="var(--blue-stroke,#185FA5)" stroke-width="0.5"/>
+      <text x="392" y="532" text-anchor="middle" font-size="12" fill="var(--blue-text,#0C447C)">AlloyDB</text>
+
+      <rect x="444" y="512" width="60"  height="32" rx="6" fill="var(--blue-fill,#E6F1FB)" stroke="var(--blue-stroke,#185FA5)" stroke-width="0.5"/>
+      <text x="474" y="532" text-anchor="middle" font-size="12" fill="var(--blue-text,#0C447C)">GCS</text>
+
+      <rect x="516" y="512" width="122" height="32" rx="6" fill="var(--blue-fill,#E6F1FB)" stroke="var(--blue-stroke,#185FA5)" stroke-width="0.5"/>
+      <text x="577" y="532" text-anchor="middle" font-size="12" fill="var(--blue-text,#0C447C)">Knowledge Catalog</text>
+    </svg>
+  </div>
+
+  <!-- 二、解决什么问题 -->
+  <h2><span class="section-num">二</span>解决什么问题</h2>
+  <p>当前 AI Agent 与数据平台协作面临三个核心痛点：</p>
+
+  <h3>2.1 Context Gap（上下文鸿沟）</h3>
+  <p>AI Agent 如果不理解企业对"毛利率"等业务概念的特定定义，就可能犯代价高昂的错误。数据工程师每次调用 LLM 都要手动粘贴大量 Schema 元数据，白白消耗 Token 限额并增加延迟。</p>
+
+  <h3>2.2 工具碎片化</h3>
+  <p>当前用于构建 Agent 和管理数据的工具高度碎片化，导致数据访问困难、安全风险上升，以及割裂的开发体验。工程师需要在云控制台、CLI、IDE 之间频繁切换。</p>
+
+  <h3>2.3 缺乏领域知识的 AI 引导</h3>
+  <p>通用 LLM 的 Prompt 缺乏企业级数据工程的最佳实践沉淀，数据从业者在如何高效查询、优化和排障云数据方面往往缺乏统一指导，也无法跨越整个数据资产建立统一视图。</p>
+
+  <!-- 三、核心能力 -->
+  <h2><span class="section-num">三</span>核心能力构成</h2>
+
+  <h3>3.1 Agentic Skills（预编码技能库）</h3>
+  <p>将 Google 自身数据工程经验提炼为可注入工作流的规范化路径，涵盖：</p>
+  <ul>
+    <li>SQL 查询优化 / ELT 最佳实践</li>
+    <li>ML 流程规范</li>
+    <li>数据校验 / 数据漂移检测</li>
+    <li>治理规范执行</li>
+    <li>故障排查流程</li>
+  </ul>
+
+  <h3>3.2 MCP Tools（协议工具层）</h3>
+  <p>通过 MCP 工具，Agent 与 Google Cloud 数据平台建立安全连接，无需手动管理复杂的 Pipeline 配置：</p>
+  <table>
+    <thead><tr><th>MCP Tool</th><th>对应平台</th></tr></thead>
+    <tbody>
+      <tr><td>BigQuery MCP</td><td>BigQuery</td></tr>
+      <tr><td>AlloyDB MCP</td><td>AlloyDB</td></tr>
+      <tr><td>Spanner MCP</td><td>Cloud Spanner</td></tr>
+      <tr><td>Cloud Storage MCP</td><td>Google Cloud Storage</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.3 预置 Agents（开箱即用）</h3>
+  <table>
+    <thead><tr><th>Agent</th><th>状态</th><th>核心职责</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Data Engineering Agent</strong></td>
+        <td><span class="badge badge-ga">GA</span></td>
+        <td>从头构建复杂 Pipeline，自动强制执行治理规则</td>
+      </tr>
+      <tr>
+        <td><strong>Data Science Agent</strong></td>
+        <td><span class="badge badge-ga">GA</span></td>
+        <td>自动化模型全生命周期，跨 BigQuery Dataframes 和 Serverless Spark 弹性扩展</td>
+      </tr>
+      <tr>
+        <td><strong>Database Observability Agent</strong></td>
+        <td><span class="badge badge-preview">Preview</span></td>
+        <td>7×24 基础设施守护，诊断根因并执行数据库自愈</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 四、使用方式 -->
+  <h2><span class="section-num">四</span>使用方式</h2>
+
+  <h3>4.1 安装（一分钟上手）</h3>
+  <p>根据工作环境选择入口：</p>
+  <pre><code># GitHub（适用于 Gemini CLI、Claude Code、Codex）
+git clone https://github.com/googleapis/data-agent-kit
+
+# VS Code Marketplace
+# 搜索 "Google Cloud Data Agent Kit"
+
+# Claude Code / Antigravity CLI
+# 通过各自插件市场安装</code></pre>
+  <p>安装后通过 IAM 登录，Cloud Storage、数据库、Catalog 资产即刻出现在工作区。</p>
+
+  <h3>4.2 使用模式：意图驱动式开发</h3>
+  <p>不再需要逐行编写 ETL 代码，而是向 Coding Agent 描述业务目标。例如：</p>
+  <blockquote>
+    "把 GCS 里的原始交易日志摄入 BigQuery Iceberg 表 → 用 dbt 去重、清洗、关联身份表 → 在 Spark 上训练 LightGBM 欺诈检测模型 → 批量推断并写入 Spanner → 编排整条 Pipeline。"
+  </blockquote>
+  <p>在幕后，Data Agent Kit 会自动规划整个数据生命周期的多步骤编排：自动创建 Notebook 完成摄入、SQL 转换、模型训练、批量推断及调度；若 Pipeline 失败，自动 RCA + 起草修复代码 + 通过 Git 工作流验证部署。</p>
+
+  <h3>4.3 智能路由</h3>
+  <p>系统自动为任务选择最优计算引擎：</p>
+  <ul>
+    <li><strong>SQL 原生分析 / ELT</strong> → BigQuery</li>
+    <li><strong>自定义 Python 转换 / 分布式 ML 训练</strong> → Serverless Apache Spark</li>
+  </ul>
+
+  <!-- 五、大背景定位 -->
+  <h2><span class="section-num">五</span>在 Agentic Data Cloud 大背景中的定位</h2>
+  <p>Data Agent Kit 是三大支柱中的<strong>开发者接入层</strong>：</p>
+
+  <div class="pillar-stack">
+    <div class="pillar-item" style="background:var(--teal-fill)">
+      <div class="pillar-dot" style="background:var(--teal-stroke)"></div>
+      <div class="pillar-label" style="color:var(--teal-text)">Data Agent Kit</div>
+      <div class="pillar-desc" style="color:var(--teal-text);opacity:0.8">Skills + MCP Tools + Prebuilt Agents</div>
+      <span class="pillar-tag" style="background:var(--teal-stroke);color:#fff">本文主角</span>
+    </div>
+    <div class="pillar-arrow">↓ 依赖语义上下文</div>
+    <div class="pillar-item" style="background:var(--purple-fill)">
+      <div class="pillar-dot" style="background:var(--purple-stroke)"></div>
+      <div class="pillar-label" style="color:var(--purple-text)">Knowledge Catalog</div>
+      <div class="pillar-desc" style="color:var(--purple-text);opacity:0.8">企业特定业务定义，防止 Agent 幻觉</div>
+      <span class="pillar-tag" style="background:var(--purple-stroke);color:#fff">语义地图</span>
+    </div>
+    <div class="pillar-arrow">↓ 跨云访问</div>
+    <div class="pillar-item" style="background:var(--blue-fill)">
+      <div class="pillar-dot" style="background:var(--blue-stroke)"></div>
+      <div class="pillar-label" style="color:var(--blue-text)">Cross-cloud Lakehouse</div>
+      <div class="pillar-desc" style="color:var(--blue-text);opacity:0.8">统一跨 AWS / Azure / GCP 数据访问</div>
+      <span class="pillar-tag" style="background:var(--blue-stroke);color:#fff">数据层</span>
+    </div>
+  </div>
+
+  <!-- 六、战略下沉 -->
+  <h2><span class="section-num">六</span>从云上到云下：一次战略性下沉</h2>
+
+  <h3>6.1 逆向下沉</h3>
+  <p>传统云厂商策略是"把数据搬上来"，而 Data Agent Kit 的策略是<strong>"把能力送下去"</strong>。</p>
+  <p>现实是：大量企业数据根本不在 GCP 上——Hive/Spark 跑在自建机房，Oracle 跑在专线另一头，敏感数据因合规永远不会迁云。与其等数据上来，不如让 Agent 能力通过 MCP Tools 搭桥，直接操作本地/私有环境的数据资产，而调用记录和计费留在 GCP 侧。</p>
+
+  <h3>6.2 控制点的迁移</h3>
+  <table>
+    <thead><tr><th>时代</th><th>控制点</th><th>手段</th></tr></thead>
+    <tbody>
+      <tr><td>传统云计算</td><td>算力与存储</td><td>数据必须上云</td></tr>
+      <tr><td>Agentic 时代</td><td><strong>开发者工具链</strong></td><td>SDK / MCP Server 注入 IDE</td></tr>
+    </tbody>
+  </table>
+  <p>谁的 MCP Server 被装进 VS Code 和 Claude Code，谁就在 Agent 每次调用数据时获得感知和影响力——不必真正拥有数据。</p>
+
+  <!-- 七、行业影响 -->
+  <h2><span class="section-num">七</span>对行业趋势的影响</h2>
+
+  <h3>7.1 数据开发范式转移：代码驱动 → 意图驱动</h3>
+  <p>工程师从写 Spark Job、配 Airflow DAG，转变为描述业务目标并审查 AI 生成的方案。数据开发的提效天花板被大幅抬高。</p>
+
+  <h3>7.2 MCP 成为数据基础设施标准接口</h3>
+  <p>Data Agent Kit 全面押注 MCP，将 BigQuery、Spanner、AlloyDB 等云服务包装为 MCP Server。这进一步确立 MCP 作为 <strong>Agent-to-Data 标准协议</strong>的地位。对 Hive/Spark 等开源数仓而言，若无 MCP 接入层，未来与 AI Agent 的集成摩擦将显著增大。</p>
+
+  <h3>7.3 开发工具生态重组</h3>
+  <p>通过将数据平台能力以 Agentic Skills 形式注入 Claude Code、VS Code 等开发者工具，Google 实际上打通了 AI Coding Agent 与企业数据底座之间的最后一英里，对 IDE 厂商和数据平台厂商均形成整合压力。</p>
+
+  <h3>7.4 HITL → HOTL 自动化加速</h3>
+  <p>Pipeline 自愈能力（自动 RCA + 自动 Git PR）是 <strong>HOTL（Human Out of the Loop）</strong> 落地数据运维领域的早期形态，代表 AI Agent 在数据系统中自主决策权限的持续扩张。</p>
+
+  <h3>7.5 竞争格局</h3>
+  <table>
+    <thead><tr><th>厂商</th><th>产品</th><th>路线特点</th></tr></thead>
+    <tbody>
+      <tr><td>Google</td><td>Data Agent Kit</td><td>开源套件 + 多 IDE 集成，生态开放</td></tr>
+      <tr><td>AWS</td><td>Bedrock Data Automation</td><td>平台封闭，与 AWS 生态深度绑定</td></tr>
+      <tr><td>Databricks</td><td>Mosaic AI</td><td>统一分析平台，Lakehouse 原生</td></tr>
+    </tbody>
+  </table>
+  <p>Google 选择了<strong>开源套件 + 多 IDE 集成</strong>路线，而非封闭平台，对企业自定义和迁移成本更友好。</p>
+
+  <!-- 八、实践启示 -->
+  <h2><span class="section-num">八</span>对数仓团队的实践启示</h2>
+  <p>对于使用 Hive/Spark 技术栈的数据平台团队：</p>
+  <ul>
+    <li><strong>不需要迁移数据</strong>：部署兼容 MCP 协议的本地 Server，Claude Code / Gemini CLI 即可感知本地 Schema、血缘、治理规则</li>
+    <li><strong>YAML Spec 可作为 MCP 上下文投喂层</strong>：SDD 系统中的 Spec 定义天然适合作为 Knowledge Catalog 的等价物，向 Agent 传递业务语义</li>
+    <li><strong>开源优先</strong>：Data Agent Kit 以 Apache 2.0 开源，可在私有化环境中自行部署和定制 Skills</li>
+  </ul>
+
+  <!-- Footer -->
+  <div class="doc-footer">
+    文档整理自对话记录，如需最新信息请参考
+    <a href="https://cloud.google.com/blog" target="_blank">Google Cloud 官方博客</a> 及
+    <a href="https://github.com/googleapis/data-agent-kit" target="_blank">Data Agent Kit GitHub</a>
+  </div>
+
+</div>
+</body>
+</html>

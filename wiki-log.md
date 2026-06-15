@@ -2,6 +2,22 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-06-15] ingest | Google Cloud Data Agent Kit 深度解析（中文分析文章）
+- saved `sources/2026/06/15/Google Cloud Data Agent Kit 深度解析.html` — 中文深度分析原文（含 SVG 架构图）
+- expanded `big-data/google-data-agent-kit` — 整合三大来源（Twitter 官宣 + 官方博客 + 中文分析），新增：预置 Agents 详表（Data Engineering/Data Science/DB Observability + GA/Preview 状态）、意图驱动开发完整示例（交易日志→欺诈检测→Spanner 全链路）、逆向下沉战略分析（控制点从算力存储迁移到开发者工具链）、HITL→HOTL 数据运维自主化演进、竞争格局对比表（Google vs AWS vs Databricks）、对 Hive/Spark 数仓团队的实践启示（MCP + YAML Spec 投喂层）
+
+## [2026-06-15] ingest | Google Cloud 官方博客：Data Agent Kit 详解 + Agentic Data Cloud 战略
+- saved `sources/2026/06/15/Data Agent Kit brings data skills and tools to your IDE or CLI - Google Cloud Blog.html` — 官方博客原文（284KB）
+- saved `sources/2026/06/15/What's New in the Agentic Data Cloud - Google Cloud Blog.html` — 官方博客原文（258KB）
+- expanded `big-data/google-data-agent-kit` — 基于官方博客大幅扩充：新增统一数据中心（Unified Hub）、Agentic Skills 详解、对话式分析、意图驱动工程范式、安装使用指南、上下文窗口税概念；增加详细架构表格；补充新 source 引用
+- created `big-data/agentic-data-cloud` — Google Agentic Data Cloud 战略架构页：三大创新支柱（Knowledge Catalog 通用上下文引擎 / Agentic-First 从业者体验 / 跨云 Lakehouse）、四类结构性失败分析、客户案例、性能数据
+- updated `big-data/index` — Data Agent 生态新增 agentic-data-cloud
+
+## [2026-06-15] ingest | 谷歌开源 Data Agent Kit：数据工程正式进入原生 Agent 时代
+- created `big-data/google-data-agent-kit` — Google Cloud 开源数据工程 AI 工具集，含 Agentic Skills / MCP 工具层 / IDE 插件
+- created `ai-agent/ecosystem/agentic-skills` — Agentic Skills（预制数据技能库）概念页，Data Agent 核心抽象单元
+- updated `big-data/index` — Data Agent 生态新增 google-data-agent-kit
+
 ## [2026-06-08] ingest | How Anthropic enables self-service data analytics with Claude
 - created `agentic-analytics-anthropic` — Anthropic 利用 Claude 构建自服务分析平台的完整架构（四层 stack：数据基础→真相源→Skills→验证），三大失败模式与最佳实践
 
