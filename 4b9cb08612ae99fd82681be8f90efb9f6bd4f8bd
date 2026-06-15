@@ -1,0 +1,26 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8-ntes.8",
+  "base_commit_sha": "4b9cb08612ae99fd82681be8f90efb9f6bd4f8bd",
+  "prompts": {
+    "d8e761828d99891d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_14a55c215ffehI8ewD5K26EwM9",
+        "model": "unknown"
+      },
+      "human_author": "ginger",
+      "messages": [],
+      "total_additions": 372,
+      "total_deletions": 0,
+      "accepted_lines": 0,
+      "overriden_lines": 0,
+      "per_file_stats": {
+        "wiki/big-data/dw-sdd-workflow.md": {
+          "additions": 372
+        }
+      }
+    }
+  }
+}
