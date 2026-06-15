@@ -13,6 +13,17 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - removed 3 speculative wikilinks (claude-code-skills-system, ISO-GQL, 知识图谱) → kept as plain text
 - result: 14 broken wikilinks → 0, 156 pages, all cross-references valid
 
+## [2026-06-15] expand | loop-engineering vs OpenClaw 对比分析
+- expanded `ai-agent/harness/loop-engineering` — 新增与 OpenClaw 的六组件逐项对照、四个结构性差异（验证哲学/预算模型/记忆复杂度/覆盖域）
+- updated `ai-agent/ecosystem/openclaw` — 添加指向 loop-engineering 的交叉引用
+- updated `ai-agent/ecosystem/openclaw-agentic-search-memory` — 添加指向 loop-engineering 的交叉引用
+
+## [2026-06-15] ingest | Loop Engineering详解：把反馈循环放进工程现场
+- saved `sources/2026/06/15/loop-engineering详解.md` — 微信公众号文章全文（若飞·架构师，8.8KB）
+- saved `article-downloads/Loop Engineering详解：把反馈循环放进工程现场.html` — 自包含 HTML（74KB）
+- created `ai-agent/harness/loop-engineering` — Loop Engineering 核心概念页：六组件拆解、闭环vs开环、验证准入表、预算约束、状态记忆、人在场原则、7天试点路径
+- updated `ai-agent/harness/index` — 新增 loop-engineering 入口
+
 ## [2026-06-15] ingest | Google Cloud 官方博客：Data Agent Kit 详解 + Agentic Data Cloud 战略
 - saved `sources/2026/06/15/Data Agent Kit brings data skills and tools to your IDE or CLI - Google Cloud Blog.html` — 官方博客原文（284KB）
 - saved `sources/2026/06/15/What's New in the Agentic Data Cloud - Google Cloud Blog.html` — 官方博客原文（258KB）

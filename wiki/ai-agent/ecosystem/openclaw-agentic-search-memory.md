@@ -5,7 +5,7 @@ aliases: [Agentic Search, Agentic Memory, OpenClaw Search, OpenClaw Memory]
 tags: [ai-agent, big-data, concept]
 sources: [2026/05/28/OpenClaw_AgenticSearch_Memory.pdf]
 created: 2026-05-29
-updated: 2026-05-31
+updated: 2026-06-15
 ---
 
 # OpenClaw Agentic Search & Memory
@@ -244,6 +244,7 @@ P24 用一条时间线串起从搜索工具到认知引擎的 5 阶段跃迁：
 
 ## 相关页面
 
+- [[loop-engineering]] — Loop Engineering 概念页，含与 OpenClaw 的六组件逐项对照
 - [[openclaw]] — OpenClaw 数字员工网关架构
 - [[dataworks-data-agent]] — DataWorks Data Agent
 - [[dataworks-2026-0528-xialiaori]] — 2026-05-28 虾聊日全部分享内容

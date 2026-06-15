@@ -5,7 +5,7 @@ aliases: [harness, Harness 编排]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-05-18
+updated: 2026-06-15
 ---
 
 # Harness 编排体系
@@ -22,6 +22,7 @@ Agent 编排系统的设计模式与工程实践，共 8 篇。
 
 - [[harness-design-long-running]] — GAN 启发三 Agent 架构
 - [[harness-build-to-delete]] — Build-to-Delete 理念
+- [[loop-engineering]] — Loop Engineering：把反馈循环放进工程现场
 
 ## 工程实践
 
