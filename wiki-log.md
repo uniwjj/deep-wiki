@@ -2,6 +2,15 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-06-16] ingest | AI Agent & Skill 测评方案及落地实践（微信公众号：腾讯程序员）
+
+- saved `sources/2026/06/16/AI Agent & Skill 测评方案及落地实践.html` — 原始 HTML（含 20 张图片、33 个样式块）
+- saved `sources/2026/06/16/AI Agent & Skill 测评方案及落地实践.txt` — 提取文本 + frontmatter
+- created `ai-agent/agent-core/agent-evaluation-framework.md` — AI Agent 测评框架总论：三类评分器（确定性/Rubric/人工）+ 五大维度（功能正确性/过程质量/效率成本/鲁棒性安全/体验对齐）+ 通用评分公式
+- created `ai-agent/agent-core/agent-evaluation-implementation.md` — 测评落地实践：四大场景用例设计 + 基线管理 + Trace 能力 + 稳定性评估（pass@k vs pass^k）+ 能力测评 vs 回归测评 + TPerf 性能 AI 分析 Agent 案例（9 类 30+ 用例、LCS 步骤评分、7 模型对比）
+- updated `ai-agent/agent-core/index.md` — 新增"测评体系"分类，总数 16→18 篇
+- updated `ai-agent/ecosystem/architect-in-agent-era.md` — 补充评估体系相关交叉引用
+
 ## [2026-06-15] ingest | Google Cloud Data Agent Kit 深度解析（中文分析文章）
 - saved `sources/2026/06/15/Google Cloud Data Agent Kit 深度解析.html` — 中文深度分析原文（含 SVG 架构图）
 - expanded `big-data/google-data-agent-kit` — 整合三大来源（Twitter 官宣 + 官方博客 + 中文分析），新增：预置 Agents 详表（Data Engineering/Data Science/DB Observability + GA/Preview 状态）、意图驱动开发完整示例（交易日志→欺诈检测→Spanner 全链路）、逆向下沉战略分析（控制点从算力存储迁移到开发者工具链）、HITL→HOTL 数据运维自主化演进、竞争格局对比表（Google vs AWS vs Databricks）、对 Hive/Spark 数仓团队的实践启示（MCP + YAML Spec 投喂层）

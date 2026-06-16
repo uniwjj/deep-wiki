@@ -1,16 +1,16 @@
 ---
 title: Agent 基础理论
-description: AI Agent 基础理论与核心机制——设计范式、记忆系统、规划能力、安全治理
+description: AI Agent 基础理论与核心机制——设计范式、记忆系统、规划能力、安全治理、测评体系
 aliases: [agent-core, Agent 理论]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-05-18
+updated: 2026-06-16
 ---
 
 # Agent 基础理论
 
-Agent 核心理论与机制，共 16 篇。
+Agent 核心理论与机制，共 18 篇。
 
 ## 设计范式
 
@@ -25,6 +25,11 @@ Agent 核心理论与机制，共 16 篇。
 - [[agent-tdd-workflow]] — TDD 工作流
 - [[meta-jit-testing]] — Meta JIT 测试
 - [[agent-skill-test-case]] — Skill 测试用例
+
+## 测评体系
+
+- [[agent-evaluation-framework]] — AI Agent 测评框架（三类评分器 + 五大维度）
+- [[agent-evaluation-implementation]] — 测评落地实践（用例设计、基线管理、工程化）
 
 ## 多 Agent 协作
 

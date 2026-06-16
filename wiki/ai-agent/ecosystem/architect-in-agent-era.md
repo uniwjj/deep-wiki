@@ -35,6 +35,8 @@ updated: 2026-05-18
 
 ## 相关页面
 
+- [[agent-evaluation-framework]] — AI Agent 测评框架（评估体系的系统化落地）
+- [[agent-evaluation-implementation]] — 测评落地实践（用例设计、基线管理、工程化）
 - [[agent-harness-overview]] — Harness 综述
 - [[agent-architecture-patterns]] — 架构模式
 - [[claude-code-harness]] — Claude Code Harness
