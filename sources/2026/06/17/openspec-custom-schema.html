@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenSpec 自定义 Schema 深度指南</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --ink: #1a1a1a;
+    --ink-secondary: #4a4a4a;
+    --ink-muted: #7a7a7a;
+    --bg: #f8f7f4;
+    --bg-card: #ffffff;
+    --bg-code: #f2f1ee;
+    --accent: #2d6a4f;
+    --accent-light: #e8f4ed;
+    --accent-mid: #52b788;
+    --teal: #1a6b7a;
+    --teal-light: #e0f2f5;
+    --purple: #4a3f8f;
+    --purple-light: #eeecf8;
+    --coral: #b5451b;
+    --coral-light: #faeae4;
+    --amber: #8a5a00;
+    --amber-light: #fdf3dc;
+    --rule: #e0ded8;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 16px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: #fff;
+    padding: 72px 0 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.03) 39px,
+      rgba(255,255,255,0.03) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.03) 39px,
+      rgba(255,255,255,0.03) 40px
+    );
+  }
+  .header-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--accent-mid);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    position: relative;
+  }
+  header h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto 20px;
+    padding: 0 24px;
+  }
+  header h1 em {
+    font-style: normal;
+    color: var(--accent-mid);
+  }
+  .header-sub {
+    color: rgba(255,255,255,0.55);
+    font-size: 15px;
+    position: relative;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 36px;
+    position: relative;
+    flex-wrap: wrap;
+    padding: 0 24px;
+  }
+  .header-meta span {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .header-meta span::before {
+    content: '·';
+    color: var(--accent-mid);
+  }
+
+  /* ── TOC ── */
+  .toc-wrap {
+    max-width: 860px;
+    margin: 48px auto;
+    padding: 0 24px;
+  }
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 28px 32px;
+  }
+  .toc-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 16px;
+  }
+  .toc ol {
+    padding-left: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 32px;
+  }
+  @media (max-width: 600px) { .toc ol { grid-template-columns: 1fr; } }
+  .toc a {
+    color: var(--ink-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 2;
+    transition: color 0.15s;
+  }
+  .toc a:hover { color: var(--accent); }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-bottom: 72px;
+  }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    height: 1px;
+    background: var(--accent-light);
+    flex: 1;
+  }
+  h2 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 36px 0 14px;
+    letter-spacing: -0.01em;
+  }
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-secondary);
+    margin: 24px 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: var(--mono);
+  }
+  p {
+    color: var(--ink-secondary);
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--accent); }
+
+  /* ── CODE ── */
+  pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 24px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 20px 0;
+    position: relative;
+  }
+  .code-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+  code {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: var(--bg-code);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--coral);
+  }
+  pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+  .cm { color: #6a9955; }
+  .ck { color: #9cdcfe; }
+  .cv { color: #ce9178; }
+  .cn { color: #4fc1ff; }
+  .co { color: #c586c0; }
+
+  /* ── CALLOUTS ── */
+  .callout {
+    padding: 18px 22px;
+    border-radius: 8px;
+    margin: 24px 0;
+    font-size: 14px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { color: var(--ink-secondary); line-height: 1.65; }
+  .callout-body strong { display: block; margin-bottom: 4px; font-size: 13px; }
+  .callout.info { background: var(--teal-light); border-left: 3px solid var(--teal); }
+  .callout.tip { background: var(--accent-light); border-left: 3px solid var(--accent); }
+  .callout.warn { background: var(--amber-light); border-left: 3px solid var(--amber); }
+  .callout.key { background: var(--purple-light); border-left: 3px solid var(--purple); }
+
+  /* ── DIAGRAMS ── */
+  .diagram-wrap {
+    margin: 32px 0;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .diagram-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg);
+  }
+  .diagram-body {
+    padding: 28px 24px;
+    overflow-x: auto;
+  }
+  svg text { font-family: var(--sans); }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 20px 0;
+  }
+  th {
+    background: var(--bg);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 500;
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 2px solid var(--rule);
+  }
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink-secondary);
+    vertical-align: top;
+  }
+  td code { font-size: 12px; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg); }
+
+  /* ── STEP FLOW ── */
+  .step-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 28px 0;
+  }
+  .step {
+    display: flex;
+    gap: 20px;
+    position: relative;
+  }
+  .step-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-connector {
+    width: 2px;
+    flex: 1;
+    background: var(--rule);
+    min-height: 24px;
+    margin: 4px 0;
+  }
+  .step:last-child .step-connector { display: none; }
+  .step-content {
+    padding-bottom: 28px;
+    flex: 1;
+  }
+  .step-content h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 6px 0 8px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-family: var(--sans);
+  }
+  .step-content p { font-size: 14px; margin-bottom: 0; }
+
+  /* ── FIELD GRID ── */
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 20px 0;
+  }
+  @media (max-width: 640px) { .field-grid { grid-template-columns: 1fr; } }
+  .field-card {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .field-name {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .field-type {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+  .field-desc { font-size: 13px; color: var(--ink-secondary); line-height: 1.6; }
+
+  /* ── COMMAND CARDS ── */
+  .cmd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 24px 0;
+  }
+  @media (max-width: 600px) { .cmd-grid { grid-template-columns: 1fr; } }
+  .cmd-card {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cmd-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .cmd-card.propose::before { background: var(--accent); }
+  .cmd-card.apply::before { background: var(--purple); }
+  .cmd-card.verify::before { background: var(--teal); }
+  .cmd-card.archive::before { background: var(--coral); }
+  .cmd-name {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .cmd-card.propose .cmd-name { color: var(--accent); }
+  .cmd-card.apply .cmd-name { color: var(--purple); }
+  .cmd-card.verify .cmd-name { color: var(--teal); }
+  .cmd-card.archive .cmd-name { color: var(--coral); }
+  .cmd-desc { font-size: 13px; color: var(--ink-secondary); line-height: 1.6; }
+  .cmd-scope {
+    margin-top: 10px;
+    font-size: 11px;
+    font-family: var(--mono);
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  .cmd-card.propose .cmd-scope { background: var(--accent-light); color: var(--accent); }
+  .cmd-card.apply .cmd-scope { background: var(--purple-light); color: var(--purple); }
+  .cmd-card.verify .cmd-scope { background: var(--teal-light); color: var(--teal); }
+  .cmd-card.archive .cmd-scope { background: var(--coral-light); color: var(--coral); }
+
+  /* ── DIVIDER ── */
+  hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 56px 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    border-top: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--ink-muted);
+    font-family: var(--mono);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">OpenSpec · Spec-Driven Development</div>
+  <h1>自定义 Schema<br><em>原理、配置与实践深度指南</em></h1>
+  <p class="header-sub">从默认工作流到完全定制的团队专属 SDD 流程，系统拆解 schema 驱动机制的每个层次</p>
+  <div class="header-meta">
+    <span>Custom Schema</span>
+    <span>Artifact DAG</span>
+    <span>SKILL 机制</span>
+    <span>Verify 扩展</span>
+  </div>
+</header>
+
+<!-- TOC -->
+<div class="toc-wrap">
+  <div class="toc">
+    <div class="toc-title">本文目录</div>
+    <ol>
+      <li><a href="#s1">什么是 OpenSpec Schema</a></li>
+      <li><a href="#s2">三层定制体系</a></li>
+      <li><a href="#s3">schema.yaml 完整字段详解</a></li>
+      <li><a href="#s4">命令与 Schema 的对应关系</a></li>
+      <li><a href="#s5">openspec status 的状态判断机制</a></li>
+      <li><a href="#s6">创建自定义 Schema</a></li>
+      <li><a href="#s7">Template 文件设计</a></li>
+      <li><a href="#s8">SKILL 文件机制</a></li>
+      <li><a href="#s9">扩展 verify 能力</a></li>
+      <li><a href="#s10">完整实战：数据仓库场景</a></li>
+    </ol>
+  </div>
+</div>
+
+<main>
+
+<!-- ─────────────────── S1 ─────────────────── -->
+<section class="section" id="s1">
+  <div class="section-label">01 · 核心概念</div>
+  <h2>什么是 OpenSpec Schema</h2>
+
+  <p>OpenSpec 是一个面向 AI Coding Agent 的规范驱动开发（SDD）框架。它解决的核心问题是：<strong>AI 编码助手功能强大但行为难以预测</strong>，当需求活在对话历史里时，输出就会飘移。OpenSpec 的解法是：在编码之前，先锁定意图文档。</p>
+
+  <p><strong>Schema</strong> 是 OpenSpec 的工作流引擎。它定义了"从一个想法到最终代码合并，中间需要 AI 生成哪些文档、按什么顺序生成、依据什么规则生成"。Schema 决定了整个变更周期的形状。</p>
+
+  <div class="callout key">
+    <div class="callout-icon">◈</div>
+    <div class="callout-body">
+      <strong>核心心智模型</strong>
+      Schema 不是"流程图"，而是一个<strong>有向无环图（DAG）的声明</strong>。你声明节点（artifact）和边（requires 依赖），OpenSpec CLI 负责遍历这个图，Agent 负责在每个节点填充内容。
+    </div>
+  </div>
+
+  <p>OpenSpec 内置一个默认 schema 叫 <code>spec-driven</code>，产出四个 artifact：</p>
+
+  <div class="diagram-wrap">
+    <div class="diagram-title">图 1 · 默认 spec-driven schema 的 artifact 流</div>
+    <div class="diagram-body">
+      <svg width="100%" viewBox="0 0 720 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M1 2L9 5L1 8" fill="none" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <!-- boxes -->
+        <g>
+          <rect x="10" y="38" width="140" height="44" rx="8" fill="#e8f4ed" stroke="#2d6a4f" stroke-width="1.5"/>
+          <text x="80" y="56" text-anchor="middle" fill="#1a3a28" font-size="13" font-weight="600">proposal.md</text>
+          <text x="80" y="73" text-anchor="middle" fill="#2d6a4f" font-size="11">意图与范围</text>
+        </g>
+        <line x1="152" y1="60" x2="192" y2="60" stroke="#2d6a4f" stroke-width="1.5" marker-end="url(#ah)"/>
+        <g>
+          <rect x="194" y="38" width="140" height="44" rx="8" fill="#e8f4ed" stroke="#2d6a4f" stroke-width="1.5"/>
+          <text x="264" y="56" text-anchor="middle" fill="#1a3a28" font-size="13" font-weight="600">specs.md</text>
+          <text x="264" y="73" text-anchor="middle" fill="#2d6a4f" font-size="11">行为规约 (what)</text>
+        </g>
+        <line x1="336" y1="60" x2="376" y2="60" stroke="#2d6a4f" stroke-width="1.5" marker-end="url(#ah)"/>
+        <g>
+          <rect x="378" y="38" width="140" height="44" rx="8" fill="#e8f4ed" stroke="#2d6a4f" stroke-width="1.5"/>
+          <text x="448" y="56" text-anchor="middle" fill="#1a3a28" font-size="13" font-weight="600">design.md</text>
+          <text x="448" y="73" text-anchor="middle" fill="#2d6a4f" font-size="11">技术方案 (how)</text>
+        </g>
+        <line x1="520" y1="60" x2="560" y2="60" stroke="#2d6a4f" stroke-width="1.5" marker-end="url(#ah)"/>
+        <g>
+          <rect x="562" y="38" width="148" height="44" rx="8" fill="#e0f2f5" stroke="#1a6b7a" stroke-width="1.5"/>
+          <text x="636" y="56" text-anchor="middle" fill="#0e3d44" font-size="13" font-weight="600">tasks.md</text>
+          <text x="636" y="73" text-anchor="middle" fill="#1a6b7a" font-size="11">实现清单 → apply</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <p>但这个默认流程并不适合所有团队。数据仓库开发需要血缘校验；事件驱动系统需要 AsyncAPI 规约；快速迭代项目可能不需要 design 步骤。<strong>Custom Schema 就是把这个流程变成你自己的</strong>。</p>
+</section>
+
+<!-- ─────────────────── S2 ─────────────────── -->
+<section class="section" id="s2">
+  <div class="section-label">02 · 体系架构</div>
+  <h2>三层定制体系</h2>
+
+  <p>OpenSpec 提供三个颗粒度不同的定制层次，从轻到重：</p>
+
+  <div class="diagram-wrap">
+    <div class="diagram-title">图 2 · 三层定制体系与优先级</div>
+    <div class="diagram-body">
+      <svg width="100%" viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Layer 3 (bottom, widest) -->
+        <rect x="20" y="210" width="640" height="72" rx="10" fill="#f2f1ee" stroke="#c8c6c0" stroke-width="1"/>
+        <text x="44" y="240" fill="#4a4a4a" font-size="13" font-weight="600">Layer 3 · Global Override</text>
+        <text x="44" y="258" fill="#7a7a7a" font-size="12">~/.openspec/schemas/  ·  跨项目共享  ·  优先级最低</text>
+        <text x="600" y="252" fill="#7a7a7a" font-size="11" text-anchor="middle">power users</text>
+
+        <!-- Layer 2 -->
+        <rect x="60" y="130" width="560" height="72" rx="10" fill="#eeecf8" stroke="#4a3f8f" stroke-width="1.5"/>
+        <text x="84" y="160" fill="#2a2060" font-size="13" font-weight="600">Layer 2 · Custom Schema</text>
+        <text x="84" y="178" fill="#4a3f8f" font-size="12">openspec/schemas/&lt;name&gt;/  ·  版本控制  ·  团队专属工作流</text>
+        <text x="560" y="172" fill="#4a3f8f" font-size="11" text-anchor="middle">推荐</text>
+
+        <!-- Layer 1 (top, narrowest) -->
+        <rect x="120" y="40" width="440" height="80" rx="10" fill="#e8f4ed" stroke="#2d6a4f" stroke-width="2"/>
+        <text x="144" y="70" fill="#1a3a28" font-size="13" font-weight="600">Layer 1 · Project Config</text>
+        <text x="144" y="90" fill="#2d6a4f" font-size="12">openspec/config.yaml  ·  context 注入  ·  rules 规则  ·  最高优先级</text>
+        <text x="500" y="82" fill="#2d6a4f" font-size="11" text-anchor="middle">大多数团队</text>
+
+        <!-- priority arrow -->
+        <line x1="660" y1="270" x2="660" y2="52" stroke="#c8c6c0" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ah)"/>
+        <text x="672" y="170" fill="#7a7a7a" font-size="11" transform="rotate(90 672 170)">优先级 HIGH →</text>
+      </svg>
+    </div>
+  </div>
+
+  <h3>Layer 1：Project Config（config.yaml）</h3>
+  <p>最轻量的定制方式，不修改任何工作流结构，只向 AI 注入项目上下文和规则约束：</p>
+
+  <div class="code-label">openspec/config.yaml</div>
+  <pre><span class="cm"># 指定使用哪个 schema（Layer 2 定义的，或内置的）</span>
+<span class="ck">schema</span>: <span class="cv">spec-driven</span>
+
+<span class="cm"># context 注入所有 artifact 的 Prompt</span>
+<span class="ck">context</span>: <span class="cv">|</span>
+  Tech stack: Hive/Spark, Java, TypeScript
+  Data warehouse: 四层 YAML Spec 架构
+  Testing: 单元测试 + 集成测试
+  所有 DDL 必须包含 COMMENT 字段描述
+
+<span class="cm"># rules 只注入匹配的 artifact</span>
+<span class="ck">rules</span>:
+  <span class="ck">proposal</span>:
+    - <span class="cv">明确上下游血缘影响范围</span>
+    - <span class="cv">包含回滚方案</span>
+  <span class="ck">tasks</span>:
+    - <span class="cv">每个任务必须标注对应的 Spec 层级</span>
+    - <span class="cv">HQL 文件必须放在 sql/ 目录下</span></pre>
+
+  <div class="callout info">
+    <div class="callout-icon">ℹ</div>
+    <div class="callout-body">
+      <strong>注入结构</strong>
+      生成任意 artifact 时，OpenSpec 按此结构组装 Prompt：<code>&lt;context&gt;...&lt;/context&gt;</code> + <code>&lt;rules&gt;...&lt;/rules&gt;</code>（仅匹配 artifact）+ <code>&lt;template&gt;模板内容&lt;/template&gt;</code>。context 全局有效，rules 按 artifact id 精准注入。
+    </div>
+  </div>
+
+  <h3>Layer 2：Custom Schema（核心）</h3>
+  <p>定义 artifact 的类型、顺序、依赖关系和 AI 生成指令。存放于 <code>openspec/schemas/&lt;name&gt;/</code>，与代码一起版本控制。这是最有价值的定制层。</p>
+
+  <h3>Layer 3：Global Override</h3>
+  <p>放在 <code>~/.openspec/schemas/</code>，在本机所有项目中共享。适合个人习惯性工作流，但因为不在项目仓库里，团队协作时每人都需要单独配置，通常不推荐作为团队方案。</p>
+
+  <h3>Schema 解析优先级</h3>
+  <table>
+    <thead><tr><th>优先级</th><th>来源</th><th>典型场景</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1（最高）</strong></td><td>CLI flag <code>--schema &lt;name&gt;</code></td><td>临时切换 schema 测试</td></tr>
+      <tr><td><strong>2</strong></td><td>变更文件夹 <code>.openspec.yaml</code></td><td>单次变更使用特定 schema</td></tr>
+      <tr><td><strong>3</strong></td><td><code>openspec/config.yaml</code> 中的 <code>schema:</code></td><td>项目默认 schema</td></tr>
+      <tr><td><strong>4（最低）</strong></td><td>内置默认 <code>spec-driven</code></td><td>无任何配置时的兜底</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ─────────────────── S3 ─────────────────── -->
+<section class="section" id="s3">
+  <div class="section-label">03 · 字段详解</div>
+  <h2>schema.yaml 完整字段详解</h2>
+
+  <p>一个完整的 <code>schema.yaml</code> 由<strong>元信息</strong>、<strong>artifacts 列表</strong>和 <strong>apply 块</strong>三部分组成。以下是所有可用字段：</p>
+
+  <div class="code-label">schema.yaml · 完整结构</div>
+  <pre><span class="ck">name</span>: <span class="cv">dw-spec-driven</span>          <span class="cm"># 唯一标识符，用于 --schema 参数</span>
+<span class="ck">version</span>: <span class="cn">1</span>                     <span class="cm"># 整数版本号</span>
+<span class="ck">description</span>: <span class="cv">数据仓库 SDD 工作流</span>  <span class="cm"># 人读的描述</span>
+
+<span class="ck">artifacts</span>:
+  - <span class="ck">id</span>: <span class="cv">business-spec</span>           <span class="cm"># artifact 唯一 ID（用于 requires 引用）</span>
+    <span class="ck">generates</span>: <span class="cv">specs/business/spec.md</span>  <span class="cm"># 输出路径，支持 glob</span>
+    <span class="ck">description</span>: <span class="cv">业务层规约</span>      <span class="cm"># CLI status 显示用</span>
+    <span class="ck">template</span>: <span class="cv">business-spec.md</span>   <span class="cm"># templates/ 下的模板文件</span>
+    <span class="ck">instruction</span>: <span class="cv">|</span>              <span class="cm"># 注入 AI Prompt 的生成指令</span>
+      按四层 YAML Spec 的 Business Layer 格式，
+      描述业务需求、数据血缘和验收标准。
+    <span class="ck">requires</span>: []               <span class="cm"># 依赖的前置 artifact id 列表</span>
+
+  - <span class="ck">id</span>: <span class="cv">implementation-spec</span>
+    <span class="ck">generates</span>: <span class="cv">specs/impl/spec.md</span>
+    <span class="ck">template</span>: <span class="cv">impl-spec.md</span>
+    <span class="ck">instruction</span>: <span class="cv">|</span>
+      根据 business-spec，生成 Implementation Layer，
+      包含 HQL 模板、分区策略、调度依赖。
+    <span class="ck">requires</span>:
+      - <span class="cv">business-spec</span>           <span class="cm"># 必须先有 business-spec 才能创建</span>
+
+  - <span class="ck">id</span>: <span class="cv">tasks</span>
+    <span class="ck">generates</span>: <span class="cv">tasks.md</span>
+    <span class="ck">template</span>: <span class="cv">tasks.md</span>
+    <span class="ck">instruction</span>: <span class="cv">|</span>
+      根据 business-spec 和 implementation-spec 生成任务列表。
+      最后一组任务必须包含写入 verify/.apply-done 的步骤。
+    <span class="ck">requires</span>:
+      - <span class="cv">business-spec</span>
+      - <span class="cv">implementation-spec</span>
+
+<span class="ck">apply</span>:
+  <span class="ck">requires</span>:                    <span class="cm"># /opsx:apply 前必须存在的 artifact</span>
+    - <span class="cv">tasks</span>
+  <span class="ck">tracks</span>: <span class="cv">tasks.md</span>             <span class="cm"># Agent 读哪个文件追踪任务进度</span></pre>
+
+  <h3>artifacts 子字段</h3>
+  <div class="field-grid">
+    <div class="field-card">
+      <div class="field-name">id</div>
+      <div class="field-type">string · 必填</div>
+      <div class="field-desc">artifact 的唯一标识符。用于 <code>requires</code> 引用、<code>openspec status</code> 输出、<code>config.yaml</code> 的 <code>rules</code> 键名。</div>
+    </div>
+    <div class="field-card">
+      <div class="field-name">generates</div>
+      <div class="field-type">string · 必填 · 支持 glob</div>
+      <div class="field-desc">输出文件路径，相对于变更文件夹。支持 <code>specs/**/*.md</code> 这样的 glob，此时只要目录下有任意匹配文件即视为完成。</div>
+    </div>
+    <div class="field-card">
+      <div class="field-name">template</div>
+      <div class="field-type">string · 必填</div>
+      <div class="field-desc"><code>templates/</code> 目录下的 Markdown 文件路径。内容注入 AI Prompt 作为结构骨架，HTML 注释可向 AI 提供填写指导。</div>
+    </div>
+    <div class="field-card">
+      <div class="field-name">instruction</div>
+      <div class="field-type">string · 推荐</div>
+      <div class="field-desc">生成该 artifact 时注入 AI 的核心指令。描述内容要求、格式规范、关注点。这是定制 AI 行为最重要的字段。</div>
+    </div>
+    <div class="field-card">
+      <div class="field-name">requires</div>
+      <div class="field-type">string[] · 可选</div>
+      <div class="field-desc">依赖的前置 artifact id 列表。OpenSpec CLI 基于此构建 DAG，只有所有依赖都已存在（文件存在），该 artifact 才进入 ready 状态。</div>
+    </div>
+    <div class="field-card">
+      <div class="field-name">description</div>
+      <div class="field-type">string · 可选</div>
+      <div class="field-desc"><code>openspec status</code> 输出中显示的描述文字，帮助人类快速理解这个 artifact 的用途。不影响 AI 行为。</div>
+    </div>
+  </div>
+
+  <h3>apply 块字段</h3>
+  <div class="field-grid">
+    <div class="field-card">
+      <div class="field-name">apply.requires</div>
+      <div class="field-type">string[] · 必填</div>
+      <div class="field-desc">执行 <code>/opsx:apply</code> 前必须已存在的 artifact 列表。相当于"实现门控"——缺少这些文档就无法开始写代码。</div>
+    </div>
+    <div class="field-card">
+      <div class="field-name">apply.tracks</div>
+      <div class="field-type">string · 必填</div>
+      <div class="field-desc">Agent 执行 apply 时读取和更新的文件，通常是 <code>tasks.md</code>。Agent 逐条读取任务，完成后将 <code>[ ]</code> 改为 <code>[x]</code>。</div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-icon">⚠</div>
+    <div class="callout-body">
+      <strong>config.yaml 不是 schema.yaml 的一部分</strong>
+      <code>context</code>、<code>rules</code>、默认 <code>schema</code> 名这三个字段在 <code>openspec/config.yaml</code> 里，不在 <code>schema.yaml</code> 里。两者职责分离：schema.yaml 定义工作流结构，config.yaml 注入项目上下文。
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── S4 ─────────────────── -->
+<section class="section" id="s4">
+  <div class="section-label">04 · 命令映射</div>
+  <h2>命令与 Schema 的对应关系</h2>
+
+  <p>OpenSpec 的斜杠命令和 schema 字段有明确的映射关系，理解这个映射是使用自定义 schema 的关键：</p>
+
+  <div class="cmd-grid">
+    <div class="cmd-card propose">
+      <div class="cmd-name">/opsx:propose</div>
+      <div class="cmd-desc">驱动 <code>artifacts</code> 列表的完整执行。循环调用 <code>openspec status</code>，按 DAG 顺序依次生成所有 ready 状态的 artifact，直到 <code>apply.requires</code> 全部满足为止。</div>
+      <div class="cmd-scope">对应 schema.artifacts</div>
+    </div>
+    <div class="cmd-card apply">
+      <div class="cmd-name">/opsx:apply</div>
+      <div class="cmd-desc">使用 <code>apply.tracks</code> 指定的文件（通常 tasks.md）逐条执行任务，写代码、创建文件，并标记任务完成。前置条件由 <code>apply.requires</code> 控制。</div>
+      <div class="cmd-scope">对应 schema.apply</div>
+    </div>
+    <div class="cmd-card verify">
+      <div class="cmd-name">/opsx:verify</div>
+      <div class="cmd-desc">完全独立于 schema。Agent 读取变更文件夹内所有 artifact + 搜索代码库，做语义层面的一致性校验（完整性、正确性、连贯性）。</div>
+      <div class="cmd-scope">独立于 schema</div>
+    </div>
+    <div class="cmd-card archive">
+      <div class="cmd-name">/opsx:archive</div>
+      <div class="cmd-desc">独立于 schema。将变更文件夹中的 delta specs（ADDED/MODIFIED/REMOVED 章节）合并到 <code>openspec/specs/</code> 主目录，再将整个变更文件夹移入 archive/。</div>
+      <div class="cmd-scope">独立于 schema</div>
+    </div>
+  </div>
+
+  <div class="diagram-wrap">
+    <div class="diagram-title">图 3 · 完整执行链与 schema 字段的对应</div>
+    <div class="diagram-body">
+      <svg width="100%" viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M1 2L9 5L1 8" fill="none" stroke="#7a7a7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+
+        <!-- explore -->
+        <rect x="10" y="10" width="130" height="50" rx="8" fill="#f2f1ee" stroke="#c8c6c0" stroke-width="1.5"/>
+        <text x="75" y="32" text-anchor="middle" fill="#4a4a4a" font-size="13" font-weight="600">/opsx:explore</text>
+        <text x="75" y="50" text-anchor="middle" fill="#7a7a7a" font-size="11">无 artifact 产出</text>
+
+        <!-- propose -->
+        <rect x="170" y="10" width="160" height="50" rx="8" fill="#e8f4ed" stroke="#2d6a4f" stroke-width="2"/>
+        <text x="250" y="32" text-anchor="middle" fill="#1a3a28" font-size="13" font-weight="600">/opsx:propose</text>
+        <text x="250" y="50" text-anchor="middle" fill="#2d6a4f" font-size="11">schema.artifacts DAG</text>
+
+        <!-- apply -->
+        <rect x="360" y="10" width="140" height="50" rx="8" fill="#eeecf8" stroke="#4a3f8f" stroke-width="2"/>
+        <text x="430" y="32" text-anchor="middle" fill="#2a2060" font-size="13" font-weight="600">/opsx:apply</text>
+        <text x="430" y="50" text-anchor="middle" fill="#4a3f8f" font-size="11">schema.apply</text>
+
+        <!-- archive -->
+        <rect x="530" y="10" width="140" height="50" rx="8" fill="#faeae4" stroke="#b5451b" stroke-width="1.5"/>
+        <text x="600" y="32" text-anchor="middle" fill="#6b2a10" font-size="13" font-weight="600">/opsx:archive</text>
+        <text x="600" y="50" text-anchor="middle" fill="#b5451b" font-size="11">独立于 schema</text>
+
+        <!-- arrows top -->
+        <line x1="141" y1="35" x2="168" y2="35" stroke="#7a7a7a" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <line x1="331" y1="35" x2="358" y2="35" stroke="#7a7a7a" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <line x1="501" y1="35" x2="528" y2="35" stroke="#7a7a7a" stroke-width="1.5" marker-end="url(#ah2)"/>
+
+        <!-- propose detail box -->
+        <rect x="30" y="100" width="450" height="165" rx="10" fill="white" stroke="#2d6a4f" stroke-width="1" stroke-dasharray="5 3"/>
+        <text x="50" y="122" fill="#2d6a4f" font-size="11" font-weight="600">propose 内部循环（基于 schema.artifacts DAG）</text>
+
+        <!-- loop step 1 -->
+        <rect x="50" y="136" width="180" height="36" rx="6" fill="#e8f4ed" stroke="#2d6a4f" stroke-width="1"/>
+        <text x="140" y="150" text-anchor="middle" fill="#1a3a28" font-size="12" font-weight="600">openspec status</text>
+        <text x="140" y="164" text-anchor="middle" fill="#2d6a4f" font-size="11">检查哪些 artifact ready</text>
+
+        <line x1="232" y1="154" x2="258" y2="154" stroke="#2d6a4f" stroke-width="1.5" marker-end="url(#ah)"/>
+
+        <!-- loop step 2 -->
+        <rect x="260" y="136" width="200" height="36" rx="6" fill="#e8f4ed" stroke="#2d6a4f" stroke-width="1"/>
+        <text x="360" y="150" text-anchor="middle" fill="#1a3a28" font-size="12" font-weight="600">openspec instructions</text>
+        <text x="360" y="164" text-anchor="middle" fill="#2d6a4f" font-size="11">拿到 template + context</text>
+
+        <!-- loop step 3 -->
+        <rect x="50" y="200" width="180" height="36" rx="6" fill="#e8f4ed" stroke="#2d6a4f" stroke-width="1"/>
+        <text x="140" y="214" text-anchor="middle" fill="#1a3a28" font-size="12" font-weight="600">Agent 生成内容</text>
+        <text x="140" y="228" text-anchor="middle" fill="#2d6a4f" font-size="11">按 instruction 写文件</text>
+
+        <line x1="360" y1="172" x2="360" y2="192" stroke="#2d6a4f" stroke-width="1.5"/>
+        <line x1="360" y1="192" x2="140" y2="192" stroke="#2d6a4f" stroke-width="1.5"/>
+        <line x1="140" y1="192" x2="140" y2="198" stroke="#2d6a4f" stroke-width="1.5" marker-end="url(#ah)"/>
+
+        <!-- loop back -->
+        <line x1="140" y1="236" x2="140" y2="256" stroke="#2d6a4f" stroke-width="1.5"/>
+        <line x1="140" y1="256" x2="46" y2="256" stroke="#2d6a4f" stroke-width="1.5"/>
+        <line x1="46" y1="256" x2="46" y2="154" stroke="#2d6a4f" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <line x1="46" y1="154" x2="48" y2="154" stroke="#2d6a4f" stroke-width="1.5" marker-end="url(#ah)"/>
+        <text x="28" y="208" fill="#7a7a7a" font-size="10" text-anchor="middle" transform="rotate(-90 28 208)">循环直到满足</text>
+
+        <!-- stop condition -->
+        <rect x="310" y="200" width="150" height="36" rx="6" fill="#f8f7f4" stroke="#c8c6c0" stroke-width="1"/>
+        <text x="385" y="214" text-anchor="middle" fill="#4a4a4a" font-size="12" font-weight="600">apply.requires 满足</text>
+        <text x="385" y="228" text-anchor="middle" fill="#7a7a7a" font-size="11">停止 → 提示用户</text>
+
+        <!-- apply detail -->
+        <rect x="500" y="100" width="170" height="85" rx="10" fill="white" stroke="#4a3f8f" stroke-width="1" stroke-dasharray="5 3"/>
+        <text x="520" y="122" fill="#4a3f8f" font-size="11" font-weight="600">apply 执行</text>
+        <text x="515" y="142" fill="#4a4a4a" font-size="11">读 apply.tracks 文件</text>
+        <text x="515" y="158" fill="#4a4a4a" font-size="11">逐条执行 [ ] 任务</text>
+        <text x="515" y="174" fill="#4a4a4a" font-size="11">写代码 → 标记 [x]</text>
+
+        <!-- verify standalone -->
+        <rect x="30" y="300" width="620" height="48" rx="8" fill="#e0f2f5" stroke="#1a6b7a" stroke-width="1"/>
+        <text x="340" y="320" text-anchor="middle" fill="#0e3d44" font-size="12" font-weight="600">/opsx:verify — 独立语义校验</text>
+        <text x="340" y="338" text-anchor="middle" fill="#1a6b7a" font-size="11">读所有 artifact 文件 + 搜索代码库 → Agent 推理判断（不依赖 schema）</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── S5 ─────────────────── -->
+<section class="section" id="s5">
+  <div class="section-label">05 · 状态机制</div>
+  <h2>openspec status 的状态判断机制</h2>
+
+  <p><code>openspec status</code> 是 propose 循环的控制器，它的判断逻辑完全基于<strong>文件是否存在</strong>，不做任何内容语义解析：</p>
+
+  <div class="diagram-wrap">
+    <div class="diagram-title">图 4 · artifact 状态转换逻辑</div>
+    <div class="diagram-body">
+      <svg width="100%" viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M1 2L9 5L1 8" fill="none" stroke="#7a7a7a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <!-- blocked -->
+        <rect x="20" y="70" width="150" height="60" rx="8" fill="#faeae4" stroke="#b5451b" stroke-width="1.5"/>
+        <text x="95" y="97" text-anchor="middle" fill="#6b2a10" font-size="13" font-weight="600">BLOCKED</text>
+        <text x="95" y="115" text-anchor="middle" fill="#b5451b" font-size="11">missingDeps 非空</text>
+        <!-- ready -->
+        <rect x="260" y="70" width="160" height="60" rx="8" fill="#fdf3dc" stroke="#8a5a00" stroke-width="1.5"/>
+        <text x="340" y="97" text-anchor="middle" fill="#5a3a00" font-size="13" font-weight="600">READY</text>
+        <text x="340" y="115" text-anchor="middle" fill="#8a5a00" font-size="11">依赖全部 done，文件不存在</text>
+        <!-- done -->
+        <rect x="510" y="70" width="150" height="60" rx="8" fill="#e8f4ed" stroke="#2d6a4f" stroke-width="1.5"/>
+        <text x="585" y="97" text-anchor="middle" fill="#1a3a28" font-size="13" font-weight="600">DONE</text>
+        <text x="585" y="115" text-anchor="middle" fill="#2d6a4f" font-size="11">generates 路径文件存在</text>
+
+        <!-- arrows -->
+        <line x1="172" y1="100" x2="258" y2="100" stroke="#7a7a7a" stroke-width="1.5" marker-end="url(#ah3)"/>
+        <text x="215" y="90" text-anchor="middle" fill="#7a7a7a" font-size="11">依赖都变成 done</text>
+
+        <line x1="422" y1="100" x2="508" y2="100" stroke="#2d6a4f" stroke-width="1.5" marker-end="url(#ah3)"/>
+        <text x="465" y="90" text-anchor="middle" fill="#2d6a4f" font-size="11">Agent 写入文件</text>
+
+        <!-- condition labels -->
+        <text x="95" y="155" text-anchor="middle" fill="#7a7a7a" font-size="11">requires 中有未完成的</text>
+        <text x="340" y="155" text-anchor="middle" fill="#7a7a7a" font-size="11">Agent 下一个操作目标</text>
+        <text x="585" y="155" text-anchor="middle" fill="#7a7a7a" font-size="11">文件检查：glob 或精确路径</text>
+
+        <!-- legend -->
+        <text x="340" y="30" text-anchor="middle" fill="#4a4a4a" font-size="12">状态完全由文件系统决定，与文件内容无关</text>
+      </svg>
+    </div>
+  </div>
+
+  <p><code>openspec status --json</code> 返回结构化数据，这是 Agent 真正读取的格式：</p>
+
+  <div class="code-label">openspec status --change add-lineage --json</div>
+  <pre>{
+  <span class="ck">"changeName"</span>: <span class="cv">"add-lineage"</span>,
+  <span class="ck">"schemaName"</span>: <span class="cv">"dw-spec-driven"</span>,
+  <span class="ck">"isComplete"</span>: <span class="co">false</span>,
+  <span class="ck">"applyRequires"</span>: [<span class="cv">"tasks"</span>],
+  <span class="ck">"artifacts"</span>: [
+    {
+      <span class="ck">"id"</span>: <span class="cv">"business-spec"</span>,
+      <span class="ck">"outputPath"</span>: <span class="cv">"specs/business/spec.md"</span>,
+      <span class="ck">"status"</span>: <span class="cv">"done"</span>        <span class="cm">// 文件存在</span>
+    },
+    {
+      <span class="ck">"id"</span>: <span class="cv">"implementation-spec"</span>,
+      <span class="ck">"outputPath"</span>: <span class="cv">"specs/impl/spec.md"</span>,
+      <span class="ck">"status"</span>: <span class="cv">"ready"</span>       <span class="cm">// 依赖满足，文件不存在 → Agent 下一个目标</span>
+    },
+    {
+      <span class="ck">"id"</span>: <span class="cv">"tasks"</span>,
+      <span class="ck">"outputPath"</span>: <span class="cv">"tasks.md"</span>,
+      <span class="ck">"status"</span>: <span class="cv">"blocked"</span>,
+      <span class="ck">"missingDeps"</span>: [<span class="cv">"implementation-spec"</span>]
+    }
+  ]
+}</pre>
+
+  <p>与 <code>status</code> 配合使用的还有 <code>openspec instructions</code>，它是 Agent 真正用来"拿到下一个 artifact 完整生成上下文"的命令：</p>
+
+  <div class="code-label">openspec instructions implementation-spec --change add-lineage --json</div>
+  <pre>{
+  <span class="ck">"artifact"</span>: <span class="cv">"implementation-spec"</span>,
+  <span class="ck">"template"</span>: <span class="cv">"...模板文件内容..."</span>,
+  <span class="ck">"context"</span>: <span class="cv">"...config.yaml 的 context..."</span>,
+  <span class="ck">"rules"</span>: [<span class="cv">"..."</span>],
+  <span class="ck">"dependencyContent"</span>: {
+    <span class="ck">"business-spec"</span>: <span class="cv">"...business spec 文件内容..."</span>
+  }
+}</pre>
+
+  <div class="callout tip">
+    <div class="callout-icon">✦</div>
+    <div class="callout-body">
+      <strong>一次调用，全部上下文</strong>
+      <code>openspec instructions</code> 一次返回 template + context + rules + 所有依赖 artifact 的内容，Agent 不需要多次读文件。这个命令是 propose 循环内层的核心，相当于 Agent 的"配料包"。
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── S6 ─────────────────── -->
+<section class="section" id="s6">
+  <div class="section-label">06 · 创建方式</div>
+  <h2>创建自定义 Schema</h2>
+
+  <h3>方式一：Fork 现有 Schema（推荐）</h3>
+  <p>最快的方式，把内置 schema 复制到项目目录，再按需修改：</p>
+
+  <pre><span class="cm"># Fork 内置 spec-driven</span>
+openspec schema fork spec-driven my-workflow
+
+<span class="cm"># 指定目标名称</span>
+openspec schema fork spec-driven dw-spec-driven</pre>
+
+  <p>执行后会在 <code>openspec/schemas/dw-spec-driven/</code> 创建完整结构：</p>
+
+  <pre>openspec/schemas/dw-spec-driven/
+├── schema.yaml          <span class="cm"># 工作流定义，可自由编辑</span>
+└── templates/
+    ├── proposal.md      <span class="cm"># 各 artifact 的模板骨架</span>
+    ├── specs.md
+    ├── design.md
+    └── tasks.md</pre>
+
+  <h3>方式二：从零创建</h3>
+  <pre><span class="cm"># 交互式创建</span>
+openspec schema init dw-spec-driven
+
+<span class="cm"># 非交互式，指定 artifacts 列表</span>
+openspec schema init dw-spec-driven \
+  --description "数据仓库 SDD 工作流" \
+  --artifacts "business-spec,implementation-spec,tasks" \
+  --default</pre>
+
+  <h3>方式三：从社区仓库安装</h3>
+  <p>社区维护了一个 schema 集合仓库 <a href="https://github.com/intent-driven-dev/openspec-schemas" target="_blank">openspec-schemas</a>，可以让 Agent 直接安装：</p>
+
+  <pre><span class="cm"># 告诉 Agent 安装指定 schema</span>
+Read this file:
+https://raw.githubusercontent.com/intent-driven-dev/openspec-schemas/refs/heads/main/README.md
+and install schema event-driven</pre>
+
+  <h3>验证与调试</h3>
+  <pre><span class="cm"># 验证 schema 合法性（语法、模板存在、无循环依赖）</span>
+openspec schema validate dw-spec-driven
+
+<span class="cm"># 查看 schema 解析来源</span>
+openspec schema which dw-spec-driven
+
+<span class="cm"># 列出所有可用 schema</span>
+openspec schemas</pre>
+
+  <h3>设为项目默认</h3>
+  <div class="code-label">openspec/config.yaml</div>
+  <pre><span class="ck">schema</span>: <span class="cv">dw-spec-driven</span>   <span class="cm"># 此后 /opsx:propose 自动使用这个 schema</span></pre>
+</section>
+
+<!-- ─────────────────── S7 ─────────────────── -->
+<section class="section" id="s7">
+  <div class="section-label">07 · 模板设计</div>
+  <h2>Template 文件设计</h2>
+
+  <p>Template 是 Markdown 文件，注入 AI Prompt 作为结构骨架。HTML 注释 <code>&lt;!-- ... --&gt;</code> 用于向 AI 提供填写指导，不会出现在最终输出中。</p>
+
+  <p>好的 template 设计原则：</p>
+  <ul style="color: var(--ink-secondary); font-size: 15px; padding-left: 20px; margin-bottom: 16px; line-height: 2;">
+    <li>Section 标题明确，AI 知道这里写什么</li>
+    <li>HTML 注释提供格式样例或约束说明</li>
+    <li>不在 template 里硬编码具体内容——那是 <code>instruction</code> 的工作</li>
+  </ul>
+
+  <div class="code-label">templates/implementation-spec.md · 数据仓库场景示例</div>
+  <pre><span class="cm"># Implementation Spec: {change-name}</span>
+
+<span class="cm">## Target Table</span>
+<span class="cm">&lt;!-- 目标表名，格式：database.table_name --&gt;</span>
+
+<span class="cm">## Source Tables</span>
+<span class="cm">&lt;!--
+列出所有上游来源表，格式：
+- database.table_name: 字段描述
+每个来源表都必须在 Hive 中实际存在
+--&gt;</span>
+
+<span class="cm">## Field Mapping</span>
+<span class="cm">&lt;!--
+字段映射表，格式：
+| 目标字段 | 来源表.字段 | 转换逻辑 | 类型 |
+每行对应一个输出字段
+--&gt;</span>
+
+<span class="cm">## Partition Strategy</span>
+<span class="cm">&lt;!-- 分区字段、分区粒度、动态/静态分区 --&gt;</span>
+
+<span class="cm">## Schedule Dependencies</span>
+<span class="cm">&lt;!-- 调度依赖的上游任务，格式：task_id: 描述 --&gt;</span>
+
+<span class="cm">## HQL Template</span>
+<span class="cm">&lt;!--
+提供关键 HQL 逻辑骨架，包含：
+- INSERT OVERWRITE 语句
+- JOIN 条件
+- WHERE 过滤逻辑
+不需要完整可运行的 HQL，只需关键结构
+--&gt;</span>
+```sql
+INSERT OVERWRITE TABLE {target_table}
+PARTITION (dt = '${dt}')
+SELECT
+  ...
+FROM {main_source}
+...
+```</pre>
+
+  <div class="callout info">
+    <div class="callout-icon">ℹ</div>
+    <div class="callout-body">
+      <strong>template vs instruction 的分工</strong>
+      <code>template</code> 决定<em>结构形状</em>（有哪些章节、每节放什么）；<code>instruction</code> 决定<em>生成策略</em>（关注什么、遵循什么规范、不要做什么）。两者都注入 Prompt，合起来才是 AI 的完整指导。
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── S8 ─────────────────── -->
+<section class="section" id="s8">
+  <div class="section-label">08 · SKILL 机制</div>
+  <h2>SKILL 文件：Agent 的操作手册</h2>
+
+  <p>Schema 定义了工作流的结构，但 <strong>SKILL 文件</strong>定义了 Agent 的行为方式——触发条件、执行步骤、输出格式。两者协同工作：</p>
+
+  <div class="diagram-wrap">
+    <div class="diagram-title">图 5 · SKILL 文件的生成与加载机制</div>
+    <div class="diagram-body">
+      <svg width="100%" viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M1 2L9 5L1 8" fill="none" stroke="#7a7a7a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <!-- openspec init -->
+        <rect x="20" y="80" width="160" height="60" rx="8" fill="#e8f4ed" stroke="#2d6a4f" stroke-width="1.5"/>
+        <text x="100" y="103" text-anchor="middle" fill="#1a3a28" font-size="13" font-weight="600">openspec init</text>
+        <text x="100" y="121" text-anchor="middle" fill="#2d6a4f" font-size="11">--tools claude</text>
+        <text x="100" y="135" text-anchor="middle" fill="#2d6a4f" font-size="11">--profile core</text>
+
+        <!-- generates arrow -->
+        <line x1="181" y1="110" x2="219" y2="110" stroke="#7a7a7a" stroke-width="1.5" marker-end="url(#ah4)"/>
+        <text x="200" y="102" text-anchor="middle" fill="#7a7a7a" font-size="11">生成</text>
+
+        <!-- SKILL files -->
+        <rect x="221" y="40" width="200" height="140" rx="10" fill="white" stroke="#c8c6c0" stroke-width="1"/>
+        <text x="321" y="64" text-anchor="middle" fill="#4a4a4a" font-size="12" font-weight="600">.claude/skills/</text>
+        <rect x="241" y="76" width="160" height="28" rx="5" fill="#f2f1ee" stroke="#c8c6c0" stroke-width="1"/>
+        <text x="321" y="95" text-anchor="middle" fill="#4a4a4a" font-size="12">openspec-propose/SKILL.md</text>
+        <rect x="241" y="112" width="160" height="28" rx="5" fill="#f2f1ee" stroke="#c8c6c0" stroke-width="1"/>
+        <text x="321" y="131" text-anchor="middle" fill="#4a4a4a" font-size="12">openspec-apply-change/SKILL.md</text>
+        <rect x="241" y="148" width="160" height="28" rx="5" fill="#f2f1ee" stroke="#c8c6c0" stroke-width="1"/>
+        <text x="321" y="167" text-anchor="middle" fill="#4a4a4a" font-size="12">openspec-archive-change/SKILL.md</text>
+
+        <!-- load arrow -->
+        <line x1="423" y1="110" x2="459" y2="110" stroke="#7a7a7a" stroke-width="1.5" marker-end="url(#ah4)"/>
+        <text x="441" y="102" text-anchor="middle" fill="#7a7a7a" font-size="11">加载</text>
+
+        <!-- Claude Code context -->
+        <rect x="461" y="60" width="199" height="100" rx="10" fill="#eeecf8" stroke="#4a3f8f" stroke-width="1.5"/>
+        <text x="561" y="87" text-anchor="middle" fill="#2a2060" font-size="13" font-weight="600">Claude Code 上下文</text>
+        <text x="561" y="107" text-anchor="middle" fill="#4a4a4a" font-size="11">会话启动时读取所有</text>
+        <text x="561" y="123" text-anchor="middle" fill="#4a4a4a" font-size="11">SKILL.md 注入上下文</text>
+        <text x="561" y="143" text-anchor="middle" fill="#4a3f8f" font-size="11">→ Claude 知道如何响应命令</text>
+
+        <!-- user input -->
+        <text x="340" y="205" text-anchor="middle" fill="#7a7a7a" font-size="12">用户输入 /opsx:propose → 触发 .claude/commands/opsx/propose.md → Claude 按 SKILL 指令执行</text>
+      </svg>
+    </div>
+  </div>
+
+  <p>SKILL.md 的内容结构大致如下（简化示意）：</p>
+
+  <div class="code-label">.claude/skills/openspec-propose/SKILL.md（示意）</div>
+  <pre><span class="cm"># SKILL: OpenSpec Propose</span>
+
+<span class="cm">## Trigger</span>
+Use when: user runs /opsx:propose [change-name]
+Also use when: user says "start a new change", "create change"
+
+<span class="cm">## Steps</span>
+1. Run `openspec new change $ARGUMENTS`
+2. Loop until all apply.requires artifacts are done:
+   a. Run `openspec status --change {name} --json`
+   b. Find first artifact with status "ready"
+   c. Run `openspec instructions {artifact-id} --change {name} --json`
+   d. Generate artifact content based on instructions
+   e. Write file to the path in artifact.outputPath
+3. When all apply.requires done:
+   Report completion, suggest /opsx:apply</pre>
+
+  <p>这就是为什么说"Agent 按 SKILL 行动"——SKILL.md 是一段结构化的自然语言 + 伪代码，Claude 把它当成执行手册，逐步推进。</p>
+</section>
+
+<!-- ─────────────────── S9 ─────────────────── -->
+<section class="section" id="s9">
+  <div class="section-label">09 · Verify 扩展</div>
+  <h2>扩展自定义 verify 能力</h2>
+
+  <p>内置的 <code>/opsx:verify</code> 只做通用语义校验，无法覆盖领域特定的结构化检查（如血缘路径合法性、HQL 字段对齐）。有三种扩展方式：</p>
+
+  <h3>方案 A：在 Schema 中加 verify-report artifact（格式校验）</h3>
+  <p>适合：在 apply 之前就能做的<strong>静态格式校验</strong>（无需代码已生成）。把校验本身变成一个 artifact，用文件产出（report.md）作为 tasks 的强制前置。</p>
+
+  <div class="code-label">schema.yaml · 加入 lineage-check artifact</div>
+  <pre><span class="ck">artifacts</span>:
+  <span class="cm"># ... business-spec, implementation-spec ...</span>
+
+  - <span class="ck">id</span>: <span class="cv">lineage-check</span>
+    <span class="ck">generates</span>: <span class="cv">verify/lineage-check.md</span>
+    <span class="ck">template</span>: <span class="cv">lineage-check.md</span>
+    <span class="ck">instruction</span>: <span class="cv">|</span>
+      Read implementation-spec.md and validate:
+      1. source_tables 字段格式是否为 db.table 格式
+      2. field_list 中是否有重复字段名
+      3. partition_fields 是否在 field_list 中有对应项
+      4. target_table 名称是否符合命名规范（dws_/ads_ 前缀）
+      Output a structured PASS/FAIL report.
+      If any check FAIL, still write the report but mark overall: FAILED
+    <span class="ck">requires</span>:
+      - <span class="cv">implementation-spec</span>
+
+  - <span class="ck">id</span>: <span class="cv">tasks</span>
+    <span class="ck">generates</span>: <span class="cv">tasks.md</span>
+    <span class="ck">requires</span>:
+      - <span class="cv">business-spec</span>
+      - <span class="cv">implementation-spec</span>
+      - <span class="cv">lineage-check</span>   <span class="cm"># lineage 校验通过才能生成 tasks</span></pre>
+
+  <h3>方案 B：独立 verify SKILL 文件（动态内容校验）</h3>
+  <p>适合：<strong>apply 完成后</strong>需要做的校验（代码已生成，验证代码与 spec 的一致性）。写一个独立的 SKILL 文件，不依赖 schema 结构：</p>
+
+  <div class="code-label">.claude/skills/dw-verify/SKILL.md</div>
+  <pre><span class="cm"># SKILL: Data Warehouse Verify</span>
+
+<span class="cm">## When to use</span>
+After /opsx:apply completes, before /opsx:archive.
+Trigger: "verify", "run dw verify", "check lineage consistency"
+
+<span class="cm">## Steps</span>
+
+<span class="cm">### 1. Task completion check</span>
+Read tasks.md → confirm all [ ] are now [x]
+
+<span class="cm">### 2. Spec vs HQL alignment</span>
+Read specs/impl/spec.md → extract:
+  - source_tables, target_table, field_list, partition_fields
+
+For each generated .hql file in sql/ directory:
+  - Check source_tables appear in FROM / JOIN clauses
+  - Check field_list matches SELECT column names
+  - Check partition_fields match PARTITIONED BY clause
+
+<span class="cm">### 3. Business spec cross-check</span>
+Read specs/business/spec.md:
+  - Verify partition convention matches business layer agreement
+  - Verify target_table naming matches domain prefix rules
+
+<span class="cm">### 4. OpenSpec structural validation</span>
+Run: `openspec validate --change {change-name} --json`
+
+<span class="cm">### 5. Write report</span>
+Write to verify/report.md:
+  - Overall: PASS / FAIL
+  - Task Completion: [x] N/N tasks done
+  - HQL Alignment: per-check results
+  - Partition Check: result
+
+<span class="cm">### 6. Gate</span>
+If any check FAILED:
+  - Show specific failures with file locations
+  - Do NOT suggest /opsx:archive
+  - Ask user to fix and re-run verify
+
+If all PASSED:
+  - "Verification passed. Ready for /opsx:archive"</pre>
+
+  <h3>方案 C：apply.instruction 内嵌验证</h3>
+  <p>最简单但最不灵活，适合简单场景：</p>
+
+  <div class="code-label">schema.yaml · apply 块内嵌验证步骤</div>
+  <pre><span class="ck">apply</span>:
+  <span class="ck">requires</span>: [<span class="cv">tasks</span>]
+  <span class="ck">tracks</span>: <span class="cv">tasks.md</span>
+  <span class="ck">instruction</span>: <span class="cv">|</span>
+    完成所有 tasks.md 中的任务。
+    
+    所有任务完成后，执行以下验证：
+    1. 读 specs/impl/spec.md 中的 field_list
+    2. 对每个生成的 HQL 文件，检查字段名是否匹配
+    3. 在 tasks.md 末尾追加 ## Verification 章节，
+       记录每项检查结果（PASS/FAIL）
+    4. 如有 FAIL，输出具体位置并停止</pre>
+
+  <h3>三种方案对比</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>方案</th>
+        <th>检查时机</th>
+        <th>适合场景</th>
+        <th>可重跑</th>
+        <th>复杂度</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>A · artifact</strong></td>
+        <td>propose 阶段（apply 前）</td>
+        <td>格式合规、必填校验</td>
+        <td>删文件重跑</td>
+        <td>低</td>
+      </tr>
+      <tr>
+        <td><strong>B · SKILL</strong></td>
+        <td>apply 完成后手动触发</td>
+        <td>代码与 spec 一致性</td>
+        <td>随时</td>
+        <td>中</td>
+      </tr>
+      <tr>
+        <td><strong>C · apply.instruction</strong></td>
+        <td>apply 结束时自动</td>
+        <td>简单检查、快速场景</td>
+        <td>需重跑 apply</td>
+        <td>极低</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="callout-icon">✦</div>
+    <div class="callout-body">
+      <strong>推荐组合</strong>
+      方案 A（schema artifact）处理静态格式校验，方案 B（独立 SKILL）处理动态内容校验。两者职责清晰，互不干扰，覆盖 propose → apply → verify 的完整链路。
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── S10 ─────────────────── -->
+<section class="section" id="s10">
+  <div class="section-label">10 · 完整实战</div>
+  <h2>完整实战：数据仓库 SDD 场景</h2>
+
+  <p>以下是一个为数据仓库开发量身定制的完整 schema 设计，对应四层 YAML Spec 架构（Business → Design → Implementation → Runtime）：</p>
+
+  <div class="step-flow">
+    <div class="step">
+      <div class="step-line"><div class="step-num">1</div><div class="step-connector"></div></div>
+      <div class="step-content">
+        <h4>Fork 内置 schema</h4>
+        <p>从 spec-driven 出发，避免从零开始。</p>
+        <pre style="margin-top:10px">openspec schema fork spec-driven dw-spec-driven</pre>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-line"><div class="step-num">2</div><div class="step-connector"></div></div>
+      <div class="step-content">
+        <h4>定义 schema.yaml</h4>
+        <p>四个 artifact 对应四个关键文档层次，lineage-check 作为 tasks 的强制前置。</p>
+        <div class="code-label">openspec/schemas/dw-spec-driven/schema.yaml</div>
+        <pre><span class="ck">name</span>: <span class="cv">dw-spec-driven</span>
+<span class="ck">version</span>: <span class="cn">1</span>
+<span class="ck">description</span>: <span class="cv">数据仓库 Spec 驱动开发工作流</span>
+
+<span class="ck">artifacts</span>:
+  - <span class="ck">id</span>: <span class="cv">business-spec</span>
+    <span class="ck">generates</span>: <span class="cv">specs/business/spec.md</span>
+    <span class="ck">description</span>: <span class="cv">业务需求与血缘来源</span>
+    <span class="ck">template</span>: <span class="cv">business-spec.md</span>
+    <span class="ck">instruction</span>: <span class="cv">|</span>
+      按 Business Layer 格式描述：
+      - 业务背景与数据需求
+      - 上游血缘来源（source system / source table）
+      - 核心指标定义与计算口径
+      - 数据质量要求与验收标准
+    <span class="ck">requires</span>: []
+
+  - <span class="ck">id</span>: <span class="cv">implementation-spec</span>
+    <span class="ck">generates</span>: <span class="cv">specs/impl/spec.md</span>
+    <span class="ck">description</span>: <span class="cv">Implementation Layer：HQL 规约</span>
+    <span class="ck">template</span>: <span class="cv">impl-spec.md</span>
+    <span class="ck">instruction</span>: <span class="cv">|</span>
+      根据 business-spec 生成实现规约：
+      - target_table: 目标表完整名称
+      - source_tables: 所有来源表列表
+      - field_list: 字段映射关系
+      - partition_fields: 分区策略
+      - schedule_deps: 调度依赖
+      - hql_skeleton: 关键 HQL 逻辑骨架
+    <span class="ck">requires</span>:
+      - <span class="cv">business-spec</span>
+
+  - <span class="ck">id</span>: <span class="cv">lineage-check</span>
+    <span class="ck">generates</span>: <span class="cv">verify/lineage-check.md</span>
+    <span class="ck">description</span>: <span class="cv">血缘格式静态校验报告</span>
+    <span class="ck">template</span>: <span class="cv">lineage-check.md</span>
+    <span class="ck">instruction</span>: <span class="cv">|</span>
+      Read implementation-spec.md and validate:
+      1. source_tables 格式：每项必须是 db.table_name
+      2. field_list 无重复字段名
+      3. partition_fields 的每个字段必须在 field_list 中
+      4. target_table 必须有 dws_ / ads_ / dim_ 前缀
+      5. 命名必须是 snake_case
+      Write structured PASS/FAIL report. 
+      Mark overall FAILED if any check fails.
+    <span class="ck">requires</span>:
+      - <span class="cv">implementation-spec</span>
+
+  - <span class="ck">id</span>: <span class="cv">tasks</span>
+    <span class="ck">generates</span>: <span class="cv">tasks.md</span>
+    <span class="ck">description</span>: <span class="cv">实现任务清单</span>
+    <span class="ck">template</span>: <span class="cv">tasks.md</span>
+    <span class="ck">instruction</span>: <span class="cv">|</span>
+      根据 implementation-spec 和 lineage-check 生成任务：
+      1. DDL 创建任务（建表 SQL）
+      2. HQL 开发任务（按字段组分组）
+      3. 数据质量检查任务
+      4. 调度配置任务
+      最后添加任务：写入 verify/.apply-done 标记文件
+    <span class="ck">requires</span>:
+      - <span class="cv">business-spec</span>
+      - <span class="cv">implementation-spec</span>
+      - <span class="cv">lineage-check</span>
+
+<span class="ck">apply</span>:
+  <span class="ck">requires</span>: [<span class="cv">tasks</span>]
+  <span class="ck">tracks</span>: <span class="cv">tasks.md</span></pre>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-line"><div class="step-num">3</div><div class="step-connector"></div></div>
+      <div class="step-content">
+        <h4>配置 config.yaml 注入项目上下文</h4>
+        <div class="code-label">openspec/config.yaml</div>
+        <pre><span class="ck">schema</span>: <span class="cv">dw-spec-driven</span>
+
+<span class="ck">context</span>: <span class="cv">|</span>
+  数据仓库技术栈：Hive 3.x / Spark 3.x / YARN
+  命名规范：snake_case，层级前缀 ods_/dwd_/dws_/ads_/dim_
+  分区约定：日期分区字段统一为 dt，格式 yyyyMMdd
+  所有 DDL 必须包含 COMMENT 字段描述
+  HQL 文件统一放置在 sql/ 目录，文件名与 target_table 一致
+
+<span class="ck">rules</span>:
+  <span class="ck">business-spec</span>:
+    - <span class="cv">必须明确指定上游血缘来源的系统名和表名</span>
+    - <span class="cv">核心指标需注明计算口径和去重逻辑</span>
+  <span class="ck">implementation-spec</span>:
+    - <span class="cv">source_tables 必须全部是现有 Hive 表</span>
+    - <span class="cv">partition_fields 必须包含 dt 字段</span>
+  <span class="ck">tasks</span>:
+    - <span class="cv">每个任务标注对应的 Spec 层级（Business/Impl）</span>
+    - <span class="cv">DDL 任务在 HQL 任务之前</span></pre>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-line"><div class="step-num">4</div><div class="step-connector"></div></div>
+      <div class="step-content">
+        <h4>编写 dw-verify SKILL（apply 后语义校验）</h4>
+        <div class="code-label">.claude/skills/dw-verify/SKILL.md</div>
+        <pre><span class="cm"># SKILL: DW Verify</span>
+
+<span class="cm">## When to use</span>
+After /opsx:apply, before /opsx:archive.
+Trigger: "run dw verify", "verify the change", "check alignment"
+
+<span class="cm">## Steps</span>
+1. Confirm tasks.md: all [ ] changed to [x]
+2. Read specs/impl/spec.md: extract source_tables, field_list
+3. For each .hql file in sql/:
+   - source_tables → appear in FROM/JOIN
+   - field_list → match SELECT columns
+   - partition fields → match PARTITIONED BY
+4. Run: openspec validate --change {name} --json
+5. Write verify/report.md with PASS/FAIL per check
+6. If FAILED: show specific locations, block archive
+7. If PASSED: "Ready for /opsx:archive"</pre>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-line"><div class="step-num">5</div><div class="step-connector"></div></div>
+      <div class="step-content">
+        <h4>完整工作流：使用体验</h4>
+        <pre><span class="cm"># 1. 开始一个新变更</span>
+/opsx:propose add-order-dws
+
+<span class="cm"># OpenSpec 按 DAG 顺序自动生成：</span>
+<span class="cm"># ✓ specs/business/spec.md</span>
+<span class="cm"># ✓ specs/impl/spec.md</span>
+<span class="cm"># ✓ verify/lineage-check.md  ← 如果 lineage-check FAILED，tasks 不会生成</span>
+<span class="cm"># ✓ tasks.md</span>
+
+<span class="cm"># 2. 实现代码</span>
+/opsx:apply
+
+<span class="cm"># 3. 领域专项校验（自定义 SKILL）</span>
+run dw verify
+
+<span class="cm"># 4. 归档</span>
+/opsx:archive</pre>
+
+        <div class="diagram-wrap" style="margin-top:20px">
+          <div class="diagram-title">图 6 · 数据仓库场景完整流程</div>
+          <div class="diagram-body">
+            <svg width="100%" viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="ah5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M1 2L9 5L1 8" fill="none" stroke="#2d6a4f" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </marker>
+              </defs>
+
+              <!-- propose phase -->
+              <rect x="10" y="10" width="370" height="160" rx="10" fill="#f8fbf9" stroke="#2d6a4f" stroke-width="1" stroke-dasharray="5 3"/>
+              <text x="24" y="30" fill="#2d6a4f" font-size="11" font-weight="600">/opsx:propose 阶段（schema.artifacts）</text>
+
+              <rect x="24" y="42" width="130" height="36" rx="6" fill="#e8f4ed" stroke="#2d6a4f" stroke-width="1.5"/>
+              <text x="89" y="65" text-anchor="middle" fill="#1a3a28" font-size="12" font-weight="600">business-spec</text>
+
+              <line x1="156" y1="60" x2="176" y2="60" stroke="#2d6a4f" stroke-width="1.5" marker-end="url(#ah5)"/>
+
+              <rect x="178" y="42" width="140" height="36" rx="6" fill="#e8f4ed" stroke="#2d6a4f" stroke-width="1.5"/>
+              <text x="248" y="65" text-anchor="middle" fill="#1a3a28" font-size="12" font-weight="600">implementation-spec</text>
+
+              <line x1="248" y1="78" x2="248" y2="98" stroke="#2d6a4f" stroke-width="1.5" marker-end="url(#ah5)"/>
+
+              <rect x="178" y="100" width="140" height="36" rx="6" fill="#fdf3dc" stroke="#8a5a00" stroke-width="1.5"/>
+              <text x="248" y="123" text-anchor="middle" fill="#5a3a00" font-size="12" font-weight="600">lineage-check ✓</text>
+
+              <line x1="248" y1="136" x2="248" y2="148" stroke="#2d6a4f" stroke-width="1.5"/>
+              <line x1="248" y1="148" x2="90" y2="148" stroke="#2d6a4f" stroke-width="1.5"/>
+              <line x1="90" y1="148" x2="90" y2="158" stroke="#2d6a4f" stroke-width="1.5" marker-end="url(#ah5)"/>
+
+              <rect x="24" y="160" width="130" height="36" rx="6" fill="#e0f2f5" stroke="#1a6b7a" stroke-width="1.5"/>
+              <text x="89" y="183" text-anchor="middle" fill="#0e3d44" font-size="12" font-weight="600">tasks.md</text>
+
+              <!-- apply phase -->
+              <rect x="400" y="10" width="130" height="80" rx="10" fill="#eeecf8" stroke="#4a3f8f" stroke-width="1.5"/>
+              <text x="465" y="34" text-anchor="middle" fill="#2a2060" font-size="11" font-weight="600">/opsx:apply</text>
+              <text x="465" y="54" text-anchor="middle" fill="#4a4a4a" font-size="11">读 tasks.md</text>
+              <text x="465" y="70" text-anchor="middle" fill="#4a4a4a" font-size="11">写 HQL/DDL 代码</text>
+              <text x="465" y="85" text-anchor="middle" fill="#4a3f8f" font-size="11">→ 写 verify/.apply-done</text>
+
+              <!-- verify -->
+              <rect x="400" y="110" width="130" height="60" rx="10" fill="#e0f2f5" stroke="#1a6b7a" stroke-width="1.5"/>
+              <text x="465" y="134" text-anchor="middle" fill="#0e3d44" font-size="11" font-weight="600">dw verify SKILL</text>
+              <text x="465" y="152" text-anchor="middle" fill="#4a4a4a" font-size="11">HQL vs spec 对齐</text>
+              <text x="465" y="167" text-anchor="middle" fill="#1a6b7a" font-size="11">→ verify/report.md</text>
+
+              <!-- archive -->
+              <rect x="548" y="10" width="120" height="160" rx="10" fill="#faeae4" stroke="#b5451b" stroke-width="1.5"/>
+              <text x="608" y="38" text-anchor="middle" fill="#6b2a10" font-size="11" font-weight="600">/opsx:archive</text>
+              <text x="608" y="58" text-anchor="middle" fill="#4a4a4a" font-size="11">合并 delta specs</text>
+              <text x="608" y="76" text-anchor="middle" fill="#4a4a4a" font-size="11">移入 archive/</text>
+              <text x="608" y="96" text-anchor="middle" fill="#b5451b" font-size="11">独立于 schema</text>
+
+              <!-- cross-arrows -->
+              <line x1="372" y1="178" x2="398" y2="178" stroke="#2d6a4f" stroke-width="1.5" marker-end="url(#ah5)"/>
+              <line x1="155" y1="178" x2="172" y2="178" stroke="#c8c6c0" stroke-width="1" stroke-dasharray="3 2"/>
+              <text x="163" y="170" fill="#7a7a7a" font-size="10">apply.requires</text>
+
+              <line x1="531" y1="50" x2="546" y2="50" stroke="#4a3f8f" stroke-width="1.5" marker-end="url(#ah5)"/>
+              <line x1="531" y1="140" x2="546" y2="140" stroke="#1a6b7a" stroke-width="1.5" marker-end="url(#ah5)"/>
+
+              <!-- lineage check fail note -->
+              <text x="340" y="120" fill="#b5451b" font-size="10">如 FAILED → tasks 阻断</text>
+              <line x1="320" y1="117" x2="322" y2="110" stroke="#b5451b" stroke-width="1" marker-end="url(#ah5)"/>
+
+              <!-- bottom label -->
+              <text x="200" y="240" text-anchor="middle" fill="#7a7a7a" font-size="12">文件存在判断 → 状态机驱动</text>
+              <text x="500" y="240" text-anchor="middle" fill="#7a7a7a" font-size="12">语义判断 → Agent 推理</text>
+              <line x1="340" y1="230" x2="340" y2="245" stroke="#c8c6c0" stroke-width="1"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- summary -->
+<section class="section">
+  <div class="section-label">小结</div>
+  <h2>核心要点回顾</h2>
+
+  <table>
+    <thead><tr><th>概念</th><th>关键理解</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>schema.yaml</strong></td>
+        <td>定义 artifact DAG 和 apply 门控，不包含 context/rules（那在 config.yaml）</td>
+      </tr>
+      <tr>
+        <td><strong>状态判断</strong></td>
+        <td><code>openspec status</code> 完全基于文件是否存在，与内容无关</td>
+      </tr>
+      <tr>
+        <td><strong>propose 循环</strong></td>
+        <td>status 检查 → instructions 拿上下文 → Agent 生成文件 → 循环，直到 apply.requires 满足</td>
+      </tr>
+      <tr>
+        <td><strong>verify</strong></td>
+        <td>内置 verify 独立于 schema，做通用语义校验；领域校验需通过 artifact 或 SKILL 自行扩展</td>
+      </tr>
+      <tr>
+        <td><strong>archive</strong></td>
+        <td>完全独立于 schema，负责 delta spec 合并和历史归档</td>
+      </tr>
+      <tr>
+        <td><strong>SKILL vs schema</strong></td>
+        <td>schema 控制"生成什么文档"，SKILL 控制"Agent 如何行动"，两者互补不重叠</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+
+<footer>
+  OpenSpec Custom Schema 深度指南 · 基于官方文档 Fission-AI/OpenSpec · 2026
+</footer>
+
+</body>
+</html>

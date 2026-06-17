@@ -197,6 +197,8 @@ sdd-propose → /clear → sdd-ff → /clear → sdd-plan → /clear → sdd-cod
 
 ## 相关页面
 
+- [[openspec-schema-mechanism]] — Schema 机制深度解析
+- [[openspec-skill-mechanism]] — SKILL 文件机制与 invoke 委托
 - [[superpowers-framework]] — Superpowers 框架详解
 - [[openspec-sdd-practice]] — OpenSpec 七步工作流实战
 - [[superpowers-openspec-pitfalls]] — 双框架组合的 7 个坑及衔接 Skill

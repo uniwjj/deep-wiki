@@ -5,7 +5,7 @@ aliases: [sdd, 规范驱动开发]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-05-24
+updated: 2026-06-17
 ---
 
 # SDD 规范驱动开发
@@ -36,6 +36,13 @@ updated: 2026-05-24
 ## 自定义工作流
 
 - [[sdd-custom-workflow]] — 自定义 SDD 工作流
+
+## OpenSpec Schema 深度拆解
+
+- [[openspec-schema-mechanism]] — Schema DAG 模型、三层定制、状态机、命令映射
+- [[openspec-custom-schema-guide]] — 自定义 schema 创建、模板设计与完整实战
+- [[openspec-skill-mechanism]] — SKILL 文件机制：Agent 操作手册
+- [[openspec-verify-extension]] — 扩展 verify 的三种方案与推荐组合
 
 ## 相关页面
 

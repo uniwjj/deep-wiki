@@ -2,6 +2,16 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-06-17] ingest | OpenSpec 自定义 Schema 深度指南
+- saved `sources/2026/06/17/openspec-custom-schema.html` — 原始 HTML 文章（10 章，含 6 个 SVG 架构图）
+- created `ai-agent/sdd/openspec-schema-mechanism.md` — Schema 核心机制：DAG 心智模型、三层定制体系、schema.yaml 完整字段详解、命令映射、openspec status 状态机
+- created `ai-agent/sdd/openspec-custom-schema-guide.md` — 自定义 schema 创建（fork/init/社区安装）、模板设计原则、数据仓库完整实战（dw-spec-driven）
+- created `ai-agent/sdd/openspec-skill-mechanism.md` — SKILL 文件机制：生成与加载流程、SKILL.md 结构、与 schema.yaml 的分工
+- created `ai-agent/sdd/openspec-verify-extension.md` — Verify 扩展三种方案（artifact/SKILL/instruction）对比与推荐组合
+- updated `ai-agent/sdd/index.md` — 新增"OpenSpec Schema 深度拆解"分类（4 篇）
+- updated `ai-agent/sdd/openspec-sdd-practice.md` — 添加 Schema 相关交叉引用
+- updated `ai-agent/sdd/sdd-custom-workflow.md` — 添加 Schema 与 SKILL 机制交叉引用
+
 ## [2026-06-16] ingest | AI Agent & Skill 测评方案及落地实践（微信公众号：腾讯程序员）
 
 - saved `sources/2026/06/16/AI Agent & Skill 测评方案及落地实践.html` — 原始 HTML（含 20 张图片、33 个样式块）
