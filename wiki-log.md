@@ -2,6 +2,14 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-06-18] ingest | 让 DataAgent 真正用起来: DataAgent 在企业信用的优化和实践
+
+- saved `sources/2026/06/18/dataagent-enterprise-credit-practice.md` — 微信公众号文章全文（杜淑均/蚂蚁集团/DataFun）
+- saved `article-downloads/让 DataAgent 真正用起来-DataAgent 在企业信用的优化和实践.html` — 自包含离线 HTML（24 张图片、语法高亮 CSS）
+- created `ai-agent/agent-core/data-agent-enterprise-practice.md` — Data Agent 企业级实践：三个判断（承接 Coding Agent 闭环/可组合能力优于孤立产品/数据资产下限+业务认知上限）、四层架构（语义→认知→Agent核心→渠道）、四个关键实践（增强元信息/混合语义路由/可演进认知系统/Harness 自迭代）
+- created `ai-agent/agent-core/business-cognition-system.md` — 可演进业务认知系统：三类知识来源（显性抽取/人工校正/Agent反馈）、两种组织（召回知识库/文件系统）、动态加载、反馈回流闭环
+- updated `ai-agent/harness/harness-engineering-practice.md` — 新增蚂蚁企信 Data Agent 的 Harness 实践交叉引用（Main/Reviewer/Executor/Eval 四 Agent 协同）
+
 ## [2026-06-17] ingest | OpenSpec 自定义 Schema 深度指南
 - saved `sources/2026/06/17/openspec-custom-schema.html` — 原始 HTML 文章（10 章，含 6 个 SVG 架构图）
 - created `ai-agent/sdd/openspec-schema-mechanism.md` — Schema 核心机制：DAG 心智模型、三层定制体系、schema.yaml 完整字段详解、命令映射、openspec status 状态机

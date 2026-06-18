@@ -5,7 +5,7 @@ aliases: [Harness实践, Agent-aware系统, Harness Engineering Practice]
 tags: [ai-agent, practice, concept]
 sources: [2026/05/09/Harness Engineering：为 Coding Agent 构建可控工程系统的实践总结.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-06-18
 ---
 
 # Harness Engineering 实践
@@ -39,3 +39,4 @@ Stripe 案例 + Routa.js（多 Agent 协作遵循统一规范）：github.com/ph
 - [[agent-harness-overview]] — Harness 综述
 - [[dw-harness-practice|数仓 Harness 工程落地方案]] — 数仓侧的 Harness 五层防御实践
 - [[harness-design-long-running]] — 长任务设计
+- [[data-agent-enterprise-practice]] — 蚂蚁企信：用 Coding Agent 构建 Data Agent 的 Harness 实践（Main/Reviewer/Executor/Eval 四 Agent 协同）
