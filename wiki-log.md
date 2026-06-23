@@ -2,6 +2,14 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-06-23] lint | 知识库健康检查与修正（第七轮）
+
+- fixed `business-cognition-system` — 修复断链 [[agent-context-engineering]] → [[ai-agent/context-eng/index|上下文工程]]
+- fixed `data-agent-enterprise-practice` — 修复断链 [[data-asset-semantic-layer]] → [[dataagent-semantic-layer|数据资产语义层]]
+- fixed `data-agent-enterprise-practice` — 移除无效 wikilink [[metricflow]]（外部工具），改为纯文本
+- fixed `iceberg` — 补充缺失 `sources` 字段（lint-stub.md）
+- result: 168 页面，0 断链，0 frontmatter 缺失，0 空来源——知识库结构健康
+
 ## [2026-06-18] ingest | 让 DataAgent 真正用起来: DataAgent 在企业信用的优化和实践
 
 - saved `sources/2026/06/18/dataagent-enterprise-credit-practice.md` — 微信公众号文章全文（杜淑均/蚂蚁集团/DataFun）

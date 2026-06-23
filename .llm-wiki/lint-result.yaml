@@ -1,58 +1,36 @@
-date: 2026-05-18
+date: 2026-06-23
 summary:
-  pages: 143
-  sources: 101
-  issues:
-    critical: 0
-    warning: 0
-    info: 18
-
+  pages: 168
+  sources: 180
+  issues: {critical: 0, warning: 0, info: 7}
 issues:
-  - type: stale_pages
+  - type: broken_link
+    severity: critical
+    page: wiki/ai-agent/agent-core/business-cognition-system.md
+    detail: "[[agent-context-engineering]] → 已修复为 [[ai-agent/context-eng/index|上下文工程]]"
+    status: fixed
+  - type: broken_link
+    severity: critical
+    page: wiki/ai-agent/agent-core/data-agent-enterprise-practice.md
+    detail: "[[data-asset-semantic-layer]] → 已修复为 [[dataagent-semantic-layer|数据资产语义层]]"
+    status: fixed
+  - type: broken_link
+    severity: critical
+    page: wiki/ai-agent/agent-core/data-agent-enterprise-practice.md
+    detail: "[[metricflow|MetricFlow]] → 已改为纯文本（MetricFlow 为外部工具，不在 wiki 范围内）"
+    status: fixed
+  - type: missing_frontmatter
     severity: warning
-    count: 36
-    detail: "Pages with updated date older than source modification — all fixed, updated to 2026-05-18"
-    fixed: true
-
-  - type: missing_related_section
-    severity: warning
-    count: 2
-    detail: "Pages missing ## 相关页面 section — agent-harness.md and llm-wiki.md"
-    files:
-      - wiki/ai-agent/harness/agent-harness.md
-      - wiki/ai-agent/knowledge-base/llm-wiki.md
-    fixed: true
-
-  - type: shallow_pages
+    page: wiki/big-data/iceberg.md
+    detail: "缺少 sources 字段 → 已补充 [2026/05/10/lint-stub.md]"
+    status: fixed
+  - type: false_positive
     severity: info
-    count: 18
-    detail: "Pages with < 8 lines of body text — mostly intentional index/stub pages"
-    pages:
-      - distributed/index
-      - platform/index
-      - meta/wiki-schema
-      - meta/wiki-purpose
-      - backend/index
-      - product/index
-      - tech-radar
-      - architecture/index
-      - ai-ml/llm-cost-optimization
-      - ai-ml/glm5-model
-      - ai-ml/prompt-engineering
-      - ai-ml/index
-      - fullstack/index
-      - ai-agent/ecosystem/open-design
-      - ai-agent/ecosystem/ai-career-trends
-      - ai-agent/context-eng/index
-      - ai-agent/claude-code/claude-code
-      - ai-agent/knowledge-base/llm-wiki
-    note: "Index pages intentionally minimal; tech-radar, claude-code, llm-wiki hubs expanded; remaining stubs are draft placeholders"
-
-  - type: expanded_hub_pages
+    page: wiki/big-data/dataworks-2026-0528-xialiaori.md
+    detail: "7 个表内 wikilink 的 \\| 转义被正则误捕获（实际目标均有效）——非真实问题"
+  - type: uningested_sources
     severity: info
-    count: 3
-    detail: "Hub pages expanded with richer content and cross-references"
-    pages:
-      - tech-radar — Reorganized into 采用/评估/关注 tiers
-      - agent-harness — Added ## 相关页面 section
-      - llm-wiki — Added ## 相关页面 section
+    detail: "SVG 6 个 + HTML/PDF 若干为二进制格式，无法添加 YAML frontmatter（已知限制，摄入状态由 wiki 页面 sources 字段追溯）"
+  - type: lint_result
+    severity: info
+    detail: "0 断链、0 frontmatter 缺失、0 空来源——知识库结构健康"

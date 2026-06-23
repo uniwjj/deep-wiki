@@ -5,7 +5,7 @@ aliases: [Data Agent Enterprise Practice, DataAgent 企业实践, 蚂蚁 Data Ag
 tags: [ai-agent, big-data, practice]
 sources: [2026/06/18/dataagent-enterprise-credit-practice.md]
 created: 2026-06-18
-updated: 2026-06-18
+updated: 2026-06-23
 ---
 
 # Data Agent 企业级实践
@@ -91,7 +91,7 @@ Data Agent 与 Coding Agent 的关键差异：
 | NL → Model → SQL | Data Model（主力） | 核心业务分析洞察 | 口径一致、版本化管理 | 初期建设成本高 |
 | NL → SQL | Table Metadata + 知识增强 | 探索式分析、长尾问题 | 覆盖面广、冷启动快 | 准确度不稳定、口径难统一 |
 
-参考建模思路：[[metricflow|MetricFlow]]、Cube.dev——通过度量、指标、维度和视图组织统一语义。
+参考建模思路：MetricFlow、Cube.dev——通过度量、指标、维度和视图组织统一语义。
 
 **系统先判断问题类型，再选择最适合的路径。**
 
@@ -150,4 +150,4 @@ Data Agent 与 Coding Agent 的关键差异：
 - [[agent-mcp-protocol]] — MCP 协议与 Agent 工具调用
 - [[agent-evaluation-framework]] — Agent 评测框架
 - [[agent-multi-agent-collaboration]] — 多 Agent 协同模式
-- [[data-asset-semantic-layer]] — 数据资产语义层
+- [[dataagent-semantic-layer|数据资产语义层]] — DataAgent 语义层（节点类型体系、FlowSpec 规范、调度与依赖语义）

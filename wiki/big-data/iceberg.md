@@ -3,9 +3,10 @@ title: Apache Iceberg
 description: 开放表格式标准——为大规模分析表提供 ACID 事务、schema 演进、时间旅行和跨引擎互操作能力
 aliases: [Iceberg, Apache Iceberg, Iceberg 表格式]
 tags: [big-data, tool, concept]
+sources: [2026/05/10/lint-stub.md]
 status: draft
 created: 2026-06-15
-updated: 2026-06-15
+updated: 2026-06-23
 ---
 
 # Apache Iceberg
