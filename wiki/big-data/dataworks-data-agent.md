@@ -3,9 +3,9 @@ title: DataWorks Data Agent
 description: 阿里云 DataWorks 双引擎驱动的全托管数据智能体——代码 Agent + 运维 Agent 共享统一数据语义与上下文，MCP 协议开放 Skill 生态，覆盖数据开发、治理、分析与引擎管控运维
 aliases: [DataWorks Data Agent, 数据智能体, DataAgent]
 tags: [big-data, ai-agent, platform, tool]
-sources: [2026/05/12/01. DataWorks Data Agent.pdf, 2026/05/12/DataWorks DataAgent分享录音.md, 2026/05/28/DataWorks Data Agent：新一代数据智能体，企业大数据的数字员工.pdf]
+sources: [2026/05/12/01. DataWorks Data Agent.pdf, 2026/05/12/DataWorks DataAgent分享录音.md, 2026/05/28/DataWorks Data Agent：新一代数据智能体，企业大数据的数字员工.pdf, 2026/06/23/DataWorks Data Agent 总体架构.svg, 2026/06/23/DataWorks DataAgent入口与交互模式.svg, 2026/06/23/DataWorks 架构运行流与内核.svg]
 created: 2026-05-12
-updated: 2026-05-31
+updated: 2026-06-23
 ---
 
 # DataWorks Data Agent
@@ -296,3 +296,5 @@ P16 明确“DataAgent 不是终点，是新的起点”，关键词是开放架
 - [[code-agent-vs-data-agent]] — Code Agent / Data Agent 分工的更普适论述
 - [[databricks-genie]] — Databricks 企业级 Data Agent
 - [[infinisynapse]] — 另一种 Data Agent 基础设施方案
+- [[cloud-village-data-agent-platform]] — 云村 DAS Agent 平台（另一种 Agent 平台架构实践）
+- [[cainiao-data-warehouse-architecture]] — 菜鸟数仓未来架构（Data Mesh + CDM）

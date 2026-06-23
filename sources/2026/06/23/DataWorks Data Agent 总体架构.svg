@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%" style="background-color: #f5f8fc; font-family: -apple-system, 'Microsoft YaHei', 'PingFang SC', sans-serif;">
+    <!-- 各层级背景 -->
+    <rect x="0" y="0" width="1200" height="850" fill="#f5f8fc"/>
+    <text x="600" y="40" font-size="22" font-weight="bold" fill="#2563EB" text-anchor="middle">DataWorks Data Agent: 新一代数据智能体</text>
+
+    <!-- 第1层：用户交互层 -->
+    <rect x="40" y="60" width="1120" height="80" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
+    <text x="70" y="90" font-size="16" font-weight="bold" fill="#4B5563">用户交互层</text>
+    
+    <rect x="100" y="80" width="160" height="40" rx="4" fill="#F3F4F6"/>
+    <text x="180" y="105" font-size="14" fill="#4B5563" text-anchor="middle">ChatUI</text>
+    
+    <rect x="300" y="80" width="250" height="40" rx="4" fill="#F3F4F6"/>
+    <text x="425" y="105" font-size="14" fill="#4B5563" text-anchor="middle">TUI / CLI</text>
+    
+    <rect x="590" y="80" width="250" height="40" rx="4" fill="#F3F4F6"/>
+    <text x="715" y="105" font-size="14" fill="#4B5563" text-anchor="middle">IM Channel</text>
+    
+    <rect x="880" y="80" width="250" height="40" rx="4" fill="#F3F4F6"/>
+    <text x="1005" y="105" font-size="14" fill="#4B5563" text-anchor="middle">Remote Control (H5)</text>
+
+    <!-- 第2层：Data Agent 智能体层 -->
+    <rect x="40" y="160" width="850" height="250" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
+    <text x="70" y="190" font-size="16" font-weight="bold" fill="#4B5563">Data Agent</text>
+    <text x="70" y="210" font-size="14" fill="#6B7280">智能体层</text>
+
+    <!-- 4个智能体方块 -->
+    <rect x="60" y="225" width="195" height="140" fill="#8B5CF6" rx="6"/>
+    <text x="157" y="250" font-size="15" font-weight="bold" fill="#FFFFFF" text-anchor="middle">数据开发Agent</text>
+    <text x="75" y="278" font-size="13" fill="#E0E7FF">需求分析  NL2SQL</text>
+    <text x="75" y="298" font-size="13" fill="#E0E7FF">任务构建  工作流构建</text>
+    <text x="75" y="318" font-size="13" fill="#E0E7FF">代码Review 运维诊断</text>
+
+    <rect x="265" y="225" width="195" height="140" fill="#8B5CF6" rx="6"/>
+    <text x="362" y="250" font-size="15" font-weight="bold" fill="#FFFFFF" text-anchor="middle">数据治理Agent</text>
+    <text x="280" y="278" font-size="13" fill="#E0E7FF">快捷找表  元数据增强</text>
+    <text x="280" y="298" font-size="13" fill="#E0E7FF">AI检查器 数据质量生成</text>
+    <text x="280" y="318" font-size="13" fill="#E0E7FF">血缘分析  治理计划生成</text>
+
+    <rect x="470" y="225" width="195" height="140" fill="#8B5CF6" rx="6"/>
+    <text x="567" y="250" font-size="15" font-weight="bold" fill="#FFFFFF" text-anchor="middle">数据分析Agent</text>
+    <text x="485" y="278" font-size="13" fill="#E0E7FF">快捷问数  归因分析</text>
+    <text x="485" y="298" font-size="13" fill="#E0E7FF">深度分析  行动建议</text>
+    <text x="485" y="318" font-size="13" fill="#E0E7FF">报告生成  报告分享</text>
+
+    <rect x="675" y="225" width="195" height="140" fill="#8B5CF6" rx="6"/>
+    <text x="772" y="250" font-size="15" font-weight="bold" fill="#FFFFFF" text-anchor="middle">数据运维Agent</text>
+    <text x="690" y="278" font-size="13" fill="#E0E7FF">异常诊断  智能运维</text>
+    <text x="690" y="298" font-size="13" fill="#E0E7FF">资源管理  性能优化</text>
+    <text x="690" y="318" font-size="13" fill="#E0E7FF">知识问答  集群配置</text>
+
+    <!-- 协议层 Bar -->
+    <rect x="60" y="375" width="810" height="25" rx="4" fill="#F3F4F6" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="465" y="393" font-size="13" fill="#4B5563" text-anchor="middle">Agent 协议层 (ACP / A2A)</text>
+
+    <!-- 右侧扩展区 -->
+    <rect x="910" y="160" width="230" height="250" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
+    <text x="925" y="190" font-size="14" font-weight="bold" fill="#4B5563">Agent上下文与扩展</text>
+    
+    <rect x="920" y="210" width="210" height="35" rx="4" fill="#F3F4F6"/>
+    <text x="1025" y="233" font-size="14" fill="#4B5563" text-anchor="middle">第三方Skill</text>
+    
+    <rect x="920" y="255" width="210" height="35" rx="4" fill="#F3F4F6"/>
+    <text x="1025" y="278" font-size="14" fill="#4B5563" text-anchor="middle">第三方MCP</text>
+    
+    <rect x="920" y="300" width="210" height="35" rx="4" fill="#F3F4F6"/>
+    <text x="1025" y="323" font-size="14" fill="#4B5563" text-anchor="middle">知识库/Rules</text>
+    
+    <rect x="920" y="345" width="210" height="35" rx="4" fill="#F3F4F6"/>
+    <text x="1025" y="368" font-size="14" fill="#4B5563" text-anchor="middle">语义模型</text>
+
+    <!-- 第3层：大模型层 -->
+    <rect x="40" y="430" width="1120" height="70" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
+    <text x="70" y="460" font-size="16" font-weight="bold" fill="#4B5563">大模型层</text>
+
+    <rect x="60" y="445" width="190" height="40" rx="6" fill="#3B82F6"/>
+    <text x="155" y="470" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Qwen系列</text>
+
+    <rect x="260" y="445" width="190" height="40" rx="6" fill="#3B82F6"/>
+    <text x="355" y="470" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">GLM系列</text>
+
+    <rect x="460" y="445" width="190" height="40" rx="6" fill="#3B82F6"/>
+    <text x="555" y="470" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">DeepSeek系列</text>
+
+    <rect x="660" y="445" width="210" height="40" rx="6" fill="#3B82F6"/>
+    <text x="765" y="470" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">NL2SQL专家模型</text>
+
+    <rect x="880" y="445" width="250" height="40" rx="6" fill="#3B82F6"/>
+    <text x="1005" y="470" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">私有化部署模型服务</text>
+
+    <!-- 第4层：计算资源层 -->
+    <rect x="40" y="520" width="1120" height="110" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
+    <text x="70" y="550" font-size="16" font-weight="bold" fill="#4B5563">计算资源层</text>
+
+    <!-- 计算项 -->
+    <rect x="70" y="560" width="125" height="45" rx="4" fill="#F3F4F6"/>
+    <text x="132" y="585" font-size="14" fill="#4B5563" text-anchor="middle">MaxCompute</text>
+
+    <rect x="205" y="560" width="110" height="45" rx="4" fill="#F3F4F6"/>
+    <text x="260" y="585" font-size="14" fill="#4B5563" text-anchor="middle">Hologres</text>
+
+    <rect x="325" y="560" width="125" height="45" rx="4" fill="#F3F4F6"/>
+    <text x="387" y="585" font-size="14" fill="#4B5563" text-anchor="middle">EMR Spark</text>
+
+    <rect x="460" y="560" width="145" height="45" rx="4" fill="#F3F4F6"/>
+    <text x="532" y="585" font-size="14" fill="#4B5563" text-anchor="middle">EMR StarRocks</text>
+
+    <rect x="615" y="560" width="90" height="45" rx="4" fill="#F3F4F6"/>
+    <text x="660" y="585" font-size="14" fill="#4B5563" text-anchor="middle">Flink</text>
+
+    <rect x="715" y="560" width="175" height="45" rx="4" fill="#F3F4F6"/>
+    <text x="802" y="585" font-size="14" fill="#4B5563" text-anchor="middle">AI搜索 (ES、OS)</text>
+
+    <rect x="900" y="560" width="175" height="45" rx="4" fill="#F3F4F6"/>
+    <text x="987" y="585" font-size="14" fill="#4B5563" text-anchor="middle">AI计算 (PAI DLC)</text>
+
+    <!-- 第5层：数据湖仓层 -->
+    <rect x="40" y="650" width="1120" height="80" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
+    <text x="70" y="680" font-size="16" font-weight="bold" fill="#4B5563">数据湖仓层</text>
+
+    <rect x="300" y="665" width="600" height="45" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+    <text x="600" y="692" font-size="16" fill="#475569" text-anchor="middle">OpenLake (Lakehouse)</text>
+
+    <rect x="920" y="665" width="210" height="45" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+    <text x="1025" y="692" font-size="16" fill="#475569" text-anchor="middle">Data Warehouse</text>
+</svg>

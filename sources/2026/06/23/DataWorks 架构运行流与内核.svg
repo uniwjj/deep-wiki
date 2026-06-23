@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="100%" height="100%" style="background-color: #F8FAFC; font-family: -apple-system, 'Microsoft YaHei', 'PingFang SC', sans-serif;">
+    <!-- 顶层：访问与控制 -->
+    <rect x="40" y="30" width="1120" height="80" rx="10" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
+    <text x="60" y="55" font-size="14" font-weight="bold" fill="#3B82F6">NATURAL LANGUAGE ACCESS</text>
+    <text x="60" y="80" font-size="16" font-weight="bold" fill="#1F2937">CLI · IDE · IM · OpenAPI</text>
+
+    <text x="480" y="70" font-size="20" fill="#9CA3AF">→</text>
+    <rect x="510" y="55" width="160" height="35" rx="4" fill="#EBF5FF" stroke="#3B82F6" stroke-width="1"/>
+    <text x="590" y="77" font-size="14" font-weight="bold" fill="#3B82F6" text-anchor="middle">ACP Gateway</text>
+
+    <text x="730" y="70" font-size="20" fill="#9CA3AF">→</text>
+    <rect x="760" y="55" width="180" height="35" rx="4" fill="#FFF7ED" stroke="#EA580C" stroke-width="1"/>
+    <text x="850" y="77" font-size="14" font-weight="bold" fill="#EA580C" text-anchor="middle">Master Router</text>
+
+    <!-- 中间执行器 (左侧 Code, 右侧 Ops) -->
+    <!-- 左侧 Code Executor -->
+    <rect x="40" y="140" width="380" height="180" rx="12" fill="#FFFFFF" stroke="#2563EB" stroke-width="3"/>
+    <rect x="40" y="140" width="150" height="35" rx="12" fill="#1D4ED8"/>
+    <text x="115" y="163" font-size="16" font-weight="bold" fill="#FFFFFF" text-anchor="middle">CODE EXECUTOR</text>
+
+    <text x="60" y="195" font-size="20" font-weight="bold" fill="#1E3A8A">CodeAgent · 代码执行器</text>
+    <text x="60" y="215" font-size="14" fill="#3B82F6">· 服务 CLI 模式</text>
+
+    <text x="60" y="240" font-size="13" fill="#4B5563">K8s 沙箱 · 自主多步规划</text>
+    <text x="60" y="260" font-size="13" fill="#4B5563">跨引擎 SQL · ETL 工程理解 · 多文件读写</text>
+    
+    <line x1="60" y1="275" x2="400" y2="275" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="60" y="295" font-size="13" fill="#6B7280">典型任务:数据开发 · ETL 改造 · 复杂代码变更</text>
+
+    <!-- 右侧 Ops Executor -->
+    <rect x="780" y="140" width="380" height="180" rx="12" fill="#FFFFFF" stroke="#EA580C" stroke-width="3"/>
+    <rect x="780" y="140" width="150" height="35" rx="12" fill="#C2410C"/>
+    <text x="855" y="163" font-size="16" font-weight="bold" fill="#FFFFFF" text-anchor="middle">OPS EXECUTOR</text>
+
+    <text x="800" y="195" font-size="20" font-weight="bold" fill="#7C2D12">Claw · 运维执行器</text>
+    <text x="800" y="215" font-size="14" fill="#EA580C">· 服务 Claw 模式</text>
+
+    <text x="800" y="240" font-size="13" fill="#4B5563">多步任务自治 · 人在回路确认</text>
+    <text x="800" y="260" font-size="13" fill="#4B5563">跨域协同:调度 / 治理 / 监控</text>
+    
+    <line x1="800" y1="275" x2="1140" y2="275" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="800" y="295" font-size="13" fill="#6B7280">典型任务:故障诊断 · 任务调度 · 补数 · 治理巡检</text>
+
+    <!-- 中心内核 -->
+    <circle cx="600" cy="230" r="110" fill="#EFF6FF" stroke="#2563EB" stroke-width="4"/>
+    <circle cx="600" cy="230" r="95" fill="#FFFFFF"/>
+    <text x="600" y="210" font-size="12" fill="#6B7280" text-anchor="middle">RUNTIME KERNEL</text>
+    <text x="600" y="235" font-size="18" font-weight="bold" fill="#1E3A8A" text-anchor="middle">统一策略内核</text>
+    <text x="600" y="255" font-size="13" fill="#4B5563" text-anchor="middle">路由 · 权限 · 计划 · 审计</text>
+    <rect x="510" y="275" width="180" height="30" rx="15" fill="#EA580C"/>
+    <text x="600" y="295" font-size="13" font-weight="bold" fill="#FFFFFF" text-anchor="middle">不止于聊天框，而是受控执行的内核</text>
+
+    <!-- 连接虚线 -->
+    <line x1="420" y1="230" x2="490" y2="230" stroke="#2563EB" stroke-width="2" stroke-dasharray="6,4"/>
+    <line x1="710" y1="230" x2="780" y2="230" stroke="#EA580C" stroke-width="2" stroke-dasharray="6,4"/>
+
+    <!-- 下层语义框 -->
+    <rect x="40" y="340" width="1120" height="85" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
+    
+    <rect x="50" y="350" width="260" height="65" rx="6" fill="#EBF5FF" stroke="#BFDBFE" stroke-width="1"/>
+    <text x="70" y="375" font-size="14" font-weight="bold" fill="#1E3A8A">Data Semantic Grounding</text>
+    <text x="70" y="395" font-size="12" fill="#4B5563">把数据世界转成执行器可用的</text>
+    <text x="70" y="410" font-size="12" fill="#4B5563">语义、约束与运行提示</text>
+
+    <rect x="320" y="350" width="190" height="65" rx="6" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="340" y="375" font-size="14" font-weight="bold" fill="#374151">Semantic Objects</text>
+    <text x="340" y="395" font-size="12" fill="#6B7280">表 · 字段 · 指标 · 口径</text>
+
+    <rect x="520" y="350" width="210" height="65" rx="6" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="540" y="375" font-size="14" font-weight="bold" fill="#374151">Operational Context</text>
+    <text x="540" y="395" font-size="12" fill="#6B7280">血缘 · 任务依赖 · SLA</text>
+
+    <rect x="740" y="350" width="210" height="65" rx="6" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="760" y="375" font-size="14" font-weight="bold" fill="#374151">Governance Rules</text>
+    <text x="760" y="395" font-size="12" fill="#6B7280">权限 · 质量 · 影响分析</text>
+
+    <!-- 平台服务层 (虚线) -->
+    <rect x="40" y="445" width="1120" height="95" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2" stroke-dasharray="6,4"/>
+    <text x="60" y="475" font-size="14" font-weight="bold" fill="#4B5563">PLATFORM SERVICES</text>
+
+    <rect x="160" y="465" width="240" height="65" rx="6" fill="#F3F4F6" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="280" y="490" font-size="14" font-weight="bold" fill="#1F2937" text-anchor="middle">MCP Hub</text>
+    <text x="280" y="510" font-size="12" fill="#6B7280" text-anchor="middle">工具调用 · 临时凭证</text>
+
+    <rect x="480" y="465" width="240" height="65" rx="6" fill="#F3F4F6" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="600" y="490" font-size="14" font-weight="bold" fill="#1F2937" text-anchor="middle">Session / RAG</text>
+    <text x="600" y="510" font-size="12" fill="#6B7280" text-anchor="middle">记忆 · 规范知识</text>
+
+    <rect x="800" y="465" width="240" height="65" rx="6" fill="#F3F4F6" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="920" y="490" font-size="14" font-weight="bold" fill="#1F2937" text-anchor="middle">Observability</text>
+    <text x="920" y="510" font-size="12" fill="#6B7280" text-anchor="middle">Trace · Audit</text>
+
+    <!-- 云基础设施层 -->
+    <rect x="40" y="560" width="1120" height="55" rx="8" fill="#E5E7EB"/>
+    <text x="60" y="585" font-size="13" font-weight="bold" fill="#4B5563">CLOUD FOUNDATION</text>
+
+    <line x1="220" y1="565" x2="220" y2="610" stroke="#9CA3AF" stroke-width="1"/>
+    <text x="290" y="585" font-size="14" fill="#1F2937" text-anchor="middle">通义模型</text>
+
+    <line x1="390" y1="565" x2="390" y2="610" stroke="#9CA3AF" stroke-width="1"/>
+    <text x="500" y="585" font-size="14" fill="#1F2937" text-anchor="middle">ACK Pro K8s</text>
+
+    <line x1="630" y1="565" x2="630" y2="610" stroke="#9CA3AF" stroke-width="1"/>
+    <text x="800" y="585" font-size="14" fill="#1F2937" text-anchor="middle">MaxCompute / Hologres / Flink / EMR</text>
+
+    <line x1="980" y1="565" x2="980" y2="610" stroke="#9CA3AF" stroke-width="1"/>
+    <text x="1080" y="585" font-size="14" fill="#1F2937" text-anchor="middle">KMS / RBAC / OTel</text>
+</svg>

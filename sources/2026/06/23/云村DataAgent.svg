@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%" style="background-color: #fcfcfc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+    <defs>
+        <!-- 箭头定义 -->
+        <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#4A90E2"/>
+        </marker>
+        <marker id="arrow-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#9BA4B5"/>
+        </marker>
+        <marker id="arrow-orange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#E67E22"/>
+        </marker>
+        
+        <!-- 阴影滤镜 -->
+        <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+            <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.05"/>
+        </filter>
+        <filter id="shadow-light" x="-2%" y="-2%" width="104%" height="104%">
+            <feDropShadow dx="1" dy="1" stdDeviation="2" flood-color="#000000" flood-opacity="0.03"/>
+        </filter>
+    </defs>
+
+    <!-- 背景虚线框 / 层叠背景 -->
+    <!-- 第1层背景 -->
+    <rect x="20" y="70" width="1160" height="170" rx="10" fill="none" stroke="#E0E6ED" stroke-width="2" stroke-dasharray="8,4"/>
+    <!-- 第2层背景 -->
+    <rect x="20" y="260" width="1160" height="120" rx="10" fill="none" stroke="#E0E6ED" stroke-width="2" stroke-dasharray="8,4"/>
+    <!-- 第3层背景 -->
+    <rect x="20" y="400" width="1160" height="130" rx="10" fill="none" stroke="#E0E6ED" stroke-width="2" stroke-dasharray="8,4"/>
+    <!-- 第4层背景 -->
+    <rect x="20" y="545" width="1160" height="115" rx="10" fill="none" stroke="#E0E6ED" stroke-width="2" stroke-dasharray="8,4"/>
+    <!-- 第5层背景 -->
+    <rect x="20" y="675" width="1160" height="110" rx="10" fill="none" stroke="#E0E6ED" stroke-width="2" stroke-dasharray="8,4"/>
+
+    <!-- ==================== 顶部标题栏 ==================== -->
+    <rect x="0" y="0" width="1200" height="60" fill="#F0F4F8" />
+    <text x="600" y="38" font-size="24" font-weight="bold" fill="#1A365D" text-anchor="middle">云村数据 Agent 平台 · DAS Agent Platform</text>
+
+    <!-- ==================== 第1行：产品层 ==================== -->
+    <!-- 左侧：自建 -->
+    <text x="40" y="95" font-size="16" font-weight="bold" fill="#2C3E50">云村 DAS Agent 产品 (自建)</text>
+    
+    <!-- Data Agent -->
+    <rect x="40" y="110" width="350" height="80" rx="6" fill="#FFFFFF" stroke="#4A90E2" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="55" y="135" font-size="14" font-weight="bold" fill="#2C3E50">Data Agent</text>
+    <text x="55" y="155" font-size="12" fill="#606266">业务域模式 · 全域搜索</text>
+    <text x="55" y="172" font-size="12" fill="#606266">SQL + Python · 深度分析</text>
+    <text x="55" y="189" font-size="12" fill="#606266">面向：业务运营 · 数据分析师</text>
+
+    <!-- Dev Agent -->
+    <rect x="410" y="110" width="280" height="80" rx="6" fill="#FFFFFF" stroke="#4A90E2" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="425" y="135" font-size="14" font-weight="bold" fill="#2C3E50">Dev Agent</text>
+    <text x="425" y="155" font-size="12" fill="#606266">人机协作 · SDD 全流程</text>
+    <text x="425" y="172" font-size="12" fill="#606266">需求→模型→ETL→DQC</text>
+    <text x="425" y="189" font-size="12" fill="#606266">面向：数仓开发人员</text>
+
+    <!-- Ops Agent -->
+    <rect x="710" y="110" width="280" height="80" rx="6" fill="#FFFFFF" stroke="#4A90E2" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="725" y="135" font-size="14" font-weight="bold" fill="#2C3E50">Ops Agent</text>
+    <text x="725" y="155" font-size="12" fill="#606266">PoPo 值班机器人</text>
+    <text x="725" y="172" font-size="12" fill="#606266">智能答疑 · 异常诊断</text>
+    <text x="725" y="189" font-size="12" fill="#606266">面向：运维 · 所有用户</text>
+
+    <!-- 右侧：第三方 -->
+    <text x="740" y="95" font-size="16" font-weight="bold" fill="#2C3E50">三方本地 Agent 产品</text>
+    <text x="740" y="112" font-size="12" fill="#606266">通过 das-mcp-cli 直接访问数据工具</text>
+
+    <!-- Claude Code -->
+    <rect x="740" y="130" width="410" height="60" rx="6" fill="#FFFFFF" stroke="#4A90E2" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="755" y="150" font-size="14" font-weight="bold" fill="#2C3E50">Claude Code</text>
+    <text x="755" y="167" font-size="12" fill="#606266">Anthropic 官方 CLI Agent · 终端/IDE 多场景</text>
+    <text x="755" y="183" font-size="12" fill="#606266">das-mcp-cli 本地集成 → OmniSQL + Rossta</text>
+
+    <!-- Code Maker -->
+    <rect x="740" y="200" width="410" height="30" rx="6" fill="#FFFFFF" stroke="#4A90E2" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="755" y="220" font-size="14" font-weight="bold" fill="#2C3E50">Code Maker</text>
+
+    <!-- 更多三方备注 -->
+    <rect x="740" y="240" width="410" height="45" rx="6" fill="#FFFFFF" stroke="#4A90E2" stroke-width="1" stroke-dasharray="4,2" filter="url(#shadow-light)"/>
+    <text x="755" y="255" font-size="12" fill="#606266">更多三方 / 自定义 Agent</text>
+    <text x="755" y="270" font-size="12" fill="#606266">Custom Agent, 自建 Agent, 本地部署</text>
+    <text x="755" y="282" font-size="11" fill="#909399">均通过标准 CLI / API 接入 das-mcp-cli</text>
+
+    <!-- 连接线：从产品向下 -->
+    <line x1="200" y1="190" x2="200" y2="265" stroke="#4A90E2" stroke-width="2" marker-end="url(#arrow-blue)"/>
+    <line x1="550" y1="190" x2="550" y2="265" stroke="#4A90E2" stroke-width="2" marker-end="url(#arrow-blue)"/>
+    <line x1="850" y1="190" x2="850" y2="265" stroke="#4A90E2" stroke-width="2" marker-end="url(#arrow-blue)"/>
+    <line x1="950" y1="285" x2="950" y2="405" stroke="#9BA4B5" stroke-width="2" marker-end="url(#arrow-gray)" stroke-dasharray="4,2"/>
+
+    <!-- ==================== 第2行：运行时层 (Aris) ==================== -->
+    <text x="35" y="285" font-size="16" font-weight="bold" fill="#2C3E50">Agent 运行时 · Aris (Agent Manager)</text>
+    <text x="35" y="302" font-size="12" fill="#606266">Docker/K8s · Claude Agent SDK · 生命周期管理</text>
+
+    <!-- Aris 内部框 -->
+    <rect x="35" y="315" width="255" height="50" rx="6" fill="#FFFFFF" stroke="#27AE60" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="50" y="335" font-size="14" font-weight="bold" fill="#27AE60">Container 沙箱</text>
+    <text x="50" y="352" font-size="12" fill="#606266">Docker / Kubernetes · Claude Agent SDK</text>
+    <text x="50" y="362" font-size="11" fill="#909399">集成</text>
+
+    <rect x="310" y="315" width="250" height="50" rx="6" fill="#FFFFFF" stroke="#27AE60" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="325" y="335" font-size="14" font-weight="bold" fill="#27AE60">凭证自动注入</text>
+    <text x="325" y="352" font-size="12" fill="#606266">das-mcp-cli 集成 · 用户凭证绑定</text>
+
+    <rect x="580" y="315" width="250" height="50" rx="6" fill="#FFFFFF" stroke="#27AE60" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="595" y="335" font-size="14" font-weight="bold" fill="#27AE60">动态插件机制</text>
+    <text x="595" y="352" font-size="12" fill="#606266">Hook 技术 · Plugin 注入 · 前端定制</text>
+
+    <rect x="850" y="315" width="300" height="50" rx="6" fill="#FFFFFF" stroke="#27AE60" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="865" y="335" font-size="14" font-weight="bold" fill="#27AE60">生命周期管理</text>
+    <text x="865" y="352" font-size="12" fill="#606266">Agent 实例管理 · 创建/销毁 · 弹性扩展</text>
+
+    <!-- 连接线：运行时向下 -->
+    <line x1="200" y1="365" x2="200" y2="415" stroke="#E67E22" stroke-width="2" marker-end="url(#arrow-orange)"/>
+    <line x1="550" y1="365" x2="550" y2="415" stroke="#E67E22" stroke-width="2" marker-end="url(#arrow-orange)"/>
+    <line x1="850" y1="365" x2="850" y2="415" stroke="#E67E22" stroke-width="2" marker-end="url(#arrow-orange)"/>
+
+    <!-- ==================== 第3行：桥接层 (das-mcp-cli) ==================== -->
+    <text x="35" y="425" font-size="16" font-weight="bold" fill="#2C3E50">Agent和工具的桥梁 · das-mcp-cli</text>
+    <text x="35" y="442" font-size="12" fill="#606266">标准 CLI 工具，所有 Agent (自建 + 三方) 访问数据平台的统一安全通道</text>
+
+    <!-- 桥接内部框 -->
+    <rect x="35" y="455" width="360" height="60" rx="6" fill="#FFFFFF" stroke="#E67E22" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="50" y="475" font-size="14" font-weight="bold" fill="#E67E22">身份互信 &amp; 安全通道</text>
+    <text x="50" y="493" font-size="12" fill="#606266">Open-ID 统一身份 · Token 设备绑定</text>
+    <text x="50" y="508" font-size="12" fill="#606266">端到端加密 · 后台审计 · 细粒度权限</text>
+
+    <rect x="415" y="455" width="380" height="60" rx="6" fill="#FFFFFF" stroke="#E67E22" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="430" y="475" font-size="14" font-weight="bold" fill="#E67E22">智能数据桥接</text>
+    <text x="430" y="493" font-size="12" fill="#606266">无缝连接 OmniSQL + Rossta 语义层</text>
+    <text x="430" y="508" font-size="12" fill="#606266">自然语言查询 · 敏感黑名单 · 异常 SQL 拦截</text>
+
+    <rect x="815" y="455" width="340" height="60" rx="6" fill="#FFFFFF" stroke="#E67E22" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="830" y="475" font-size="14" font-weight="bold" fill="#E67E22">Skill 市场与生态</text>
+    <text x="830" y="493" font-size="12" fill="#606266">Skill 托管 · 分享 · 一键安装</text>
+    <text x="830" y="508" font-size="12" fill="#606266">三方集成：Muse · ABTest · 猛犸 · Overmind</text>
+
+    <!-- 连接线：桥接向下 -->
+    <line x1="200" y1="515" x2="200" y2="560" stroke="#8E44AD" stroke-width="2" stroke-dasharray="4,2"/>
+    <line x1="600" y1="515" x2="600" y2="560" stroke="#8E44AD" stroke-width="2" stroke-dasharray="4,2"/>
+    <line x1="950" y1="515" x2="950" y2="560" stroke="#8E44AD" stroke-width="2" stroke-dasharray="4,2"/>
+
+    <!-- ==================== 第4行：数据语义层 (Das Rossta) ==================== -->
+    <text x="35" y="570" font-size="16" font-weight="bold" fill="#2C3E50">数据语义层服务 · Das Rossta</text>
+
+    <rect x="35" y="585" width="550" height="65" rx="6" fill="#FFFFFF" stroke="#8E44AD" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="50" y="605" font-size="14" font-weight="bold" fill="#8E44AD">知识库沉淀</text>
+    <text x="50" y="623" font-size="12" fill="#606266">300+ 物理表案例 · 3000+ 指标案例</text>
+    <text x="50" y="640" font-size="12" fill="#606266">按业务线 &amp; 数仓分层结构化管理</text>
+
+    <rect x="600" y="585" width="550" height="65" rx="6" fill="#FFFFFF" stroke="#8E44AD" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="615" y="605" font-size="14" font-weight="bold" fill="#8E44AD">AI 语义支撑</text>
+    <text x="615" y="623" font-size="12" fill="#606266">N2SQL Schema 关联 · 业务上下文</text>
+    <text x="615" y="640" font-size="12" fill="#606266">Text-to-SQL · 高质量上下文 · AI 理解精度提升</text>
+
+    <!-- 连接线：语义向下 -->
+    <line x1="300" y1="650" x2="300" y2="690" stroke="#E74C3C" stroke-width="2" stroke-dasharray="4,2"/>
+    <line x1="850" y1="650" x2="850" y2="690" stroke="#E74C3C" stroke-width="2" stroke-dasharray="4,2"/>
+
+    <!-- ==================== 第5行：数据与查询底层 (OmniSQL) ==================== -->
+    <text x="35" y="700" font-size="16" font-weight="bold" fill="#2C3E50">数据与查询底层 · OmniSQL</text>
+
+    <rect x="35" y="715" width="550" height="55" rx="6" fill="#FFFFFF" stroke="#E74C3C" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="270" y="735" font-size="14" font-weight="bold" fill="#E74C3C" text-anchor="middle">统一数据查询服务</text>
+    <text x="300" y="755" font-size="12" fill="#606266" text-anchor="middle">Impala · Doris · Hive · ClickHouse</text>
+    <text x="300" y="770" font-size="12" fill="#606266" text-anchor="middle">Apache Graviton 元数据管理 · JDBC 标准协议</text>
+
+    <rect x="600" y="715" width="550" height="55" rx="6" fill="#FFFFFF" stroke="#E74C3C" stroke-width="2" filter="url(#shadow-light)"/>
+    <text x="875" y="735" font-size="14" font-weight="bold" fill="#E74C3C" text-anchor="middle">AI 场景专项优化</text>
+    <text x="875" y="755" font-size="12" fill="#606266" text-anchor="middle">细粒度权限 (表/字段级) · 白名单快速申请</text>
+    <text x="875" y="770" font-size="12" fill="#606266" text-anchor="middle">敏感黑名单防泄露 · 异常 SQL 拦截 · 自动优化改写</text>
+
+    <!-- ==================== 底部：外部数据源 & 图例 ==================== -->
+    <rect x="130" y="805" width="940" height="40" rx="6" fill="#F8F9FA" stroke="#DCE1E6" stroke-width="2"/>
+    <text x="600" y="830" font-size="14" font-weight="bold" fill="#606266" text-anchor="middle">外部数据源：云村平台 · 猛犸平台 · Muse · ABTest · Popo · Overmind</text>
+    
+    <!-- 图例 -->
+    <rect x="30" y="855" width="12" height="12" fill="#FFFFFF" stroke="#4A90E2" stroke-width="2"/>
+    <text x="48" y="866" font-size="12" fill="#606266">自建 Agent</text>
+    
+    <rect x="130" y="855" width="12" height="12" fill="#FFFFFF" stroke="#4A90E2" stroke-width="2"/>
+    <text x="148" y="866" font-size="12" fill="#606266">三方 Agent</text>
+
+    <rect x="230" y="855" width="12" height="12" fill="#FFFFFF" stroke="#27AE60" stroke-width="2"/>
+    <text x="248" y="866" font-size="12" fill="#606266">Aris 运行时</text>
+
+    <rect x="340" y="855" width="12" height="12" fill="#FFFFFF" stroke="#E67E22" stroke-width="2"/>
+    <text x="358" y="866" font-size="12" fill="#606266">桥接层</text>
+
+    <rect x="430" y="855" width="12" height="12" fill="#FFFFFF" stroke="#8E44AD" stroke-width="2"/>
+    <text x="448" y="866" font-size="12" fill="#606266">数据底座</text>
+
+    <text x="600" y="866" font-size="12" fill="#909399" text-anchor="middle">→ 自建路径  —— 三方直达</text>
+
+    <!-- 右下角水印/版权 (模拟) -->
+    <rect x="1080" y="860" width="100" height="20" rx="4" fill="#F0F4F8"/>
+    <text x="1130" y="874" font-size="11" fill="#909399" text-anchor="middle">by 1Capture 制作</text>
+</svg>

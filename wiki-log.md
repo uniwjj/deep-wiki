@@ -612,3 +612,17 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - created `ontological-semantic-layer` — 本体化语义层核心概念、六类能力框架、七项落地准备、Data Infra 团队角色重定义
 - updated `ontology` — 添加本体化语义层交叉引用
 - updated `dataagent-semantic-layer` — 添加本体化语义层作为上层概念框架
+
+## [2026-06-23] ingest | 桌面上 share 目录 6 个 SVG 架构图批量摄取
+
+- saved `sources/2026/06/23/DataWorks Data Agent 总体架构.svg` — DataWorks 产品架构图（五层）
+- saved `sources/2026/06/23/DataWorks DataAgent入口与交互模式.svg` — CLI/Claw 双模式入口
+- saved `sources/2026/06/23/DataWorks 架构运行流与内核.svg` — DataAgent Core 技术架构
+- saved `sources/2026/06/23/菜鸟数仓未来预测.svg` — 菜鸟 Data Mesh 未来架构
+- saved `sources/2026/06/23/淘宝DataAgent.svg` — 淘宝 R2C 架构图（本体论+Harness 双锚点）
+- saved `sources/2026/06/23/云村DataAgent.svg` — 云村 DAS Agent 五层平台架构
+- created `big-data/cainiao-data-warehouse-architecture.md` — 菜鸟数仓未来架构：Data Mesh 三层 + 交易/物流/LLM 三大数据域 + CDM/WIKI/ODS 标准化
+- created `ai-agent/cloud-village-data-agent-platform.md` — 云村 DAS Agent Platform：自建 Agent + 三方 Agent 统一 das-mcp-cli 桥接 + Aris 运行时 + Rossta 语义层 + OmniSQL 查询引擎
+- updated `big-data/dataworks-data-agent.md` — 新增 3 个 SVG 来源、交叉链接云村和菜鸟新页面
+- updated `big-data/taobao-live-data-dev-paradigm.md` — 新增淘宝DataAgent.svg 来源、交叉链接
+- updated `big-data/superetl.md` — 新增菜鸟数仓未来预测.svg 来源、交叉链接新页面

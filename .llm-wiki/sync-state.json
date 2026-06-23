@@ -4,1640 +4,1652 @@
       "path": "wiki/homepage.md",
       "mtime": 1781503422310.3645,
       "contentHash": "e6b3c729a43d8d82",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/learning-path.md": {
       "path": "wiki/learning-path.md",
       "mtime": 1781503422310.4487,
       "contentHash": "1d9e65326d0d52f8",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/tech-radar.md": {
       "path": "wiki/tech-radar.md",
       "mtime": 1781503422311.3782,
       "contentHash": "04ab0e7ce55cfd2d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
+    },
+    "wiki/ai-agent/cloud-village-data-agent-platform.md": {
+      "path": "wiki/ai-agent/cloud-village-data-agent-platform.md",
+      "mtime": 1782201622399.8452,
+      "contentHash": "5872c58fd84038a8",
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/index.md": {
       "path": "wiki/ai-agent/index.md",
       "mtime": 1781503422303.4321,
       "contentHash": "36bbdd7d6e13a19b",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-ml/bookrag.md": {
       "path": "wiki/ai-ml/bookrag.md",
       "mtime": 1781503422306.5227,
       "contentHash": "7afa74eaec74fd66",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-ml/glm5-model.md": {
       "path": "wiki/ai-ml/glm5-model.md",
       "mtime": 1781503422306.6047,
       "contentHash": "21ff34eb97487cbe",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-ml/index.md": {
       "path": "wiki/ai-ml/index.md",
       "mtime": 1781503422306.6846,
       "contentHash": "156e219cd5282b08",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-ml/llm-cost-optimization.md": {
       "path": "wiki/ai-ml/llm-cost-optimization.md",
       "mtime": 1781503422306.7717,
       "contentHash": "de88072d45877262",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-ml/ontology.md": {
       "path": "wiki/ai-ml/ontology.md",
       "mtime": 1781508077145.4204,
       "contentHash": "5042419a0719ea06",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-ml/prompt-engineering.md": {
       "path": "wiki/ai-ml/prompt-engineering.md",
       "mtime": 1781503422306.992,
       "contentHash": "c40c86e4b85b48de",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-ml/rag-query-optimization.md": {
       "path": "wiki/ai-ml/rag-query-optimization.md",
       "mtime": 1781503422307.078,
       "contentHash": "3d2bcaba6564f8dd",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-ml/token-consumption-economics.md": {
       "path": "wiki/ai-ml/token-consumption-economics.md",
       "mtime": 1781503422307.1655,
       "contentHash": "9d5f43a179cafad2",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/architecture/index.md": {
       "path": "wiki/architecture/index.md",
       "mtime": 1781503422307.2932,
       "contentHash": "7c71e6f8300475f1",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/backend/index.md": {
       "path": "wiki/backend/index.md",
       "mtime": 1781503422307.4192,
       "contentHash": "236edb1af43cb47e",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/agentic-data-cloud.md": {
       "path": "wiki/big-data/agentic-data-cloud.md",
       "mtime": 1781503422307.605,
       "contentHash": "83fe6c2ef8e4e3da",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
+    },
+    "wiki/big-data/cainiao-data-warehouse-architecture.md": {
+      "path": "wiki/big-data/cainiao-data-warehouse-architecture.md",
+      "mtime": 1782201597610.4,
+      "contentHash": "373ef34bb9937d94",
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/code-agent-vs-data-agent.md": {
       "path": "wiki/big-data/code-agent-vs-data-agent.md",
       "mtime": 1781503422307.747,
       "contentHash": "2d1efbbce8f2c5c4",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/data-agent-practice-guide.md": {
       "path": "wiki/big-data/data-agent-practice-guide.md",
       "mtime": 1781503422307.8901,
       "contentHash": "7fbc6e64ff29c625",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/data-dev-skills-automation.md": {
       "path": "wiki/big-data/data-dev-skills-automation.md",
       "mtime": 1781503422307.9753,
       "contentHash": "5d96c308cca43af1",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/dataagent-semantic-layer.md": {
       "path": "wiki/big-data/dataagent-semantic-layer.md",
       "mtime": 1781508077203.3438,
       "contentHash": "9aad3921868075a6",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/databricks-genie.md": {
       "path": "wiki/big-data/databricks-genie.md",
       "mtime": 1781503422308.211,
       "contentHash": "624041fc972cea4c",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/dataworks-2026-0528-xialiaori.md": {
       "path": "wiki/big-data/dataworks-2026-0528-xialiaori.md",
       "mtime": 1781503422308.3215,
       "contentHash": "e928d35da954081c",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/dataworks-data-agent.md": {
       "path": "wiki/big-data/dataworks-data-agent.md",
-      "mtime": 1781503422308.444,
-      "contentHash": "f1fb97ec052e669b",
-      "lastSynced": "2026-06-18"
+      "mtime": 1782201640750.5964,
+      "contentHash": "286131bedf2638f7",
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/dataworks-stock-case.md": {
       "path": "wiki/big-data/dataworks-stock-case.md",
       "mtime": 1781503422308.5952,
       "contentHash": "66391c3ac3c86d25",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/emr-skills.md": {
       "path": "wiki/big-data/emr-skills.md",
       "mtime": 1781503422308.7102,
       "contentHash": "04cac3fedf21858d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/flink-skills.md": {
       "path": "wiki/big-data/flink-skills.md",
       "mtime": 1781503422308.8354,
       "contentHash": "5dff757f6b1cf865",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/google-data-agent-kit.md": {
       "path": "wiki/big-data/google-data-agent-kit.md",
       "mtime": 1781503422308.9607,
       "contentHash": "983ebf44e847aa73",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/hologres-skills.md": {
       "path": "wiki/big-data/hologres-skills.md",
       "mtime": 1781503422309.0784,
       "contentHash": "cd5e396ba59292b6",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/iceberg.md": {
       "path": "wiki/big-data/iceberg.md",
       "mtime": 1781503422309.1726,
       "contentHash": "8554905e2d8115eb",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/index.md": {
       "path": "wiki/big-data/index.md",
       "mtime": 1781503422309.2568,
       "contentHash": "24d6dd6daa0c93dd",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/infinisynapse.md": {
       "path": "wiki/big-data/infinisynapse.md",
       "mtime": 1781503422309.4026,
       "contentHash": "de6d08637d29ddae",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/maxcompute-data-ai.md": {
       "path": "wiki/big-data/maxcompute-data-ai.md",
       "mtime": 1781503422309.4932,
       "contentHash": "40d0600c3b69c382",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/maxcompute-skills.md": {
       "path": "wiki/big-data/maxcompute-skills.md",
       "mtime": 1781503422309.615,
       "contentHash": "ca3648f4a21b7468",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/ontological-semantic-layer.md": {
       "path": "wiki/big-data/ontological-semantic-layer.md",
       "mtime": 1781508070307.55,
       "contentHash": "279ba770ada15a05",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/openai-data-agent.md": {
       "path": "wiki/big-data/openai-data-agent.md",
       "mtime": 1781503422309.7144,
       "contentHash": "d4040af0075c1d31",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/superetl.md": {
       "path": "wiki/big-data/superetl.md",
-      "mtime": 1781503422309.8499,
-      "contentHash": "64eb076a2fd36418",
-      "lastSynced": "2026-06-18"
+      "mtime": 1782201650422.351,
+      "contentHash": "b7f71579de579267",
+      "lastSynced": "2026-06-23"
     },
     "wiki/big-data/taobao-live-data-dev-paradigm.md": {
       "path": "wiki/big-data/taobao-live-data-dev-paradigm.md",
-      "mtime": 1781503422309.9893,
-      "contentHash": "e119f956e4320786",
-      "lastSynced": "2026-06-18"
+      "mtime": 1782201645460.2063,
+      "contentHash": "faf8f7ccfcc4cf68",
+      "lastSynced": "2026-06-23"
     },
     "wiki/distributed/index.md": {
       "path": "wiki/distributed/index.md",
       "mtime": 1781503422310.1477,
       "contentHash": "2defa442be4563c7",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/fullstack/index.md": {
       "path": "wiki/fullstack/index.md",
       "mtime": 1781503422310.28,
       "contentHash": "761a1879ca38489f",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/meta/wiki-purpose.md": {
       "path": "wiki/meta/wiki-purpose.md",
       "mtime": 1781503422310.5857,
       "contentHash": "e7a62633fe183302",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/meta/wiki-schema.md": {
       "path": "wiki/meta/wiki-schema.md",
       "mtime": 1781503422310.6702,
       "contentHash": "b03482f591eaa31d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/platform/index.md": {
       "path": "wiki/platform/index.md",
       "mtime": 1781503422310.8103,
       "contentHash": "188ff9082c3ccef6",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/product/index.md": {
       "path": "wiki/product/index.md",
       "mtime": 1781503422310.9426,
       "contentHash": "f8e91e1201936f94",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/product/netease-tasted-interview.md": {
       "path": "wiki/product/netease-tasted-interview.md",
       "mtime": 1781503422311.0496,
       "contentHash": "78c0dc1c0f3ea480",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/product/netease-tasted-model.md": {
       "path": "wiki/product/netease-tasted-model.md",
       "mtime": 1781503422311.1414,
       "contentHash": "e5363fa19c2ef4d3",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/product/silicon-valley-pm-methodology.md": {
       "path": "wiki/product/silicon-valley-pm-methodology.md",
       "mtime": 1781503422311.2883,
       "contentHash": "1e3b9e97dfff1239",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/agent-architecture-patterns.md": {
       "path": "wiki/ai-agent/agent-core/agent-architecture-patterns.md",
       "mtime": 1781503422293.0522,
       "contentHash": "aa3e40638c751847",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/agent-autonomous-planning.md": {
       "path": "wiki/ai-agent/agent-core/agent-autonomous-planning.md",
       "mtime": 1781503422293.1484,
       "contentHash": "d5c887f5421d275d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/agent-design-paradigms.md": {
       "path": "wiki/ai-agent/agent-core/agent-design-paradigms.md",
       "mtime": 1781503422293.295,
       "contentHash": "36406699e4fad518",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/agent-evaluation-framework.md": {
       "path": "wiki/ai-agent/agent-core/agent-evaluation-framework.md",
       "mtime": 1781605224838.568,
       "contentHash": "312fc52ee959940f",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/agent-evaluation-implementation.md": {
       "path": "wiki/ai-agent/agent-core/agent-evaluation-implementation.md",
       "mtime": 1781605265912.1042,
       "contentHash": "ea3d1606e47138b8",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/agent-mcp-protocol.md": {
       "path": "wiki/ai-agent/agent-core/agent-mcp-protocol.md",
       "mtime": 1781503422293.3894,
       "contentHash": "3f2ba8f52c594af3",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/agent-memory-system.md": {
       "path": "wiki/ai-agent/agent-core/agent-memory-system.md",
       "mtime": 1781503422293.4863,
       "contentHash": "7eb6d984504c01dd",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/agent-multi-agent-collaboration.md": {
       "path": "wiki/ai-agent/agent-core/agent-multi-agent-collaboration.md",
       "mtime": 1781503422293.585,
       "contentHash": "2f3705e4022e1086",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/agent-skill-test-case.md": {
       "path": "wiki/ai-agent/agent-core/agent-skill-test-case.md",
       "mtime": 1781503422293.6826,
       "contentHash": "6be279319367307a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/agent-skills-system.md": {
       "path": "wiki/ai-agent/agent-core/agent-skills-system.md",
       "mtime": 1781503422293.818,
       "contentHash": "1b362f3f648b0506",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/agent-tdd-workflow.md": {
       "path": "wiki/ai-agent/agent-core/agent-tdd-workflow.md",
       "mtime": 1781503422293.959,
       "contentHash": "88bad272919236db",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/ai-agent-security.md": {
       "path": "wiki/ai-agent/agent-core/ai-agent-security.md",
       "mtime": 1781503422294.0696,
       "contentHash": "33db017b42caeb0d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/ai-governance.md": {
       "path": "wiki/ai-agent/agent-core/ai-governance.md",
       "mtime": 1781503422294.1716,
       "contentHash": "36e23773bb2829b7",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/business-cognition-system.md": {
       "path": "wiki/ai-agent/agent-core/business-cognition-system.md",
       "mtime": 1781782129919.7534,
       "contentHash": "6c223387017da422",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/data-agent-enterprise-practice.md": {
       "path": "wiki/ai-agent/agent-core/data-agent-enterprise-practice.md",
       "mtime": 1781782110557.953,
       "contentHash": "93de54966c8a4197",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/index.md": {
       "path": "wiki/ai-agent/agent-core/index.md",
       "mtime": 1781605281691.377,
       "contentHash": "b3ca1e9a2c25b3e2",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/meta-jit-testing.md": {
       "path": "wiki/ai-agent/agent-core/meta-jit-testing.md",
       "mtime": 1781503422294.3818,
       "contentHash": "54becdf576d137dc",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/multi-llm-design.md": {
       "path": "wiki/ai-agent/agent-core/multi-llm-design.md",
       "mtime": 1781503422294.4795,
       "contentHash": "8650cc8eff4d3578",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/parallel-thinking.md": {
       "path": "wiki/ai-agent/agent-core/parallel-thinking.md",
       "mtime": 1781503422294.5732,
       "contentHash": "aa8d705836c4eeaf",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/specialized-knowledge-search.md": {
       "path": "wiki/ai-agent/agent-core/specialized-knowledge-search.md",
       "mtime": 1781503422294.6711,
       "contentHash": "1858bccf8daf1490",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/agent-core/sub-agent-vs-team.md": {
       "path": "wiki/ai-agent/agent-core/sub-agent-vs-team.md",
       "mtime": 1781503422294.771,
       "contentHash": "e022b3b16f0ab2c4",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-agent-loop.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-agent-loop.md",
       "mtime": 1781503422294.992,
       "contentHash": "1b9035f9ee561647",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-api-layer.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-api-layer.md",
       "mtime": 1781503422295.166,
       "contentHash": "db0b87a76818bb00",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-architecture.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-architecture.md",
       "mtime": 1781503422295.309,
       "contentHash": "df5c0baf29172a51",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-auto-dream.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-auto-dream.md",
       "mtime": 1781503422295.4238,
       "contentHash": "23a2f2750a11adc0",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-bootstrap-pipeline.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-bootstrap-pipeline.md",
       "mtime": 1781503422295.5774,
       "contentHash": "5c48baddbd0bd550",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-builtin-agents.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-builtin-agents.md",
       "mtime": 1781503422295.7368,
       "contentHash": "251b8701cde14a2d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-concurrent-tools.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-concurrent-tools.md",
       "mtime": 1781503422295.8474,
       "contentHash": "4e78913638e04df1",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-configuration-guide.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-configuration-guide.md",
       "mtime": 1781503422296.0115,
       "contentHash": "5673c9d637136e54",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-context-compaction.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-context-compaction.md",
       "mtime": 1781503422296.1758,
       "contentHash": "f655f500a18cd72c",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-coordinator-mode.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-coordinator-mode.md",
       "mtime": 1781503422296.3293,
       "contentHash": "25b16618ea4025d9",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-extensibility.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-extensibility.md",
       "mtime": 1781503422296.4854,
       "contentHash": "db425a1f90737325",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-fork-subagent.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-fork-subagent.md",
       "mtime": 1781503422296.6436,
       "contentHash": "ed61afdd64a0e589",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-harness.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-harness.md",
       "mtime": 1781503422296.7732,
       "contentHash": "f414448dc9b70f86",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-hidden-features.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-hidden-features.md",
       "mtime": 1781503422296.9321,
       "contentHash": "b0d05721a1bafa6d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-input-system.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-input-system.md",
       "mtime": 1781503422297.0908,
       "contentHash": "48f00c88790d9267",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-internal-mechanisms.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-internal-mechanisms.md",
       "mtime": 1781503422297.3098,
       "contentHash": "9ebcc9c1dd3f5167",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-large-codebase.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-large-codebase.md",
       "mtime": 1781503422297.4885,
       "contentHash": "c6152348a5c82db7",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-mcp.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-mcp.md",
       "mtime": 1781503422297.6118,
       "contentHash": "08618060b1bbc642",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-memory-system.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-memory-system.md",
       "mtime": 1781503422297.7712,
       "contentHash": "76f577342a175641",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-multi-agent-mechanism.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-multi-agent-mechanism.md",
       "mtime": 1781503422297.8784,
       "contentHash": "907169b0fbcf2796",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-performance.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-performance.md",
       "mtime": 1781503422297.9844,
       "contentHash": "0e0064c226fcf4d7",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-permission-system.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-permission-system.md",
       "mtime": 1781503422298.1477,
       "contentHash": "c7a3964d6e0eeab4",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-remote-execution.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-remote-execution.md",
       "mtime": 1781503422298.2612,
       "contentHash": "40828e554fa03a81",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-search-strategy.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-search-strategy.md",
       "mtime": 1781503422298.408,
       "contentHash": "6855975559a39e28",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-session-persistence.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-session-persistence.md",
       "mtime": 1781503422298.5112,
       "contentHash": "8f6d5ddc6540dcf0",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-sourcemap-reverse.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-sourcemap-reverse.md",
       "mtime": 1781503422298.6162,
       "contentHash": "cb0eaef8947ecedd",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-state-architecture.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-state-architecture.md",
       "mtime": 1781503422298.7683,
       "contentHash": "bd6f882160a69647",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-subagent.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-subagent.md",
       "mtime": 1781503422298.9233,
       "contentHash": "031b3c14f950b62e",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-swarm.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-swarm.md",
       "mtime": 1781503422299.02,
       "contentHash": "293d8b1bec8fd5ac",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-terminal-ui.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-terminal-ui.md",
       "mtime": 1781503422299.1304,
       "contentHash": "779259f4cf85e0ee",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-tool-system.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-tool-system.md",
       "mtime": 1781503422299.3096,
       "contentHash": "f22381e0d71d858f",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code-vs-opencode.md": {
       "path": "wiki/ai-agent/claude-code/claude-code-vs-opencode.md",
       "mtime": 1781503422299.424,
       "contentHash": "cba5d3d1b543d363",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/claude-code.md": {
       "path": "wiki/ai-agent/claude-code/claude-code.md",
       "mtime": 1781503422299.5217,
       "contentHash": "b2d0e9697464db22",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/dive-into-claude-code.md": {
       "path": "wiki/ai-agent/claude-code/dive-into-claude-code.md",
       "mtime": 1781503422299.6772,
       "contentHash": "9689be496154ab7d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/claude-code/index.md": {
       "path": "wiki/ai-agent/claude-code/index.md",
       "mtime": 1781503422299.773,
       "contentHash": "3730150a21382092",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/context-eng/claude-md-best-practices.md": {
       "path": "wiki/ai-agent/context-eng/claude-md-best-practices.md",
       "mtime": 1781503422299.9321,
       "contentHash": "200ebcb56e2c002d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/context-eng/google-context-engineering.md": {
       "path": "wiki/ai-agent/context-eng/google-context-engineering.md",
       "mtime": 1781503422300.0972,
       "contentHash": "4dc8ac4e6fed8661",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/context-eng/index.md": {
       "path": "wiki/ai-agent/context-eng/index.md",
       "mtime": 1781503422300.2012,
       "contentHash": "01b7f65807b9c2b2",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/context-eng/manus-context-engineering.md": {
       "path": "wiki/ai-agent/context-eng/manus-context-engineering.md",
       "mtime": 1781503422300.2986,
       "contentHash": "b4a0707e0f19b24a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/agentic-analytics-anthropic.md": {
       "path": "wiki/ai-agent/ecosystem/agentic-analytics-anthropic.md",
       "mtime": 1781503422300.5261,
       "contentHash": "4cadfb6600dc4541",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/agentic-skills.md": {
       "path": "wiki/ai-agent/ecosystem/agentic-skills.md",
       "mtime": 1781503422300.6404,
       "contentHash": "5ae5bfb2f0f79845",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/ai-agent-ecommerce-content.md": {
       "path": "wiki/ai-agent/ecosystem/ai-agent-ecommerce-content.md",
       "mtime": 1781503422300.7415,
       "contentHash": "646f7161179fdff0",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/ai-career-trends.md": {
       "path": "wiki/ai-agent/ecosystem/ai-career-trends.md",
       "mtime": 1781503422300.8345,
       "contentHash": "785361ca89af3e79",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/anthropic-cookbook.md": {
       "path": "wiki/ai-agent/ecosystem/anthropic-cookbook.md",
       "mtime": 1781503422300.9255,
       "contentHash": "fed0ed8a21124c15",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/architect-in-agent-era.md": {
       "path": "wiki/ai-agent/ecosystem/architect-in-agent-era.md",
       "mtime": 1781605288912.066,
       "contentHash": "ef49f5df39c157ed",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/claude-managed-agents.md": {
       "path": "wiki/ai-agent/ecosystem/claude-managed-agents.md",
       "mtime": 1781503422301.123,
       "contentHash": "f748ba11855c03a6",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/claw-code.md": {
       "path": "wiki/ai-agent/ecosystem/claw-code.md",
       "mtime": 1781503422301.2114,
       "contentHash": "ed89419c6ea413b0",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/deerflow.md": {
       "path": "wiki/ai-agent/ecosystem/deerflow.md",
       "mtime": 1781503422301.2983,
       "contentHash": "d2a0617c9b6e67f7",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/digital-employee.md": {
       "path": "wiki/ai-agent/ecosystem/digital-employee.md",
       "mtime": 1781503422301.3865,
       "contentHash": "ac176b85801e3441",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/google-scion.md": {
       "path": "wiki/ai-agent/ecosystem/google-scion.md",
       "mtime": 1781503422301.472,
       "contentHash": "e88559affa0ac4dc",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/graphify-tool.md": {
       "path": "wiki/ai-agent/ecosystem/graphify-tool.md",
       "mtime": 1781503422301.5618,
       "contentHash": "fea1c1ab7213ddfc",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/hermes-agent.md": {
       "path": "wiki/ai-agent/ecosystem/hermes-agent.md",
       "mtime": 1781503422301.6538,
       "contentHash": "698442cb2d7727f9",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/index.md": {
       "path": "wiki/ai-agent/ecosystem/index.md",
       "mtime": 1781503422301.7446,
       "contentHash": "18c01eb68321f55d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/log-diagnosis-skill.md": {
       "path": "wiki/ai-agent/ecosystem/log-diagnosis-skill.md",
       "mtime": 1781503422301.8389,
       "contentHash": "4f78a3b6d5027d6a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/open-design.md": {
       "path": "wiki/ai-agent/ecosystem/open-design.md",
       "mtime": 1781503422301.9277,
       "contentHash": "3d60f63a953cffc0",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/openclaw-agentic-search-memory.md": {
       "path": "wiki/ai-agent/ecosystem/openclaw-agentic-search-memory.md",
       "mtime": 1781506215798.8,
       "contentHash": "d2fbcf9791a5704c",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/openclaw.md": {
       "path": "wiki/ai-agent/ecosystem/openclaw.md",
       "mtime": 1781506215706.538,
       "contentHash": "a60d143550657ff5",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/ecosystem/opencode.md": {
       "path": "wiki/ai-agent/ecosystem/opencode.md",
       "mtime": 1781503422302.3286,
       "contentHash": "60f1b737875fae72",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/harness/agent-harness-overview.md": {
       "path": "wiki/ai-agent/harness/agent-harness-overview.md",
       "mtime": 1781503422302.481,
       "contentHash": "7ae134b143785b58",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/harness/agent-harness.md": {
       "path": "wiki/ai-agent/harness/agent-harness.md",
       "mtime": 1781503422302.5693,
       "contentHash": "80173329089d06cc",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/harness/agent-vs-framework-vs-harness.md": {
       "path": "wiki/ai-agent/harness/agent-vs-framework-vs-harness.md",
       "mtime": 1781503422302.6538,
       "contentHash": "db174ef5c32249a2",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/harness/dw-harness-practice.md": {
       "path": "wiki/ai-agent/harness/dw-harness-practice.md",
       "mtime": 1781503422302.8137,
       "contentHash": "a6447148a2b680b2",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/harness/glm5-harness-practice.md": {
       "path": "wiki/ai-agent/harness/glm5-harness-practice.md",
       "mtime": 1781503422302.9038,
       "contentHash": "87f071c983e7f7a4",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/harness/harness-as-backend.md": {
       "path": "wiki/ai-agent/harness/harness-as-backend.md",
       "mtime": 1781503422302.994,
       "contentHash": "db015d7ff65b9c63",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/harness/harness-build-to-delete.md": {
       "path": "wiki/ai-agent/harness/harness-build-to-delete.md",
       "mtime": 1781503422303.0808,
       "contentHash": "5c35fa03053840fb",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/harness/harness-design-long-running.md": {
       "path": "wiki/ai-agent/harness/harness-design-long-running.md",
       "mtime": 1781503422303.167,
       "contentHash": "4b6d69c356e3d186",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/harness/harness-engineering-practice.md": {
       "path": "wiki/ai-agent/harness/harness-engineering-practice.md",
       "mtime": 1781782158615.59,
       "contentHash": "a718710932259db3",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/harness/index.md": {
       "path": "wiki/ai-agent/harness/index.md",
       "mtime": 1781505065430.3367,
       "contentHash": "5ee2d55d58114c3a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/harness/loop-engineering.md": {
       "path": "wiki/ai-agent/harness/loop-engineering.md",
       "mtime": 1781506203944.7095,
       "contentHash": "2501a118fa64a028",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/knowledge-base/ai-knowledge-base.md": {
       "path": "wiki/ai-agent/knowledge-base/ai-knowledge-base.md",
       "mtime": 1781503422303.5737,
       "contentHash": "d7eb38dfac007b9f",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/knowledge-base/index.md": {
       "path": "wiki/ai-agent/knowledge-base/index.md",
       "mtime": 1781503422303.657,
       "contentHash": "9611ee541f4c4b43",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/knowledge-base/karpathy-agent-obsidian-os.md": {
       "path": "wiki/ai-agent/knowledge-base/karpathy-agent-obsidian-os.md",
       "mtime": 1781503422303.7476,
       "contentHash": "4279cd2058175a4a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/knowledge-base/knowledge-base-karpathy-guide.md": {
       "path": "wiki/ai-agent/knowledge-base/knowledge-base-karpathy-guide.md",
       "mtime": 1781503422303.8389,
       "contentHash": "eeea03553c27d703",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/knowledge-base/knowledge-base-karpathy-practice.md": {
       "path": "wiki/ai-agent/knowledge-base/knowledge-base-karpathy-practice.md",
       "mtime": 1781503422303.9292,
       "contentHash": "640dc4e1779bf196",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/knowledge-base/llm-wiki-applications.md": {
       "path": "wiki/ai-agent/knowledge-base/llm-wiki-applications.md",
       "mtime": 1781503422304.017,
       "contentHash": "ace2ccd724559b24",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/knowledge-base/llm-wiki-concept.md": {
       "path": "wiki/ai-agent/knowledge-base/llm-wiki-concept.md",
       "mtime": 1781503422304.111,
       "contentHash": "aedc6f591b0d8c67",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/knowledge-base/llm-wiki-implementations.md": {
       "path": "wiki/ai-agent/knowledge-base/llm-wiki-implementations.md",
       "mtime": 1781503422304.1963,
       "contentHash": "d72add86a3036583",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/knowledge-base/llm-wiki-six-layer.md": {
       "path": "wiki/ai-agent/knowledge-base/llm-wiki-six-layer.md",
       "mtime": 1781503422304.2876,
       "contentHash": "b8cc8ed40d06ba02",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/knowledge-base/llm-wiki.md": {
       "path": "wiki/ai-agent/knowledge-base/llm-wiki.md",
       "mtime": 1781503422304.387,
       "contentHash": "e814839d566d96e1",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/knowledge-base/obsidian-claudian.md": {
       "path": "wiki/ai-agent/knowledge-base/obsidian-claudian.md",
       "mtime": 1781503422304.477,
       "contentHash": "e74cfdbe26d9c519",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/knowledge-base/obsidian-second-brain.md": {
       "path": "wiki/ai-agent/knowledge-base/obsidian-second-brain.md",
       "mtime": 1781503422304.5752,
       "contentHash": "ba3952d7158ee1dc",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/knowledge-base/rag-vs-llm-wiki.md": {
       "path": "wiki/ai-agent/knowledge-base/rag-vs-llm-wiki.md",
       "mtime": 1781503422304.6704,
       "contentHash": "f43ed335edaab990",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/ai-programming-tools-comparison.md": {
       "path": "wiki/ai-agent/sdd/ai-programming-tools-comparison.md",
       "mtime": 1781503422304.869,
       "contentHash": "fca584331701ca96",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/index.md": {
       "path": "wiki/ai-agent/sdd/index.md",
       "mtime": 1781666562530.0164,
       "contentHash": "178971d60e409a23",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/openspec-custom-schema-guide.md": {
       "path": "wiki/ai-agent/sdd/openspec-custom-schema-guide.md",
       "mtime": 1781666519136.47,
       "contentHash": "cb08aff688152ce2",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/openspec-schema-mechanism.md": {
       "path": "wiki/ai-agent/sdd/openspec-schema-mechanism.md",
       "mtime": 1781666494571.6133,
       "contentHash": "879cef4ae16bce42",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/openspec-sdd-practice.md": {
       "path": "wiki/ai-agent/sdd/openspec-sdd-practice.md",
       "mtime": 1781666566566.3357,
       "contentHash": "8358708dcb64ce2c",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/openspec-skill-mechanism.md": {
       "path": "wiki/ai-agent/sdd/openspec-skill-mechanism.md",
       "mtime": 1781666535535.6157,
       "contentHash": "1298176097bfaabb",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/openspec-verify-extension.md": {
       "path": "wiki/ai-agent/sdd/openspec-verify-extension.md",
       "mtime": 1781666555199.1155,
       "contentHash": "ac717a1a334e4286",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/progressive-spec-methodology.md": {
       "path": "wiki/ai-agent/sdd/progressive-spec-methodology.md",
       "mtime": 1781503422305.132,
       "contentHash": "c2817b0aac86aea5",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/sdd-custom-workflow.md": {
       "path": "wiki/ai-agent/sdd/sdd-custom-workflow.md",
       "mtime": 1781666569613.1848,
       "contentHash": "65a0016b02ce06ba",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/sdd-openspec-superpowers.md": {
       "path": "wiki/ai-agent/sdd/sdd-openspec-superpowers.md",
       "mtime": 1781503422305.349,
       "contentHash": "84b917f34a12ce16",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/spec-kit.md": {
       "path": "wiki/ai-agent/sdd/spec-kit.md",
       "mtime": 1781503422305.4963,
       "contentHash": "061afb0d8e6afa62",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/superpowers-framework.md": {
       "path": "wiki/ai-agent/sdd/superpowers-framework.md",
       "mtime": 1781503422305.629,
       "contentHash": "4d551f36c289d86c",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/superpowers-iron-laws.md": {
       "path": "wiki/ai-agent/sdd/superpowers-iron-laws.md",
       "mtime": 1781503422305.714,
       "contentHash": "fc0ce93bdf1d28c7",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/superpowers-openspec-legacy-workflow.md": {
       "path": "wiki/ai-agent/sdd/superpowers-openspec-legacy-workflow.md",
       "mtime": 1781503422305.856,
       "contentHash": "9701963e15bf2dc9",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/superpowers-openspec-pitfalls.md": {
       "path": "wiki/ai-agent/sdd/superpowers-openspec-pitfalls.md",
       "mtime": 1781503422305.9783,
       "contentHash": "ca78e62b834f0890",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/superpowers-repo-architecture.md": {
       "path": "wiki/ai-agent/sdd/superpowers-repo-architecture.md",
       "mtime": 1781503422306.1208,
       "contentHash": "14b35ecc6c424b77",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/superpowers-vs-openspec.md": {
       "path": "wiki/ai-agent/sdd/superpowers-vs-openspec.md",
       "mtime": 1781503422306.263,
       "contentHash": "b28c6404800c1f13",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "wiki/ai-agent/sdd/superpowers-workflow-scenarios.md": {
       "path": "wiki/ai-agent/sdd/superpowers-workflow-scenarios.md",
       "mtime": 1781503422306.3882,
       "contentHash": "0f5561908e9d38ac",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/01/19/开源AI编程工具对决：Superpowers技能库与OpenSpec规范驱动，谁更胜一筹？.md": {
       "path": "sources/2026/01/19/开源AI编程工具对决：Superpowers技能库与OpenSpec规范驱动，谁更胜一筹？.md",
       "mtime": 1781503421797.3035,
       "contentHash": "bd2daa11d0d4c4a1",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/02/26/Obsidian + Claudian真香警告：AI知识库终极方案.md": {
       "path": "sources/2026/02/26/Obsidian + Claudian真香警告：AI知识库终极方案.md",
       "mtime": 1781503421797.5503,
       "contentHash": "d072273ebccfcfe9",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/03/26/挖到宝！Obsidian打造个人第二大脑.md": {
       "path": "sources/2026/03/26/挖到宝！Obsidian打造个人第二大脑.md",
       "mtime": 1781503421797.806,
       "contentHash": "a5bc60306c04a5d7",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/03/29/claude-code-auto-dream-guide.md": {
       "path": "sources/2026/03/29/claude-code-auto-dream-guide.md",
       "mtime": 1781503421797.9746,
       "contentHash": "633adfedf12e60b3",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/03/31/Claude Code sourcemap还原实战.md": {
       "path": "sources/2026/03/31/Claude Code sourcemap还原实战.md",
       "mtime": 1781503421798.169,
       "contentHash": "49c4b6f1a6556aef",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/01/Claude Code 87个未发布功能.md": {
       "path": "sources/2026/04/01/Claude Code 87个未发布功能.md",
       "mtime": 1781503421798.4023,
       "contentHash": "65c5e08c0c90f84d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/01/Claude Code 源码架构解析.md": {
       "path": "sources/2026/04/01/Claude Code 源码架构解析.md",
       "mtime": 1781503421798.5222,
       "contentHash": "f46188925a25815a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/02/Superpowers框架.md": {
       "path": "sources/2026/04/02/Superpowers框架.md",
       "mtime": 1781503421798.6902,
       "contentHash": "cf4349aee971114e",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/02/claw-code突破10万星.md": {
       "path": "sources/2026/04/02/claw-code突破10万星.md",
       "mtime": 1781503421798.7878,
       "contentHash": "dc39284c91c87fba",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/02/日志诊断Skill.md": {
       "path": "sources/2026/04/02/日志诊断Skill.md",
       "mtime": 1781503421798.918,
       "contentHash": "9b23fe8afcf68af9",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/03/Claude Code Harness架构设计.md": {
       "path": "sources/2026/04/03/Claude Code Harness架构设计.md",
       "mtime": 1781503421799.0964,
       "contentHash": "eaf77f52bd86989a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/03/GLM5-Harness实战.md": {
       "path": "sources/2026/04/03/GLM5-Harness实战.md",
       "mtime": 1781503421799.2227,
       "contentHash": "af6e050fa099af73",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/05/Agent Skills测试用例Skill.md": {
       "path": "sources/2026/04/05/Agent Skills测试用例Skill.md",
       "mtime": 1781503421799.392,
       "contentHash": "9134a9f933c3d9fb",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/05/LLM搭建知识库保姆级教程.md": {
       "path": "sources/2026/04/05/LLM搭建知识库保姆级教程.md",
       "mtime": 1781503421799.5107,
       "contentHash": "a6974f57d0d971c2",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/05/渐进式Spec新范式.md": {
       "path": "sources/2026/04/05/渐进式Spec新范式.md",
       "mtime": 1781503421799.6301,
       "contentHash": "2b63c7c974ef0343",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/06/BookRAG.md": {
       "path": "sources/2026/04/06/BookRAG.md",
       "mtime": 1781503421799.8235,
       "contentHash": "d0d1e9dc5e4c4509",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/06/Karpathy Agent+Obsidian操作系统.md": {
       "path": "sources/2026/04/06/Karpathy Agent+Obsidian操作系统.md",
       "mtime": 1781503421799.9497,
       "contentHash": "c713bf731c10805a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/06/Karpathy LLM Wiki颠覆RAG.md": {
       "path": "sources/2026/04/06/Karpathy LLM Wiki颠覆RAG.md",
       "mtime": 1781503421800.0686,
       "contentHash": "70ed5d2775454b37",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/06/LLM Wiki开源仓库.md": {
       "path": "sources/2026/04/06/LLM Wiki开源仓库.md",
       "mtime": 1781503421800.1897,
       "contentHash": "6a967ad44b69e9f2",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/06/跟着Karpathy从零搭建AI知识库.md": {
       "path": "sources/2026/04/06/跟着Karpathy从零搭建AI知识库.md",
       "mtime": 1781503421800.3105,
       "contentHash": "d199e60001d42dd8",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/07/Anthropic Cookbook食谱库.md": {
       "path": "sources/2026/04/07/Anthropic Cookbook食谱库.md",
       "mtime": 1781503421800.457,
       "contentHash": "b135cb2b837e8f2b",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/07/Karpathy终结RAG草莽时代.md": {
       "path": "sources/2026/04/07/Karpathy终结RAG草莽时代.md",
       "mtime": 1781503421800.5884,
       "contentHash": "37079e90a8dcdd3a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/07/LLM Wiki爆火Agent时代.md": {
       "path": "sources/2026/04/07/LLM Wiki爆火Agent时代.md",
       "mtime": 1781503421800.7217,
       "contentHash": "7c0e946c0f4fab1d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/07/开源社区48小时搞定LLM Wiki.md": {
       "path": "sources/2026/04/07/开源社区48小时搞定LLM Wiki.md",
       "mtime": 1781503421800.8223,
       "contentHash": "a90c0dfc43ec61d4",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/08/Hermes Agent教程：能\"自己进化\"专属超级分身AI Agent.md": {
       "path": "sources/2026/04/08/Hermes Agent教程：能\"自己进化\"专属超级分身AI Agent.md",
       "mtime": 1781503421800.9907,
       "contentHash": "f7ba97b1cf34545a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/08/OpenSpec 实战复盘：一个真实项目的 SDD 全流程落地记录.md": {
       "path": "sources/2026/04/08/OpenSpec 实战复盘：一个真实项目的 SDD 全流程落地记录.md",
       "mtime": 1781503421801.1194,
       "contentHash": "050a2d7e7849735f",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/08/SDD 规范驱动，OpenSpec+SuperPowers 双框架，让 AI 高效无债可追溯.md": {
       "path": "sources/2026/04/08/SDD 规范驱动，OpenSpec+SuperPowers 双框架，让 AI 高效无债可追溯.md",
       "mtime": 1781503421801.2214,
       "contentHash": "23886c333d15a93f",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/08/从源码角度聊聊 Claude Code 和 OpenCode 的效果区别.md": {
       "path": "sources/2026/04/08/从源码角度聊聊 Claude Code 和 OpenCode 的效果区别.md",
       "mtime": 1781503421801.3428,
       "contentHash": "629eaa0892309aca",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/09/Anthropic亲自下场，又一批Agent创业公司死掉了.md": {
       "path": "sources/2026/04/09/Anthropic亲自下场，又一批Agent创业公司死掉了.md",
       "mtime": 1781503421801.49,
       "contentHash": "31a83c7eac08b6af",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/09/Anthropic新发布的工程博客，重新思考Agent的新架构.md": {
       "path": "sources/2026/04/09/Anthropic新发布的工程博客，重新思考Agent的新架构.md",
       "mtime": 1781503421801.591,
       "contentHash": "3f2ac818a1e186fe",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/09/Anthropic的「脑手分离」：Claude Managed Agents架构拆解.md": {
       "path": "sources/2026/04/09/Anthropic的「脑手分离」：Claude Managed Agents架构拆解.md",
       "mtime": 1781503421801.7136,
       "contentHash": "2efec0d58e0b4f0b",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/09/Claude Managed Agents发布：AI Agent部署进入托管时代.md": {
       "path": "sources/2026/04/09/Claude Managed Agents发布：AI Agent部署进入托管时代.md",
       "mtime": 1781503421801.805,
       "contentHash": "8a2d41eed9bd01a0",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/09/Hermes Agent 凭什么两周封神，自进化还是有点东西.md": {
       "path": "sources/2026/04/09/Hermes Agent 凭什么两周封神，自进化还是有点东西.md",
       "mtime": 1781503421801.9036,
       "contentHash": "81afd98148ced47a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/09/OpenClaw 用户集体\"叛逃\" Hermes时代来临.md": {
       "path": "sources/2026/04/09/OpenClaw 用户集体\"叛逃\" Hermes时代来临.md",
       "mtime": 1781503421802,
       "contentHash": "8e1f7102f08fdec1",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/09/开发Agent苦日子熬到头了！Anthropic发布Claude Managed Agents.md": {
       "path": "sources/2026/04/09/开发Agent苦日子熬到头了！Anthropic发布Claude Managed Agents.md",
       "mtime": 1781503421802.0952,
       "contentHash": "51c4ebe9cab5bae2",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/09/快速蹿红的Hermes Agent，会成为下一个OpenClaw吗.md": {
       "path": "sources/2026/04/09/快速蹿红的Hermes Agent，会成为下一个OpenClaw吗.md",
       "mtime": 1781503421802.221,
       "contentHash": "345d636757ed854a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/09/效率提升十倍！Anthropic发布Agent基础设施Claude Managed Agents.md": {
       "path": "sources/2026/04/09/效率提升十倍！Anthropic发布Agent基础设施Claude Managed Agents.md",
       "mtime": 1781503421802.367,
       "contentHash": "e52b91db58f9475a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/09/数开的未来在哪？我用一套 Skills 干掉了数开 70% 的重复开发.md": {
       "path": "sources/2026/04/09/数开的未来在哪？我用一套 Skills 干掉了数开 70% 的重复开发.md",
       "mtime": 1781503421802.5488,
       "contentHash": "ebe370fab565140d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/09/狂揽4万星，换掉OpenClaw太爽了，5美元就能养个AI打工人.md": {
       "path": "sources/2026/04/09/狂揽4万星，换掉OpenClaw太爽了，5美元就能养个AI打工人.md",
       "mtime": 1781503421802.6855,
       "contentHash": "1c9d818f9cb4b604",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/10/装完Hermes Agent玩了一圈，我觉得龙虾已死.md": {
       "path": "sources/2026/04/10/装完Hermes Agent玩了一圈，我觉得龙虾已死.md",
       "mtime": 1781503421802.844,
       "contentHash": "9afb0bbc03dd207e",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/11/Google悄悄开源了个\"AI虚拟机\"，让多个Agent同时干活不打架.md": {
       "path": "sources/2026/04/11/Google悄悄开源了个\"AI虚拟机\"，让多个Agent同时干活不打架.md",
       "mtime": 1781503421803.008,
       "contentHash": "26bd615744d15817",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/21/AI写代码太快人类测试跟不上了Meta用新方法把bug检出率提升4倍.md": {
       "path": "sources/2026/04/21/AI写代码太快人类测试跟不上了Meta用新方法把bug检出率提升4倍.md",
       "mtime": 1781503421803.1638,
       "contentHash": "353760434b77a59b",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/26/Karpathy的CLAUDE.md爆火：AI不瞎改了但开始用聪明的方式犯错.md": {
       "path": "sources/2026/04/26/Karpathy的CLAUDE.md爆火：AI不瞎改了但开始用聪明的方式犯错.md",
       "mtime": 1781503421803.3726,
       "contentHash": "bf96991c9f497c4a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/27/AI Agent在电商内容场景的应用及演进.md": {
       "path": "sources/2026/04/27/AI Agent在电商内容场景的应用及演进.md",
       "mtime": 1781503421803.6292,
       "contentHash": "32eb201ad67e7d8b",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/04/27/MaxCompute Data+AI：大数据平台的AI化演进与实践.md": {
       "path": "sources/2026/04/27/MaxCompute Data+AI：大数据平台的AI化演进与实践.md",
       "mtime": 1781503421803.7563,
       "contentHash": "ad27111a0289435e",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/7张图搞懂Claude Code的Harness架构设计总结.md": {
       "path": "sources/2026/05/09/7张图搞懂Claude Code的Harness架构设计总结.md",
       "mtime": 1781503421804.0166,
       "contentHash": "fa9bdda8f49dd7c8",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/AI Agent进阶：Sub-Agents vs Agent Teams.md": {
       "path": "sources/2026/05/09/AI Agent进阶：Sub-Agents vs Agent Teams.md",
       "mtime": 1781503421804.157,
       "contentHash": "2efd304cc68b871b",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/AI-Agent架构设计四-多Agent协作.md": {
       "path": "sources/2026/05/09/AI-Agent架构设计四-多Agent协作.md",
       "mtime": 1781503421804.2532,
       "contentHash": "9d5230fd88b78eab",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/AI代理的上下文工程：构建Manus的经验教训.md": {
       "path": "sources/2026/05/09/AI代理的上下文工程：构建Manus的经验教训.md",
       "mtime": 1781503421804.392,
       "contentHash": "e38c2d9f60cb03c3",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Agent-Harness综述同一模型体感差异在哪.md": {
       "path": "sources/2026/05/09/Agent-Harness综述同一模型体感差异在哪.md",
       "mtime": 1781503421804.5312,
       "contentHash": "9c200e3e1be986b1",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Agent时代架构师到底应该学什么.md": {
       "path": "sources/2026/05/09/Agent时代架构师到底应该学什么.md",
       "mtime": 1781503421804.6687,
       "contentHash": "55b746af0c5b846f",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Anthropic 的 Harness，已经进入新阶段：只用三招，开始从\"补\"转向\"删\".md": {
       "path": "sources/2026/05/09/Anthropic 的 Harness，已经进入新阶段：只用三招，开始从\"补\"转向\"删\".md",
       "mtime": 1781503421804.8235,
       "contentHash": "80bbf8ff6f04173f",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Anthropic-CEO警告程序员淘汰三种铁饭碗.md": {
       "path": "sources/2026/05/09/Anthropic-CEO警告程序员淘汰三种铁饭碗.md",
       "mtime": 1781503421804.9236,
       "contentHash": "e16fef06f2df1d67",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Anthropic说：不要在等下一代模型了，立刻马上做Harness.md": {
       "path": "sources/2026/05/09/Anthropic说：不要在等下一代模型了，立刻马上做Harness.md",
       "mtime": 1781503421805.104,
       "contentHash": "1736b9f968b237bb",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Building agents that reach production systems with MCP.md": {
       "path": "sources/2026/05/09/Building agents that reach production systems with MCP.md",
       "mtime": 1781503421805.252,
       "contentHash": "74aec94a050b6e42",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Claude Code v2.1.88 架构分析.md": {
       "path": "sources/2026/05/09/Claude Code v2.1.88 架构分析.md",
       "mtime": 1781503421805.341,
       "contentHash": "ccad2f089cf5b286",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Claude Code 源码泄漏：拆解工业级 AI Coding Agent.md": {
       "path": "sources/2026/05/09/Claude Code 源码泄漏：拆解工业级 AI Coding Agent.md",
       "mtime": 1781503421805.5134,
       "contentHash": "2198efc84a98b845",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Claude Code 源码深度解析.md": {
       "path": "sources/2026/05/09/Claude Code 源码深度解析.md",
       "mtime": 1781503421805.7021,
       "contentHash": "39052cb4bfd373a4",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Claude Code 源码深度解析：一个工业级 AI Agent 的实现之道.md": {
       "path": "sources/2026/05/09/Claude Code 源码深度解析：一个工业级 AI Agent 的实现之道.md",
       "mtime": 1781503421805.7957,
       "contentHash": "db424766b2bca1d0",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Claude Code 源码蒸馏 - Harness Engineering 实践记录.md": {
       "path": "sources/2026/05/09/Claude Code 源码蒸馏 - Harness Engineering 实践记录.md",
       "mtime": 1781503421805.9438,
       "contentHash": "2725e7749a6689df",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Claude-Code-技术解析.md": {
       "path": "sources/2026/05/09/Claude-Code-技术解析.md",
       "mtime": 1781503421806.0808,
       "contentHash": "39660ddecc492704",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Claude-Code产品负责人-AI时代PM核心能力.md": {
       "path": "sources/2026/05/09/Claude-Code产品负责人-AI时代PM核心能力.md",
       "mtime": 1781503421806.2163,
       "contentHash": "4f8a59eb272dfbbf",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Coding-Agent-Harness六组件协作系统.md": {
       "path": "sources/2026/05/09/Coding-Agent-Harness六组件协作系统.md",
       "mtime": 1781503421806.358,
       "contentHash": "86eb1202070028b8",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Cursor复盘Harness模型决定能力上限Harness决定生产下限.md": {
       "path": "sources/2026/05/09/Cursor复盘Harness模型决定能力上限Harness决定生产下限.md",
       "mtime": 1781503421806.5007,
       "contentHash": "789696fd45bd2842",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/DeerFlow 2.0：字节跳动开源的 Super Agent Harness 到底强在哪.md": {
       "path": "sources/2026/05/09/DeerFlow 2.0：字节跳动开源的 Super Agent Harness 到底强在哪.md",
       "mtime": 1781503421806.6372,
       "contentHash": "e21be42815cdfd1e",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Harness Engineering-AI编程进入AI治理和大规模工程化阶段.md": {
       "path": "sources/2026/05/09/Harness Engineering-AI编程进入AI治理和大规模工程化阶段.md",
       "mtime": 1781503421806.7312,
       "contentHash": "3f990544f75940ef",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Harness Engineering：为 Coding Agent 构建可控工程系统的实践总结.md": {
       "path": "sources/2026/05/09/Harness Engineering：为 Coding Agent 构建可控工程系统的实践总结.md",
       "mtime": 1781503421806.8577,
       "contentHash": "e70b4aacb50a632d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Harness 设计：构建长时间运行的应用开发.md": {
       "path": "sources/2026/05/09/Harness 设计：构建长时间运行的应用开发.md",
       "mtime": 1781503421807.0151,
       "contentHash": "f2fce9c0997498ae",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Harness正在成为新后端.md": {
       "path": "sources/2026/05/09/Harness正在成为新后端.md",
       "mtime": 1781503421807.1438,
       "contentHash": "3efd3ab7948b49f1",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Karpathy 开源了 Agent + Obsidian 个人知识库，超级有启发.md": {
       "path": "sources/2026/05/09/Karpathy 开源了 Agent + Obsidian 个人知识库，超级有启发.md",
       "mtime": 1781503421807.2861,
       "contentHash": "a5b32c378d3db67d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Karpathy-LLM-Wiki改造六层架构.md": {
       "path": "sources/2026/05/09/Karpathy-LLM-Wiki改造六层架构.md",
       "mtime": 1781503421807.3745,
       "contentHash": "676a7bf96631efce",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/LLM-Wiki让AI把你的文档自动长成知识库.md": {
       "path": "sources/2026/05/09/LLM-Wiki让AI把你的文档自动长成知识库.md",
       "mtime": 1781503421807.4766,
       "contentHash": "72c9d68640f6171c",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Open-Design开源平替Claude-Design.md": {
       "path": "sources/2026/05/09/Open-Design开源平替Claude-Design.md",
       "mtime": 1781503421807.5674,
       "contentHash": "701bbfd6456e5885",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/OpenAI 内部 Data Agent 的构建原理分析.md": {
       "path": "sources/2026/05/09/OpenAI 内部 Data Agent 的构建原理分析.md",
       "mtime": 1781503421807.7117,
       "contentHash": "ecfe997f2599735d",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/OpenSpec vs Superpowers：2 套 AI 编码工作流，3 个场景怎么选.md": {
       "path": "sources/2026/05/09/OpenSpec vs Superpowers：2 套 AI 编码工作流，3 个场景怎么选.md",
       "mtime": 1781503421808.0005,
       "contentHash": "c99bdd08962f1fe5",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Rag-vs-GraphRag-vs-LLM-Wiki方案对比与选型.md": {
       "path": "sources/2026/05/09/Rag-vs-GraphRag-vs-LLM-Wiki方案对比与选型.md",
       "mtime": 1781503421808.0928,
       "contentHash": "21403cb59f9914ea",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/SDD 规范驱动：OpenSpec+SuperPowers 双框架.md": {
       "path": "sources/2026/05/09/SDD 规范驱动：OpenSpec+SuperPowers 双框架.md",
       "mtime": 1781503421808.238,
       "contentHash": "929d1387af4f8ad2",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Sub-Agent VS Agent Team：多智能体架构和上下文边界.md": {
       "path": "sources/2026/05/09/Sub-Agent VS Agent Team：多智能体架构和上下文边界.md",
       "mtime": 1781503421808.3816,
       "contentHash": "34a52ec91f1536cc",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Superpowers：145k Star的AI编码框架，到底是什么来头.md": {
       "path": "sources/2026/05/09/Superpowers：145k Star的AI编码框架，到底是什么来头.md",
       "mtime": 1781503421808.4744,
       "contentHash": "9d969f1eddc7fdac",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/The Anatomy of an Agent Harness.md": {
       "path": "sources/2026/05/09/The Anatomy of an Agent Harness.md",
       "mtime": 1781503421808.615,
       "contentHash": "012b7aad2dc72c2a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/The Anatomy of an Agent Harness原文.md": {
       "path": "sources/2026/05/09/The Anatomy of an Agent Harness原文.md",
       "mtime": 1781503421808.795,
       "contentHash": "27cf778398ede7a3",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/Using Claude Code - session management and 1M context.md": {
       "path": "sources/2026/05/09/Using Claude Code - session management and 1M context.md",
       "mtime": 1781503421808.9316,
       "contentHash": "dd2adb6af6f8e69f",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/anthropic-harness-design-long-running-apps.md": {
       "path": "sources/2026/05/09/anthropic-harness-design-long-running-apps.md",
       "mtime": 1781503421809.0789,
       "contentHash": "bdceb0774a7d0f9b",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/一个被严重低估的 Skills——Superpowers.md": {
       "path": "sources/2026/05/09/一个被严重低估的 Skills——Superpowers.md",
       "mtime": 1781503421809.2454,
       "contentHash": "0d21de30a1d0df0a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/一文彻底讲清：Agent、Agent Framework、Agent Harness 的本质区别.md": {
       "path": "sources/2026/05/09/一文彻底讲清：Agent、Agent Framework、Agent Harness 的本质区别.md",
       "mtime": 1781503421809.4055,
       "contentHash": "4bcd3520ff112f85",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/一文看懂 Harness Engineering：智能体时代的 AI 编程驾驭之道.md": {
       "path": "sources/2026/05/09/一文看懂 Harness Engineering：智能体时代的 AI 编程驾驭之道.md",
       "mtime": 1781503421809.5464,
       "contentHash": "fb8d1de11e567c99",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/封神级RAG优化实战query改写加prompt构建.md": {
       "path": "sources/2026/05/09/封神级RAG优化实战query改写加prompt构建.md",
       "mtime": 1781503421809.6924,
       "contentHash": "04ae3b5bfb911e96",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/开源Agent架构的设计与实现之：OpenCode.md": {
       "path": "sources/2026/05/09/开源Agent架构的设计与实现之：OpenCode.md",
       "mtime": 1781503421809.8389,
       "contentHash": "eb8ad5b9fab68d10",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/我把Anthropic的Harness理念Skill化了.md": {
       "path": "sources/2026/05/09/我把Anthropic的Harness理念Skill化了.md",
       "mtime": 1781503421809.9888,
       "contentHash": "f6902de6d9e7ec24",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/09/谈OpenClaw刚刚更新的Memory Wiki技术.md": {
       "path": "sources/2026/05/09/谈OpenClaw刚刚更新的Memory Wiki技术.md",
       "mtime": 1781503421882.5413,
       "contentHash": "2faa1dec0ccc8939",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/10/Agent 的长短期记忆系统.md": {
       "path": "sources/2026/05/10/Agent 的长短期记忆系统.md",
       "mtime": 1781503421898.1006,
       "contentHash": "5e0f17534330c62f",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/10/Agent范式.md": {
       "path": "sources/2026/05/10/Agent范式.md",
       "mtime": 1781503421898.2866,
       "contentHash": "23ad2102291dedee",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/10/Claude Code from Source.md": {
       "path": "sources/2026/05/10/Claude Code from Source.md",
       "mtime": 1781503421898.726,
       "contentHash": "8f67b6a70ff81909",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/10/Claude Code 多Agent实现机制.md": {
       "path": "sources/2026/05/10/Claude Code 多Agent实现机制.md",
       "mtime": 1781503421899.0671,
       "contentHash": "7a7a3fc665f2d186",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/10/lint-stub.md": {
       "path": "sources/2026/05/10/lint-stub.md",
       "mtime": 1781503421949.0527,
       "contentHash": "5ee2bd6692b3acfe",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/12/DataWorks DataAgent分享录音.md": {
       "path": "sources/2026/05/12/DataWorks DataAgent分享录音.md",
       "mtime": 1781503422092.769,
       "contentHash": "71658775dbb33eda",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/14/DataAgent语义层分析.md": {
       "path": "sources/2026/05/14/DataAgent语义层分析.md",
       "mtime": 1781503422103.6475,
       "contentHash": "988227d8459c5a85",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/14/网易人才观.md": {
       "path": "sources/2026/05/14/网易人才观.md",
       "mtime": 1781503422103.781,
       "contentHash": "272f7ea4f2ab1525",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/14/网易人才观面试.md": {
       "path": "sources/2026/05/14/网易人才观面试.md",
       "mtime": 1781503422103.9465,
       "contentHash": "245dc339ab70edb7",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/17/Claude Code 大型代码库配置指南.md": {
       "path": "sources/2026/05/17/Claude Code 大型代码库配置指南.md",
       "mtime": 1781503422104.62,
       "contentHash": "46cf1a067a9f3aa1",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/18/为什么 Code Agent 无法解决企业数据分析问题.md": {
       "path": "sources/2026/05/18/为什么 Code Agent 无法解决企业数据分析问题.md",
       "mtime": 1781503422106.0103,
       "contentHash": "05528c8c79bccac6",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/21/Claude Code Harness 工程：数仓侧落地方案｜得物技术.md": {
       "path": "sources/2026/05/21/Claude Code Harness 工程：数仓侧落地方案｜得物技术.md",
       "mtime": 1781503422106.6067,
       "contentHash": "17ffa37322970ba4",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/28/DataWorks虾聊0528录音-修正版.md": {
       "path": "sources/2026/05/28/DataWorks虾聊0528录音-修正版.md",
       "mtime": 1781503422155.5461,
       "contentHash": "ae4a9794e9dc5f2a",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/05/29/别再卷大模型了_Palantir 告诉我们，AI 的进阶是_本体论_.md": {
       "path": "sources/2026/05/29/别再卷大模型了_Palantir 告诉我们，AI 的进阶是_本体论_.md",
       "mtime": 1781503422290.3728,
       "contentHash": "eb5fde7d26e092fa",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/06/03/anthropic-self-service-analytics-with-claude.md": {
       "path": "sources/2026/06/03/anthropic-self-service-analytics-with-claude.md",
       "mtime": 1781503422290.6838,
       "contentHash": "753ca000fd8bc4a7",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/06/15/loop-engineering详解.md": {
       "path": "sources/2026/06/15/loop-engineering详解.md",
       "mtime": 1781505006087.153,
       "contentHash": "b6d34b969b5b3f65",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     },
     "sources/2026/06/18/dataagent-enterprise-credit-practice.md": {
       "path": "sources/2026/06/18/dataagent-enterprise-credit-practice.md",
       "mtime": 1781782149119.478,
       "contentHash": "6b8d56a9c89e8934",
-      "lastSynced": "2026-06-18"
+      "lastSynced": "2026-06-23"
     }
   },
-  "lastSync": "2026-06-18"
+  "lastSync": "2026-06-23"
 }
