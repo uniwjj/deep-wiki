@@ -5,7 +5,7 @@ aliases: [Data Agent Enterprise Practice, DataAgent 企业实践, 蚂蚁 Data Ag
 tags: [ai-agent, big-data, practice]
 sources: [2026/06/18/dataagent-enterprise-credit-practice.md]
 created: 2026-06-18
-updated: 2026-06-23
+updated: 2026-06-26
 ---
 
 # Data Agent 企业级实践
@@ -151,3 +151,4 @@ Data Agent 与 Coding Agent 的关键差异：
 - [[agent-evaluation-framework]] — Agent 评测框架
 - [[agent-multi-agent-collaboration]] — 多 Agent 协同模式
 - [[dataagent-semantic-layer|数据资产语义层]] — DataAgent 语义层（节点类型体系、FlowSpec 规范、调度与依赖语义）
+- [[xiaomi-dimi-data-agent]] — 小米 DiMi Text2SQL 全球第三，语义层 Harness 的量化验证

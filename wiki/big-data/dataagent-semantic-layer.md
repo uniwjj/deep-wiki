@@ -1,11 +1,11 @@
 ---
 title: DataAgent 语义层
-description: DataWorks DataAgent 语义层的具体内容——从分享录音和数据开发 SKILL 中提取的结构化领域知识，包括节点类型体系、连接器参数、FlowSpec 规范、调度与依赖语义、运行时约束等
+description: DataWorks DataAgent 语义层的具体内容——从分享录音和数据开发 SKILL 中提取的结构化领域知识，包括节点类型体系、连接器参数、FlowSpec 规范、调度与依赖语义、运行时约束等。同时涵盖业界 NL2Semantic2SQL 语义层范式演进。
 aliases: [语义层, semantic layer, 数据语义层]
 tags: [big-data, ai-agent, concept]
-sources: [2026/05/12/DataWorks DataAgent分享录音.md, 2026/05/14/DataAgent语义层分析.md]
+sources: [2026/05/12/DataWorks DataAgent分享录音.md, 2026/05/14/DataAgent语义层分析.md, 2026/06/26/小米 Data Agent 获 Text2SQL 全球榜单第三名.html]
 created: 2026-05-14
-updated: 2026-05-14
+updated: 2026-06-26
 ---
 
 # DataAgent 语义层
@@ -134,3 +134,4 @@ SKILL 示例 SQL 中使用但未显式定义的写法：
 - [[openai-data-agent]] — OpenAI 内部 Data Agent（对照语义正确性问题）
 - [[ontological-semantic-layer]] — 本体化语义层，DataAgent 语义层的上层概念框架与战略视角
 - [[specialized-knowledge-search]] — 语义层作为 Data Agent 搜索基础设施
+- [[xiaomi-dimi-data-agent]] — 小米 DiMi NL2Semantic2SQL，语义层在 Harness 工程化中的位置

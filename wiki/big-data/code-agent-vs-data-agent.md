@@ -1,11 +1,11 @@
 ---
 title: Code Agent vs Data Agent
-description: 为什么 Code Agent 无法解决企业数据分析问题——从目标函数差异、Databricks Genie 的三个挑战、维度对比与协作分工
+description: 为什么 Code Agent 无法解决企业数据分析问题——从目标函数差异、Databricks Genie 的三个挑战、BIRD 榜单证据、维度对比与协作分工
 aliases: [Code Agent vs Data Agent, code-agent-data-agent, 编码智能体与数据智能体对比]
 tags: [big-data, ai-agent, comparison]
-sources: [2026/05/18/为什么 Code Agent 无法解决企业数据分析问题.html, 2026/05/18/为什么 Code Agent 无法解决企业数据分析问题.md]
+sources: [2026/05/18/为什么 Code Agent 无法解决企业数据分析问题.html, 2026/05/18/为什么 Code Agent 无法解决企业数据分析问题.md, 2026/06/26/小米 Data Agent 获 Text2SQL 全球榜单第三名.html]
 created: 2026-05-18
-updated: 2026-05-18
+updated: 2026-06-26
 ---
 
 # Code Agent vs Data Agent
@@ -36,6 +36,19 @@ WinClaw 在 2026-05-16 发表的观点文章，从 [[databricks-genie|Databricks
 关键词搜索容易失效——用户问"收入"，但表名 `rev_recognition_fact`、dashboard 写 `ARR`、文档写"确认收入"、财务口径叫"净收入"。
 
 > 企业 Data Agent 的第一能力不是写 SQL，而是找到相关数据资产，并判断它们之间的关系。
+
+### BIRD 榜单证据：模型裸打 vs 加 Harness 的天壤之别
+
+来自 [[xiaomi-dimi-data-agent|小米 DiMi Data Agent]] 的实践提供了量化证据。**BIRD**（Text2SQL 领域公认最难评测基准，95 个真实数据库、37 个垂直领域、含脏数据）的排名显示：
+
+| 参赛方 | 方式 | 排名 |
+|------|------|------|
+| Claude Opus 4.6 | 裸模型 | 30-40 名 |
+| GPT-5.5 | 裸模型 | 30-40 名 |
+| 腾讯 Data Agent | Model + Harness | 全球第五 |
+| 小米 DiMi | Model + Harness | 全球第三 |
+
+顶级基座模型裸打榜只能排 30-40 名，Harness（语义层体系）的差异决定排名。这与 Xiaomi DiMi 总结的五大生产级瓶颈一致：查数幻觉、根因分析陷阱、多表关联混乱、无评测闭环、权限合规——这些问题靠优化提示词无法根治，需要结构化 Harness 体系。
 
 ### 挑战二：动态环境里，真实来源很难判断
 
@@ -117,3 +130,4 @@ Code Agent 默认方式是不断改代码，注意力从"业务问题"转移到"
 - [[specialized-knowledge-search]] — 应对挑战一的语义搜索技术
 - [[parallel-thinking]] — 应对挑战三的多轨迹采样聚合方法
 - [[multi-llm-design]] — Genie 的 Multi-LLM 架构
+- [[xiaomi-dimi-data-agent]] — 小米 DiMi BIRD 第三名，Harness > Model 的量化证据

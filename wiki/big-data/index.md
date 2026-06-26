@@ -5,7 +5,7 @@ aliases: [big-data, 大数据]
 tags: [big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-06-15
+updated: 2026-06-26
 ---
 
 # 大数据技术
@@ -19,6 +19,13 @@ updated: 2026-06-15
 - [[hologres-skills]] — Hologres CLI/Skills/AI Function
 - [[flink-skills]] — Flink Agent Skills 四层能力
 - [[emr-skills]] — EMR AI Native 与 Skills 全景
+- [[xiaomi-dimi-data-agent]] — 小米 DiMi Text2SQL 全球第三，NL2Semantic2SQL 语义层 Harness 五大生产级瓶颈
+- [[code-agent-vs-data-agent]] — 企业数据分析为何不能用 Code Agent，BIRD 榜单证据
+- [[ontological-semantic-layer]] — 本体化语义层：数仓到 Agent 架构补位
+- [[dataagent-semantic-layer]] — DataWorks DataAgent 语义层的实物层面内容
+- [[openai-data-agent]] — OpenAI 内部 Data Agent 六层上下文体系
+- [[infinisynapse]] — WinClaw Data Agent 基础设施方案
+- [[cloud-village-data-agent-platform]] — 网易云村 DAS Agent Platform 五层架构
 - [[superetl]] — 菜鸟基于 Data Agent 的 SuperETL
 
 ## 虾聊日活动

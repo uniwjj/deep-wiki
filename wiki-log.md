@@ -634,3 +634,10 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `big-data/dataworks-data-agent.md` — 新增 3 个 SVG 来源、交叉链接云村和菜鸟新页面
 - updated `big-data/taobao-live-data-dev-paradigm.md` — 新增淘宝DataAgent.svg 来源、交叉链接
 - updated `big-data/superetl.md` — 新增菜鸟数仓未来预测.svg 来源、交叉链接新页面
+
+## [2026-06-26] ingest | 小米 Data Agent 获 Text2SQL 全球榜单第三名
+- created `big-data/xiaomi-dimi-data-agent` — Xiaomi DiMi Data Agent 主页面：BIRD #3、NL2Semantic2SQL、五大生产级瓶颈
+- updated `big-data/code-agent-vs-data-agent` — 新增 BIRD 榜单量化证据（裸模型 30-40 名 vs Harness 前五）、交叉引用
+- updated `big-data/dataagent-semantic-layer` — 新增 Xiaomi NL2Semantic2SQL 参考引用
+- updated `ai-agent/agent-core/data-agent-enterprise-practice` — 交叉引用 Xiaomi DiMi
+- updated `big-data/index` — 新增 Data Agent 生态系列页面
