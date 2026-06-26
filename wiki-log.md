@@ -2,6 +2,12 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-06-26] ingest | How Anthropic enables self-service data analytics with Claude（重新摄取）
+
+- saved `article-downloads/How Anthropic enables self-service data analytics with Claude.html` — 自包含离线 HTML（4 张图片、2 个代码块）
+- saved `sources/2026/06/26/anthropic-self-service-analytics-with-claude.md` — 文章 Markdown 版本（2026-06-21 更新版）
+- updated `ai-agent/ecosystem/agentic-analytics-anthropic.md` — 补充 6月21日更新内容：参考文档模板（为 LLM 检索优化的表描述结构）、仓库 Skill 完整骨架模板（语义层优先反借口清单、快速启动工作流、业务实体消歧、对抗 SQL 审查 + 溯源页脚、字段命名陷阱血泪教训）；更新 sources 指向新版本，扩展相关页面链接
+
 ## [2026-06-23] lint | 知识库健康检查与修正（第七轮）
 
 - fixed `business-cognition-system` — 修复断链 [[agent-context-engineering]] → [[ai-agent/context-eng/index|上下文工程]]

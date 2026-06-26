@@ -650,8 +650,8 @@
     },
     "wiki/ai-agent/ecosystem/agentic-analytics-anthropic.md": {
       "path": "wiki/ai-agent/ecosystem/agentic-analytics-anthropic.md",
-      "mtime": 1781503422300.5261,
-      "contentHash": "4cadfb6600dc4541",
+      "mtime": 1782464260864.4187,
+      "contentHash": "52e61fab7f3532f5",
       "lastSynced": "2026-06-26"
     },
     "wiki/ai-agent/ecosystem/agentic-skills.md": {
@@ -1654,6 +1654,12 @@
       "path": "sources/2026/06/18/dataagent-enterprise-credit-practice.md",
       "mtime": 1781782149119.478,
       "contentHash": "6b8d56a9c89e8934",
+      "lastSynced": "2026-06-26"
+    },
+    "sources/2026/06/26/anthropic-self-service-analytics-with-claude.md": {
+      "path": "sources/2026/06/26/anthropic-self-service-analytics-with-claude.md",
+      "mtime": 1782464201847.536,
+      "contentHash": "768c6047d845c347",
       "lastSynced": "2026-06-26"
     }
   },
