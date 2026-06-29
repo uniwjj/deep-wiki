@@ -56,5 +56,7 @@ Claude 自动向上遍历加载所有 CLAUDE.md，因此根级上下文不会丢
 
 - [[claude-code]] — Claude Code
 - [[claude-code-large-codebase]] — CLAUDE.md 在大型代码库中的分层实践
+- [[claude-code-instruction-failure]] — Claude Code 指令失效分析与五层规则架构
+- [[claude-code-behavior-contract]] — CLAUDE.md 行为契约：从 41% 到 3% 的规则工程
 - [[claude-code-auto-dream]] — 自动梦境
 - [[progressive-spec-methodology]] — 渐进式 Spec

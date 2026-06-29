@@ -208,6 +208,8 @@ Subagent 是独立的 Claude 实例，只返回最终结果，不污染主 agent
 ## 相关页面
 
 - [[claude-code-large-codebase]] — 理论基础与设计原理
+- [[claude-code-instruction-failure]] — 指令失效分析与五层规则架构
+- [[claude-code-behavior-contract]] — 行为契约：从 41% 到 3% 的规则工程
 - [[claude-code-extensibility]] — Skills/Hooks/Plugins/MCP 的源码级实现
 - [[agent-harness-overview]] — Harness 六承重层综述
 - [[claude-md-best-practices]] — CLAUDE.md 编写实践

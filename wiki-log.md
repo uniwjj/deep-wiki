@@ -2,6 +2,21 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
+## [2026-06-29] ingest | 菜鸟 SuperETL 补充（DataWorks 虾聊日相关）
+
+- updated `big-data/superetl.md` — 基于 2026-06-28 DataFun 文章补充：九大 Skill 铁律约束、置信度评估机制（30%/90%分级）、6 步实战推演（带 Hook 机制对照）、cn-odpscmd CLI 详细命令表、Hooks 四个触发时机细化（SessionStart→PreToolUse→PostToolUse→SessionEnd）、LLM 数据域 + 应用层 AI 化展望
+- updated `big-data/dataworks-2026-0528-xialiaori.md` — 补充菜鸟 SuperETL 交叉引用
+- saved `sources/2026/06/28/菜鸟借助 DataWorks Data Agent 实现 AI 数据研发 SuperETL 落地.html` — 原始 HTML（17 张图片）
+
+## [2026-06-29] ingest | Claude Code 指令失效分析与行为契约（两篇）
+
+- created `ai-agent/claude-code/claude-code-instruction-failure.md` — Claude Code 忽略指令的四类根因 + 五层规则架构（入口→路径→Skills→Subagent→硬边界）+ 臃肿文件收身方法
+- created `ai-agent/claude-code/claude-code-behavior-contract.md` — 从 41% 到 3% 的规则工程：五类 Agent 偏差（猜/扩/混/忘/装作完成）、12 条规则的四维重组、好规则的失败现场来源、80 行骨架模板、三层文件架构
+- updated `ai-agent/context-eng/claude-md-best-practices.md` — 补充两篇新页面的交叉引用
+- updated `ai-agent/claude-code/claude-code-configuration-guide.md` — 补充两篇新页面的交叉引用
+- saved `sources/2026/06/28/我终于搞明白了：Claude Code 为什么会忽略指令了.html` — 原始 HTML（5 张图片）
+- saved `sources/2026/05/11/Claude Code 错误率从 41% 到 3%：CLAUDE.md 到底改对了什么？.html` — 原始 HTML（4 张图片）
+
 ## [2026-06-26] ingest | How Anthropic enables self-service data analytics with Claude（重新摄取）
 
 - saved `article-downloads/How Anthropic enables self-service data analytics with Claude.html` — 自包含离线 HTML（4 张图片、2 个代码块）
