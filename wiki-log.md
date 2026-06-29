@@ -2,9 +2,10 @@
 
 Append-only record of wiki operations. Format: `[date] verb | subject`
 
-## [2026-06-29] ingest | OceanBase 湖库一体 AI 数据库正式发布
+## [2026-06-29] ingest | OceanBase 湖库一体 AI 数据库正式发布 + 页面优化
 
-- created `big-data/oceanbase-ai-database.md` — OceanBase 2026-06-29 发布会：湖库一体架构、Lakebase/DataStudio/DataPilot 三大产品、多模表+AI列、Agent友好上下文工程（数据分支/逻辑库/MCP接口）、四条工程底线、灵光3000万闪应用/智慧驾驶/证券三大落地场景、TCO降低30-50%
+- created `big-data/oceanbase-ai-database.md` — OceanBase 2026-06-29 发布会：湖库一体架构、Lakebase/DataStudio/DataPilot 三大产品、多模表+AI列、Agent友好上下文工程、四条工程底线、三大落地场景
+- optimized `big-data/oceanbase-ai-database.md` — 重构逻辑链（为什么重建→是什么→怎么工作→工程底线→真实验证），提高信息密度，消除冗余
 - saved `sources/2026/06/29/OceanBase 湖库一体 AI 数据库正式发布.html` — 原始 HTML（24 张图片）
 
 ## [2026-06-29] ingest | 菜鸟 SuperETL 补充（DataWorks 虾聊日相关）
