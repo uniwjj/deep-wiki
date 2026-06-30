@@ -5,7 +5,7 @@ aliases: [harness, Harness 编排]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-06-15
+updated: 2026-06-30
 ---
 
 # Harness 编排体系
@@ -29,6 +29,7 @@ Agent 编排系统的设计模式与工程实践，共 8 篇。
 - [[harness-engineering-practice]] — Harness 工程实践
 - [[harness-as-backend]] — Harness 作为新后端
 - [[glm5-harness-practice]] — GLM5 Harness 实战
+- [[omnigent-meta-harness]] — Databricks Omnigent 元编排层（meta-harness），开源跨框架 Agent 调度
 
 ## 相关页面
 

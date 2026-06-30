@@ -5,7 +5,7 @@ aliases: [big-data, 大数据]
 tags: [big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-06-26
+updated: 2026-06-30
 ---
 
 # 大数据技术
@@ -38,8 +38,23 @@ updated: 2026-06-26
 - [[maxcompute-data-ai]] — MaxCompute Data+AI 演进
 - [[openai-data-agent]] — OpenAI Data Agent 分析
 - [[databricks-genie]] — Databricks Genie 企业级 Data Agent
+- [[databricks-2026-summit]] — Databricks 2026 Data+AI Summit 四层架构变革综述
 - [[infinisynapse]] — InfiniSynapse（InfiniAgent + InfiniSQL + InfiniRAG）
 - [[data-dev-skills-automation]] — 数开 Skills 自动化
+
+## AI 原生数据平台
+
+- [[ai-native-data-platform-report]] — 《AI原生数据平台研究报告》6+2 架构与四维对照框架
+- [[agentic-data-cloud]] — Google Agentic Data Cloud（System of Action）
+- [[oceanbase-ai-database]] — OceanBase 湖库一体 AI 数据库
+- [[ontological-semantic-layer]] — 本体化语义层：数仓到 Agent 架构补位
+- [[genie-ontology]] — Databricks Genie Ontology：PageRank 式企业语义资产
+- [[ltap-architecture]] — Databricks LTAP 架构：存储层统一 OLTP/OLAP 的"第三条路"
+- [[databricks-agent-control-plane]] — Databricks Agent 控制面战略：六层控制点拼图
+- [[customerlake]] — Databricks CustomerLake：Agentic CDP
+- [[lakewatch-agent-siem]] — Lakewatch + Panther 收购：Agent 驱动安全湖仓
+- [[agent-infra-vendor-strategies]] — Agent 基础设施厂商战略对照（Databricks/Microsoft/Google/Snowflake）
+- [[enterprise-agi-framework]] — 企业级 AGI 框架：SoI 四层堆栈 + 本体成熟度 1-9 级 + 数据层冰面化
 
 ## 概念与对比
 

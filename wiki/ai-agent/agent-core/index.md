@@ -5,7 +5,7 @@ aliases: [agent-core, Agent 理论]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-06-16
+updated: 2026-06-30
 ---
 
 # Agent 基础理论
@@ -43,6 +43,10 @@ Agent 核心理论与机制，共 18 篇。
 - [[agent-mcp-protocol]] — MCP 协议
 - [[ai-agent-security]] — Agent 安全
 - [[ai-governance]] — AI 治理框架
+
+## 战略框架
+
+- [[enterprise-agi-framework]] — 企业级 AGI 框架：SoI 四层堆栈 + 本体成熟度 1-9 级 + 数据层冰面化
 
 ## 专用搜索
 

@@ -668,3 +668,41 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `big-data/dataagent-semantic-layer` — 新增 Xiaomi NL2Semantic2SQL 参考引用
 - updated `ai-agent/agent-core/data-agent-enterprise-practice` — 交叉引用 Xiaomi DiMi
 - updated `big-data/index` — 新增 Data Agent 生态系列页面
+
+## [2026-06-30] ingest | 从Databricks产品发布会看数据平台的演进方向
+- saved `sources/2026/06/30/从Databricks产品发布会看数据平台的演进方向.html` — 微信公众号文章（Chrome headless 渲染，自包含 HTML，5 张正文图片）
+- saved `sources/2026/06/30/从Databricks产品发布会看-图片识别.md` — 5 张图片 OCR 识别结果（图1 四层架构图、报告封面、6+2 架构图、装饰条、二维码卡片）
+- created `big-data/databricks-2026-summit` — Databricks 2026 Data+AI Summit 变革综述：四层架构（数据底座/治理语义/Agent平台/应用）、LTAP、Unity AI Gateway、五大行业趋势、四维对照
+- created `ai-ml/genie-ontology` — Genie Ontology：人工定义+自动生长双轨制，PageRank 式权威性排名，复杂业务首问命中率 84.5%
+- created `ai-agent/harness/omnigent-meta-harness` — Omnigent 元编排层（meta-harness），Apache 2.0 开源跨框架 Agent 调度，竞争上移至编排治理层
+- created `big-data/ai-native-data-platform-report` — 《AI原生数据平台研究报告》6+2 架构定义与计算/供给/治理/消费四维对照框架
+- updated `big-data/databricks-genie` — 补充 Genie One/Code GA、Agent Bricks 10万生产Agent/10^15 Token 规模、Genie Ontology 语义底座、Pay-as-you-go 计费
+- updated `big-data/index` — 新增 AI 原生数据平台分区与 Databricks 2026 系列页面
+- updated `ai-agent/harness/index` — 新增 Omnigent 元编排层条目
+
+## [2026-06-30] ingest | Databricks DAIS 2026 第二批四篇文章（LTAP/全家桶/Agent入口/智能体湖仓）
+- saved `sources/2026/06/30/Databricks 发布 LTAP：首个统一事务与分析处理的湖上架构.html` — LTAP 技术深度拆解（智透圈，6/29）
+- saved `sources/2026/06/30/Databricks Data + AI Summit 2026 深度回顾：Genie One、Lakebase 与 Agent 全家桶.html` — 产品事实盘点（智透圈，6/28）
+- saved `sources/2026/06/30/Genie 之后，Databricks 真正想抢的是企业 Agent 入口.html` — 战略判断（数智技术落地，6/26）
+- saved `sources/2026/06/30/Databricks Data + AI Summit 2026 重磅复盘：Databricks 正式迈入「AI 智能体湖仓」时代.html` — 财务数据+产品补强（databricks 研究基地，6/23）
+- saved `sources/2026/06/30/Databricks-DAIS2026-第二批四篇-图片识别.md` — 8 张图片 OCR 识别（含 Agent 控制点战略图、LTAP 架构图、Lakehouse 架构图）
+- created `big-data/ltap-architecture` — LTAP 架构：HTAP/零ETL/LTAP 三方对比、传统架构七痛点、对数据工程师五影响、Lakebase 三项增强
+- created `big-data/databricks-agent-control-plane` — Databricks Agent 控制面战略：六层控制点拼图、Genie Ontology 风险视角、Snowflake/Collibra 对比、国内平台三层能力建议
+- created `big-data/customerlake` — CustomerLake：Agentic CDP，Profile Agents + Campaign Agents，Agent 进入营销业务流程
+- created `big-data/lakewatch-agent-siem` — Lakewatch + Panther 收购：Agent 驱动 SIEM 安全湖仓，完成全栈闭环
+- created `big-data/agent-infra-vendor-strategies` — Agent 基础设施厂商战略对照：Databricks/Microsoft Solara/Google Gemini Spark 三方对标 + Snowflake/Collibra 对比
+- updated `ai-ml/genie-ontology` — 补充五大权威评分维度、50+数据源、84.5% vs 52.4% 对照、风险与局限视角
+- updated `ai-agent/harness/omnigent-meta-harness` — 补充五大职能、框架无关性（一行代码切换 LangGraph/CrewAI/Claude Code SDK/OpenAI Agent SDK）、托管版本
+- updated `big-data/databricks-2026-summit` — 补充财务数据（ARR 54亿/AI收入14亿/融资70亿）、DAIS 2025 vs 2026 对比、Reyden 引擎、Unity Catalog Iceberg 写入 GA、Genie One 定价细节、Agent Bricks 多框架/模型支持、新增控制面/CustomerLake/Lakewatch 等交叉引用
+- updated `big-data/index` — 新增 LTAP/控制面/CustomerLake/Lakewatch/厂商对照 5 个页面索引
+
+## [2026-06-30] ingest | Databricks DAIS 2026 第三批两篇 + 官方博客
+- saved `sources/2026/06/30/318| 企业级AGI：AI的真正战场.html` — 企业级AGI理论框架（王知鱼，译自 SiliconANGLE，6/29）
+- saved `sources/2026/06/30/Databricks 一次发了 18 件事：Lakehouse 下沉为底座，Agent Runtime 升到顶层.html` — 18项发布全景+竞争格局（云计算指北，6/20）
+- saved `sources/2026/06/30/Databricks-DAIS2026-第三批两篇-图片识别.md` — 40张图片OCR（本体成熟度模型图、SoI框架图、冰面化图、四层架构图、9条战线竞争格局图等）
+- saved `sources/2026/06/30/Databricks官方博客-Introducing Genie One Genie Ontology Genie Agents.md` — Databricks官方一手来源（6/16）
+- created `ai-agent/agent-core/enterprise-agi-framework` — 企业级AGI框架：企业级AGI vs 弥赛亚AGI、SoI四层堆栈、本体成熟度1-9级模型、描述性vs可执行本体、技能提升管道、数据层冰面化、Omnigent治理≠学习
+- updated `ai-ml/genie-ontology` — 补充OntoRank机制+5维度权威性示例、成熟度评估(5-6级)、官方"无需人工策展"表述、官方博客来源
+- updated `big-data/databricks-2026-summit` — 补充4C叙事骨架、厂商口径警示、9条战线竞争格局表、enterprise-agi-framework交叉引用
+- updated `big-data/databricks-genie` — 补充Genie Agents(从Spaces演化)、Genie One核心能力、Foot Locker证言、官方博客来源
+- updated `big-data/index`、`ai-agent/agent-core/index` — 新增 enterprise-agi-framework 索引
