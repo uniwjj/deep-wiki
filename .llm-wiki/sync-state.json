@@ -2,8 +2,8 @@
   "entries": {
     "wiki/homepage.md": {
       "path": "wiki/homepage.md",
-      "mtime": 1782872540994.9612,
-      "contentHash": "28cb31c90b7eb237",
+      "mtime": 1782873168035.165,
+      "contentHash": "ef898c6ba3fd7c6e",
       "lastSynced": "2026-07-01"
     },
     "wiki/ai-agent/index.md": {
@@ -116,8 +116,8 @@
     },
     "wiki/meta/index.md": {
       "path": "wiki/meta/index.md",
-      "mtime": 1782871714595.6863,
-      "contentHash": "af09be980e0a5fb5",
+      "mtime": 1782873174832.1035,
+      "contentHash": "d80ec628d48d84d0",
       "lastSynced": "2026-07-01"
     },
     "wiki/meta/learning-path.md": {
@@ -130,18 +130,6 @@
       "path": "wiki/meta/tech-radar.md",
       "mtime": 1781503422311.3782,
       "contentHash": "04ab0e7ce55cfd2d",
-      "lastSynced": "2026-07-01"
-    },
-    "wiki/meta/wiki-purpose.md": {
-      "path": "wiki/meta/wiki-purpose.md",
-      "mtime": 1781503422310.5857,
-      "contentHash": "e7a62633fe183302",
-      "lastSynced": "2026-07-01"
-    },
-    "wiki/meta/wiki-schema.md": {
-      "path": "wiki/meta/wiki-schema.md",
-      "mtime": 1781503422310.6702,
-      "contentHash": "b03482f591eaa31d",
       "lastSynced": "2026-07-01"
     },
     "wiki/platform/index.md": {

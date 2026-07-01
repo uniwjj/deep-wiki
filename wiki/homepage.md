@@ -28,8 +28,8 @@ updated: 2026-07-01
 
 ## 快速入口
 
-- [[wiki-purpose]] — 定位与范围
-- [[wiki-schema]] — 知识库组织规则
+- `wiki-purpose.md` — 定位与范围（根目录配置文件）
+- `wiki-schema.md` — 知识库组织规则（根目录配置文件）
 - [[tech-radar]] — 当前关注的技术趋势
 - [[learning-path]] — 阶段式学习计划
 
@@ -43,5 +43,3 @@ updated: 2026-07-01
 ## 相关页面
 
 - [[meta/index]] — 知识库元信息（定位、规则、学习路线、技术雷达）
-- [[wiki-purpose]]
-- [[wiki-schema]]

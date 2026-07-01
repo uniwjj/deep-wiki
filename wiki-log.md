@@ -734,3 +734,9 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - verified: CLI 报的 1095 "broken wikilinks" 与 2 "orphan" 多为表格内 `\|` 转义误解析（已知误报，6/23 lint 已记录）；用正确解析核实真实断链=0，真实孤立页仅 meta/index（已从 homepage 加入链修复）
 - updated `homepage` — 相关页面加入 [[meta/index]] 入链，消除孤儿
 - updated `CLAUDE.md`(AGENTS.md) — 新增 CLI 安装命令（@jackwener/llm-wiki）+ 分布式读写规则（禁止写 agent 个人记忆，约定只能写入仓库内文件）
+
+## [2026-07-01] lint | 删除 wiki/meta/ 下 wiki-purpose/wiki-schema 镜像页
+- removed `wiki/meta/wiki-purpose.md` / `wiki/meta/wiki-schema.md` — 2026-05-14 误建 stub（用"建镜像页"错误修复根目录配置文件不在 wikilink 图的断链）
+- 根目录 `wiki-purpose.md` / `wiki-schema.md` 保持唯一权威副本（CLAUDE.md 要求操作前必读）
+- homepage / meta/index 中 [[wiki-purpose]] / [[wiki-schema]] 改为纯文本提及（配置文件不在 wikilink 图，本不应作为知识节点链接）
+- 消除 basename 重复与链接歧义
