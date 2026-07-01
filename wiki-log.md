@@ -726,3 +726,11 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `ai-agent/index` — 新增 data-agent/ 子领域行（29 页，第二大子域）
 - updated `wiki-schema` — 目录结构补充 data-agent/ 子目录
 - result: big-data/ 从 32 页降至 3 页（iceberg/ltap-architecture/maxcompute-data-ai），为 Flink/CDC/Iceberg/Paimon/湖仓一体等学习腾出容器；迁移后 0 断链（wikilink 用文件名）
+
+## [2026-07-01] ops | 恢复 llm-wiki CLI 与 sync
+- installed `@jackwener/llm-wiki@0.5.1` (npm install -g) — 此前 CLI 被误删，导致历次 sync 未执行
+- ran `llm-wiki sync` — 68 changes synced, 259 unchanged，sync-state 更新至 2026-07-01
+- ran `llm-wiki status`/`graph` — 184 页 / 112 源 / 1136 链接，5 社区
+- verified: CLI 报的 1095 "broken wikilinks" 与 2 "orphan" 多为表格内 `\|` 转义误解析（已知误报，6/23 lint 已记录）；用正确解析核实真实断链=0，真实孤立页仅 meta/index（已从 homepage 加入链修复）
+- updated `homepage` — 相关页面加入 [[meta/index]] 入链，消除孤儿
+- updated `CLAUDE.md`(AGENTS.md) — 新增 CLI 安装命令（@jackwener/llm-wiki）+ 分布式读写规则（禁止写 agent 个人记忆，约定只能写入仓库内文件）

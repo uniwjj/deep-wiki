@@ -46,10 +46,19 @@
 
 ## CLI
 
+安装（scoped npm 包，注意带 `@jackwener/` 前缀，**不要**装成同名的不相干包 `llm-wiki`）：
+
+```bash
+npm install -g @jackwener/llm-wiki
+```
+
 - `llm-wiki search <query>` — BM25 关键词检索（如配置了 DB9 则附加向量检索）
 - `llm-wiki graph` — 社区、枢纽、孤立页、待创建页
 - `llm-wiki status` — 统计 + 健康度摘要
 - `llm-wiki sync` — 跟踪 mtime/SHA256，如配置了 DB9 则推送 embedding
+
+> 若 `command not found: llm-wiki`，说明本机未装 CLI——用上面的命令安装。
+> 在未配置 DB9（`.llm-wiki/config.toml` 中 `[db9]` 段被注释）时，`sync` 仍会更新本地 mtime/SHA256 索引，但不会推送 embedding。
 
 ## 规则
 
@@ -59,3 +68,7 @@
 4. 每次操作之后，向 `wiki-log.md` 追加一条记录 **并** 运行 `llm-wiki sync`
 5. 当你收到信息时，应用你的自动摄取标准——不要等待显式命令
 6. 首次摄取 PDF、图片、PPT 转 PDF 等多模态资料时，就必须保证信息处理正确、完整、可追溯，不能等到重新摄取阶段再补救。不能把派生 TXT/OCR 当作唯一可信来源；必须回到原始 PDF/图片正文，逐页或逐图进行视觉复核，必要时将 PDF 转为页面图片检查。摄取时要尽可能保留全部有效信息，包括逐页索引、标题层级、架构图、流程图、截图、表格、代码、数字、示例、模块名、路线图、结论与上下游关系。对无法可靠辨认的小字、模糊区域或被遮挡内容，只能标记为不确定或不摄取，禁止臆测。
+7. **本知识库支持分布式读写**——会被多台机器、多个 agent 会话共用。因此：
+   - **禁止把知识库相关的事实写进 agent 个人记忆**（`~/.claude/.../memory/`）。记忆是本机私有的，其他机器看不到，会造成状态分裂。
+   - 所有需要持久化的约定、配置、行为规则，必须写入仓库内的文件：`CLAUDE.md`（`AGENTS.md`）、`wiki-agent.md`、`.agents/skills/llm-wiki/SKILL.md`、`wiki-schema.md` 等。这些文件随 git 同步，对所有机器可见。
+   - 运行期状态（lint 结果、sync 状态）写入 `.llm-wiki/`，同样随仓库同步。

@@ -42,5 +42,6 @@ updated: 2026-07-01
 
 ## 相关页面
 
+- [[meta/index]] — 知识库元信息（定位、规则、学习路线、技术雷达）
 - [[wiki-purpose]]
 - [[wiki-schema]]
