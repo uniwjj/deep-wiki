@@ -6,10 +6,7 @@ date: 2026-05-16
 retrieved: 2026-05-18
 type: blog
 ingested: 2026-05-18
-wiki_pages: [big-data/infinisynapse, big-data/code-agent-vs-data-agent]
-  - big-data/code-agent-vs-data-agent.md
-  - big-data/infinisynapse.md
-  - big-data/databricks-genie.md
+wiki_pages: [big-data/infinisynapse, big-data/code-agent-vs-data-agent, big-data/databricks-genie]
 ---
 
 # 为什么 Code Agent 无法解决企业数据分析问题

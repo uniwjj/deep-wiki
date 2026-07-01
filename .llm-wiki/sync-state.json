@@ -1662,10 +1662,28 @@
       "contentHash": "f6902de6d9e7ec24",
       "lastSynced": "2026-07-01"
     },
+    "sources/2026/05/09/清华大学2026年OpenClaw与数字员工研究报告47页.md": {
+      "path": "sources/2026/05/09/清华大学2026年OpenClaw与数字员工研究报告47页.md",
+      "mtime": 1782881489094.1946,
+      "contentHash": "39d330a394b4132b",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/09/清华大学：Token消费学研究报告.md": {
+      "path": "sources/2026/05/09/清华大学：Token消费学研究报告.md",
+      "mtime": 1782881489094.5798,
+      "contentHash": "9b6f78085325bea3",
+      "lastSynced": "2026-07-01"
+    },
     "sources/2026/05/09/谈OpenClaw刚刚更新的Memory Wiki技术.md": {
       "path": "sources/2026/05/09/谈OpenClaw刚刚更新的Memory Wiki技术.md",
       "mtime": 1781503421882.5413,
       "contentHash": "2faa1dec0ccc8939",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/10/2025数据智能体实践指南-火山引擎-2025.md": {
+      "path": "sources/2026/05/10/2025数据智能体实践指南-火山引擎-2025.md",
+      "mtime": 1782881489093.2915,
+      "contentHash": "7e26e1932b68c239",
       "lastSynced": "2026-07-01"
     },
     "sources/2026/05/10/Agent 的长短期记忆系统.md": {
@@ -1692,16 +1710,100 @@
       "contentHash": "7a7a3fc665f2d186",
       "lastSynced": "2026-07-01"
     },
+    "sources/2026/05/10/Claude Code 技术解析.md": {
+      "path": "sources/2026/05/10/Claude Code 技术解析.md",
+      "mtime": 1782881453234.13,
+      "contentHash": "47a044e191635822",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/10/Claude-Code-Source-Analysis.md": {
+      "path": "sources/2026/05/10/Claude-Code-Source-Analysis.md",
+      "mtime": 1782881489093.6243,
+      "contentHash": "22169f4800c4f130",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/10/Dive into Claude Code.md": {
+      "path": "sources/2026/05/10/Dive into Claude Code.md",
+      "mtime": 1782881489092.1748,
+      "contentHash": "7def12f0e66bfe47",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/10/Google：上下文工程白皮书.md": {
+      "path": "sources/2026/05/10/Google：上下文工程白皮书.md",
+      "mtime": 1782881489092.5317,
+      "contentHash": "a716993412bfff8a",
+      "lastSynced": "2026-07-01"
+    },
     "sources/2026/05/10/lint-stub.md": {
       "path": "sources/2026/05/10/lint-stub.md",
       "mtime": 1781503421949.0527,
       "contentHash": "5ee2bd6692b3acfe",
       "lastSynced": "2026-07-01"
     },
+    "sources/2026/05/10/硅谷顶级PM的方法论.md": {
+      "path": "sources/2026/05/10/硅谷顶级PM的方法论.md",
+      "mtime": 1782881489092.8936,
+      "contentHash": "bb1d76070bdb072b",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/11/Claude Code 错误率从 41% 到 3%：CLAUDE.md 到底改对了什么？.md": {
+      "path": "sources/2026/05/11/Claude Code 错误率从 41% 到 3%：CLAUDE.md 到底改对了什么？.md",
+      "mtime": 1782881513095.1165,
+      "contentHash": "8e8b06b957a37aa4",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/12/01. DataWorks Data Agent.md": {
+      "path": "sources/2026/05/12/01. DataWorks Data Agent.md",
+      "mtime": 1782881489097.0708,
+      "contentHash": "2010f13a2b931789",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/12/02. 菜鸟SuperETL.md": {
+      "path": "sources/2026/05/12/02. 菜鸟SuperETL.md",
+      "mtime": 1782881489096.4805,
+      "contentHash": "553f098ab601fedb",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/12/03. 基于 MaxCompute Skills 简化数仓运维加速多模态开发.md": {
+      "path": "sources/2026/05/12/03. 基于 MaxCompute Skills 简化数仓运维加速多模态开发.md",
+      "mtime": 1782881489095.2122,
+      "contentHash": "e4540edc5a90dabf",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/12/04. 基于 Hologres Skills 完成广告素材智能生成与投放效果分析.md": {
+      "path": "sources/2026/05/12/04. 基于 Hologres Skills 完成广告素材智能生成与投放效果分析.md",
+      "mtime": 1782881489095.884,
+      "contentHash": "8a78c82edcee0390",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/12/05. Flink Skills—重塑实时计算开发与运维体验.md": {
+      "path": "sources/2026/05/12/05. Flink Skills—重塑实时计算开发与运维体验.md",
+      "mtime": 1782881489097.669,
+      "contentHash": "224b46f8e327bdf5",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/12/06. 基于 EMR Skills 实现智驾场景的自动化数据标注.md": {
+      "path": "sources/2026/05/12/06. 基于 EMR Skills 实现智驾场景的自动化数据标注.md",
+      "mtime": 1782881489095.523,
+      "contentHash": "7b50d3341282760b",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/12/07. DataWorks个人量化案例.md": {
+      "path": "sources/2026/05/12/07. DataWorks个人量化案例.md",
+      "mtime": 1782881489094.9,
+      "contentHash": "31579d847ac882c4",
+      "lastSynced": "2026-07-01"
+    },
     "sources/2026/05/12/DataWorks DataAgent分享录音.md": {
       "path": "sources/2026/05/12/DataWorks DataAgent分享录音.md",
       "mtime": 1781503422092.769,
       "contentHash": "71658775dbb33eda",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/12/deepwiki-opencode.md": {
+      "path": "sources/2026/05/12/deepwiki-opencode.md",
+      "mtime": 1782881453245.5583,
+      "contentHash": "6f9b07dce9ce376b",
       "lastSynced": "2026-07-01"
     },
     "sources/2026/05/14/DataAgent语义层分析.md": {
@@ -1722,16 +1824,58 @@
       "contentHash": "245dc339ab70edb7",
       "lastSynced": "2026-07-01"
     },
+    "sources/2026/05/15/AI 编程三剑客：Spec-Kit、OpenSpec、Superpowers 深度对比与实战指南.md": {
+      "path": "sources/2026/05/15/AI 编程三剑客：Spec-Kit、OpenSpec、Superpowers 深度对比与实战指南.md",
+      "mtime": 1782881453236.114,
+      "contentHash": "15b69611b4b5278c",
+      "lastSynced": "2026-07-01"
+    },
     "sources/2026/05/17/Claude Code 大型代码库配置指南.md": {
       "path": "sources/2026/05/17/Claude Code 大型代码库配置指南.md",
       "mtime": 1781503422104.62,
       "contentHash": "46cf1a067a9f3aa1",
       "lastSynced": "2026-07-01"
     },
+    "sources/2026/05/17/Claude Code安装Superpowers后代码通过率58%→91%：AI编程工程化拐点来了.md": {
+      "path": "sources/2026/05/17/Claude Code安装Superpowers后代码通过率58%→91%：AI编程工程化拐点来了.md",
+      "mtime": 1782881453226.3928,
+      "contentHash": "f108784aca8c140c",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/17/How Claude Code works in large codebases_ Best practices and where to start.md": {
+      "path": "sources/2026/05/17/How Claude Code works in large codebases_ Best practices and where to start.md",
+      "mtime": 1782881453229.3162,
+      "contentHash": "6d670f56491440aa",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/17/SDD 实践：OpenSpec + Superpowers 整合创建自定义工作流.md": {
+      "path": "sources/2026/05/17/SDD 实践：OpenSpec + Superpowers 整合创建自定义工作流.md",
+      "mtime": 1782881453227.7844,
+      "contentHash": "3f0312daaaddab0e",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/17/Superpowers+Openspec两个AI编程框架一起用，我踩了7个坑.md": {
+      "path": "sources/2026/05/17/Superpowers+Openspec两个AI编程框架一起用，我踩了7个坑.md",
+      "mtime": 1782881453231.5618,
+      "contentHash": "510e26c5d78adbb6",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/17/从古法编程到 AI 编程：Superpowers + OpenSpec 协同开发实战指南.md": {
+      "path": "sources/2026/05/17/从古法编程到 AI 编程：Superpowers + OpenSpec 协同开发实战指南.md",
+      "mtime": 1782881453230.4182,
+      "contentHash": "71f332a79cedae49",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/18/Pushing the Frontier for Data Agents with Genie.md": {
+      "path": "sources/2026/05/18/Pushing the Frontier for Data Agents with Genie.md",
+      "mtime": 1782881453223.761,
+      "contentHash": "82460238d458aaa6",
+      "lastSynced": "2026-07-01"
+    },
     "sources/2026/05/18/为什么 Code Agent 无法解决企业数据分析问题.md": {
       "path": "sources/2026/05/18/为什么 Code Agent 无法解决企业数据分析问题.md",
-      "mtime": 1781503422106.0103,
-      "contentHash": "05528c8c79bccac6",
+      "mtime": 1782881469620.4973,
+      "contentHash": "4947fae850f49987",
       "lastSynced": "2026-07-01"
     },
     "sources/2026/05/21/Claude Code Harness 工程：数仓侧落地方案｜得物技术.md": {
@@ -1740,10 +1884,88 @@
       "contentHash": "17ffa37322970ba4",
       "lastSynced": "2026-07-01"
     },
+    "sources/2026/05/24/Claude Code + OpenSpec + Superpowers，AI协同开发实战详解（从入门到精通）.md": {
+      "path": "sources/2026/05/24/Claude Code + OpenSpec + Superpowers，AI协同开发实战详解（从入门到精通）.md",
+      "mtime": 1782881513095.71,
+      "contentHash": "7517694f3399b656",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/24/SDD 实践：OpenSpec + Superpowers 整合创建自定义工作流.md": {
+      "path": "sources/2026/05/24/SDD 实践：OpenSpec + Superpowers 整合创建自定义工作流.md",
+      "mtime": 1782881513095.524,
+      "contentHash": "8db03e80aae5afdc",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/24/Superpowers 实战指南：7 步流程 + 14 个技能 + 3 条铁律，搭建让 AI 编程更稳、更守规矩的工作流.md": {
+      "path": "sources/2026/05/24/Superpowers 实战指南：7 步流程 + 14 个技能 + 3 条铁律，搭建让 AI 编程更稳、更守规矩的工作流.md",
+      "mtime": 1782881513095.8933,
+      "contentHash": "2e09ea9b3421864f",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/24/Superpowers_让 AI 编程从_碰运气_变成_走流程_的完整方法论.md": {
+      "path": "sources/2026/05/24/Superpowers_让 AI 编程从_碰运气_变成_走流程_的完整方法论.md",
+      "mtime": 1782881513095.3337,
+      "contentHash": "d963824268513de2",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/24/从古法编程到 AI 编程：Superpowers + OpenSpec 协同开发实战指南.md": {
+      "path": "sources/2026/05/24/从古法编程到 AI 编程：Superpowers + OpenSpec 协同开发实战指南.md",
+      "mtime": 1782881513096.0623,
+      "contentHash": "2de3cbaf7c5df210",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/24/开源项目 superpowers 深度解读：把 AI Coding Agent 变成遵守工程流程的协作伙伴.md": {
+      "path": "sources/2026/05/24/开源项目 superpowers 深度解读：把 AI Coding Agent 变成遵守工程流程的协作伙伴.md",
+      "mtime": 1782881513096.2263,
+      "contentHash": "705b3428a70e242e",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/28/DataWorks Data Agent：新一代数据智能体，企业大数据的数字员工.md": {
+      "path": "sources/2026/05/28/DataWorks Data Agent：新一代数据智能体，企业大数据的数字员工.md",
+      "mtime": 1782881489089.572,
+      "contentHash": "d57e577dcf5e4047",
+      "lastSynced": "2026-07-01"
+    },
     "sources/2026/05/28/DataWorks虾聊0528录音-修正版.md": {
       "path": "sources/2026/05/28/DataWorks虾聊0528录音-修正版.md",
       "mtime": 1781503422155.5461,
       "contentHash": "ae4a9794e9dc5f2a",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/28/EMR Skills：从 Lakehouse 到 Agentic Lakehouse.md": {
+      "path": "sources/2026/05/28/EMR Skills：从 Lakehouse 到 Agentic Lakehouse.md",
+      "mtime": 1782881489090.096,
+      "contentHash": "285f7d3a7e379f01",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/28/Flink Skills—重塑实时计算开发与运维体验.md": {
+      "path": "sources/2026/05/28/Flink Skills—重塑实时计算开发与运维体验.md",
+      "mtime": 1782881489090.822,
+      "contentHash": "62e01915724ea71b",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/28/MaxCompute × Agent：从多模态存储到混合计算，突破数字员工的算力边界 20260528.md": {
+      "path": "sources/2026/05/28/MaxCompute × Agent：从多模态存储到混合计算，突破数字员工的算力边界 20260528.md",
+      "mtime": 1782881489091.8508,
+      "contentHash": "cf4ddee3c48ee34f",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/28/OpenClaw_AgenticSearch_Memory.md": {
+      "path": "sources/2026/05/28/OpenClaw_AgenticSearch_Memory.md",
+      "mtime": 1782881489091.4763,
+      "contentHash": "95910d8d20d4e8ba",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/28/基于 Hologres Skills 完成广告素材智能生成与投放效果分析.md": {
+      "path": "sources/2026/05/28/基于 Hologres Skills 完成广告素材智能生成与投放效果分析.md",
+      "mtime": 1782881489091.15,
+      "contentHash": "77110c807eb48bce",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/05/28/淘宝直播：AI 驱动的数据研发范式升级.md": {
+      "path": "sources/2026/05/28/淘宝直播：AI 驱动的数据研发范式升级.md",
+      "mtime": 1782881489090.4797,
+      "contentHash": "2533127ed0e1907a",
       "lastSynced": "2026-07-01"
     },
     "sources/2026/05/29/别再卷大模型了_Palantir 告诉我们，AI 的进阶是_本体论_.md": {
@@ -1758,10 +1980,58 @@
       "contentHash": "753ca000fd8bc4a7",
       "lastSynced": "2026-07-01"
     },
+    "sources/2026/06/15/Data Agent Kit brings data skills and tools to your IDE or CLI - Google Cloud Blog.md": {
+      "path": "sources/2026/06/15/Data Agent Kit brings data skills and tools to your IDE or CLI - Google Cloud Blog.md",
+      "mtime": 1782881513098.7769,
+      "contentHash": "c4b54297a006e98d",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/15/Google Cloud Data Agent Kit 深度解析.md": {
+      "path": "sources/2026/06/15/Google Cloud Data Agent Kit 深度解析.md",
+      "mtime": 1782881513099.0815,
+      "contentHash": "bd5c05717c64da7b",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/15/What's New in the Agentic Data Cloud - Google Cloud Blog.md": {
+      "path": "sources/2026/06/15/What's New in the Agentic Data Cloud - Google Cloud Blog.md",
+      "mtime": 1782881513098.93,
+      "contentHash": "669669e6171c8a72",
+      "lastSynced": "2026-07-01"
+    },
     "sources/2026/06/15/loop-engineering详解.md": {
       "path": "sources/2026/06/15/loop-engineering详解.md",
       "mtime": 1781505006087.153,
       "contentHash": "b6d34b969b5b3f65",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/15/大数据基建如何迈向 AI Infra？（上）.md": {
+      "path": "sources/2026/06/15/大数据基建如何迈向 AI Infra？（上）.md",
+      "mtime": 1782881453221.949,
+      "contentHash": "17912d97788fd5ea",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/15/大数据基建如何迈向 AI Infra？（下）.md": {
+      "path": "sources/2026/06/15/大数据基建如何迈向 AI Infra？（下）.md",
+      "mtime": 1782881453220.335,
+      "contentHash": "c11732b9c34fba1b",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/15/谷歌开源 Data Agent Kit_数据工程正式进入原生 Agent 时代.md": {
+      "path": "sources/2026/06/15/谷歌开源 Data Agent Kit_数据工程正式进入原生 Agent 时代.md",
+      "mtime": 1782881513098.6123,
+      "contentHash": "f3b776d0f3d3b41e",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/16/AI Agent & Skill 测评方案及落地实践.md": {
+      "path": "sources/2026/06/16/AI Agent & Skill 测评方案及落地实践.md",
+      "mtime": 1782881513096.6672,
+      "contentHash": "610709b7f289ed2d",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/17/openspec-custom-schema.md": {
+      "path": "sources/2026/06/17/openspec-custom-schema.md",
+      "mtime": 1782881513097.142,
+      "contentHash": "429743fd066c545c",
       "lastSynced": "2026-07-01"
     },
     "sources/2026/06/18/dataagent-enterprise-credit-practice.md": {
@@ -1774,6 +2044,60 @@
       "path": "sources/2026/06/26/anthropic-self-service-analytics-with-claude.md",
       "mtime": 1782464201847.536,
       "contentHash": "768c6047d845c347",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/26/小米 Data Agent 获 Text2SQL 全球榜单第三名.md": {
+      "path": "sources/2026/06/26/小米 Data Agent 获 Text2SQL 全球榜单第三名.md",
+      "mtime": 1782881513097.305,
+      "contentHash": "f3a9ec7f96e73f1e",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/28/我终于搞明白了：Claude Code 为什么会忽略指令了.md": {
+      "path": "sources/2026/06/28/我终于搞明白了：Claude Code 为什么会忽略指令了.md",
+      "mtime": 1782881513096.9856,
+      "contentHash": "9764d4bc0bb1d466",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/28/菜鸟借助 DataWorks Data Agent 实现 AI 数据研发 SuperETL 落地.md": {
+      "path": "sources/2026/06/28/菜鸟借助 DataWorks Data Agent 实现 AI 数据研发 SuperETL 落地.md",
+      "mtime": 1782881513096.8315,
+      "contentHash": "6faae0e70501324d",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/29/OceanBase 湖库一体 AI 数据库正式发布.md": {
+      "path": "sources/2026/06/29/OceanBase 湖库一体 AI 数据库正式发布.md",
+      "mtime": 1782881513096.5042,
+      "contentHash": "35ebc35deb9f1699",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/30/318| 企业级AGI：AI的真正战场.md": {
+      "path": "sources/2026/06/30/318| 企业级AGI：AI的真正战场.md",
+      "mtime": 1782881513097.6348,
+      "contentHash": "94a2b1e79985bfc7",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/30/Databricks Data + AI Summit 2026 深度回顾：Genie One、Lakebase 与 Agent 全家桶.md": {
+      "path": "sources/2026/06/30/Databricks Data + AI Summit 2026 深度回顾：Genie One、Lakebase 与 Agent 全家桶.md",
+      "mtime": 1782881513097.9636,
+      "contentHash": "fa461b7c5a6af9d7",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/30/Databricks Data + AI Summit 2026 重磅复盘：Databricks 正式迈入「AI 智能体湖仓」时代.md": {
+      "path": "sources/2026/06/30/Databricks Data + AI Summit 2026 重磅复盘：Databricks 正式迈入「AI 智能体湖仓」时代.md",
+      "mtime": 1782881513098.1292,
+      "contentHash": "8aa1be5f7d4c5eec",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/30/Databricks 一次发了 18 件事：Lakehouse 下沉为底座，Agent Runtime 升到顶层.md": {
+      "path": "sources/2026/06/30/Databricks 一次发了 18 件事：Lakehouse 下沉为底座，Agent Runtime 升到顶层.md",
+      "mtime": 1782881513098.2898,
+      "contentHash": "4392457aedc306a2",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/30/Databricks 发布 LTAP：首个统一事务与分析处理的湖上架构.md": {
+      "path": "sources/2026/06/30/Databricks 发布 LTAP：首个统一事务与分析处理的湖上架构.md",
+      "mtime": 1782881513097.7996,
+      "contentHash": "891c1adc3752f0d2",
       "lastSynced": "2026-07-01"
     },
     "sources/2026/06/30/Databricks-DAIS2026-第三批两篇-图片识别.md": {
@@ -1794,10 +2118,22 @@
       "contentHash": "1203a425629dcc19",
       "lastSynced": "2026-07-01"
     },
+    "sources/2026/06/30/Genie 之后，Databricks 真正想抢的是企业 Agent 入口.md": {
+      "path": "sources/2026/06/30/Genie 之后，Databricks 真正想抢的是企业 Agent 入口.md",
+      "mtime": 1782881513098.4453,
+      "contentHash": "dfe3a67de78dc69c",
+      "lastSynced": "2026-07-01"
+    },
     "sources/2026/06/30/从Databricks产品发布会看-图片识别.md": {
       "path": "sources/2026/06/30/从Databricks产品发布会看-图片识别.md",
       "mtime": 1782798463600.3672,
       "contentHash": "615e0b2bbfcb3ff6",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/30/从Databricks产品发布会看数据平台的演进方向.md": {
+      "path": "sources/2026/06/30/从Databricks产品发布会看数据平台的演进方向.md",
+      "mtime": 1782881513097.471,
+      "contentHash": "14e46ef166c5618c",
       "lastSynced": "2026-07-01"
     },
     "sources/2026/07/01/aliyun-realtime-flink-product.md": {

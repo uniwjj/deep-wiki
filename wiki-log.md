@@ -841,3 +841,13 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - created `table-format-selection` — 四格式定位速览、横向机制对比（更新机制/元数据/索引/CDC-changelog/流批一体/引擎绑定/国内采用度）、更新机制根本差异（Iceberg 快照+delete vs Paimon LSM）、CDC/changelog 能力对比、腾讯真实选型决策（CDC选Hudi/常规入湖选Iceberg）、专家圆桌观点、按场景选型建议、国内市场格局
 - updated `big-data/index` — 新增"选型对比"分区；移除整个"待建设"节（所有规划主题已建成）
 - 本次无新 sources（复用已有 sidecar）
+
+## [2026-07-01] fix | 历史来源补齐 sidecar，统一 HTML+MD 共存规则
+用户要求检查之前摄取数据是否符合"HTML+MD 共存"规则。发现 5-6 月早期摄取的来源用了错误方式，三类违规：
+- A类（12个HTML）：HTML 顶部被插了 YAML frontmatter（破坏浏览器渲染）→ 剥离 frontmatter 写回干净 HTML，提取 ingested/wiki_pages 建同名 .md sidecar
+- B类（21个PDF）：无 .md sidecar（部分配 .txt 衍生文本，txt 不被 CLI 追踪）→ 建同名 .md sidecar（保留 .txt 作衍生文本）
+- C类（24个HTML）：纯 HTML 无 sidecar 也无 frontmatter → 建同名 .md sidecar
+- 修复 1 个 malformed frontmatter（为什么 Code Agent...md 的 wiki_pages 块损坏）
+- 删除 sources 下 3 个 .DS_Store
+- 验证：所有 html/pdf 均有同名 .md sidecar；HTML 顶部无残留 frontmatter；Sources 199→255（+56 sidecar 被 CLI 识别）；Pages 仍 188（sidecar 未污染）
+- 现全部来源符合 wiki-agent.md「来源格式约定」节规则
