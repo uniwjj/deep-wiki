@@ -716,3 +716,13 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `homepage` — 最近更新区从占位符填充为真实最新页面，更新 updated 日期
 - flagged `distribution` — ai-agent 占 70%，其余领域各 1 页（学习重心真实反映，非缺陷）
 - note: llm-wiki CLI 不在 PATH，sync 未能执行，待确认 CLI 安装
+
+## [2026-07-01] restructure | big-data 拆分——Data Agent 迁出，回归纯大数据技术
+- created `ai-agent/data-agent/` — 新子目录，承接原 big-data/ 下 Data Agent 主题
+- migrated 28 页 big-data/* → ai-agent/data-agent/*（带 ai-agent 标签的 Data Agent 内容）
+- migrated `cloud-village-data-agent-platform` — 从 ai-agent/ 根迁入 data-agent/
+- created `ai-agent/data-agent/index` — 按产品/语义层/Skills/厂商战略/实践案例五分区
+- rewritten `big-data/index` — 去除 Data Agent 分区，聚焦纯技术栈，附学习规划待建设分区
+- updated `ai-agent/index` — 新增 data-agent/ 子领域行（29 页，第二大子域）
+- updated `wiki-schema` — 目录结构补充 data-agent/ 子目录
+- result: big-data/ 从 32 页降至 3 页（iceberg/ltap-architecture/maxcompute-data-ai），为 Flink/CDC/Iceberg/Paimon/湖仓一体等学习腾出容器；迁移后 0 断链（wikilink 用文件名）

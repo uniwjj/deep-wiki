@@ -1,45 +1,29 @@
 date: 2026-07-01
 summary:
-  pages: 182
+  pages: 183
   sources: 200
-  issues: {critical: 2, warning: 2, info: 1}
-issues:
-  - type: broken_link
-    severity: critical
-    page: wiki/ai-agent/ecosystem/agentic-analytics-anthropic.md
-    detail: "[[agent-evaluation]] → 已修复为 [[agent-evaluation-framework]]（已有页面）"
-    status: fixed
-  - type: broken_link
-    severity: critical
-    page: wiki/big-data/dataworks-2026-0528-xialiaori.md
-    detail: "[[cainiao-superetl-dataworks-agent]] → 已修复为 [[superetl]]（菜鸟 SuperETL 已有页面）"
-    status: fixed
-  - type: broken_link
-    severity: critical
-    page: wiki/big-data/oceanbase-ai-database.md
-    detail: "[[cainiao-superetl-dataworks-agent]] → 已修复为 [[superetl]]"
-    status: fixed
-  - type: naming_violation
-    severity: warning
-    page: wiki/learning-path.md
-    detail: "散落于 wiki/ 根目录 → 已 git mv 至 wiki/meta/（wikilink 用文件名，不破坏链接）"
-    status: fixed
-  - type: naming_violation
-    severity: warning
-    page: wiki/tech-radar.md
-    detail: "散落于 wiki/ 根目录 → 已 git mv 至 wiki/meta/"
-    status: fixed
-  - type: missing_index
-    severity: warning
-    page: wiki/meta/
-    detail: "缺 index.md → 已创建聚合索引"
-    status: fixed
-  - type: distribution_imbalance
-    severity: info
-    detail: "ai-agent 127页(70%)，distributed/backend/architecture/platform/fullstack 各仅1页——学习重心真实反映，非缺陷，不在自动修复范围"
+  issues: {critical: 0, warning: 0, info: 1}
+actions:
+  - type: restructure
+    detail: "新建 ai-agent/data-agent/ 子目录，从 big-data/ 迁出 28 页 Data Agent 内容 + ai-agent/ 根下 1 页（cloud-village），共 29 页 + 1 index"
+    status: done
+  - type: restructure
+    detail: "big-data/ 回归纯大数据技术，剩 3 页（iceberg/ltap-architecture/maxcompute-data-ai）+ index"
+    status: done
+  - type: index_rewrite
+    detail: "重写 big-data/index——去除 Data Agent 分区，聚焦纯技术栈，附学习规划待建设分区"
+    status: done
+  - type: index_create
+    detail: "新建 ai-agent/data-agent/index——按产品/语义层/Skills/厂商战略/实践案例五分区组织 29 页"
+    status: done
+  - type: index_update
+    detail: "ai-agent/index 新增 data-agent/ 子领域行（29 页，第二大子域）"
+    status: done
+  - type: schema_sync
+    detail: "wiki-schema.md 目录结构补充 data-agent/ 子目录"
+    status: done
 notes:
-  - "frontmatter 100% 完整（title/description/tags/sources/updated 全覆盖）"
-  - "0 真实孤立页（所有非索引页均有入链）"
-  - "0 重复 basename（无链接歧义）"
-  - "homepage 最近更新区从占位符填充为真实最新页面"
-  - "llm-wiki CLI 不在 PATH，sync 步骤未能执行——需用户确认 CLI 安装路径"
+  - "迁移后 0 断链（wikilink 用文件名，移动不破坏链接）"
+  - "0 孤立页、frontmatter 100% 完整"
+  - "big-data/ 从 32 页降至 3 页，为 Flink/CDC/Iceberg/Paimon/湖仓一体等学习腾出干净容器"
+  - "llm-wiki CLI 仍不可用，sync 未执行"
