@@ -706,3 +706,13 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `big-data/databricks-2026-summit` — 补充4C叙事骨架、厂商口径警示、9条战线竞争格局表、enterprise-agi-framework交叉引用
 - updated `big-data/databricks-genie` — 补充Genie Agents(从Spaces演化)、Genie One核心能力、Foot Locker证言、官方博客来源
 - updated `big-data/index`、`ai-agent/agent-core/index` — 新增 enterprise-agi-framework 索引
+
+## [2026-07-01] lint | 健康度巡检与结构优化
+- fixed `agentic-analytics-anthropic` — 断链 [[agent-evaluation]] → [[agent-evaluation-framework]]（已有页面）
+- fixed `dataworks-2026-0528-xialiaori` — 断链 [[cainiao-superetl-dataworks-agent]] → [[superetl]]（菜鸟 SuperETL 已有页面）
+- fixed `oceanbase-ai-database` — 同上断链修复
+- moved `learning-path` / `tech-radar` — 从 wiki/ 根目录迁入 wiki/meta/（符合 schema 约定，wikilink 不受影响）
+- created `meta/index` — 补齐 wiki/meta/ 目录索引
+- updated `homepage` — 最近更新区从占位符填充为真实最新页面，更新 updated 日期
+- flagged `distribution` — ai-agent 占 70%，其余领域各 1 页（学习重心真实反映，非缺陷）
+- note: llm-wiki CLI 不在 PATH，sync 未能执行，待确认 CLI 安装

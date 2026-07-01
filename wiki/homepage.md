@@ -5,7 +5,7 @@ aliases: [Deep Study, 知识库首页]
 tags: [meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-09
-updated: 2026-05-18
+updated: 2026-07-01
 ---
 
 # Deep Study
@@ -28,14 +28,17 @@ updated: 2026-05-18
 
 ## 快速入口
 
-- [[wiki-purpose]] — 定位与范围（根目录配置文件）
-- [[wiki-schema]] — 知识库组织规则（根目录配置文件）
+- [[wiki-purpose]] — 定位与范围
+- [[wiki-schema]] — 知识库组织规则
 - [[tech-radar]] — 当前关注的技术趋势
 - [[learning-path]] — 阶段式学习计划
 
 ## 最近更新
 
-_开始摄入资料后，此区域将自动填充。_
+- [[databricks-2026-summit]] — Databricks 2026 Data+AI Summit 变革综述：四层架构、LTAP、Genie Ontology
+- [[enterprise-agi-framework]] — 企业级 AGI 框架：SoI 四层堆栈、本体成熟度模型
+- [[oceanbase-ai-database]] — OceanBase 湖库一体 AI 数据库
+- [[ltap-architecture]] — LTAP 架构：首个统一事务与分析处理的湖上架构
 
 ## 相关页面
 

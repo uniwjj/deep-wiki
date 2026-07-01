@@ -106,7 +106,7 @@ OceanBase 从分布式事务数据库起步，在金融核心系统经历 15 年
 ## 相关页面
 
 - [[dataworks-data-agent]] — DataWorks Data Agent（数据开发领域的 AI 智能体）
-- [[cainiao-superetl-dataworks-agent]] — 菜鸟 SuperETL 实践
+- [[superetl]] — 菜鸟 SuperETL 实践
 - [[cloud-village-data-agent-platform]] — 云村 DAS Agent 平台
 - [[dataagent-semantic-layer]] — 数据资产语义层
 - [[data-agent-enterprise-practice]] — 企业数据智能体实践综述
