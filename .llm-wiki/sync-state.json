@@ -2,14 +2,14 @@
   "entries": {
     "wiki/homepage.md": {
       "path": "wiki/homepage.md",
-      "mtime": 1782873168035.165,
-      "contentHash": "ef898c6ba3fd7c6e",
+      "mtime": 1782873388371.0872,
+      "contentHash": "144a3e53558844f4",
       "lastSynced": "2026-07-01"
     },
     "wiki/ai-agent/index.md": {
       "path": "wiki/ai-agent/index.md",
-      "mtime": 1782872206616.5117,
-      "contentHash": "a330149ab275fe29",
+      "mtime": 1782873409377.203,
+      "contentHash": "b3a3845dddba4d2c",
       "lastSynced": "2026-07-01"
     },
     "wiki/ai-ml/bookrag.md": {
@@ -68,14 +68,14 @@
     },
     "wiki/architecture/index.md": {
       "path": "wiki/architecture/index.md",
-      "mtime": 1781503422307.2932,
-      "contentHash": "7c71e6f8300475f1",
+      "mtime": 1782873441226.2786,
+      "contentHash": "6302101db0192ac5",
       "lastSynced": "2026-07-01"
     },
     "wiki/backend/index.md": {
       "path": "wiki/backend/index.md",
-      "mtime": 1781503422307.4192,
-      "contentHash": "236edb1af43cb47e",
+      "mtime": 1782873440564.5632,
+      "contentHash": "8d8497966f4bd48c",
       "lastSynced": "2026-07-01"
     },
     "wiki/big-data/iceberg.md": {
@@ -104,44 +104,32 @@
     },
     "wiki/distributed/index.md": {
       "path": "wiki/distributed/index.md",
-      "mtime": 1781503422310.1477,
-      "contentHash": "2defa442be4563c7",
+      "mtime": 1782873419937.7766,
+      "contentHash": "bee1d8232c0dde45",
       "lastSynced": "2026-07-01"
     },
     "wiki/fullstack/index.md": {
       "path": "wiki/fullstack/index.md",
-      "mtime": 1781503422310.28,
-      "contentHash": "761a1879ca38489f",
+      "mtime": 1782873442153.101,
+      "contentHash": "11043ddb21f4488d",
       "lastSynced": "2026-07-01"
     },
     "wiki/meta/index.md": {
       "path": "wiki/meta/index.md",
-      "mtime": 1782873174832.1035,
-      "contentHash": "d80ec628d48d84d0",
-      "lastSynced": "2026-07-01"
-    },
-    "wiki/meta/learning-path.md": {
-      "path": "wiki/meta/learning-path.md",
-      "mtime": 1781503422310.4487,
-      "contentHash": "1d9e65326d0d52f8",
-      "lastSynced": "2026-07-01"
-    },
-    "wiki/meta/tech-radar.md": {
-      "path": "wiki/meta/tech-radar.md",
-      "mtime": 1781503422311.3782,
-      "contentHash": "04ab0e7ce55cfd2d",
+      "mtime": 1782873397323.4683,
+      "contentHash": "af3119d9d4677390",
       "lastSynced": "2026-07-01"
     },
     "wiki/platform/index.md": {
       "path": "wiki/platform/index.md",
-      "mtime": 1781503422310.8103,
-      "contentHash": "188ff9082c3ccef6",
+      "mtime": 1782873440289.97,
+      "contentHash": "8040050cb1b3fd16",
       "lastSynced": "2026-07-01"
     },
     "wiki/product/index.md": {
       "path": "wiki/product/index.md",
-      "mtime": 1781503422310.9426,
-      "contentHash": "f8e91e1201936f94",
+      "mtime": 1782873414902.8997,
+      "contentHash": "921559031a868f8a",
       "lastSynced": "2026-07-01"
     },
     "wiki/product/netease-tasted-interview.md": {

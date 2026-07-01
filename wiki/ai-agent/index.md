@@ -37,5 +37,4 @@ Agent 开发领域的技术积累索引，按子领域分目录管理。
 ## 相关页面
 
 - [[homepage]]
-- [[learning-path]]
 - [[big-data/index]]

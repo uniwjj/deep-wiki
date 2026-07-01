@@ -740,3 +740,11 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 根目录 `wiki-purpose.md` / `wiki-schema.md` 保持唯一权威副本（CLAUDE.md 要求操作前必读）
 - homepage / meta/index 中 [[wiki-purpose]] / [[wiki-schema]] 改为纯文本提及（配置文件不在 wikilink 图，本不应作为知识节点链接）
 - 消除 basename 重复与链接歧义
+
+## [2026-07-01] cleanup | 删除 learning-path / tech-radar（非知识内容）
+- removed `wiki/meta/learning-path.md` / `wiki/meta/tech-radar.md` — 学习路线与技术雷达是计划/待办，非知识本身，不属于知识库
+- updated `homepage` — 快速入口移除两项，meta/index 描述同步
+- updated `meta/index` — 删除"学习与跟踪"节，仅保留知识库规则
+- updated `ai-agent/index`、`product/index` — 移除相关页面引用
+- updated `distributed/platform/backend/architecture/fullstack index` — "待补充"句去除 [[learning-path]] 链接
+- 0 残留引用、0 真实断链

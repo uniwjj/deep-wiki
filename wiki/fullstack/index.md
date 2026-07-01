@@ -12,7 +12,7 @@ updated: 2026-05-18
 
 React/Vue、TypeScript、Next.js、Node.js、tRPC、Tailwind CSS 等全栈开发主题的索引目录。
 
-_本领域内容待补充，参见 [[learning-path]] 了解计划安排。_
+_本领域内容待补充。_
 
 ## 相关页面
 

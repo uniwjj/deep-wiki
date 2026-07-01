@@ -12,7 +12,7 @@ updated: 2026-05-18
 
 DevOps、可观测性（OpenTelemetry）、Kubernetes、CI/CD、SRE、IaC（Terraform）等平台工程主题的索引目录。
 
-_本领域内容待补充，参见 [[learning-path]] 了解计划安排。_
+_本领域内容待补充。_
 
 ## 相关页面
 
