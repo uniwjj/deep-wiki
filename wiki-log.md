@@ -878,3 +878,11 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 4 个 PDF sidecar 状态从 pending-visual-review 更新为 reviewed/source-missing
 
 工具发现：pdftotext 命令行工具可可靠提取 PDF 文字（之前误以为环境受限）。已记入经验。
+
+## [2026-07-01] add | Anthropic 自服务数据分析中文总结（特例：改 sources）
+
+- 原文 `sources/2026/06/26/anthropic-self-service-analytics-with-claude.md` 已有摄取页 `agentic-analytics-anthropic.md`
+- 新增中文总结 `anthropic-self-service-analytics-with-claude.zh-cn.md`（同目录），忠实原文事实/数字/机制，按国人习惯改写表述；原文未讲处标注"原文未提及"或"推测说明"
+- **特例**：经用户批准，在原文 .md frontmatter 加 `zh_cn_summary` 字段指向中文总结——违反 sources 不可变规则（CLAUDE.md 规则 2），此篇为唯一例外，不作为先例
+- 中文总结 frontmatter 标 `type: zh-cn-summary`、`source:` 指回原文，避免被 CLI 误当待摄取来源
+- 已跑 `llm-wiki sync`：Added 1 / Modified 1，状态干净

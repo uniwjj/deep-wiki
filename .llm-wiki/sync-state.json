@@ -2042,8 +2042,14 @@
     },
     "sources/2026/06/26/anthropic-self-service-analytics-with-claude.md": {
       "path": "sources/2026/06/26/anthropic-self-service-analytics-with-claude.md",
-      "mtime": 1782464201847.536,
-      "contentHash": "768c6047d845c347",
+      "mtime": 1782892157657.9434,
+      "contentHash": "c2cbe636c28b83b3",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/06/26/anthropic-self-service-analytics-with-claude.zh-cn.md": {
+      "path": "sources/2026/06/26/anthropic-self-service-analytics-with-claude.zh-cn.md",
+      "mtime": 1782892280933.8289,
+      "contentHash": "858008b329e25d91",
       "lastSynced": "2026-07-01"
     },
     "sources/2026/06/26/小米 Data Agent 获 Text2SQL 全球榜单第三名.md": {

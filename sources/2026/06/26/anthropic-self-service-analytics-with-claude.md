@@ -8,6 +8,7 @@ retrieved: 2026-06-26
 type: article
 ingested: 2026-06-26
 wiki_pages: [agentic-analytics-anthropic.md]
+zh_cn_summary: anthropic-self-service-analytics-with-claude.zh-cn.md  # 中文总结版（忠实原文事实，按国人习惯改写表述；推测部分已标注），与原文同目录
 ---
 
 # How Anthropic enables self-service data analytics with Claude
