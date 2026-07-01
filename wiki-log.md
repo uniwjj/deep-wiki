@@ -851,3 +851,30 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 删除 sources 下 3 个 .DS_Store
 - 验证：所有 html/pdf 均有同名 .md sidecar；HTML 顶部无残留 frontmatter；Sources 199→255（+56 sidecar 被 CLI 识别）；Pages 仍 188（sidecar 未污染）
 - 现全部来源符合 wiki-agent.md「来源格式约定」节规则
+
+## [2026-07-01] optimize | 知识库优化（4项）
+用户要求"优化知识库"，4项全做：
+
+**1. 修来源误用链接**：之前摄取把来源 slug 当 wikilink 写进正文（如 [[gravitino-core-objects|核心对象]]），造成 40 个假 wanted pages。54 处全部改为纯文本（来源已记在 frontmatter sources 字段）。
+
+**2. 全面 lint 巡检**：
+- 真断链（wanted pages）：53→0（修来源误用 + 19 处表格 `\|` 转义假断链）
+- 假断链修复：4 个文件 19 处 `[[name\|alias]]` → `[[name|alias]]`（表格内 wikilink 转义误报，历史遗留）
+- 孤立页：graph 报 1 个（agentic-skills），实为误报（ecosystem/index 有引用，工具统计 bug）
+- status 的 1110 broken 是 CLI 已知误报（含 alias 的链接重复计数），非真问题
+- frontmatter 100% 完整（之前 lint 已确认）
+
+**3. 补 big-data 交叉引用**：
+- iceberg/paimon 四格式对比处链向 [[table-format-selection]]（收口页从 0 入链→2）
+- apache-flink 相关页面补 flink-cdc/paimon/lakehouse/realtime-data-warehouse 链接
+- paimon 相关页面补 gravitino/lakehouse/realtime-data-warehouse，去掉"待建"标记
+- lakehouse 入链 2→4
+
+**4. PDF 逐页复核**（用 pdftotext 提取，非 Read 图片）：
+- CIDR Lakehouse 论文：补入论文正式定义（低成本直存+DBMS功能）、两层数仓四大问题（Reliability/Data staleness/Total cost/Limited use-case）、事务元数据层实现机制、Delta Engine TPC-DS 性能 → lakehouse.md
+- Iceberg TDG（344页）：补入 Catalog 五类型（Hive/Glue/Nessie/REST/JDBC）、小文件问题与 Compaction、原子提交机制 → iceberg.md
+- IJSAT Iceberg 论文：复核，内容与 iceberg.md 吻合，作学术佐证
+- Flink CDC PDF：article-downloads 清理时丢失，内容已由 HTML 充分覆盖，sidecar 标注 source-missing
+- 4 个 PDF sidecar 状态从 pending-visual-review 更新为 reviewed/source-missing
+
+工具发现：pdftotext 命令行工具可可靠提取 PDF 文字（之前误以为环境受限）。已记入经验。

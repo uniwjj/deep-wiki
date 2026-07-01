@@ -80,8 +80,8 @@
     },
     "wiki/big-data/apache-flink.md": {
       "path": "wiki/big-data/apache-flink.md",
-      "mtime": 1782877209381.3494,
-      "contentHash": "cfc12dc6c67b12db",
+      "mtime": 1782881841185.91,
+      "contentHash": "c89577d3dec7edb4",
       "lastSynced": "2026-07-01"
     },
     "wiki/big-data/flink-cdc.md": {
@@ -98,20 +98,20 @@
     },
     "wiki/big-data/flink-state-backend.md": {
       "path": "wiki/big-data/flink-state-backend.md",
-      "mtime": 1782877302399.1558,
-      "contentHash": "4825fddd26202360",
+      "mtime": 1782881685774.2737,
+      "contentHash": "e3e36e098c565700",
       "lastSynced": "2026-07-01"
     },
     "wiki/big-data/gravitino.md": {
       "path": "wiki/big-data/gravitino.md",
-      "mtime": 1782880858604.8647,
-      "contentHash": "7492b2b32a760bda",
+      "mtime": 1782881685777.7793,
+      "contentHash": "145cf19eb2b442f1",
       "lastSynced": "2026-07-01"
     },
     "wiki/big-data/iceberg.md": {
       "path": "wiki/big-data/iceberg.md",
-      "mtime": 1782880418051.262,
-      "contentHash": "4f8a5d52a9c1062e",
+      "mtime": 1782882000638.5674,
+      "contentHash": "35aa0a067ab26bd9",
       "lastSynced": "2026-07-01"
     },
     "wiki/big-data/index.md": {
@@ -122,8 +122,8 @@
     },
     "wiki/big-data/lakehouse.md": {
       "path": "wiki/big-data/lakehouse.md",
-      "mtime": 1782880975794.015,
-      "contentHash": "d940afd4b89da6a6",
+      "mtime": 1782881906093.743,
+      "contentHash": "266c718db62e3ea8",
       "lastSynced": "2026-07-01"
     },
     "wiki/big-data/ltap-architecture.md": {
@@ -140,20 +140,20 @@
     },
     "wiki/big-data/paimon.md": {
       "path": "wiki/big-data/paimon.md",
-      "mtime": 1782880785350.3691,
-      "contentHash": "3afd6aba43c453cf",
+      "mtime": 1782881824733.0735,
+      "contentHash": "e4c893891de9fbf0",
       "lastSynced": "2026-07-01"
     },
     "wiki/big-data/realtime-data-warehouse.md": {
       "path": "wiki/big-data/realtime-data-warehouse.md",
-      "mtime": 1782881057408.4084,
-      "contentHash": "64e008288190573a",
+      "mtime": 1782881685778.7146,
+      "contentHash": "1d4955d2614523c3",
       "lastSynced": "2026-07-01"
     },
     "wiki/big-data/table-format-selection.md": {
       "path": "wiki/big-data/table-format-selection.md",
-      "mtime": 1782881138637.273,
-      "contentHash": "ea4be705183a5a33",
+      "mtime": 1782881685779.0752,
+      "contentHash": "7e2b4815c14d058e",
       "lastSynced": "2026-07-01"
     },
     "wiki/distributed/index.md": {
@@ -290,8 +290,8 @@
     },
     "wiki/ai-agent/agent-core/enterprise-agi-framework.md": {
       "path": "wiki/ai-agent/agent-core/enterprise-agi-framework.md",
-      "mtime": 1782800985157.3735,
-      "contentHash": "f98d919814732d35",
+      "mtime": 1782881728979.2021,
+      "contentHash": "5650286bd9d60df1",
       "lastSynced": "2026-07-01"
     },
     "wiki/ai-agent/agent-core/index.md": {
@@ -638,8 +638,8 @@
     },
     "wiki/ai-agent/data-agent/databricks-2026-summit.md": {
       "path": "wiki/ai-agent/data-agent/databricks-2026-summit.md",
-      "mtime": 1782801208906.2888,
-      "contentHash": "22e34ba726774139",
+      "mtime": 1782881728961.4043,
+      "contentHash": "ffdb60703b630bfb",
       "lastSynced": "2026-07-01"
     },
     "wiki/ai-agent/data-agent/databricks-agent-control-plane.md": {
@@ -656,8 +656,8 @@
     },
     "wiki/ai-agent/data-agent/dataworks-2026-0528-xialiaori.md": {
       "path": "wiki/ai-agent/data-agent/dataworks-2026-0528-xialiaori.md",
-      "mtime": 1782871689109.2446,
-      "contentHash": "40533f0c6bfaee2c",
+      "mtime": 1782881728959.9517,
+      "contentHash": "8a6251c40072954d",
       "lastSynced": "2026-07-01"
     },
     "wiki/ai-agent/data-agent/dataworks-data-agent.md": {
@@ -764,8 +764,8 @@
     },
     "wiki/ai-agent/ecosystem/agentic-skills.md": {
       "path": "wiki/ai-agent/ecosystem/agentic-skills.md",
-      "mtime": 1781503422300.6404,
-      "contentHash": "5ae5bfb2f0f79845",
+      "mtime": 1782881728952.9048,
+      "contentHash": "0049641d26dcec0d",
       "lastSynced": "2026-07-01"
     },
     "wiki/ai-agent/ecosystem/ai-agent-ecommerce-content.md": {
@@ -2196,6 +2196,12 @@
       "contentHash": "253678948ab48422",
       "lastSynced": "2026-07-01"
     },
+    "sources/2026/07/01/flink-cdc-incremental-snapshot.md": {
+      "path": "sources/2026/07/01/flink-cdc-incremental-snapshot.md",
+      "mtime": 1782881958063.6777,
+      "contentHash": "3464ce47006ed7f9",
+      "lastSynced": "2026-07-01"
+    },
     "sources/2026/07/01/flink-cdc-practice-optimization.md": {
       "path": "sources/2026/07/01/flink-cdc-practice-optimization.md",
       "mtime": 1782878286853.345,
@@ -2366,14 +2372,14 @@
     },
     "sources/2026/07/01/iceberg-definitive-guide-dremio.md": {
       "path": "sources/2026/07/01/iceberg-definitive-guide-dremio.md",
-      "mtime": 1782880352848.2043,
-      "contentHash": "ff5730820f2a2cad",
+      "mtime": 1782882016042.8408,
+      "contentHash": "7cb28eb95a1177f5",
       "lastSynced": "2026-07-01"
     },
     "sources/2026/07/01/iceberg-ijsat-2024.md": {
       "path": "sources/2026/07/01/iceberg-ijsat-2024.md",
-      "mtime": 1782880352856.999,
-      "contentHash": "2e2e30abe3a5d3a9",
+      "mtime": 1782881947748.8813,
+      "contentHash": "1021bd87b3e8f1fd",
       "lastSynced": "2026-07-01"
     },
     "sources/2026/07/01/iceberg-principle-optimization.md": {
@@ -2444,8 +2450,8 @@
     },
     "sources/2026/07/01/lakehouse-cidr-2021.md": {
       "path": "sources/2026/07/01/lakehouse-cidr-2021.md",
-      "mtime": 1782880934018.657,
-      "contentHash": "5e6959d25e20aba1",
+      "mtime": 1782881919276.037,
+      "contentHash": "93ec0a148b4d53ba",
       "lastSynced": "2026-07-01"
     },
     "sources/2026/07/01/lakehouse-citic-practice.md": {

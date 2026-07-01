@@ -21,13 +21,13 @@ updated: 2026-05-31
 | # | 主题 | 演讲人 | 来源 |
 |---|------|--------|------|
 | 0 | **OPC 引主机制** — 一人加 AI 的创业路径与杭州 OPC 政策 | 王子军｜I have a demo 创始人、未来数字港 OPC 入驻者 | 仅录音 |
-| 1 | [[dataworks-data-agent\|DataWorks Data Agent 揭开面纱：新一代数据智能体，企业大数据的数字员工]] | 孙文强｜阿里云智能集团高级技术专家、DataWorks 团队 | PDF + 录音 |
-| 2 | [[taobao-live-data-dev-paradigm\|淘宝直播 × DataWorks DataAgent：AI 驱动的数据研发新范式]] | 丁源｜阿里巴巴淘天集团高级数据专家、淘宝直播数据研发负责人 | PDF + 录音 |
-| 3 | [[maxcompute-skills\|MaxCompute × Agent：从多模态存储到混合计算]] | 孙戴博（六稻）｜阿里云智能集团产品专家、MaxCompute PD | PDF + 录音 |
-| 4 | [[hologres-skills\|基于 Hologres Skills 完成广告素材智能生成与投放效果分析]] | 赵红梅（梅酱）｜Hologres 产品经理 | PDF + 录音 |
-| 5 | [[flink-skills\|Flink Skills：重塑实时计算开发与运维体验]] | 李昊哲 | PDF + 录音 |
-| 6 | [[emr-skills\|EMR Skills：从 Lakehouse 到 Agentic Lakehouse]] | 畅含｜EMR 产品经理、计算平台事业部 | PDF + 录音 |
-| 7 | [[openclaw-agentic-search-memory\|Agentic Search + Memory，OpenClaw 企业研究更智能]] | 陈梦成｜阿里云 AI 搜索团队 | PDF + 录音 |
+| 1 | [[dataworks-data-agent|DataWorks Data Agent 揭开面纱：新一代数据智能体，企业大数据的数字员工]] | 孙文强｜阿里云智能集团高级技术专家、DataWorks 团队 | PDF + 录音 |
+| 2 | [[taobao-live-data-dev-paradigm|淘宝直播 × DataWorks DataAgent：AI 驱动的数据研发新范式]] | 丁源｜阿里巴巴淘天集团高级数据专家、淘宝直播数据研发负责人 | PDF + 录音 |
+| 3 | [[maxcompute-skills|MaxCompute × Agent：从多模态存储到混合计算]] | 孙戴博（六稻）｜阿里云智能集团产品专家、MaxCompute PD | PDF + 录音 |
+| 4 | [[hologres-skills|基于 Hologres Skills 完成广告素材智能生成与投放效果分析]] | 赵红梅（梅酱）｜Hologres 产品经理 | PDF + 录音 |
+| 5 | [[flink-skills|Flink Skills：重塑实时计算开发与运维体验]] | 李昊哲 | PDF + 录音 |
+| 6 | [[emr-skills|EMR Skills：从 Lakehouse 到 Agentic Lakehouse]] | 畅含｜EMR 产品经理、计算平台事业部 | PDF + 录音 |
+| 7 | [[openclaw-agentic-search-memory|Agentic Search + Memory，OpenClaw 企业研究更智能]] | 陈梦成｜阿里云 AI 搜索团队 | PDF + 录音 |
 
 ## 开场：OPC 引主机制（王子军）
 

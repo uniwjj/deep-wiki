@@ -12,11 +12,34 @@ updated: 2026-07-01
 
 **湖仓一体（Lakehouse）** 是融合数据湖的低成本存储与数据仓库的数据治理/事务能力的新一代数据平台架构。它用开放表格式在低成本对象存储上提供 ACID 事务、Schema 演进、时间旅行与高性能查询，使一份数据同时服务 BI 分析与机器学习，消除数据湖与数据仓库的割裂。
 
-> 概念理论源头是 CIDR 2021 论文 *Lakehouse: A New Generation of Open Platforms...*（Matei Zaharia 等，Databricks）。该 PDF 待逐页视觉复核（见 [[lakehouse-cidr-2021|论文 sidecar]]），本页论点暂以 Databricks 博客 [[lakehouse-databricks-what-is|What is a Data Lakehouse]] 及中文转述为据。
+> 概念理论源头是 CIDR 2021 论文 *Lakehouse: A New Generation of Open Platforms...*（Armbrust/Zaharia 等，Databricks + UC Berkeley + Stanford）。论文定义与核心论点已据 PDF 原文校正（来源 lakehouse-cidr-2021.pdf）。
+
+## 论文定义与核心论点
+
+论文论证**数据仓库架构将衰落，被 Lakehouse 取代**。正式定义：
+
+> **Lakehouse = 基于低成本、可直接访问的存储的数据管理系统，同时提供传统分析型 DBMS 的管理与性能功能**（ACID 事务、版本管理、时间旅行、索引、缓存、查询优化）。
+
+三个特征：(i) 基于开放直存格式（如 Parquet）；(ii) 一等公民支持机器学习与数据科学；(iii) state-of-the-art 性能。
+
+### 两层数仓架构的四大问题
+
+论文指出当时的"数据湖 + 下游数据仓库"两层架构有四个问题，正是 Lakehouse 要解决的：
+
+1. **Reliability（可靠性）** —— 保持数据湖与数据仓一致困难且昂贵，需持续 ETL，还受两套引擎差异影响。
+2. **Data staleness（数据陈旧）** —— 数据仓的数据相对湖是陈旧的，新数据常需数天才能载入。
+3. **Total cost of ownership（总拥有成本）** —— 持续 ETL 成本 + 数据复制到仓的双倍存储 + 商业数仓用专有格式锁定数据。
+4. **Limited use-case support（用例支持有限）** —— 数仓对 ML/数据科学支持弱；数据湖又缺 ACID/索引等基本管理功能，性能追不上数仓。
+
+### 实现机制：事务元数据层
+
+论文给出 Lakehouse 的实现路径：在对象存储（S3/ADLS/GCS）上用标准格式（Parquet）存数据主体，**在其上实现一个事务性元数据层（transactional metadata layer）**——定义哪些对象属于某个表版本，借此实现 ACID 事务、版本管理等能力，而数据主体仍存廉价对象存储、客户端可直接用标准格式读取。Delta Lake 是这一机制的实例（当时已支撑 Databricks 约一半工作负载）。
+
+但元数据层只补管理能力，**不足以保证 SQL 性能**。论文指出还需 caching（热数据放 SSD）、auxiliary data structures（索引/统计）、data layout optimizations 等数据仓库技术。Databricks Delta Engine 在 TPC-DS 上超越领先云数仓，论证了 Lakehouse 可达数据仓库级性能。
 
 ## 数据平台的组成
 
-数据平台 = **存储系统 + 计算引擎 + 接口**（来源 [[lakehouse-data-platform-history|极简数据平台史]]）：
+数据平台 = **存储系统 + 计算引擎 + 接口**（来源 极简数据平台史）：
 
 - **存储** —— 把原料存进来。特点：时间跨度长（存全历史）、来源分散（MySQL/日志/第三方）、集中存储（建立 single source of truth）。
 - **计算引擎** —— 从存储提炼信息。无大一统引擎，按模型/时效/数据量选型：深度学习用 TF/PyTorch，离线用 MapReduce/Spark，BI 用 OLAP。
@@ -49,7 +72,7 @@ updated: 2026-07-01
 
 ## 三次架构迭代
 
-来源 [[lakehouse-architecture-evolution|架构演进核心路线]] 总结过去十年大数据架构三次迭代：
+来源 架构演进核心路线 总结过去十年大数据架构三次迭代：
 
 | 阶段 | 核心技术 | 特征 | 问题 |
 |------|---------|------|------|
@@ -110,7 +133,7 @@ updated: 2026-07-01
 | 腾讯 | Lakehouse+批流一体；TC-Iceberg CDC 流式消费 | 统一治理，指标统一，降本增效 |
 | 中信建投 | 湖仓一体（信创替代，ANCHOR 标准） | 金融行业选型落地 |
 
-腾讯内部 CDC 场景选 Hudi、常规入湖选 Iceberg的真实决策见 [[lakehouse-tencent-practice|腾讯落地实践]]。
+腾讯内部 CDC 场景选 Hudi、常规入湖选 Iceberg的真实决策见 腾讯落地实践。
 
 ## 未来趋势
 
@@ -118,8 +141,8 @@ updated: 2026-07-01
 
 ## 待补充
 
-- CIDR 论文逐页复核：湖仓一体学术定义、与数据仓库/数据湖的正式对比、事务实现细节（待 PDF 视觉复核）
 - Hudi / Delta Lake 的独立页面（当前仅在 [[iceberg]] 对比表中涉及）
+- Lakehouse 性能优化细节（caching/索引/data layout 的工程实现）
 
 ## 相关页面
 

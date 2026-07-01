@@ -41,10 +41,10 @@ Agentic Skills 定义 **做什么**（任务逻辑），[[agent-mcp-protocol|MCP
 | 平台 | Skills 形态 | 备注 |
 |------|------------|------|
 | Google Data Agent Kit | Agentic Skills（Python/声明式） | 开源，跨 IDE |
-| [[maxcompute-skills\|MaxCompute]] | MCP Skills（SQL 模板 + Python） | 阿里云专有 |
-| [[hologres-skills\|Hologres]] | CLI Skills + AI Function | 阿里云专有 |
-| [[flink-skills\|Flink]] | 四层 Skills 体系 | 阿里云专有 |
-| [[emr-skills\|EMR]] | AI Native Skills | 阿里云专有 |
+| [[maxcompute-skills|MaxCompute]] | MCP Skills（SQL 模板 + Python） | 阿里云专有 |
+| [[hologres-skills|Hologres]] | CLI Skills + AI Function | 阿里云专有 |
+| [[flink-skills|Flink]] | 四层 Skills 体系 | 阿里云专有 |
+| [[emr-skills|EMR]] | AI Native Skills | 阿里云专有 |
 
 ## 趋势判断
 
