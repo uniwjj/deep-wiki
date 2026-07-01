@@ -225,7 +225,7 @@ updated: 2026-05-06
 | 重复主题 | 合并为一个页面，对方加为别名 |
 | 浅页面 | 从来源扩展，或合并到相关页面 |
 
-> **修复纪律**：修复不得制造新的占位文件或冗余副本。历史教训——曾为消除"根目录配置文件不在 wikilink 图"的断链，在 `wiki/meta/` 建镜像 stub，反而引入 basename 重复与链接歧义。配置文件（`wiki-purpose.md`/`wiki-schema.md`/`wiki-agent.md`/`AGENTS.md`）不在 wikilink 图内，引用时用纯文本，不建 wiki 页面副本，也不加 `status` 字段。详见 `wiki-agent.md`「修正纪律」。
+> **修复纪律**：修复要消除问题，不得把问题转移成另一个文件。严禁用"新建文件"解决"链接不通"或"内容缺失"——不建占位页、镜像页、转发页。只创建承载实质知识的页面。详见 `wiki-agent.md`「修正纪律」。
 
 7. 在 `.llm-wiki/lint-result.yaml` 写入机器可读的结果文件：
    ```yaml
