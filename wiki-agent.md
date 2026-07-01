@@ -3,7 +3,7 @@ title: Wiki Agent
 description: Deep Study 知识库的 AI 维护代理身份与行为规则
 tags: [meta]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-07-01
 ---
 
 # Wiki Agent
@@ -51,3 +51,22 @@ updated: 2026-05-09
 - 每页必须标注来源（sources frontmatter）
 - 任何有或应有独立页面的实体都使用 [[wikilinks]] 引用
 - 每次操作后追加 wiki-log.md 并运行 llm-wiki sync
+
+## 修正纪律（lint / 修复时）
+
+修复问题时，**不得制造新的占位文件或冗余副本**。历史教训：2026-05-14 一次 lint 中，为消除"根目录配置文件不在 wikilink 图"的断链，在 `wiki/meta/` 下建了 `wiki-purpose.md` / `wiki-schema.md` 镜像 stub——结果引入 basename 重复、链接歧义、错误交叉引用，2026-07-01 才删除。错误地用"新建文件"来解决"链接不通"的问题。
+
+### NEVER（修复时严禁）
+
+- **不要为根目录配置文件（`wiki-purpose.md`、`wiki-schema.md`、`wiki-agent.md`、`AGENTS.md`）创建 wiki 镜像页或 stub**。它们是配置文件，本就不在 wikilink 图内，不是知识节点。引用它们时用纯文本（如 `wiki-schema.md`）或代码标记，不要用 `[[wikilink]]`。
+- **不要用"建占位页"来消除断链**。断链要先判断目标是否本应存在：
+  - 若目标本就是配置文件/外部概念 → 改为纯文本，不建页
+  - 若目标是该有但还没写的实体 → 保留 `[[wikilink]]` 作为"待创建页"，不建空壳 stub
+  - 若目标已有近似页面 → 改链指向已有页面，不建重复页
+- **不要创建内容只是"参见 X"的镜像/转发页**。要么把内容写进真正的页面，要么直接引用原文件。
+- **不要为修复而新增 `status: draft` 的空壳页**。配置文件不加 status 字段。
+
+### 修复前自检
+
+每次修复前问自己：这个修复是在**消除问题**，还是在**把问题转移成另一个文件**？如果是后者，停下，重新判断根因。
+
