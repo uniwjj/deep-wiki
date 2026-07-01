@@ -32,8 +32,8 @@
     },
     "wiki/ai-ml/index.md": {
       "path": "wiki/ai-ml/index.md",
-      "mtime": 1781503422306.6846,
-      "contentHash": "156e219cd5282b08",
+      "mtime": 1782873922015.0264,
+      "contentHash": "43a813aabe923b89",
       "lastSynced": "2026-07-01"
     },
     "wiki/ai-ml/llm-cost-optimization.md": {
@@ -242,8 +242,8 @@
     },
     "wiki/ai-agent/agent-core/index.md": {
       "path": "wiki/ai-agent/agent-core/index.md",
-      "mtime": 1782801271691.5896,
-      "contentHash": "ab6e9ce5fd712c2b",
+      "mtime": 1782873966557.753,
+      "contentHash": "89ab271d7fb04e2f",
       "lastSynced": "2026-07-01"
     },
     "wiki/ai-agent/agent-core/meta-jit-testing.md": {
@@ -494,8 +494,8 @@
     },
     "wiki/ai-agent/claude-code/index.md": {
       "path": "wiki/ai-agent/claude-code/index.md",
-      "mtime": 1781503422299.773,
-      "contentHash": "3730150a21382092",
+      "mtime": 1782873956418.5032,
+      "contentHash": "b1e3a4af7d0a998d",
       "lastSynced": "2026-07-01"
     },
     "wiki/ai-agent/context-eng/claude-md-best-practices.md": {
@@ -782,8 +782,8 @@
     },
     "wiki/ai-agent/ecosystem/index.md": {
       "path": "wiki/ai-agent/ecosystem/index.md",
-      "mtime": 1781503422301.7446,
-      "contentHash": "18c01eb68321f55d",
+      "mtime": 1782873930976.0342,
+      "contentHash": "d05a76ff430d104d",
       "lastSynced": "2026-07-01"
     },
     "wiki/ai-agent/ecosystem/log-diagnosis-skill.md": {
@@ -872,8 +872,8 @@
     },
     "wiki/ai-agent/harness/index.md": {
       "path": "wiki/ai-agent/harness/index.md",
-      "mtime": 1782798425581.1125,
-      "contentHash": "883cce40df1519ae",
+      "mtime": 1782873980273.8577,
+      "contentHash": "33c993c5a489bbe8",
       "lastSynced": "2026-07-01"
     },
     "wiki/ai-agent/harness/loop-engineering.md": {

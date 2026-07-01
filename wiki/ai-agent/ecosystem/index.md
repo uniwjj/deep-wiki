@@ -32,11 +32,13 @@ AI Agent 工具生态与趋势分析，共 15 篇。
 - [[graphify-tool]] — Graphify 工具
 - [[anthropic-cookbook]] — Anthropic Cookbook
 - [[log-diagnosis-skill]] — 日志诊断 Skill
+- [[agentic-skills]] — Agentic Skills：封装标准化数据任务的可复用能力包
 
 ## 应用场景
 
 - [[ai-agent-ecommerce-content]] — AI Agent 电商内容应用
 - [[digital-employee]] — 数字员工概念
+- [[agentic-analytics-anthropic]] — Anthropic 自服务数据分析：四层架构实现 95% 查询自动化
 
 ## 职业与趋势
 

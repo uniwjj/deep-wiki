@@ -48,6 +48,11 @@ Agent 核心理论与机制，共 18 篇。
 
 - [[enterprise-agi-framework]] — 企业级 AGI 框架：SoI 四层堆栈 + 本体成熟度 1-9 级 + 数据层冰面化
 
+## 业务认知与企业实践
+
+- [[business-cognition-system]] — 可演进的业务认知系统：三类知识来源 + 动态加载 + 反馈回流
+- [[data-agent-enterprise-practice]] — Data Agent 企业级实践：蚂蚁企信四层架构与四个关键实践
+
 ## 专用搜索
 
 - [[specialized-knowledge-search]] — 专用知识搜索

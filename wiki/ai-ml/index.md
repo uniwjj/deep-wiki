@@ -13,6 +13,16 @@ updated: 2026-05-31
 ## 核心概念
 
 - [[ontology]] — 本体论：从哲学到 AI 基石，五要素框架与 AI 幻觉解决方案
+- [[genie-ontology]] — Databricks Genie Ontology：PageRank 式企业语义资产，首问命中率 84.5%
+
+## 大模型
+
+- [[glm5-model]] — 智谱 GLM-5 模型系列：架构特性、能力基准与 Harness 适配
+
+## Prompt 与成本
+
+- [[prompt-engineering]] — Prompt 工程：结构化 Prompt、Few-shot、Chain-of-Thought
+- [[llm-cost-optimization]] — LLM 成本优化：Token 压缩、缓存、模型路由
 
 ## RAG 与检索
 

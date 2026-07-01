@@ -29,6 +29,7 @@ Agent 编排系统的设计模式与工程实践，共 8 篇。
 - [[harness-engineering-practice]] — Harness 工程实践
 - [[harness-as-backend]] — Harness 作为新后端
 - [[glm5-harness-practice]] — GLM5 Harness 实战
+- [[dw-harness-practice]] — 得物数仓 Harness 落地：五层防御 + 8 步 SKILL 工作流
 - [[omnigent-meta-harness]] — Databricks Omnigent 元编排层（meta-harness），开源跨框架 Agent 调度
 
 ## 相关页面

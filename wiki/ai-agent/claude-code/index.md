@@ -14,6 +14,7 @@ Claude Code 的完整源码级理解，共 34 篇分析。
 
 ## 架构全景
 
+- [[claude-code]] — Claude Code 总索引：架构、机制与工程实践全览
 - [[claude-code-architecture]] — 架构全景（六抽象 + 10 设计模式）
 - [[claude-code-bootstrap-pipeline]] — 启动管道（300ms 预算）
 - [[claude-code-state-architecture]] — 两层状态架构
@@ -67,6 +68,8 @@ Claude Code 的完整源码级理解，共 34 篇分析。
 
 - [[claude-code-configuration-guide]] — 配置指南
 - [[claude-code-large-codebase]] — 大型代码库实践
+- [[claude-code-behavior-contract]] — CLAUDE.md 行为契约：从 41% 到 3% 的规则工程
+- [[claude-code-instruction-failure]] — 指令失效分析：五层规则架构
 - [[claude-code-vs-opencode]] — vs OpenCode 对比
 
 ## 相关页面

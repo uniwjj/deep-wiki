@@ -754,3 +754,13 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `homepage` — 相关页面移除 [[meta/index]]，改为直接以纯文本列出根目录配置文件
 - `meta` 标签保留（标签与目录是两套体系，schema 标签体系不动）
 - 0 残留引用、0 真实断链
+
+## [2026-07-01] lint | 补全 5 个目录 index 的索引遗漏（12 页）
+巡检发现多个子目录 index 未列出本目录全部页面（页面后期新增时只更新交叉引用、漏补 index）：
+- `ai-ml/index` 补 4 页：genie-ontology、glm5-model、prompt-engineering、llm-cost-optimization（新增"大模型""Prompt 与成本"分区）
+- `ai-agent/ecosystem/index` 补 2 页：agentic-skills、agentic-analytics-anthropic
+- `ai-agent/claude-code/index` 补 3 页：claude-code、claude-code-behavior-contract、claude-code-instruction-failure
+- `ai-agent/agent-core/index` 补 2 页：business-cognition-system、data-agent-enterprise-practice（新增"业务认知与企业实践"分区）
+- `ai-agent/harness/index` 补 1 页：dw-harness-practice
+- 结果：0 index 遗漏、0 真实断链、frontmatter 100% 完整
+- 注：CLI 报的 1058 broken wikilinks 仍为表格 \| 转义误报（已核实）
