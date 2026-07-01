@@ -72,3 +72,4 @@ npm install -g @jackwener/llm-wiki
    - **禁止把知识库相关的事实写进 agent 个人记忆**（`~/.claude/.../memory/`）。记忆是本机私有的，其他机器看不到，会造成状态分裂。
    - 所有需要持久化的约定、配置、行为规则，必须写入仓库内的文件：`CLAUDE.md`（`AGENTS.md`）、`wiki-agent.md`、`.agents/skills/llm-wiki/SKILL.md`、`wiki-schema.md` 等。这些文件随 git 同步，对所有机器可见。
    - 运行期状态（lint 结果、sync 状态）写入 `.llm-wiki/`，同样随仓库同步。
+8. **Git 工作流**：提交改动直接在 `main` 分支进行并推送远程，**不要**切单独分支、不要走 PR 流程。用户要求所有操作都在当前（main）分支完成。
