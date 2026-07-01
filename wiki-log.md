@@ -748,3 +748,9 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `ai-agent/index`、`product/index` — 移除相关页面引用
 - updated `distributed/platform/backend/architecture/fullstack index` — "待补充"句去除 [[learning-path]] 链接
 - 0 残留引用、0 真实断链
+
+## [2026-07-01] cleanup | 删除整个 wiki/meta/ 目录
+- removed `wiki/meta/`（含 index.md）— 该目录源于 2026-05-14 错误 lint（为放配置文件镜像 stub 而建），镜像与 learning-path/tech-radar 已先后清理后，仅剩一个指向根目录配置文件的冗余 index，无存在价值
+- updated `homepage` — 相关页面移除 [[meta/index]]，改为直接以纯文本列出根目录配置文件
+- `meta` 标签保留（标签与目录是两套体系，schema 标签体系不动）
+- 0 残留引用、0 真实断链

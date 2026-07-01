@@ -2,8 +2,8 @@
   "entries": {
     "wiki/homepage.md": {
       "path": "wiki/homepage.md",
-      "mtime": 1782873388371.0872,
-      "contentHash": "144a3e53558844f4",
+      "mtime": 1782873571044.0198,
+      "contentHash": "4356a1c1bc36bb1b",
       "lastSynced": "2026-07-01"
     },
     "wiki/ai-agent/index.md": {
@@ -112,12 +112,6 @@
       "path": "wiki/fullstack/index.md",
       "mtime": 1782873442153.101,
       "contentHash": "11043ddb21f4488d",
-      "lastSynced": "2026-07-01"
-    },
-    "wiki/meta/index.md": {
-      "path": "wiki/meta/index.md",
-      "mtime": 1782873397323.4683,
-      "contentHash": "af3119d9d4677390",
       "lastSynced": "2026-07-01"
     },
     "wiki/platform/index.md": {
