@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flink CDC 2.0 实现原理剖析</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>Flink CDC 2.0 实现原理剖析</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：2022-01-16T00:00:00+08:00</span>
+<span>来源：<a href="https://zhjwpku.com/2022/01/16/flink-cdc-2-0-analysis.html" target="_blank">zhjwpku.com</a></span>
+<span>平台：zhjwpku</span>
+<span>图片：8 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<article class="post" itemscope="" itemtype="http://schema.org/BlogPosting">
+<header class="post-header">
+<h2 itemprop="name headline">Flink CDC 2.0 实现原理剖析</h2>
+<i class="fa fa-calendar" style="margin-left: 2px"></i><span class="post-meta" style="margin-left: 2px"><time datetime="2022-01-16T00:00:00+08:00" itemprop="datePublished"> Jan 16, 2022</time>
+<i aria-hidden="true" class="fa fa-tags" style="margin-left: 2px"></i><a href="/tags#flink" style="margin-left: 5px">flink</a><a href="/tags#cdc" style="margin-left: 5px">cdc</a>
+</span>
+</header>
+<div class="post-content" itemprop="articleBody">
+<p><a href="https://github.com/ververica/flink-cdc-connectors">Flink CDC Connectors</a> 是 Apache Flink 的一组源端（Source）连接器，通过捕获变更数据（Change Data Capture）从不同数据库中采集数据。项目早期通过集成 <a href="https://github.com/debezium/debezium">Debezium</a> 引擎来采集数据，支持 <strong>全量 + 增量</strong> 的模式，保证所有数据的一致性。</p>
+<p>但因为集成了 Debezium Engine，用户在使用过程中出现了一些痛点:</p>
+<ol>
+<li>一致性通过加锁保证
+    <ul>
+<li>Debezium 在保证数据一致性时，需要对读取的库或表加锁，全局锁可能导致数据库 hang 住，表级锁会锁住表的读</li>
+</ul>
+</li>
+<li>不支持水平扩展
+    <ul>
+<li>Flink CDC 目前只支持单并发，在全量阶段读取阶段，如果表非常大（亿级别），读取时间在<strong>小时</strong>级别</li>
+</ul>
+</li>
+<li>全量读取阶段不支持 checkpoint
+    <ul>
+<li>CDC 读取分为两个阶段，全量读取和增量读取，全量读取阶段不支持 checkpoint，fail 后需要重新读取</li>
+</ul>
+</li>
+</ol>
+<p>Flink CDC 2.0 为了解决如上痛点而设计，借鉴 Netflix <a href="https://paper-notes.zhjwpku.com/databases/cdc/dblog.html">DBLog</a> 的无锁算法，并基于 <a href="https://cwiki.apache.org/confluence/display/FLINK/FLIP-27%3A+Refactor+Source+Interface">FLIP-27</a> 实现，以达成如下目标:</p>
+<ol>
+<li>无锁</li>
+<li>水平扩展</li>
+<li>支持全量阶段 checkpoint</li>
+</ol>
+<h4>FLIP-27</h4>
+<p>在介绍 Flink CDC 2.0 之前，先来了解一下 FLIP-27。FLIP-27 旨在解决 <code class="language-plaintext highlighter-rouge">SourceFunction</code> 中存在的几个痛点:</p>
+<ul>
+<li>split 的发现逻辑（work discovery）和实际读取数据的逻辑耦合在 <code class="language-plaintext highlighter-rouge">SourceFunction</code> 和 <code class="language-plaintext highlighter-rouge">DataStream</code> 接口中，导致 source 实现的复杂性</li>
+<li>批处理和流处理需要实现不同的 source</li>
+<li>partitions/shards/splits 等概念没有在接口中显示定义，使得很难以独立于源的方式实现<strong>事件时间对齐</strong>、<strong>分区 watermark</strong>、<strong>动态 split 分配</strong>、<strong>work stealing</strong> 等功能</li>
+<li>checkpoint 锁由 source function 占有会带来一系列问题，导致框架难以优化</li>
+<li>没有通用框架，这意味着每个 source 都要实现一个复杂的线程模型，增加了新 source 实现及测试的难度</li>
+</ul>
+<p>FLIP-27 的 Source API 包含两个组件:</p>
+<ul>
+<li><code class="language-plaintext highlighter-rouge">SplitEnumerator</code> 负责发现并发现 split，运行在 JobManager</li>
+<li><code class="language-plaintext highlighter-rouge">SourceReader</code> 负责读取 split 的实际数据，运行在 TaskManager</li>
+</ul>
+<p>这两个组件封装了核心功能，使得 Source 接口本身只是一个用于创建 <code class="language-plaintext highlighter-rouge">SplitEnumerator</code> 和 <code class="language-plaintext highlighter-rouge">SourceReader</code> 的工厂类。下图展示了 <code class="language-plaintext highlighter-rouge">SplitEnumerator</code> 和 <code class="language-plaintext highlighter-rouge">SourceReader</code> 的拓扑关系。</p>
+<p><br/></p>
+<p><img alt="Separating Work Discovery from Reading" src="/assets/2022/enumerator_and_reader.png" style="padding-left: 45px" width="550px"/></p>
+<p><br/></p>
+<p>新架构下实现的 source connector 可以做到批流一体，唯一的区别是对批处理 <code class="language-plaintext highlighter-rouge">SplitEnumerator</code> 会产出固定数量的 split 集合并且每个 split 都是有限数据集；对于流处理 <code class="language-plaintext highlighter-rouge">SplitEnumerator</code> 要么产出无限多的 split 要么 split 自身是无限数据集。</p>
+<p><code class="language-plaintext highlighter-rouge">SplitEnumerator</code> 和 <code class="language-plaintext highlighter-rouge">SourceReader</code> 需要由用户提供具体的实现类，FLIP-27 在这两个组件之间引入了通用的消息传递机制，通过传递 <code class="language-plaintext highlighter-rouge">SourceEvent</code> 接口进行通信，如下图所示:</p>
+<p><br/></p>
+<p><img alt="Generic enumerator-reader communication mechanism" src="/assets/2022/communication_mechanism.png" style="padding-left: 45px" width="600px"/></p>
+<p><br/></p>
+<p><code class="language-plaintext highlighter-rouge">SourceCoordinator</code> 和 <code class="language-plaintext highlighter-rouge">SourceOperator</code> 作为上图中 <code class="language-plaintext highlighter-rouge">OperatorCoordinator</code> 和 <code class="language-plaintext highlighter-rouge">Operator</code> 针对 FLIP-27 的实现，其类结构如下（图中忽略了 Failover 相关结构）:</p>
+<p><img alt="Class Diagram of SourceCoordinator and SourceOperator" src="/assets/2022/flink-class-diagram-of-sourcecoodinator-and-source-operator.jpg" style="padding-left: 45px" width="600px"/></p>
+<p>可以看出 <code class="language-plaintext highlighter-rouge">SourceCoordinator</code> 封装了 <code class="language-plaintext highlighter-rouge">SplitEnumerator</code>，<code class="language-plaintext highlighter-rouge">SourceOperator</code> 封装了 <code class="language-plaintext highlighter-rouge">SourceReader</code>，在不考虑 Failover 相关结构时，其接口非常简单，Flink 框架调用 <code class="language-plaintext highlighter-rouge">SourceCoordinator#start</code> 函数创建 <code class="language-plaintext highlighter-rouge">SplitEnumerator</code> 并将其启动，调用 <code class="language-plaintext highlighter-rouge">SourceOperator#open</code> 创建、注册并启动 <code class="language-plaintext highlighter-rouge">SourceReader</code>，其序列图如下:</p>
+<p><img alt="Sequence Diagram of SourceCoordinator and SourceOperator" src="/assets/2022/flink-sequence-diagram-of-sourcecoodinator-and-source-operator.jpg"/></p>
+<p><br/></p>
+<p><code class="language-plaintext highlighter-rouge">SourceOperator#emitNext</code> 调用 <code class="language-plaintext highlighter-rouge">SourceReader#pollNext</code> 接口将读取到的数据传递给下游。</p>
+<p>Source 核心接口（the lowest level interface）被设计地非常通用，这使得它非常灵活，但是也增加了复杂 Reader 的实现难度。因此 FLIP-27 中提出了通过构建更高层级的抽象来提供更简单的接口以允许阻塞调用。<code class="language-plaintext highlighter-rouge">SourceReaderBase</code> 作为 <code class="language-plaintext highlighter-rouge">SourceReader</code> 的一个抽象实现，提供了主线程（mail box main thread）和内部读取线程之间的同步机制，用户只需专注于:</p>
+<ul>
+<li>从外部系统获取记录（通过实现 <code class="language-plaintext highlighter-rouge">SplitReader</code> 接口）</li>
+<li>执行记录解析和转换（通过实现 <code class="language-plaintext highlighter-rouge">RecordEmitter</code> 接口）</li>
+<li>提取时间戳并选择是否处理 watermark</li>
+</ul>
+<p>下图展示了 <code class="language-plaintext highlighter-rouge">SourceReaderBase</code> 的工作流程:</p>
+<p><img alt="SouceReaderBase Implementation" src="/assets/2022/BaseSourceImpl.jpg"/></p>
+<h4 id="flink-cdc-20-全量增量读取实现原理">Flink CDC 2.0 全量增量读取实现原理</h4>
+<p>FLIP-27 在框架层面提供了多算子并行读取的机制，下面我们来看一下 Flink CDC 2.0 是如何结合 FLIP-27 和 DBLog 无锁算法来实现并发读取全量数据后无缝转换为单线程读取增量数据的。</p>
+<p>源端读取的表结构必须具有物理主键，用来将表进行切分，<a href="https://github.com/ververica/flink-cdc-connectors/blob/release-2.1/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/assigners/ChunkSplitter.java#L62">ChunkSplitter</a> 可以根据主键将表均匀切分为 (max - min)/chunkSize 个 split（min/max 指主键的最小值和最大值），或者使用 limit 查询保证一个 split 中有 chunkSize 条数据（最后一个 split 数据记录数 &lt;= chunkSize）。</p>
+<p>DBLog 提出的算法叫做 <code class="language-plaintext highlighter-rouge">Watermark-based Chunk Selection</code>，通过在源数据库中维护一个单行单列的表作为辅助，在查询每个 chunk（即 split）数据前后分别更新该记录使得在事务日志中生产两个事件 lw（低水位）和 hw（高水位），然后将 select 数据和 [lw, hw] 之间的日志进行处理，获得该 chunk 的 point-in-time 为 hw 的一组数据。与 DBLog 不同，Flink CDC 2.0 没有维护额外的表，而是在 select 数据前后使用 <code class="language-plaintext highlighter-rouge">SHOW MASTER STATUS</code> 获取 binlog offset，这种方式避免了侵入源端系统。</p>
+<p>快照读取的逻辑:</p>
+<ol>
+<li><code class="language-plaintext highlighter-rouge">SHOW MASTER STATUS</code> 获取 lw，插入队列</li>
+<li>读取该分片内的记录，插入队列</li>
+<li><code class="language-plaintext highlighter-rouge">SHOW MASTER STATUS</code> 获取 hw，插入队列</li>
+<li>判断 lw 与 hw 之间是否有增量变更</li>
+<li>如果没有变更，队列中插入 BINLOG_END 记录</li>
+<li>否则读取 [lw, hw] 之间的 binlog 并插入队列，最后一条记录为 BINLOG_END</li>
+</ol>
+<p><strong><a href="https://github.com/ververica/flink-cdc-connectors/blob/release-2.1/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/debezium/task/MySqlSnapshotSplitReadTask.java#L125">MySqlSnapshotSplitReadTask#doExecute</a></strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">final</span> <span class="nc">BinlogOffset</span> <span class="n">lowWatermark</span> <span class="o">=</span> <span class="n">currentBinlogOffset</span><span class="o">(</span><span class="n">jdbcConnection</span><span class="o">);</span>
+<span class="no">LOG</span><span class="o">.</span><span class="na">info</span><span class="o">(</span>
+        <span class="s">"Snapshot step 1 - Determining low watermark {} for split {}"</span><span class="o">,</span>
+        <span class="n">lowWatermark</span><span class="o">,</span>
+        <span class="n">snapshotSplit</span><span class="o">);</span>
+        
+<span class="o">((</span><span class="nc">SnapshotSplitReader</span><span class="o">.</span><span class="na">SnapshotSplitChangeEventSourceContextImpl</span><span class="o">)</span> <span class="o">(</span><span class="n">context</span><span class="o">))</span>
+        <span class="o">.</span><span class="na">setLowWatermark</span><span class="o">(</span><span class="n">lowWatermark</span><span class="o">);</span>
+<span class="n">signalEventDispatcher</span><span class="o">.</span><span class="na">dispatchWatermarkEvent</span><span class="o">(</span>
+        <span class="n">snapshotSplit</span><span class="o">,</span> <span class="n">lowWatermark</span><span class="o">,</span> <span class="nc">SignalEventDispatcher</span><span class="o">.</span><span class="na">WatermarkKind</span><span class="o">.</span><span class="na">LOW</span><span class="o">);</span>
+
+<span class="no">LOG</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Snapshot step 2 - Snapshotting data"</span><span class="o">);</span>
+<span class="n">createDataEvents</span><span class="o">(</span><span class="n">ctx</span><span class="o">,</span> <span class="n">snapshotSplit</span><span class="o">.</span><span class="na">getTableId</span><span class="o">());</span>
+
+<span class="kd">final</span> <span class="nc">BinlogOffset</span> <span class="n">highWatermark</span> <span class="o">=</span> <span class="n">currentBinlogOffset</span><span class="o">(</span><span class="n">jdbcConnection</span><span class="o">);</span>
+<span class="no">LOG</span><span class="o">.</span><span class="na">info</span><span class="o">(</span>
+        <span class="s">"Snapshot step 3 - Determining high watermark {} for split {}"</span><span class="o">,</span>
+        <span class="n">highWatermark</span><span class="o">,</span>
+        <span class="n">snapshotSplit</span><span class="o">);</span>
+<span class="n">signalEventDispatcher</span><span class="o">.</span><span class="na">dispatchWatermarkEvent</span><span class="o">(</span>
+        <span class="n">snapshotSplit</span><span class="o">,</span> <span class="n">highWatermark</span><span class="o">,</span> <span class="nc">SignalEventDispatcher</span><span class="o">.</span><span class="na">WatermarkKind</span><span class="o">.</span><span class="na">HIGH</span><span class="o">);</span>
+<span class="o">((</span><span class="nc">SnapshotSplitReader</span><span class="o">.</span><span class="na">SnapshotSplitChangeEventSourceContextImpl</span><span class="o">)</span> <span class="o">(</span><span class="n">context</span><span class="o">))</span>
+        <span class="o">.</span><span class="na">setHighWatermark</span><span class="o">(</span><span class="n">highWatermark</span><span class="o">);</span>
+</code></pre></div></div>
+<p>上述代码执行后队列中的数据:</p>
+<p><img alt="Snapshot Records" src="/assets/2022/snapshot_records.jpg" width="260px"/></p>
+<p>然后使用读取 lw 和 hw 之间的 binlog，读取到的数据 append 到同队列，队列中的数据为:</p>
+<p><img alt="Snapshot Records &amp; binlog records" src="/assets/2022/snapshot_records_with_binlog_records.jpg" width="500px"/></p>
+<p>然后对队列里的数据进行修正，获取该分片 point-in-time 为 hw 的数据。</p>
+<p><strong><a href="https://github.com/ververica/flink-cdc-connectors/blob/release-2.1/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/utils/RecordUtils.java#L81">RecordUtils#normalizedSplitRecords</a></strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 根据高低水位将 snapshot records 和 binlog records 分开</span>
+<span class="nc">SourceRecord</span> <span class="n">lowWatermark</span> <span class="o">=</span> <span class="n">sourceRecords</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+<span class="nc">SourceRecord</span> <span class="n">highWatermark</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="k">for</span> <span class="o">(;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sourceRecords</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+    <span class="nc">SourceRecord</span> <span class="n">sourceRecord</span> <span class="o">=</span> <span class="n">sourceRecords</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(!</span><span class="n">isHighWatermarkEvent</span><span class="o">(</span><span class="n">sourceRecord</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">snapshotRecords</span><span class="o">.</span><span class="na">put</span><span class="o">((</span><span class="nc">Struct</span><span class="o">)</span> <span class="n">sourceRecord</span><span class="o">.</span><span class="na">key</span><span class="o">(),</span> <span class="n">sourceRecord</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">highWatermark</span> <span class="o">=</span> <span class="n">sourceRecord</span><span class="o">;</span>
+        <span class="n">i</span><span class="o">++;</span>
+        <span class="k">break</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// binlog records 中包含了非本分片的日志，需要将属于本分片的日志过滤出来</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">sourceRecords</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">SourceRecord</span><span class="o">&gt;</span> <span class="n">allBinlogRecords</span> <span class="o">=</span>
+            <span class="n">sourceRecords</span><span class="o">.</span><span class="na">subList</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">sourceRecords</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="nc">SourceRecord</span> <span class="n">binlog</span> <span class="o">:</span> <span class="n">allBinlogRecords</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">isDataChangeRecord</span><span class="o">(</span><span class="n">binlog</span><span class="o">))</span> <span class="o">{</span>
+            <span class="nc">Object</span><span class="o">[]</span> <span class="n">key</span> <span class="o">=</span>
+                    <span class="n">getSplitKey</span><span class="o">(</span><span class="n">snapshotSplit</span><span class="o">.</span><span class="na">getSplitKeyType</span><span class="o">(),</span> <span class="n">binlog</span><span class="o">,</span> <span class="n">nameAdjuster</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">splitKeyRangeContains</span><span class="o">(</span>
+                    <span class="n">key</span><span class="o">,</span> <span class="n">snapshotSplit</span><span class="o">.</span><span class="na">getSplitStart</span><span class="o">(),</span> <span class="n">snapshotSplit</span><span class="o">.</span><span class="na">getSplitEnd</span><span class="o">()))</span> <span class="o">{</span>
+                <span class="n">binlogRecords</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">binlog</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// 将 snapshot records 和 binlog records 进行 upsert 逻辑得到 point-in-time 为 hw 的数据</span>
+<span class="n">normalizedRecords</span> <span class="o">=</span>
+        <span class="n">upsertBinlog</span><span class="o">(</span>
+                <span class="n">snapshotSplit</span><span class="o">,</span>
+                <span class="n">lowWatermark</span><span class="o">,</span>
+                <span class="n">highWatermark</span><span class="o">,</span>
+                <span class="n">snapshotRecords</span><span class="o">,</span>
+                <span class="n">binlogRecords</span><span class="o">);</span>
+</code></pre></div></div>
+<p>upsertBinlog 逻辑:</p>
+<ol>
+<li>将 lw 加入到 normalizedBinlogRecords</li>
+<li>遍历 binlogRecords 中的记录</li>
+<li>对于删除记录，将其从 snapshotRecords 删除</li>
+<li>对于更新记录，将记录中的 After 作为 READ 记录 map.put 到 snapshotRecords</li>
+<li>对于创建记录，使用 map.put 到 snapshotRecords 中</li>
+<li>将 snapshotRecords.values 加入到 normalizedBinlogRecords</li>
+<li>将 hw 加入到 normalizedBinlogRecords</li>
+<li>返回 normalizedBinlogRecords</li>
+</ol>
+<p><strong><a href="https://github.com/ververica/flink-cdc-connectors/blob/release-2.1/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/utils/RecordUtils.java#L139">RecordUtils#upsertBinlog</a></strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kd">static</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">SourceRecord</span><span class="o">&gt;</span> <span class="nf">upsertBinlog</span><span class="o">(</span>
+        <span class="nc">MySqlSplit</span> <span class="n">split</span><span class="o">,</span>
+        <span class="nc">SourceRecord</span> <span class="n">lowWatermarkEvent</span><span class="o">,</span>
+        <span class="nc">SourceRecord</span> <span class="n">highWatermarkEvent</span><span class="o">,</span>
+        <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">Struct</span><span class="o">,</span> <span class="nc">SourceRecord</span><span class="o">&gt;</span> <span class="n">snapshotRecords</span><span class="o">,</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">SourceRecord</span><span class="o">&gt;</span> <span class="n">binlogRecords</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">SourceRecord</span><span class="o">&gt;</span> <span class="n">normalizedBinlogRecords</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+    <span class="n">normalizedBinlogRecords</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">lowWatermarkEvent</span><span class="o">);</span>
+    <span class="c1">// upsert binlog events to snapshot events of split</span>
+    <span class="k">if</span> <span class="o">(!</span><span class="n">binlogRecords</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">SourceRecord</span> <span class="n">binlog</span> <span class="o">:</span> <span class="n">binlogRecords</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">Struct</span> <span class="n">key</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Struct</span><span class="o">)</span> <span class="n">binlog</span><span class="o">.</span><span class="na">key</span><span class="o">();</span>
+            <span class="nc">Struct</span> <span class="n">value</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Struct</span><span class="o">)</span> <span class="n">binlog</span><span class="o">.</span><span class="na">value</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nc">Envelope</span><span class="o">.</span><span class="na">Operation</span> <span class="n">operation</span> <span class="o">=</span>
+                        <span class="nc">Envelope</span><span class="o">.</span><span class="na">Operation</span><span class="o">.</span><span class="na">forCode</span><span class="o">(</span>
+                                <span class="n">value</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="nc">Envelope</span><span class="o">.</span><span class="na">FieldName</span><span class="o">.</span><span class="na">OPERATION</span><span class="o">));</span>
+                <span class="k">switch</span> <span class="o">(</span><span class="n">operation</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">case</span> <span class="nl">UPDATE:</span>
+                        <span class="nc">Envelope</span> <span class="n">envelope</span> <span class="o">=</span> <span class="nc">Envelope</span><span class="o">.</span><span class="na">fromSchema</span><span class="o">(</span><span class="n">binlog</span><span class="o">.</span><span class="na">valueSchema</span><span class="o">());</span>
+                        <span class="nc">Struct</span> <span class="n">source</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="na">getStruct</span><span class="o">(</span><span class="nc">Envelope</span><span class="o">.</span><span class="na">FieldName</span><span class="o">.</span><span class="na">SOURCE</span><span class="o">);</span>
+                        <span class="nc">Struct</span> <span class="n">updateAfter</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="na">getStruct</span><span class="o">(</span><span class="nc">Envelope</span><span class="o">.</span><span class="na">FieldName</span><span class="o">.</span><span class="na">AFTER</span><span class="o">);</span>
+                        <span class="nc">Instant</span> <span class="n">ts</span> <span class="o">=</span>
+                                <span class="nc">Instant</span><span class="o">.</span><span class="na">ofEpochMilli</span><span class="o">(</span>
+                                        <span class="o">(</span><span class="nc">Long</span><span class="o">)</span> <span class="n">source</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="nc">Envelope</span><span class="o">.</span><span class="na">FieldName</span><span class="o">.</span><span class="na">TIMESTAMP</span><span class="o">));</span>
+                        <span class="nc">SourceRecord</span> <span class="n">record</span> <span class="o">=</span>
+                                <span class="k">new</span> <span class="nf">SourceRecord</span><span class="o">(</span>
+                                        <span class="n">binlog</span><span class="o">.</span><span class="na">sourcePartition</span><span class="o">(),</span>
+                                        <span class="n">binlog</span><span class="o">.</span><span class="na">sourceOffset</span><span class="o">(),</span>
+                                        <span class="n">binlog</span><span class="o">.</span><span class="na">topic</span><span class="o">(),</span>
+                                        <span class="n">binlog</span><span class="o">.</span><span class="na">kafkaPartition</span><span class="o">(),</span>
+                                        <span class="n">binlog</span><span class="o">.</span><span class="na">keySchema</span><span class="o">(),</span>
+                                        <span class="n">binlog</span><span class="o">.</span><span class="na">key</span><span class="o">(),</span>
+                                        <span class="n">binlog</span><span class="o">.</span><span class="na">valueSchema</span><span class="o">(),</span>
+                                        <span class="n">envelope</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">updateAfter</span><span class="o">,</span> <span class="n">source</span><span class="o">,</span> <span class="n">ts</span><span class="o">));</span>
+                        <span class="n">snapshotRecords</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">record</span><span class="o">);</span>
+                        <span class="k">break</span><span class="o">;</span>
+                    <span class="k">case</span> <span class="nl">DELETE:</span>
+                        <span class="n">snapshotRecords</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+                        <span class="k">break</span><span class="o">;</span>
+                    <span class="k">case</span> <span class="nl">CREATE:</span>
+                        <span class="n">snapshotRecords</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">binlog</span><span class="o">);</span>
+                        <span class="k">break</span><span class="o">;</span>
+                    <span class="k">case</span> <span class="nl">READ:</span>
+                        <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">(</span>
+                                <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span>
+                                        <span class="s">"Binlog record shouldn't use READ operation, the the record is %s."</span><span class="o">,</span>
+                                        <span class="n">binlog</span><span class="o">));</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">normalizedBinlogRecords</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">snapshotRecords</span><span class="o">.</span><span class="na">values</span><span class="o">());</span>
+    <span class="n">normalizedBinlogRecords</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">highWatermarkEvent</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">normalizedBinlogRecords</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>上述过程在多个 <code class="language-plaintext highlighter-rouge">SourceReader</code> 上并发执行，互不影响。假设一个任务同步的三张表 t1/t2/t3 被切分为 6 个分片，由于并发执行，其高低水位在 binlog 上的位置的一种可能如下图所示:</p>
+<p><img alt="3 tables 6 chunks" src="/assets/2022/3_tables_6_chunks.jpg"/></p>
+<p>可以看出，t1.split1 和 t2.split1 读取的 binlog 范围有交叉（都读取了 [lw2.1, hw1.1] 之间的 binlog），t3.split2 可以早于 t3.split1 执行。这些交叉或者乱序并不影响正确性，因为全量阶段 <code class="language-plaintext highlighter-rouge">MySqlSourceReader</code> 会将每个 split 的 hw 通过 <code class="language-plaintext highlighter-rouge">FinishedSnapshotSplitsReportEvent</code> 消息汇报给 <code class="language-plaintext highlighter-rouge">MySqlSourceEnumerator</code>，在增量阶段通过这些 hw 信息来保证任意一条 binlog 记录不被重复处理。</p>
+<p><strong><a href="https://github.com/ververica/flink-cdc-connectors/blob/release-2.1/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/reader/MySqlSourceReader.java#L222">MySqlSourceReader#reportFinishedSnapshotSplitsIfNeed</a></strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kt">void</span> <span class="nf">reportFinishedSnapshotSplitsIfNeed</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(!</span><span class="n">finishedUnackedSplits</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">BinlogOffset</span><span class="o">&gt;</span> <span class="n">finishedOffsets</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">MySqlSnapshotSplit</span> <span class="n">split</span> <span class="o">:</span> <span class="n">finishedUnackedSplits</span><span class="o">.</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">finishedOffsets</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">split</span><span class="o">.</span><span class="na">splitId</span><span class="o">(),</span> <span class="n">split</span><span class="o">.</span><span class="na">getHighWatermark</span><span class="o">());</span>
+        <span class="o">}</span>
+        <span class="nc">FinishedSnapshotSplitsReportEvent</span> <span class="n">reportEvent</span> <span class="o">=</span>
+                <span class="k">new</span> <span class="nf">FinishedSnapshotSplitsReportEvent</span><span class="o">(</span><span class="n">finishedOffsets</span><span class="o">);</span>
+        <span class="n">context</span><span class="o">.</span><span class="na">sendSourceEventToCoordinator</span><span class="o">(</span><span class="n">reportEvent</span><span class="o">);</span>
+        <span class="no">LOG</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span>
+                <span class="s">"The subtask {} reports offsets of finished snapshot splits {}."</span><span class="o">,</span>
+                <span class="n">subtaskId</span><span class="o">,</span>
+                <span class="n">finishedOffsets</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>当 <code class="language-plaintext highlighter-rouge">MySqlSourceEnumerator</code> 将所有 split 的 hw 收齐之后，会创建一个 binlog split，该分片包含了需要读取 binlog 的起始位置（所有分片 hw 的最小值）和所有分片的 hw 信息。</p>
+<p><strong><a href="https://github.com/ververica/flink-cdc-connectors/blob/release-2.1/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/assigners/MySqlHybridSplitAssigner.java#L164">MySqlHybridSplitAssigner#createBinlogSplit</a></strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="nc">MySqlBinlogSplit</span> <span class="nf">createBinlogSplit</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">MySqlSnapshotSplit</span><span class="o">&gt;</span> <span class="n">assignedSnapshotSplit</span> <span class="o">=</span>
+            <span class="n">snapshotSplitAssigner</span><span class="o">.</span><span class="na">getAssignedSplits</span><span class="o">().</span><span class="na">values</span><span class="o">().</span><span class="na">stream</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">sorted</span><span class="o">(</span><span class="nc">Comparator</span><span class="o">.</span><span class="na">comparing</span><span class="o">(</span><span class="nl">MySqlSplit:</span><span class="o">:</span><span class="n">splitId</span><span class="o">))</span>
+                    <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+
+    <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">BinlogOffset</span><span class="o">&gt;</span> <span class="n">splitFinishedOffsets</span> <span class="o">=</span>
+            <span class="n">snapshotSplitAssigner</span><span class="o">.</span><span class="na">getSplitFinishedOffsets</span><span class="o">();</span>
+    <span class="kd">final</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">FinishedSnapshotSplitInfo</span><span class="o">&gt;</span> <span class="n">finishedSnapshotSplitInfos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+    <span class="nc">BinlogOffset</span> <span class="n">minBinlogOffset</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="nc">MySqlSnapshotSplit</span> <span class="n">split</span> <span class="o">:</span> <span class="n">assignedSnapshotSplit</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// find the min binlog offset</span>
+        <span class="nc">BinlogOffset</span> <span class="n">binlogOffset</span> <span class="o">=</span> <span class="n">splitFinishedOffsets</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">split</span><span class="o">.</span><span class="na">splitId</span><span class="o">());</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">minBinlogOffset</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">binlogOffset</span><span class="o">.</span><span class="na">isBefore</span><span class="o">(</span><span class="n">minBinlogOffset</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">minBinlogOffset</span> <span class="o">=</span> <span class="n">binlogOffset</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">finishedSnapshotSplitInfos</span><span class="o">.</span><span class="na">add</span><span class="o">(</span>
+                <span class="k">new</span> <span class="nf">FinishedSnapshotSplitInfo</span><span class="o">(</span>
+                        <span class="n">split</span><span class="o">.</span><span class="na">getTableId</span><span class="o">(),</span>
+                        <span class="n">split</span><span class="o">.</span><span class="na">splitId</span><span class="o">(),</span>
+                        <span class="n">split</span><span class="o">.</span><span class="na">getSplitStart</span><span class="o">(),</span>
+                        <span class="n">split</span><span class="o">.</span><span class="na">getSplitEnd</span><span class="o">(),</span>
+                        <span class="n">binlogOffset</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// the finishedSnapshotSplitInfos is too large for transmission, divide it to groups and</span>
+    <span class="c1">// then transfer them</span>
+
+    <span class="kt">boolean</span> <span class="n">divideMetaToGroups</span> <span class="o">=</span> <span class="n">finishedSnapshotSplitInfos</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">splitMetaGroupSize</span><span class="o">;</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">MySqlBinlogSplit</span><span class="o">(</span>
+            <span class="no">BINLOG_SPLIT_ID</span><span class="o">,</span>
+            <span class="n">minBinlogOffset</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">?</span> <span class="nc">BinlogOffset</span><span class="o">.</span><span class="na">INITIAL_OFFSET</span> <span class="o">:</span> <span class="n">minBinlogOffset</span><span class="o">,</span>
+            <span class="nc">BinlogOffset</span><span class="o">.</span><span class="na">NO_STOPPING_OFFSET</span><span class="o">,</span>
+            <span class="n">divideMetaToGroups</span> <span class="o">?</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;()</span> <span class="o">:</span> <span class="n">finishedSnapshotSplitInfos</span><span class="o">,</span>
+            <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;(),</span>
+            <span class="n">finishedSnapshotSplitInfos</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>当 <code class="language-plaintext highlighter-rouge">MySqlSourceEnumerator</code> 把该 binlog 分片 assign 给一个 <code class="language-plaintext highlighter-rouge">MySqlSourceReader</code> 的时候，任务从全量阶段转为增量阶段。<code class="language-plaintext highlighter-rouge">MySqlSourceReader</code> 在读取 binlog 数据后，通过 <code class="language-plaintext highlighter-rouge">shouldEmit</code> 来判断该记录是否应该发送给下游。</p>
+<p><strong><a href="https://github.com/ververica/flink-cdc-connectors/blob/release-2.1/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/debezium/reader/BinlogSplitReader.java#L197">BinlogSplitReader#shouldEmit</a></strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">shouldEmit</span><span class="o">(</span><span class="nc">SourceRecord</span> <span class="n">sourceRecord</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">isDataChangeRecord</span><span class="o">(</span><span class="n">sourceRecord</span><span class="o">))</span> <span class="o">{</span>
+        <span class="nc">TableId</span> <span class="n">tableId</span> <span class="o">=</span> <span class="n">getTableId</span><span class="o">(</span><span class="n">sourceRecord</span><span class="o">);</span>
+        <span class="nc">BinlogOffset</span> <span class="n">position</span> <span class="o">=</span> <span class="n">getBinlogPosition</span><span class="o">(</span><span class="n">sourceRecord</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">hasEnterPureBinlogPhase</span><span class="o">(</span><span class="n">tableId</span><span class="o">,</span> <span class="n">position</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">// only the table who captured snapshot splits need to filter</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">finishedSplitsInfo</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">tableId</span><span class="o">))</span> <span class="o">{</span>
+            <span class="nc">RowType</span> <span class="n">splitKeyType</span> <span class="o">=</span>
+                    <span class="nc">ChunkUtils</span><span class="o">.</span><span class="na">getSplitType</span><span class="o">(</span>
+                            <span class="n">statefulTaskContext</span><span class="o">.</span><span class="na">getDatabaseSchema</span><span class="o">().</span><span class="na">tableFor</span><span class="o">(</span><span class="n">tableId</span><span class="o">));</span>
+            <span class="nc">Object</span><span class="o">[]</span> <span class="n">key</span> <span class="o">=</span>
+                    <span class="n">getSplitKey</span><span class="o">(</span>
+                            <span class="n">splitKeyType</span><span class="o">,</span>
+                            <span class="n">sourceRecord</span><span class="o">,</span>
+                            <span class="n">statefulTaskContext</span><span class="o">.</span><span class="na">getSchemaNameAdjuster</span><span class="o">());</span>
+            <span class="k">for</span> <span class="o">(</span><span class="nc">FinishedSnapshotSplitInfo</span> <span class="n">splitInfo</span> <span class="o">:</span> <span class="n">finishedSplitsInfo</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">tableId</span><span class="o">))</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nc">RecordUtils</span><span class="o">.</span><span class="na">splitKeyRangeContains</span><span class="o">(</span>
+                                <span class="n">key</span><span class="o">,</span> <span class="n">splitInfo</span><span class="o">.</span><span class="na">getSplitStart</span><span class="o">(),</span> <span class="n">splitInfo</span><span class="o">.</span><span class="na">getSplitEnd</span><span class="o">())</span>
+                        <span class="o">&amp;&amp;</span> <span class="n">position</span><span class="o">.</span><span class="na">isAfter</span><span class="o">(</span><span class="n">splitInfo</span><span class="o">.</span><span class="na">getHighWatermark</span><span class="o">()))</span> <span class="o">{</span>
+                    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="c1">// not in the monitored splits scope, do not emit</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">// always send the schema change event and signal event</span>
+    <span class="c1">// we need record them to state of Flink</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>当一个 binlog 记录属于一个分片的主键范围内时，如果该记录在这个分片的 hw 之后，则该记录应该发送给下游。<code class="language-plaintext highlighter-rouge">BinlogSplitReader</code> 通过配置 <code class="language-plaintext highlighter-rouge">maxSplitHighWatermarkMap</code> 来判断一条记录是否已经处其所在表的最大 hw，即该表是否已经进入 Pure Binlog Phase，对于这样的 binlog 记录，不需进行比较，直接发送给下游。</p>
+<h4 id="全量读取阶段支持-checkpoint">全量读取阶段支持 checkpoint</h4>
+<p>通过上一节的介绍，我们了解了 Flink CDC 2.0 借鉴 DBLog 的算法实现了无锁读取，借助 FLIP-27 框架优雅地实现了全量阶段的并发读取。对于 checkpoint，通过实现 FLIP-27 定义的接口，能够保证重启之后恢复到之前的状态，已完成的 split 不会重新读取。</p>
+<p><code class="language-plaintext highlighter-rouge">MySqlSourceEnumerator</code> 端的状态管理在 <code class="language-plaintext highlighter-rouge">link-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/assigners/state/</code> 目录下实现，<code class="language-plaintext highlighter-rouge">MySqlSourceReader</code> 端的状态管理在 <code class="language-plaintext highlighter-rouge">flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/split/</code> 目录下实现，由于这块的逻辑相对更加复杂，本文不作进一步介绍。</p>
+<h4 id="存在的问题">存在的问题</h4>
+<p>细心的读者可能会发现，全量阶段转为增量阶段后，如果较早读取的 binlog 在源端被 purge，增量阶段会因为读取不到对应的 binlog 位置而报错。该问题是因为 Flink CDC 没有持久化存储来确保任务开始之后的 binlog 都被保存。提高并行度加速全量阶段的吞吐一定程度上能缓解该问题。</p>
+<h4 id="社区动态">社区动态</h4>
+<p>截至版本 <a href="https://github.com/ververica/flink-cdc-connectors/releases/tag/release-2.1.1">Release-2.1.1</a>，只有 flink-connector-mysql-cdc 支持上述的 CDC 2.0 特性，在 <a href="https://github.com/ververica/flink-cdc-connectors/issues/723">Release-2.2 Roadmap</a> 中，一个关键特性是将 2.0 的框架抽取出来，以支持其它数据库 connector 使用 2.0 特性，详见 <a href="https://github.com/ververica/flink-cdc-connectors/pull/776">PR</a>。</p>
+<p><br/>
+<span class="post-meta">
+References:
+</span>
+<br/>
+<span class="post-meta">
+1 <a href="https://flink-learning.org.cn/article/detail/3ebe9f20774991c4d5eeb75a141d9e1e">Flink CDC 2.0 正式发布，详解核心改进</a> by 徐榜江(雪尽). 2021.7<br/>
+2 <a href="https://zhuanlan.zhihu.com/p/159337953">Flink 1.11.0 发布，有哪些值得关注的新特性？</a> by 王治江 2020.7<br/>
+3 <a href="https://github.com/ververica/flink-cdc-connectors/pull/233">The first draft for MySQL-CDC 2.0 implementation</a><br/>
+</span></p>
+</div>
+<div class="wrapper" style="text-align: center;">
+<span style="font-size: 13px; color: #f7f7f7">Copyright © 2016-Present by 赵军旺</span>
+</div>
+
+
+
+<div id="gitalk-container"></div>
+
+</article>
+</div>
+</article>
+</body>
+</html>

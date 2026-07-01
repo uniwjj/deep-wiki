@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flink 中文社区 | Flink CDC 2.2 正式发布，新增四种数据源，支持动态加表，提供增量快照框架</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>Flink 中文社区 | Flink CDC 2.2 正式发布，新增四种数据源，支持动态加表，提供增量快照框架</h1>
+<div class="meta-info">
+<span>作者：Apache Flink 学习网</span>
+<span>发表：未知</span>
+<span>来源：<a href="https://flink-learning.org.cn/article/detail/33e9a2618e4fda5799ab23c8ce0e132d" target="_blank">flink-learning.org.cn</a></span>
+<span>平台：flink</span>
+<span>图片：8 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<main _ngcontent-flink-c21="" class="content"><router-outlet _ngcontent-flink-c23=""></router-outlet><flink-article _nghost-flink-c37=""><router-outlet _ngcontent-flink-c37=""></router-outlet><flink-detail _nghost-flink-c48=""><div _ngcontent-flink-c48="" class="detail-content"><div _ngcontent-flink-c48="" class="content"><div _ngcontent-flink-c48="" class="article-left"><div _ngcontent-flink-c48="" class="detail-title"><ul _ngcontent-flink-c48="" class="breadcrumb"><li _ngcontent-flink-c48=""><a _ngcontent-flink-c48="" href="/article/suoyou/1">学习资料</a><i _ngcontent-flink-c48="" class="flink-community communityyoushuangjiantou"></i></li><li _ngcontent-flink-c48="">Flink CDC 2.2 正式发布，新增四种数据源，支持动态加表，提供增量快照框架</li></ul><figure _ngcontent-flink-c48="" class="introduction"><h1 _ngcontent-flink-c48="">Flink CDC 2.2 正式发布，新增四种数据源，支持动态加表，提供增量快照框架</h1><div _ngcontent-flink-c48="" class="inner"><img _ngcontent-flink-c48="" alt="Flink CDC 2.2 正式发布，新增四种数据源，支持动态加表，提供增量快照框架" height="228" src="https://img.alicdn.com/imgextra/i2/O1CN018dmLGS1dAMCxGDFxC_!!6000000003695-0-tps-685-383.jpg" width="410"/></div><figcaption _ngcontent-flink-c48=""><div _ngcontent-flink-c48="" class="detail-author"><div _ngcontent-flink-c48="" class="author"> 作者： <div _ngcontent-flink-c48="" class="author-content"><a _ngcontent-flink-c48="" href="/author/1a143e3dec5a0d1def16318999233757">徐榜江（雪尽）</a><!-- --><!-- --></div><!-- --></div><!-- --><!-- --></div><div _ngcontent-flink-c48="" class="detail-abstract">Flink CDC (CDC Connectors for Apache Flink®) [1]是 Apache Flink® 的一组 Source 连接器，支持从 MySQL，MariaDB, RDS MySQL，Aurora MySQL，PolarDB MySQL，PostgreSQL，Oracle，MongoDB，SqlServer，OceanBase，PolarDB-X，TiDB 等数据库中实时地读取存量历史数据和增量变更数据，用户既可以选择用户友好的 SQL API，也可以使用功能更为强大的 DataStream API。</div><div _ngcontent-flink-c48="" class="detail-tab"><strong _ngcontent-flink-c48="">#社区动态</strong><strong _ngcontent-flink-c48="">#版本公告</strong><strong _ngcontent-flink-c48="">#CDC</strong><!-- --></div></figcaption></figure><div _ngcontent-flink-c48="" class="author-mobile"><figure _ngcontent-flink-c48=""><h1 _ngcontent-flink-c48="">Flink CDC 2.2 正式发布，新增四种数据源，支持动态加表，提供增量快照框架</h1><div _ngcontent-flink-c48="" class="information"><img _ngcontent-flink-c48="" alt="徐榜江（雪尽）" height="64" src="https://img.alicdn.com/imgextra/i3/O1CN01bRmXvr1vCnOIJzS15_!!6000000006137-0-tps-1024-1024.jpg" title="徐榜江（雪尽）" width="64"/><p _ngcontent-flink-c48=""><a _ngcontent-flink-c48="" href="/author/1a143e3dec5a0d1def16318999233757">徐榜江（雪尽）</a><!-- --><!-- --><strong _ngcontent-flink-c48="">Apache Flink Committer，Flink CDC Maintainer</strong></p></div><!-- --><figcaption _ngcontent-flink-c48=""><!-- --><p _ngcontent-flink-c48="" class="abstract">Flink CDC (CDC Connectors for Apache Flink®) [1]是 Apache Flink® 的一组 Source 连接器，支持从 MySQL，MariaDB, RDS MySQL，Aurora MySQL，PolarDB MySQL，PostgreSQL，Oracle，MongoDB，SqlServer，OceanBase，PolarDB-X，TiDB 等数据库中实时地读取存量历史数据和增量变更数据，用户既可以选择用户友好的 SQL API，也可以使用功能更为强大的 DataStream API。</p></figcaption></figure></div></div><div _ngcontent-flink-c48="" class="markdown"><p><img alt="null" class="img-responsive" src="https://img.alicdn.com/imgextra/i2/O1CN018dmLGS1dAMCxGDFxC_!!6000000003695-0-tps-685-383.jpg"/></p>
+<h2 id="前言">前言</h2><p>Flink CDC (CDC Connectors for Apache Flink®) <sup>[1]</sup>是 Apache Flink® 的一组 Source 连接器，支持从 MySQL，MariaDB, RDS MySQL，Aurora MySQL，PolarDB MySQL，PostgreSQL，Oracle，MongoDB，SqlServer，OceanBase，PolarDB-X，TiDB 等数据库中实时地读取存量历史数据和增量变更数据，用户既可以选择用户友好的 SQL API，也可以使用功能更为强大的 DataStream API。</p>
+<p><img alt="null" class="img-responsive" src="https://img.alicdn.com/imgextra/i3/O1CN01jBAP9N1m8N23rDrGM_!!6000000004909-2-tps-904-494.png"/></p>
+<p>作为新一代的数据集成框架， Flink CDC 不仅可以替代传统的 DataX 和 Canal 工具做实时数据同步，将数据库的全量和增量数据一体化地同步到消息队列和数据仓库中；也可以用于实时数据集成，将数据库数据实时入湖入仓；同时还支持强大的数据加工能力，可以通过 SQL 对数据库数据做实时关联、打宽、聚合，并将物化结果写入到各种存储中。</p>
+<p>相对于其他数据集成框架，Flink CDC 具有全增量一体化、无锁读取、并发读取、表结构变更自动同步、分布式架构等技术优势，在开源社区中非常受欢迎，成长迅速，文档完善<sup>[2]</sup>，目前社区已有 44 位贡献者，4 位Maintainer，社区用户群超过 4000 人。</p>
+<h2 id="一flink-cdc-22-概览">一、Flink CDC 2.2 概览</h2><p>经过3个多月的紧张开发，在社区开发者们的共同努力下，Flink CDC 2.2 版本正式发布了：<a href="https://github.com/ververica/flink-cdc-connectors/releases/tag/release-2.2.0" rel="noopener" target="_blank">https://github.com/ververica/flink-cdc-connectors/releases/tag/release-2.2.0</a></p>
+<p>2.2 版本共有 34 位社区贡献者参与贡献，累计贡献了 110+ commits。一图胜千言，本文通过下图带你一分钟快速了解 Flink CDC 2.2 版本的重大改进和核心特性。</p>
+<p><img alt="null" class="img-responsive" src="https://img.alicdn.com/imgextra/i4/O1CN0184Wpn11PyMpzuagUD_!!6000000001909-2-tps-904-476.png"/></p>
+<ul>
+<li>2.2 版本新增 OceanBase，PolarDB-X，SqlServer，TiDB 四种数据源接入，均支持全量和增量一体化同步。 至此，Flink CDC 已支持 12 种数据源。</li>
+<li>Flink CDC 兼容 Flink 1.13 和 Flink 1.14 两个大版本，2.2 版本的所有 Connector 都支持跑在 Flink 1.13.* 或 Flink 1.14.* 的集群上。</li>
+<li>提供增量快照读取框架，方便其他连接器接入，其他连接器采用该框架后，便可以提供无锁算法，并发读取，断点续传等功能。</li>
+<li>MySQL CDC 支持动态加表，该功能可以在无需重新读取已有表的基础上，增加需要监控的表，添加的表会自动先同步该表的全量数据再无缝切换到同步增量数据。</li>
+<li>MongoDB CDC 支持正则表达式过滤集合，该功能可以让用户在作业中指定所需监控的库名和集合名，用户可以用一个作业中监控多个数据库或多个集合。</li>
+</ul>
+<h2 id="二新增-4-种数据源支持">二、新增 4 种数据源支持</h2><p>Flink CDC 2.2 版本新增了 OceanBase CE，PolarDB-X，SqlServer，TiDB 四种数据源接入。其中新增 OceanBase CDC，SqlServer CDC，TiDB CDC 三个连接器，而 PolarDB-X 的支持则是通过对 MySQL CDC 连接器进行兼容适配实现。</p>
+<ul>
+<li><strong>OceanBase CE</strong></li>
+</ul>
+<p>OceanBase CE<sup>[3]</sup>是一款开源分布式数据库管理系统，同时支持在线事务处理与在线分析处理。OceanBase CDC 的实现机制是全量部分通过 JDBC 读取表中的历史数据，增量部分则是通过 OceanBase 提供 LogProxy Client 获取增量变更数据。</p>
+<ul>
+<li><strong>PolarDB-X</strong></li>
+</ul>
+<p>PolarDB-X<sup>[4]</sup> 是一款云原生分布式数据库系统。PolarDB-X 高度兼容 MySQL 系统及生态等特点, 其内部的日志节点提供了完全兼容 MySQL Binlog 格式和协议的增量消费能力。这些特性使得 PolarDB-X 通过适配 MySQL CDC 即可快速接入 Flink CDC，PolarDB-X 的支持正是通过 MySQL CDC 适配实现，这种方式接入代价相对较小，但却可以获取 MySQL CDC 连接器的全部能力。 </p>
+<ul>
+<li><strong>SqlServer</strong></li>
+</ul>
+<p>SqlServer<sup>[5]</sup> 是一种使用广泛的数据库， SqlServer CDC 连接器支持捕获并记录 SqlServer 数据库服务器中发生的行级变更，其原理是使用 SqlServer 自身提供的 CDC 特性，SqlServer自身提供的 CDC 能力可以将数据库中指定的变更存档到指定的 change tables 中。 SqlServer CDC 连接器首先通过 JDBC 读取表中的历史数据，再从 change tables 中或缺增量变更数据，从而实现全增量同步。</p>
+<ul>
+<li><strong>TiDB</strong></li>
+</ul>
+<p>TiDB<sup>[6]</sup> 是一款开源分布式关系型数据库，同时支持在线事务处理与在线分析处理。TiDB CDC 的原理是通过直接读取其底层 TiKV 存储中的全量数据和增量数据实现数据捕获，其中全量部分是通过按 key 划分 range 读取，增量部分使用 TiDB 提供的 CDC Client 获取增量变更数据。</p>
+<h2 id="三详解核心-feature-和重要改进">三、详解核心 feature 和重要改进</h2><h3 id="31-核心-feature">3.1 核心 feature</h3><ul>
+<li>提供增量快照读取框架</li>
+</ul>
+<p>大家都知道之前只有 MySQL CDC 支持无锁 + 多并发 + 全程断点续传等高级功能，这些功能最开始是在 2.0 版本中为 MySQL CDC 定制的增量快照读取算法实现，2.2 版本将增量快照读取算法抽象成了公共框架，方便其他 connector 接入。</p>
+<p><img alt="null" class="img-responsive" src="https://img.alicdn.com/imgextra/i4/O1CN01Q8jzqE1Yp3K55AY0G_!!6000000003107-2-tps-1600-883.png"/></p>
+<p>在增量框架完成后，其他 connector 只需要接入这个框架便可以提供无锁算法，并发读取，断点续传的能力。社区提供了一个基于增量快照框架的样例实现<sup>[7]</sup>，开发者可以参考该样例实现一个支持增量快照读取的 CDC Source。</p>
+<ul>
+<li>兼容 Flink 1.13 &amp; Flink 1.14</li>
+</ul>
+<p>在 2.2 版本之前，Flink CDC 连接器都只对应一个 Flink 大版本，比如很多用户反馈 Flink CDC 2.1 只能在 Flink 1.13 版本的集群上使用，没法在 Flink 1.14 的集群上使用。为了帮用户解决此类问题， Flink CDC 2.2 版本兼容 Flink 1.13.* 和 Flink 1.14.* 两个大版本，这意味 2.2 版本的所有 Connector 既可以跑在 Flink 1.13.* 集群上，又可以跑在 Flink 1.14.* 的集群上。通过提供兼容多版本的能力，让 Flink CDC 在提供 1.14 支持的同时，还极大地降低用户的 connector 管理成本。</p>
+<ul>
+<li>MySQL CDC 支持动态加表</li>
+</ul>
+<p>设想下假如你一个 CDC pipeline 监控了 4 张表，突然有天业务需求需要再加几张表，你肯定不想另起作业 (浪费资源)，那么这个 feature 可以让你在当前作业直接增加需要监控的表。新增表都是先做全量再优雅地切换到增量，遇到新增监控表时不用新起作业，极大地节约了资源。Flink CDC 网站也提供了该功能的使用文档<sup>[2]</sup>，用户在开发时可以参考。</p>
+<ul>
+<li>MongoDB CDC 支持自定义数据库，自定义集合</li>
+</ul>
+<p>在 2.1 版本里 MongoDB CDC 只能捕获单个集合或者单个 DB 下的全部集合，2.2 版本提供了正则匹配支持，用户可以指定自己需要的多个库和多个表。</p>
+<ul>
+<li>MySQL CDC 支持 MySQL 5.6</li>
+</ul>
+<p>从 2.2 版本开始， MySQL CDC 支持了 MySQL 5.6 版本，满足低版本的 MySQL 用户需求。</p>
+<h3 id="32-重要改进">3.2 重要改进</h3><ul>
+<li>MySQL CDC 通过心跳信息解决 binlog 过期问题</li>
+</ul>
+<p>大家可能遇到过 binlog 过期问题，这种问题一般出现在更新缓慢的表身上，这是因为 state 中记录的慢表位点总是最后一次更新的位点，假如 MySQL server 端只保留最近 1 天的 binlog，而某个慢表最近一天都没有更新过，那么 state 中记录的该表位点还是一天以前的位点，当 MySQL server 清理 binlog 后，作业再次访问该位点就会报 binlog 无法找到的错误。2.2 版本中通过内部的心跳机制传递 binlog 的最新位点，将 state 中的位点从慢表对应的位点改成全局 binlog 最新位点，避免了慢表 binlog 过期问题。</p>
+<ul>
+<li>MySQL CDC 修复数组越界问题</li>
+</ul>
+<p>该问题的根因是 MySQL CDC 依赖的第三方 binlog Client 存在数组越界 Bug，且是一个和网络相关的不稳定复现 Bug。在 Flink CDC 2.2 版本中，社区对这个问题做了修复，提升了MySQL CDC binlog 读取阶段的稳定性。 </p>
+<ul>
+<li>Oracle CDC 修复 Numeric 类型映射问题</li>
+</ul>
+<p>在 2.1 版本，Oracle CDC 在处理 Numeric 类型数据会出现转换异常，在 2.2 版本中做了修复。</p>
+<h2 id="四总结和展望">四、总结和展望</h2><p>作为一个发起时间不到两年的新兴项目，Flink CDC 项目取得了现象级的发展和关注，这得益于 Flink CDC 开源社区所有贡献者们的无私贡献和开源布道， 更离不开广大 Flink CDC 用户群体的积极反馈。作为 2022 年的第一个版本，Flink CDC 给大家带来如此多的技术改进和核心特性，相信这些改进能够帮助广大的开发者和用户在各自的领域获得更多突破。Flink CDC 社区将会继续做好开源社区建设，在接下来的社区规划中，主要有四个方向。</p>
+<ul>
+<li><strong>完善</strong> <strong>CDC</strong> <strong>技术</strong></li>
+</ul>
+<p>推动增量快照框架在各个 CDC 连接器的使用，让更多的数据源快速支持无锁读取、并发读取、断点续传、动态加表等特性。</p>
+<ul>
+<li><strong>扩展数据集成场景</strong></li>
+</ul>
+<p>CDC 只是解决一个 source 问题，很多业务需要结合整个数据场景全局地设计方案，比如更好地集成实时数仓、数据湖的下游生态，包括 Hudi、Iceberg、ClickHouse、Doris等。</p>
+<p>进一步降低 CDC 数据入湖入仓的门槛，解决整库同步、表结构变更同步等痛点。</p>
+<ul>
+<li><strong>提升</strong> <strong>Connector</strong> <strong>性能</strong></li>
+</ul>
+<p>现有一些 Connector 在海量数据场景，大规模生产业务场景下，存在一定的性能问题，需要社区投入更多的开发者打磨。 </p>
+<ul>
+<li><strong>扩大数据库生态</strong></li>
+</ul>
+<p>支持更多的数据库，如 DB2, Vitness 等。</p>
+<p><strong>致谢：</strong></p>
+<p>感谢所有为该版本做出贡献的 34 位社区贡献者，特别感谢来自 OceanBase 团队的 He Wang 贡献的 OceanBase CDC 连接器，来自大健云仓公司的 gongzhognqiang 贡献的 Sqlserver CDC 连接器，来自云账户公司的 eastfisher 贡献的 TiDB CDC 连接器， 来自 PolarDB-X 团队的 hele.kc 对 PolarDB-X 支持与适配。</p>
+<p><strong>完整贡献者列表：</strong> </p>
+<p>Dian Qi, He Wang, Jark Wu, Jiabao Sun, Jingsong Lee, Junwang Zhao, Konstantin Knauf, Leonard Xu, Mustang Kong, Paul Zhang, Qingsheng Ren, Sergey Nuyanzin, Shengkai, Tuple, Xianxun Ye, Xuebing Li, Zongwen Li, camelusluo, eastfisher, ehui, fangpc, gongzhongqiang, hele.kc, hiscat, luoyuxia, paul8263, skylines, szgeqin, taox, tsreaper, wangxiaojing, wysstartgo, yexianxun, 元组 (从commit 信息提取，按字母排序)</p>
+<p>[1] <a href="https://github.com/ververica/flink-cdc-connectors" rel="noopener" target="_blank">https://github.com/ververica/flink-cdc-connectors</a></p>
+<p>[2] <a href="https://ververica.github.io/flink-cdc-connectors" rel="noopener" target="_blank">https://ververica.github.io/flink-cdc-connectors</a></p>
+<p>[3] <a href="https://open.oceanbase.com/" rel="noopener" target="_blank">https://open.oceanbase.com</a></p>
+<p>[4] <a href="https://polardbx.com/" rel="noopener" target="_blank">https://polardbx.com</a> </p>
+<p>[5] <a href="https://www.microsoft.com/en-us/sql-server" rel="noopener" target="_blank">https://www.microsoft.com/en-us/sql-server</a></p>
+<p>[6] <a href="https://docs.pingcap.com/zh/tidb/stable" rel="noopener" target="_blank">https://docs.pingcap.com/zh/tidb/stable</a></p>
+<p>[7] <a href="https://github.com/ververica/flink-cdc-connectors/blob/master/flink-cdc-base/src/test/java/com/ververica/cdc/connectors/base/MySqlChangeEventSourceExampleTest.java#L45" rel="noopener" target="_blank">https://github.com/ververica/flink-cdc-connectors/blob/master/flink-cdc-base/src/test/java/com/ververica/cdc/connectors/base/MySqlChangeEventSourceExampleTest.java#L45</a></p>
+<p>[8] <a href="https://ververica.github.io/flink-cdc-connectors/master/content/connectors/mysql-cdc.html#scan-newly-added-tables" rel="noopener" target="_blank">https://ververica.github.io/flink-cdc-connectors/master/content/connectors/mysql-cdc.html#scan-newly-added-tables</a></p>
+<p>更多 Flink CDC 相关技术问题，可扫码加入钉钉交流群</p>
+<p style="text-align:center"><img "="" src="https://img.alicdn.com/imgextra/i4/O1CN0169PKeU25TPvj4EYsR_!!6000000007527-2-tps-828-1068.png" width="250"/></p>
+<p>线上 <strong>Flink CDC Meetup</strong> 筹备中</p>
+<p>点击下方链接，参与 <strong>Flink CDC 问卷调查</strong>，我们会认真听取你的想法</p>
+<p><a href="https://survey.aliyun.com/apps/zhiliao/oerr76Geh" rel="noopener" target="_blank">https://survey.aliyun.com/apps/zhiliao/oerr76Geh</a></p>
+<hr/>
+<p>更多 Flink 相关技术问题，可扫码加入社区钉钉交流群；</p>
+<p>第一时间获取最新技术文章和社区动态，请关注公众号～</p>
+<p><img alt="null" class="img-responsive" src="https://img.alicdn.com/imgextra/i4/O1CN01tmtpiy1iazJYZdixL_!!6000000004430-2-tps-899-548.png"/></p>
+</div><flink-pre-next _ngcontent-flink-c48="" _nghost-flink-c46=""><a _ngcontent-flink-c46="" class="pre" href="/article/detail/accdca63877b50fa6b062c9722786f87"><i _ngcontent-flink-c46="" class="flink-community communityzuojiantou"></i><span _ngcontent-flink-c46="">Improvements of Job Scheduler and Query Execution on Flink OLAP</span></a><a _ngcontent-flink-c46="" class="next" href="/article/detail/e4e55be3a2ccf468ad771a598578acec"><span _ngcontent-flink-c46="">Apache Flink 在翼支付的实践应用</span><i _ngcontent-flink-c46="" class="flink-community communityyoujiantou"></i></a></flink-pre-next></div><div _ngcontent-flink-c48="" class="article-right"><input _ngcontent-flink-c48="" class="check" id="toc-1" type="checkbox"/><flink-toc _ngcontent-flink-c48="" _nghost-flink-c47="" class="toc"><ul _ngcontent-flink-c47=""><li _ngcontent-flink-c47="" style="padding-left: 0px;"><a _ngcontent-flink-c47="" class="hover"> 前言 </a></li><li _ngcontent-flink-c47="" style="padding-left: 0px;"><a _ngcontent-flink-c47="" class="hover"> 一、Flink CDC 2.2 概览 </a></li><li _ngcontent-flink-c47="" style="padding-left: 0px;"><a _ngcontent-flink-c47="" class="hover"> 二、新增 4 种数据源支持 </a></li><li _ngcontent-flink-c47="" style="padding-left: 0px;"><a _ngcontent-flink-c47="" class="hover"> 三、详解核心 feature 和重要改进 </a></li><li _ngcontent-flink-c47="" style="padding-left: 12px;"><a _ngcontent-flink-c47="" class="hover"> 3.1 核心 feature </a></li><li _ngcontent-flink-c47="" style="padding-left: 12px;"><a _ngcontent-flink-c47="" class="hover"> 3.2 重要改进 </a></li><li _ngcontent-flink-c47="" style="padding-left: 0px;"><a _ngcontent-flink-c47="" class="hover"> 四、总结和展望 </a></li><!-- --></ul></flink-toc><label _ngcontent-flink-c48="" class="toc-icon" for="toc-1"><i _ngcontent-flink-c48="" class="flink-community communitycaidan"></i></label></div></div></div><!-- --></flink-detail><!-- --></flink-article><!-- --></main>
+</div>
+</article>
+</body>
+</html>

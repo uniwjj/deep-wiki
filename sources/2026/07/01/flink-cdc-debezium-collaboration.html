@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【Flink】深入解析Flink CDC与Debezium的协同工作原理</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>【Flink】深入解析Flink CDC与Debezium的协同工作原理</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：未知</span>
+<span>来源：<a href="https://blog.csdn.net/weixin_29099217/article/details/158118619" target="_blank">blog.csdn.net</a></span>
+<span>平台：csdn</span>
+<span>图片：0 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<div class="htmledit_views clearfix" id="content_views">
+
+<h3>1. 从“复杂架构”到“一站式搞定”：Flink CDC 带来的变革</h3>
+<p>如果你之前做过数据库的实时同步，比如把 MySQL 的数据实时弄到另一个库或者数据仓库里，大概率走过这么一条路：先得在 MySQL 上开 <code>binlog</code>，然后部署一个像 Canal 这样的中间件去监听 <code>binlog</code>，把变更事件解析出来，再写到 Kafka 这样的消息队列里。最后，你还得写一个 Flink 作业去消费 Kafka 里的数据，做处理，再写入下游。</p>
+<p>我最早接触这套方案的时候，感觉链路是真长。光组件就涉及 MySQL、Canal、Kafka、Flink 四个，每个环节的部署、配置、监控和维护都是事儿。更头疼的是，一旦数据延迟或者出错，你得顺着这条链子一个个环节去排查，到底是 Canal 没抓到日志，还是 Kafka 堆积了，或者是 Flink 作业挂了？排查成本不低。</p>
+<p>后来 Flink CDC 出现，我第一次用的时候感觉就像“开挂”了。它直接把中间那些环节给“吞”了。你不需要再单独部署和维护 Canal 和 Kafka，只需要在 Flink 作业里，通过一个简单的 <code>CREATE TABLE</code> 语句，指定 MySQL 的连接信息，就能像查普通表一样，实时读取全量数据和增量变更。链路一下子从“MySQL -&gt; Canal -&gt; Kafka -&gt; Flink”简化成了“MySQL -&gt; Flink”。这种“一站式搞定”的体验，对于开发和运维来说，幸福感提升太大了。</p>
+<p>这背后的关键，就在于 Flink CDC 把 Debezium 这个强大的 CDC 工具“打包”进了自己的连接器里。Debezium 本身是一个成熟的、基于日志的 CDC 框架，支持多种数据库。Flink CDC 没有重复造轮子，而是选择了集成它。但这种集成不是简单地把 Debezium 作为一个外部服务来调用，而是把它作为<strong>嵌入式引擎</strong>，深度整合到了 Flink 的运行时中。这意味着，对用户而言，这一切都是透明的，你感知不到 Debezium 的存在，却能享受到它带来的稳定、高效的变更数据捕获能力。</p>
+<p>所以，Flink CDC 的核心优势，可以总结为 <strong>“简化架构，降低运维成本”</strong>。它把复杂的 ETL 链路变成了一个单纯的 Flink 作业，让实时数据同步的门槛大大降低。接下来，我们就钻进它的肚子里，看看 Flink 和 Debezium 这对“黄金搭档”到底是怎么协同工作的。</p>
+<h3>2. 核心搭档揭秘：Flink 与 Debezium 的协同架构</h3>
+<p>要理解 Flink CDC 的工作原理，我们必须先看清它内部的两个关键角色：<strong>Flink</strong> 和 <strong>Debezium</strong>。它们俩的分工非常明确，配合得就像手术台上的主刀医生和麻醉师。</p>
+<p><strong>Debezium 的角色：专业的“数据捕手”</strong>。它的核心任务就是连接数据库（比如 MySQL），用一种对数据库影响最小的方式，把数据变更事件（增、删、改）一个不落地抓出来。它有两种主要工作模式：</p>
+<ol>
+<li><strong>全量快照（Snapshot）</strong>：当作业第一次启动，或者需要重新同步全量数据时，Debezium 会先给数据库拍一张“照片”，把所有现有数据都读取出来。为了保证这张“照片”的一致性（避免在拍照过程中数据被修改），早期版本可能会短暂地加锁（全局锁或表锁），但最新的 Flink CDC 2.0 已经实现了无锁快照，这个我们后面会细说。</li>
+<li><strong>增量流式读取（Streaming）</strong>：拍完快照后，Debezium 就会切换到流式模式，持续监听数据库的 <code>binlog</code>（MySQL）或类似的事务日志。任何新的插入、更新、删除操作，都会实时地被它捕获到。</li>
+</ol>
+<p><strong>Flink 的角色：强大的“数据加工厂”</strong>。Debezium 抓出来的数据，是一种它自己定义的内部格式（包含了变更前后的完整数据、元数据等）。Flink 的任务就是接手这些原始数据，并把它转换成自己生态系统里能理解的“通用语言”。这个通用语言，在 Flink SQL API 里就是 <strong><code>RowData</code></strong> 对象。</p>
+<p>这里就引出了协同工作的<strong>最关键一步：数据格式转换</strong>。Debezium 捕获的每一条变更事件，都带有丰富的上下文，比如 <code>op</code> 字段代表操作类型（c=创建，u=更新，d=删除，r=快照读取），<code>before</code> 字段代表更新前的行数据，<code>after</code> 字段代表更新后的行数据，还有 <code>source</code> 字段记录数据库、表名、时间戳等元信息。</p>
+<p>Flink CDC 连接器内部，有一个专门的<strong>反序列化模块</strong>（比如 <code>DebeziumJsonDeserializationSchema</code>），它的工作就是解析 Debezium 的原始消息，然后根据 <code>op</code> 的类型，构造出对应的 Flink <code>RowData</code> 对象，并为这个对象打上一个 <code>RowKind</code> 标签。这个标签至关重要，它直接对应了 Flink 流处理中的 changelog 概念：</p>
+<ul>
+<li><code>+I</code> (INSERT): 对应 Debezium 的 <code>op='c'</code> 或 <code>op='r'</code>，表示这是一条新增数据。</li>
+<li><code>-U</code> (UPDATE_BEFORE): 对应 Debezium <code>op='u'</code> 中的 <code>before</code> 部分，表示这是更新前的那条旧数据。</li>
+<li><code>+U</code> (UPDATE_AFTER): 对应 Debezium <code>op='u'</code> 中的 <code>after</code> 部分，表示这是更新后的新数据。</li>
+<li><code>-D</code> (DELETE): 对应 Debezium 的 <code>op='d'</code>，表示这是一条被删除的数据。</li>
+</ul>
+<p>通过这种精准的映射，数据库底层的 <code>binlog</code> 事件就被完美地翻译成了 Flink 流计算引擎能够原生处理的<strong>变更日志流（Changelog Stream）</strong>。Flink 后续所有的流式 SQL 操作（如聚合、关联）或写入到支持更新的外部系统（如数据库、Kafka），都依赖于这个完整的 <code>RowKind</code> 信息。</p>
+<p>用一个简单的比喻：Debezium 是精通多国方言（各种数据库日志）的翻译，它把方言翻译成一种中间语（Debezium 格式）。而 Flink 则是处理这种中间语的专家，它再把中间语标准化成世界语（Flink RowData），供下游所有系统使用。两者结合，才实现了从数据库直达计算引擎的无缝数据管道。</p>
+<h3>3. 从日志到流：RowData 与 Binlog 的映射魔法</h3>
+<p>上一节我们提到了 <code>RowData</code> 和 <code>RowKind</code>，这绝对是理解 Flink CDC 原理的精华所在。很多朋友刚开始会疑惑，数据库里一行简单的数据变更，到了 Flink 里怎么就变得有点“复杂”了？我们通过一个具体的例子，把整个过程掰开揉碎看一遍。</p>
+<p>假设</p>
+<div id="recommendDown">
+</div> </div>
+</div>
+</article>
+</body>
+</html>

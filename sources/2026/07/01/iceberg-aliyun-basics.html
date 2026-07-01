@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apache Iceberg数据湖基础</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>Apache Iceberg数据湖基础</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：未知</span>
+<span>来源：<a href="https://developer.aliyun.com/article/1670383" target="_blank">developer.aliyun.com</a></span>
+<span>平台：aliyun</span>
+<span>图片：0 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<div class="article-content">
+<div class="article-inner markdown-body"><h2>Introducing Apache Iceberg</h2>
+<h4>数据湖的演进与挑战</h4>
+<ul>
+<li><strong>传统数据湖（Hive 表格式）的缺陷：</strong>
+<ul>
+<li><strong>分区锁定</strong>：查询必须显式指定分区字段（如 <code>WHERE dt='2025-07-01'</code>）。</li>
+<li><strong>无原子性</strong>：并发写入导致数据覆盖或部分可见。</li>
+<li><strong>低效元数据</strong>：<code>LIST</code> 操作扫描全部分区目录（云存储成本高）。</li>
+</ul> </li>
+<li><strong>Iceberg 的革新目标：</strong> 解耦计算引擎与存储格式（支持 Spark/Flink/Trino 等）；提供 ACID 事务、模式演化和分区演化能力。</li>
+</ul>
+<h4>Iceberg 核心设计目标</h4>
+<ul>
+<li><strong>ACID 事务</strong>
+<ul>
+<li><strong>基于快照的隔离</strong>：写入生成新快照，查询读取历史一致性视图。</li>
+<li><strong>乐观锁并发控制（OCC</strong>）：冲突时自动重试或报错。</li>
+</ul> </li>
+<li><strong>模式演化（Schema Evolution）</strong>：安全地新增/重命名/删除列（无需重写数据文件）；向后兼容：旧查询可读新数据。</li>
+<li><strong>分区演化（Partition Evolution）</strong>：动态修改分区策略（如从 <code>月</code> 改为 <code>天</code>），旧查询无需改写。</li>
+<li><strong>隐藏分区（Hidden Partitioning）</strong>
+<ul>
+<li>表定义分区变换（如 <code>hours(timestamp)</code>）。</li>
+<li>写入时自动计算分区值并记录在元数据中。</li>
+<li>查询时引擎根据 <code>WHERE</code> 条件过滤分区（用户无需知道分区字段名）。</li>
+</ul> </li>
+</ul>
+<h4>Iceberg 架构分层</h4>
+<ul>
+<li><strong>Catalog 层</strong>：存储表的位置和元数据指针（支持 Hive/Nessie/JDBC）。</li>
+<li><strong>元数据层</strong>：
+  <ul>
+<li><strong>元数据文件（Metadata JSON）</strong>：记录当前快照指针、模式、分区信息。</li>
+<li><strong>清单列表（Manifest List）</strong>：快照包含的所有清单文件及其统计信息。</li>
+<li><strong>清单文件（Manifest File）</strong>：列出数据文件路径、分区范围、行数等统计信息。</li>
+</ul> </li>
+<li><strong>数据层</strong>：实际存储文件（Parquet/ORC/Avro），按分区组织。</li>
+</ul>
+<h4>Iceberg vs. 其他表格格式</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>特性</strong></th>
+<th style="text-align:left"><strong>Apache Iceberg</strong></th>
+<th style="text-align:left"><strong>Delta Lake</strong></th>
+<th style="text-align:left"><strong>Apache Hudi</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>ACID 支持</strong></td>
+<td style="text-align:left">✅ 快照隔离</td>
+<td style="text-align:left">✅ 事务日志</td>
+<td style="text-align:left">✅ 时间轴管理</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>分区演化</strong></td>
+<td style="text-align:left">✅ 无需重写数据</td>
+<td style="text-align:left">❌ 需重写数据</td>
+<td style="text-align:left">⚠️ 部分支持</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>计算引擎耦合</strong></td>
+<td style="text-align:left">❌ 解耦（通用API）</td>
+<td style="text-align:left">⚠️ 强依赖 Spark</td>
+<td style="text-align:left">⚠️ 强依赖 Spark/Flink</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>云存储优化</strong></td>
+<td style="text-align:left">✅ 避免 LIST 操作</td>
+<td style="text-align:left">⚠️ 依赖元存储</td>
+<td style="text-align:left">⚠️ 依赖元存储</td>
+</tr>
+</tbody>
+</table>
+<h2>Iceberg表结构规范</h2>
+<h4>元数据层级结构</h4>
+<ul>
+<li><strong>Catalog</strong>：表入口点（如 Hive/Nessie），存储最新元数据文件位置</li>
+<li><strong>Metadata File (JSON)</strong>：当前快照ID；表模式（Schema）；分区规范（Partition Spec）；历史快照列表。</li>
+<li><strong>Manifest List (Avro)</strong>：快照包含的所有清单文件路径；每个清单文件的分区范围统计。</li>
+<li><strong>Manifest File (Avro)</strong>：数据文件路径列表；文件格式（Parquet/ORC/AVRO）；列级统计（min/max/null计数）；文件所属分区。</li>
+<li><strong>Data File</strong>：实际数据文件（列式存储）</li>
+</ul>
+<pre><code class="lang-mermaid">graph LR
+  A[Catalog] --&gt;|指向| B[Metadata File&lt;br&gt;&lt;i&gt;v1.metadata.json&lt;/i&gt;]
+  B --&gt;|包含| C[Current Snapshot ID]
+  B --&gt;|包含| D[Schema]
+  B --&gt;|包含| E[Partition Spec]
+  C --&gt;|引用| F[Manifest List&lt;br&gt;&lt;i&gt;snap-123456.avro&lt;/i&gt;]
+  F --&gt;|列出| G[Manifest File 1.avro]
+  F --&gt;|列出| H[Manifest File 2.avro]
+  G --&gt;|引用| I[Data File 1.parquet]
+  G --&gt;|引用| J[Data File 2.parquet]
+  H --&gt;|引用| K[Data File 3.parquet]
+</code></pre>
+<h4>快照（Snapshot）机制</h4>
+<ul>
+<li><strong>快照</strong>：数据表在特定时间点的完整状态。</li>
+<li><strong>关键属性</strong>
+<ul>
+<li><strong>snapshot-id</strong>：唯一标识符</li>
+<li><strong>timestamp-ms</strong>：创建时间戳</li>
+<li><strong>manifest-list</strong>：关联的清单列表位置</li>
+</ul> </li>
+<li><strong>快照生成</strong>：每次写操作（INSERT/UPDATE/DELETE）生成新快照。</li>
+<li><strong>支持时间旅行</strong>：<code>SELECT * FROM tbl TIMESTAMP AS OF '2025-07-01 10:00:00'</code>。</li>
+</ul>
+<h4>Manifest File</h4>
+<ul>
+<li><strong>清单文件</strong>：元数据核心载体（Avro格式）</li>
+<li><strong>文件位置</strong>：云存储路径。</li>
+<li><strong>统计信息</strong>：行数（<code>record_count</code>）；文件大小（<code>file_size</code>）；列级最小值/最大值；空值计数（<code>null_value_counts</code>）。</li>
+<li><strong>分区数据</strong>：实际分区值。</li>
+</ul>
+<h4>数据文件（Data File）格式</h4>
+<ul>
+<li><strong>Parquet（默认推荐）</strong>：列式存储；高效压缩；谓词下推优化。</li>
+<li><strong>ORC</strong>：ACID 原生支持；更好的 Hive 兼容性。</li>
+<li><strong>Avro</strong>：行式存储；模式演化友好。</li>
+</ul>
+<h2>基于Spark的Iceberg表操作</h2>
+<h4>表创建与配置</h4>
+<ul>
+<li><strong>创建方式</strong>
+<ul>
+<li><strong>Spark SQL</strong>：<code>CREATE TABLE db.table...</code></li>
+<li><strong>DataFrame API</strong>：<code>df.writeTo('db.table').create()</code></li>
+<li><strong>DDL命令</strong>：<code>ALTER TABLE... SET TBLPROPERTIES</code></li>
+</ul> </li>
+<li><strong>高级配置</strong>：
+  <ul>
+<li><strong>format-version</strong>：指定元数据版本（1/2）。</li>
+<li><strong>write.target-file-size-bytes</strong>：控制文件大小（默认512MB）。</li>
+<li><strong>write.metadata.delete-after-commit.enabled</strong>：自动清理元数据。</li>
+</ul> </li>
+</ul>
+<h4>数据写入模式</h4>
+<ul>
+<li><p><strong>INSERT INTO</strong>：<code>INSERT INTO table FROM source</code></p> </li>
+<li><p><strong>MERGE INTO</strong>：</p> <pre><code class="lang-sql"><span class="token keyword">MERGE</span> <span class="token keyword">INTO</span> <span class="token keyword">table</span> t
+<span class="token keyword">USING</span> updates u <span class="token keyword">ON</span> t<span class="token punctuation">.</span>id <span class="token operator">=</span> u<span class="token punctuation">.</span>id
+<span class="token keyword">WHEN</span> <span class="token keyword">MATCHED</span> <span class="token keyword">THEN</span> <span class="token keyword">UPDATE</span> <span class="token keyword">SET</span> <span class="token operator">*</span>
+<span class="token keyword">WHEN</span> <span class="token operator">NOT</span> <span class="token keyword">MATCHED</span> <span class="token keyword">THEN</span> <span class="token keyword">INSERT</span> <span class="token operator">*</span>
+</code></pre> </li>
+<li><p><strong>COPY FROM</strong>：<code>COPY INTO table FROM '/path/raw_data.parquet' FILE_FORMAT = (TYPE = PARQUET)</code></p> </li>
+</ul>
+<h4>时间旅行查询</h4>
+<ul>
+<li><strong>VERSION AS OF [sid]</strong>：按快照ID查询。</li>
+<li><strong>TIMESTAMP AS OF [ts]</strong>：按时间戳查询。</li>
+</ul>
+<h2>模式演化</h2>
+<h4>模式演化的核心原则</h4>
+<ul>
+<li><strong>向后兼容（Backward Compatibility）</strong>：旧查询能读取新schema写入的数据。</li>
+<li><strong>向前兼容（Forward Compatibility）</strong>：新查询能读取旧schema写入的数据。</li>
+<li><strong>Iceberg 保证</strong>：所有演化操作均保持向后兼容。</li>
+</ul>
+<h4>列操作</h4>
+<ul>
+<li><p><strong>添加列</strong>：立即生效，无需重写数据文件；旧数据自动填充 <code>null</code>；可指定默认值：<code>ADD COLUMN level INT DEFAULT 1</code>。</p> </li>
+<li><p><strong>重命名列</strong></p>
+<ul>
+<li><p><strong>操作限制</strong>：不能重命名分区列;需保证向前/向后兼容（新名称和旧名称在元数据中共存）。</p> </li>
+<li><p><strong>底层原理</strong>：在元数据中添加 <code>rename</code> 记录（保留原始列ID）；查询时自动映射：旧查询用旧名，新查询用新名。</p> </li>
+</ul> </li>
+<li><p><strong>删除列</strong>：标记列为 <code>dropped</code>（仍存于元数据）；数据文件保留该列（物理未删除）；运行 <code>OPTIMIZE</code> 后物理移除。</p> </li>
+<li><p><strong>类型提升（Type Promotion）</strong></p>
+<ul>
+<li><strong>整型</strong>：<code>int → long</code></li>
+<li><strong>浮点型</strong>：<code>float → double</code></li>
+<li><strong>Decimal</strong>：扩大精度（<code>decimal(10,2) → decimal(20,2)</code>）</li>
+</ul> </li>
+<li><p><strong>嵌套结构演化</strong></p>
+<ul>
+<li><strong>支持操作</strong>：在 Struct 中添加/重命名/删除字段；修改 Map 的 value 类型；扩展 Array 元素类型。</li>
+</ul> </li>
+</ul>
+<h2>Partitioning and Sorting</h2>
+<h4>分区基础与类型</h4>
+<ul>
+<li><strong>时间分区（最常用）</strong>：根据数据写入时间进行分区，days/months/hours。</li>
+<li><strong>范围分区（指标）</strong>：根据数据范围进行数据分区，如粉丝数、播放量指标等。</li>
+<li><strong>桶分区（高基数列）</strong>：对字段值进行哈希映射分桶进行数据分区，尤其是id等高基数字段。</li>
+<li><strong>值分区（枚举值）</strong>：根据字段枚举值进行数据分区，如性别、年龄段等。</li>
+<li><strong>截断分区（字符串优化）</strong>：截取字符串子串进行数据分区。</li>
+</ul>
+<h4>隐藏分区（Hidden Partitioning）</h4>
+<ul>
+<li><p><strong>传统分区问题</strong>：用户需知道分区列名：<code>WHERE partition_col='value'</code>。</p> </li>
+<li><p><strong>Iceberg 方案</strong>：</p>
+<ul>
+<li><p><strong>表定义分区转换</strong>：<code>PARTITIONED BY days(event_time)</code>。</p> </li>
+<li><p><strong>引擎自动转换</strong>：<code>WHERE event_time &gt; X</code> → 分区值过滤。</p> </li>
+<li><p><strong>完全透明</strong>： 用户只需用业务列查询。</p> </li>
+</ul> </li>
+</ul>
+<h4>排序优化技术</h4>
+<ul>
+<li><strong>多维排序（Z-Order）</strong>：将多列值映射到Z形空间曲线，保证多列值相近的行物理相邻。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>技术</strong></th>
+<th style="text-align:left"><strong>适用场景</strong></th>
+<th style="text-align:left"><strong>优势</strong></th>
+<th style="text-align:left"><strong>限制</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>单列排序</strong></td>
+<td style="text-align:left">强过滤单列查询</td>
+<td style="text-align:left">简单高效</td>
+<td style="text-align:left">其他列无序</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Z-Order</strong></td>
+<td style="text-align:left">2-4列组合过滤</td>
+<td style="text-align:left">多维数据局部性</td>
+<td style="text-align:left">列数增加效果下降</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>希尔伯特曲线</strong></td>
+<td style="text-align:left">极高维数据</td>
+<td style="text-align:left">比Z-Order更高维优化</td>
+<td style="text-align:left">计算开销大</td>
+</tr>
+</tbody>
+</table>
+<h4>分区与排序决策树</h4>
+<ul>
+<li><strong>分区选择原则</strong>：一级分区——时间（过滤量最大）；二级分区——桶分区（分散热点）。</li>
+<li><strong>排序选择原则</strong>：1列——简单排序；2-4列——Z-Order。</li>
+</ul>
+<h2>Table Evolution</h2>
+<h4>快照管理（Snapshot Management）</h4>
+<ul>
+<li><strong>清理快照</strong>：<code>CALL system.expire_snapshots('db.table', TIMESTAMP [date]);</code></li>
+<li><strong>回滚快照</strong>：<code>CALL system.rollback_to_snapshot('db.table', [ts]);</code></li>
+<li><strong>保留策略</strong>：
+  <ul>
+<li><strong>默认保留</strong>：至少1个历史快照.</li>
+<li><strong>配置参数</strong>：<code>snapshot.expire.age.ms</code>（自动过期时间）</li>
+</ul> </li>
+</ul>
+<h4>分支（Branch）与标签（Tag）</h4>
+<ul>
+<li><p><strong>分支操作</strong></p>
+<ul>
+<li><p><strong>创建开发分支</strong>：<code>ALTER TABLE table CREATE BRANCH dev AS OF VERSION 1;</code></p> </li>
+<li><p><strong>分支写入数据</strong>：<code>INSERT INTO dev VALUES (...);</code></p> </li>
+<li><p><strong>合并到主分支</strong>：<code>MERGE INTO main t USING dev s ON t.id = s.id WHEN NOT MATCHED THEN INSERT *;</code></p> </li>
+</ul> </li>
+<li><p><strong>标签管理</strong></p>
+<ul>
+<li><strong>创建生产标签</strong>：<code>ALTER TABLE table CREATE TAG v1 AS OF VERSION 1;</code></li>
+<li><strong>查询标签数据</strong>：<code>SELECT * FROM table VERSION AS OF 'v1';</code></li>
+</ul> </li>
+</ul>
+<h4>数据同步（Hive → Iceberg）</h4>
+<ul>
+<li><strong>元数据转换</strong>：将Hive Metastore元数据转为Iceberg格式。</li>
+<li><strong>数据注册</strong>：将现有数据文件注册到Iceberg元数据。</li>
+<li><strong>验证</strong>：数据完整性检查（行数、校验和）。</li>
+<li><strong>Spark迁移命令</strong>：<code>ALTER TABLE hive_table CONVERT TO ICEBERG;</code></li>
+</ul></div>
+</div>
+</div>
+</article>
+</body>
+</html>

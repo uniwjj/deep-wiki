@@ -64,3 +64,27 @@ updated: 2026-07-01
 
 只创建承载实质知识的页面；不为修复、不为消歧、不为"凑链接"而建页。修复前自检：这个动作是在消除根因，还是在制造新文件掩盖症状？
 
+## 来源格式约定（多模态 / HTML 来源）
+
+`llm-wiki` CLI（sync / lint / status）扫描 sources 与 wiki 时**只认 `.md` 文件**（内部 `endsWith(".md")` 过滤），`.html` / `.pdf` 等非 md 来源不会被纳入来源追踪——既不计入 Sources 统计，也不会被报"未摄取"。
+
+因此，当来源是**自包含 HTML**（如 article-download skill 产出的可双击阅读的 HTML）、**PDF** 或其他非 md 格式时，处理规则：
+
+1. **原始格式文件保留在 sources/YYYY/MM/DD/**，作为不可变的正文副本（HTML 双击可读、PDF 保留原始格式）。不要把 frontmatter YAML 插进 HTML 顶部——会破坏浏览器渲染；也不要塞进 HTML 注释——gray-matter 不解析注释里的 frontmatter。
+2. **为每个非 md 来源配一个同名 `.md` sidecar**（如 `flink-checkpoint-1-11.html` → `flink-checkpoint-1-11.md`），sidecar 只承载 frontmatter：
+   ```yaml
+   ---
+   ingested: YYYY-MM-DD
+   wiki_pages: [对应 wiki 页面 slug]
+   source_file: 同名原始文件.html
+   source_type: article-html  # 或 pdf / image 等
+   ---
+   ```
+   正文一句话说明本文件是 sidecar、原始内容在同名 html/pdf。
+3. **不要建聚合式的 `_ingested.md`**——它会被 CLI 误当成 wiki 页面污染 Pages 计数，且 CLI 不解析它对应哪些来源，无追踪意义。
+4. **两者都保留**：原始格式文件供人阅读，.md sidecar 供 CLI 追踪摄取状态。删任一方都会破坏对应能力。
+5. **读原文必须回到原始格式文件（HTML/PDF），不得依赖 .md sidecar**。sidecar 只有 frontmatter 和一句话说明，**不含正文**。任何需要核实来源细节、引用原文、重新摄取的场景，都必须打开同名 HTML/PDF 读取——sidecar 仅作 CLI 追踪与来源定位的索引条目。wiki 页面 `sources` frontmatter 指向的也是原始格式文件路径（如 `2026/07/01/flink-checkpoint-1-11.html`），复核时按此路径打开 HTML。
+
+判定来源是否已被摄取：看同名 .md sidecar 的 `ingested` 字段，而非原始文件本身。
+读取来源原文：打开原始格式文件（HTML/PDF），**不要**打开 .md sidecar。
+

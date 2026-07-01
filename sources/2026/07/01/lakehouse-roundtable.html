@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数仓还是湖仓？专家圆桌深度解析</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>数仓还是湖仓？专家圆桌深度解析</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：2024-06-26T02:54:19+00:00</span>
+<span>来源：<a href="https://forum.mirrorship.cn/t/topic/13364" target="_blank">forum.mirrorship.cn</a></span>
+<span>平台：starrocks</span>
+<span>图片：1 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<div class="topic-body crawler-post" itemscope="" itemtype="http://schema.org/DiscussionForumPosting">
+<div class="crawler-post-meta">
+<div itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+<meta content="镜舟科技" itemprop="name"/>
+<div itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+<meta content="https://cdn-forum.starrocks.com/original/2X/f/f1294db67e926feeb102be58fe8c2addeadd7747.svg" itemprop="url"/>
+</div>
+</div>
+<span class="creator" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+<a href="https://forum.mirrorship.cn/u/CuiCui" itemprop="url"><span itemprop="name">CuiCui</span></a>
+</span>
+
+
+<span class="crawler-post-infos">
+<meta content="2024-06-26T02:54:19Z" itemprop="datePublished"/>
+<time class="post-time" datetime="2024-06-26T03:01:35Z" itemprop="dateModified">
+                2024年06月26日 03:01
+              </time>
+<span itemprop="position">#1</span>
+</span>
+</div>
+<div class="post" itemprop="articleBody">
+<p></p><div class="lightbox-wrapper"><a class="lightbox" data-download-href="/uploads/short-url/yrBNS3CmX51qI3lcsBanDMLcV6q.png?dl=1" href="https://cdn-forum.starrocks.com/original/2X/f/f168e4d27189a18bbc98dd182b1fe02d11e48042.png" title=""><img alt="" data-base62-sha1="yrBNS3CmX51qI3lcsBanDMLcV6q" data-small-upload="https://cdn-forum.starrocks.com/optimized/2X/f/f168e4d27189a18bbc98dd182b1fe02d11e48042_2_10x10.png" height="388" src="https://cdn-forum.starrocks.com/optimized/2X/f/f168e4d27189a18bbc98dd182b1fe02d11e48042_2_690x388.png" srcset="https://cdn-forum.starrocks.com/optimized/2X/f/f168e4d27189a18bbc98dd182b1fe02d11e48042_2_690x388.png, https://cdn-forum.starrocks.com/optimized/2X/f/f168e4d27189a18bbc98dd182b1fe02d11e48042_2_1035x582.png 1.5x, https://cdn-forum.starrocks.com/original/2X/f/f168e4d27189a18bbc98dd182b1fe02d11e48042.png 2x" width="690"/><div class="meta"><svg aria-hidden="true" class="fa d-icon d-icon-far-image svg-icon"><use xlink:href="#far-image"></use></svg><span class="filename"></span><span class="informations">1200×675 363 KB</span><svg aria-hidden="true" class="fa d-icon d-icon-discourse-expand svg-icon"><use xlink:href="#discourse-expand"></use></svg></div></a></div>
+<p>近期，Databricks 以超过 10 亿美元的价格收购了 Tabular——Apache Iceberg 的商业支持公司，这一动作加剧了 Snowflake 和 Databricks 在开放湖仓标准发展上的竞争。这起收购也突显了数据湖表格式在现代数据分析架构中的关键地位。</p>
+<p>在上月的 StarRocks Meetup 活动中，四位湖仓技术专家代表 Apache Iceberg、Apache Hudi、Apache Paimon 和 StarRocks 社区分享了他们的洞见。他们讨论了数据仓库、数据湖和湖仓技术的选择，并解答了如何选择合适湖仓表格式的问题。以下是这场圆桌讨论的专家介绍和精简摘要：</p>
+<p><strong>圆桌主持人：</strong></p>
+<p>StarRocks 代表：李昂——StarRocks Committer</p>
+<p><strong>圆桌嘉宾介绍：</strong></p>
+<p>Apache Iceberg 代表：周劲松——Apache Amoro (incubating) PPMC 成员/腾讯云专家工程师（前网易平台开发专家）</p>
+<p>Apache Hudi 代表：徐昱——Apache Hudi &amp; StarRocks Contributor/vivo 湖仓组件研发负责人</p>
+<p>Apache Paimon 代表：王日宇——StarRocks Committer/阿里云高级研发工程师</p>
+<h2>话题一：数仓 vs. 数据湖 vs. 湖仓</h2>
+<p><strong>Q1：湖仓是不是</strong> <strong>Hadoop</strong> <strong>的升级版？在数据湖建设的理念上，与 Hadoop 有哪些异同点？</strong></p>
+<p><strong>徐昱：</strong> 关于这个问题我们在 vivo 内部也经常讨论，到底 Hadoop 与 Hudi 是否能相提并论。Hudi，意为"Hadoop Upserts Deletes and Incrementals"，代表了一种新的计算与存储解决方案。HDFS 作为 Hadoop 的三大支柱之一，无论是 Hudi、Iceberg 或是 Paimon，在数据湖技术如 Hudi、Iceberg、Paimon 中并非必须，它们可以利用对象存储或本地存储。 <strong>所以可以说 Hudi 和其他湖格式引入了更高效的更新机制和新的文件格式，帮助用户提升性能，解决痛点</strong> 。 <strong>我个人认为 Hudi 更类似于一种方法论的提升，借助于 Hadoop 的生态圈来将这套方案进行落地。在 Hadoop 的计算与存储上基础上，得到一个更大的能力升华。</strong></p>
+<p><strong>王日宇：</strong> 我倾向于结合业务需求来探讨技术发展。湖仓技术的出现，是为了解决 Hive 在某些方面难以应对的问题。Hadoop 是一个庞大的系统，包括 Hive、YARN 等多个组件。 <strong>如果单纯从我们经常用的</strong> <strong>数仓</strong> <strong>的 Hive 的这个构建来说，我觉得湖仓应该算是 Hadoop 的升级版。</strong></p>
+<p>湖仓技术的需求主要来源于：</p>
+<ol>
+<li>
+<p>业务从 T+1 的离线更新转变为对实时性要求越来越高，导致 Hive 在性能上出现瓶颈。</p>
+</li>
+<li>
+<p>业务发展需要频繁变更 Hive 表结构，Hive 在这方面存在局限。</p>
+</li>
+<li>
+<p>多版本并发控制（MVCC）带来的 ACID 的需求 Hive 无法满足。</p>
+</li>
+</ol>
+<p><strong>湖仓技术是在</strong> <strong>Hive</strong> <strong>或</strong> <strong>Hadoop</strong> <strong>体系的巨人肩膀上发展起来的新技术，它</strong> <strong>继承</strong> <strong>并改进了 Hive table format 的不足，引入了更多特性。</strong> 目前，数据湖格式的四大技术——Iceberg、Hudi、Delta Lake、Paimon——虽然统称为湖仓，但各有特点，都是在不同背景下发展起来的。</p>
+<p><strong>周劲松：</strong> 我跟日宇老师的看法雷同，并想补充一些观点。 <strong>数据湖的核心功能是存储大量数据，从这个角度来看，HDFS 和</strong> <strong>OSS</strong> <strong>本身就是数据湖产品。</strong> 当我们讨论湖仓时，会提到 Iceberg、Paimon 等技术，它们是数据湖生态的一部分。</p>
+<p><strong>我理解湖仓是面向结构化数据的，可以看作是下一代的</strong> <strong>Hive</strong> <strong>表。Iceberg 的定位不仅是下一代 Hive 表，还有云原生。</strong> 随着云计算的普及，Hadoop 可能不再适合云环境，因为云存储通常使用 S3，而且可能不再使用 Hive Metastore 或 Hive Server，而是采用与云结合更好的引擎，如 Spark、Flink、StarRocks。</p>
+<p>我认为下一代的 Hadoop 可能是云上的湖仓一体架构。如果是私有化部署，可能仍会使用 HDFS 和 Hive Metastore，但不再使用 Hive Server，而是使用 Spark、Flink、StarRocks 等。同时，Hadoop 生态中的一些组件，如 Ranger，可能仍会被继续使用。</p>
+<p><strong>李昂：总结以上三位专家的观点，湖仓技术是对</strong> <strong>Hadoop</strong> <strong>的扩展和深化，它不仅提供了 Hadoop 所不具备的实时性和灵活性，还适应了云计算和大数据时代的需求。三位专家们普遍认为，无论是在私有化部署还是云环境中，湖仓技术都将在数据处理和分析领域发挥重要作用。</strong></p>
+<p><strong>Q2：我们需要对数据进行复杂的分析和快速查询，且数据的准确性和一致性对我们至关重要，我们应该怎么选型？</strong></p>
+<p><strong>王日宇：</strong> 如果目标是数据的正确性，传统 Hadoop 架构已经足够满足需求，并在许多企业和场景中得到广泛应用。 <strong>湖仓技术主要针对实时性和数据更新性的需求，如果需要实时数据入湖和查询，可以考虑使用湖格式技术。选择哪种技术应根据具体需求而定。如果主要是进行 ETL 和确保数据准确性，传统 Hadoop 依然非常有效。</strong></p>
+<p>李昂：说到数据仓库的话，这是我们 StarRocks 的强项。几年前，StarRocks 在公开的标准测试集中进行复杂分析的性能已经达到世界领先水平。如果需要了解更多相关信息，可以访问我们的官方网站或查阅相关技术文档。</p>
+<p><strong>Q3：我们的</strong> <strong>数据治理</strong> <strong>和安全性要求很高，需要确保数据的质量和合规性，我们应该考虑哪种解决方案？</strong></p>
+<p><strong>周劲松：</strong> 数据质量和安全性是数据使用中较为高级的特性。在许多公司中，这些特性并不是由湖仓或数仓产品直接提供，而是由数据中台等产品来覆盖。数据中台会将数据建模和质量控制抽象成一系列服务。</p>
+<p>我认为数据质量本质上需要用户通过配置任务来处理数据，以发现潜在问题。不同公司的需求各异，数仓或湖仓产品可能提供基础能力，但更深入的功能可能需要企业或用户自行开发定制化任务。</p>
+<p>数据质量更倾向于由上层产品来覆盖，一些企业级软件如 Databricks 可能内建了数据质量服务或模块。数据安全则是数仓和湖仓都应提供的基础功能。 <strong>数据质量服务通常既可以应用于数仓也可以应用于湖仓，因此它不应成为选择数仓或湖仓的主要考量因素。选择时应更多地从上层数据服务的角度考虑。</strong></p>
+<p><strong>Q4：如果我们的预算有限，需要一种成本效益高的数据管理解决方案，应该如何选择？</strong></p>
+<p><strong>徐昱：</strong> 在生产实践中，我们经常需要针对一些关键任务进行优化。Hive 在某些场景下具有不可替代性，比如数据写入后不需要更新的情况。在这种情况下，迁移到湖仓可能不会带来显著的性能提升或成本效益。</p>
+<p><strong>但如果我们的业务场景中存在大量更新需求，迁移到湖仓并使用其技术可以提高效率并降低资源消耗。</strong> 节省下来的资源可以用于其他任务。 <strong>对于需要架构改造的流批融合场景，我们可以优先考虑湖仓实践。</strong> 湖仓是一项新技术，我们需要通过具体的业务场景验证来确保其能带来正向收益，并据此决定推广规模。</p>
+<p><strong>李昂：</strong> 在预算有限的情况下，我们可以采用成本较低的数据湖存储方式，配合数仓进行高性能查询，湖仓是一个不错的选择。 <strong>StarRocks 自 3.0 版本以来，主打湖仓融合，除了可以使用成本较低的</strong> <strong>对象存储</strong> <strong>外，其性能也是主流数据库的 10 倍左右，是实现降本增效的理想选择。</strong></p>
+<h2><strong>话题二：表格式终极选择：Hudi vs. Iceberg vs. Paimon</strong></h2>
+<p><strong>Q1：刚才三位专家分别介绍了 Iceberg、Hudi 和 Paimon 这三种数据湖表格式。请问各位专家，您认为在哪些场景下，您介绍的表格式是最佳选择？为什么它适合这些场景？是哪些特性使其成为这些场景下的</strong> <strong>最佳实践</strong> <strong>？</strong></p>
+<p><strong>徐昱：</strong> 选择技术组件时，没有所谓的万能或最佳选择，关键在于找到最适合特定场景的组件。每个组件都有其独特的优势。例如，Hudi 在 <strong>小文件管理</strong> 方面表现出色，特别是在面对高流量写入时，能够高效地组织数据并保证写入效率。之后，Hudi 还可以通过合并方案对数据进行优化重组，这在我们的应用场景中取得了良好的效果。</p>
+<p><strong>王日宇：</strong> 当考虑数据湖格式的选型时， <strong>Paimon 的优势在于其实时更新和写入能力，特别是与</strong> <strong>Flink</strong> <strong>生态的紧密结合。</strong> 由于 Paimon 是在 Flink Table Store 中孵化的，它自然拥有许多优势。Flink 是众所周知的实时处理引擎，因此 Paimon 作为 Flink 原生表格格式，在实时更新和数据入湖的效率上表现突出。</p>
+<p><strong>李昂：</strong> Hudi 也以实时 upsert 为特色，我想知道在这个场景下使用 Hudi 会怎么样？想请日宇老师分享一些个人看法。</p>
+<p><strong>王日宇：</strong> Hudi 和 Paimon 在某些方面有相似之处，但也存在显著差异。Hudi 作为一个较早出现的湖格式，有着丰富的发展历程； Paimon 作为较新加入的成员，今年刚从 Apache 基金会毕业。Paimon 在设计时吸取了包括 Iceberg 在内的其他湖格式的优点，并结合了实时入湖的能力。 <strong>Paimon 不仅在实时更新方面表现出色，还在文件合并方面采用了</strong> <strong>LSM-Tree</strong> <strong>的思想，这是在 Hudi 和 Iceberg 的基础上进行的创新。</strong> 最终选择哪种格式，应根据具体的业务需求、测试结果和场景来决定。 <strong>实际的性能比较不应仅停留在表面，而应通过线上业务的实际测试来得出结论。</strong></p>
+<p><strong>李昂：</strong> 感谢日宇老师的深入分析。这个问题确实容易引发争议。老师的意思似乎是，虽然 Paimon 是在 Hudi 等巨人的肩膀上上发展起来的，但是 Hudi 这个巨人它也并没有停止前进的脚步，也在不断的更新迭代。接下来，我们请周劲松老师谈谈 Iceberg 在选型方面的考虑。</p>
+<p><strong>周劲松：</strong> 我的出发点与日宇和徐昱老师有所不同，更多从用户角度考虑。之前我在网易的团队使用 Iceberg 时，我们没有厂商背景，选型相对灵活。当时 Paimon 尚未出现，Delta Lake 与 Spark 绑定太深，所以我们在 Hudi 和 Iceberg 之间进行了对比。虽然 Hudi 功能看似更全，但深入代码研究后，我们选择了 Iceberg。</p>
+<p><strong>Iceberg 的优势是它是一个相当中立的项目，不强绑定任何引擎，抽象设计做得很好，为用户留出空间进行自定义开发。</strong> 相比之下，Hudi 像是面向特定需求设计的，与 Hadoop 绑定较深。 <strong>Iceberg 的目标是替换</strong> <strong>Hive</strong> <strong>，定位为一种表格格式，不解决具体需求，而是解决数据湖上表格式的需求。</strong> 它的所有元数据变更都非常谨慎，不会为任何特定引擎妥协。</p>
+<p>Iceberg 社区非常严格，会严格遵循自己的定位和方向，对于不符合社区方向的提案可能不会被接受。这使得一些公司或个人可能难以融入 Iceberg 社区，因为他们有明确的目标。虽然 Iceberg 在实时方面可能不如 Paimon，但它提供了接口，允许用户根据自己的需求进行定制化开发。从长远来看，我认为 Iceberg 将成为一个中立的、真正能替换 Hive 的表格式，其发展空间更大，因为它不与任何引擎绑定，可以按照自己的中立发展路线前进。</p>
+<p><strong>李昂：综上所述，Hudi 适合需要高效小文件管理和高写入流量的场景，Paimon 适合需要实时数据处理与</strong> <strong>Flink</strong> <strong>紧密结合的场景，而 Iceberg 则因其</strong> <strong>中立性</strong> <strong>和灵活性，适合需要自定义数据湖表格式的场景。每种格式的选择都应基于实际业务需求和场景特性。</strong></p>
+<p><strong>Q2：这三种数据湖表格式都采用了</strong> <strong>MVCC</strong> <strong>进行版本控制并支持 Merge-on-Read。这种做法可能会引起数据和元数据的冗余或分布不均匀。用户为了优化查询性能，常常需要手动调整策略。请问在这三种表格式中，哪一种的维护成本较低，以及日常维护工作主要包括哪些内容？</strong></p>
+<p><strong>徐昱：</strong> 在实际工作中，Hudi 的运维工作包括 compaction 和 clustering 的自动化处理，用户可以选择自动化或定期手动维护。这涉及到元数据归档，需要用户关注并配置清理策略，比如归档周期和数量。虽然大部分操作自动化，但在特殊情况下，如用户操作失误导致归档失败，可能需要手动整理元数据记录。</p>
+<p>日常运维工作量取决于用户对表性能的要求。如果不是特别追求查询性能，可以延长归档周期或等待固定周期后进行合并。但如果用户需要即时性能，可能需要定时任务或在合并失败时人工介入，这也是时常会有的情况。</p>
+<p>另外，生命周期管理可以通过自动化方式删除过期数据和同步冷备。但追求极致性能时，可能需要结合元数据的时间和类型进行物理删除，包括目录删除和合法性校验，这需要在脚本或程序中考虑。</p>
+<p><strong>王日宇：</strong> 维护成本不仅包括资源消耗和查询延时，还涉及易用性。用户选择湖仓格式时，关心的是维护资源投入及其带来的读写延迟。维护成本应综合考虑易用性和代价。易用性方面，各湖仓格式都致力于简化用户体验，如自动合并和手动定时合并功能。目前这些机制都相对容易使用。</p>
+<p>Paimon 在维护成本上有其优势。例如，Hudi 的 Merge-on-Read 表在 compaction 时会消耗大量 CPU 和 I/O 资源。而 Paimon 利用其创新的 LSM Tree 数据组织方式，通过分层合并减少了资源消耗。大部分情况下，minor compaction 已足够，实现快速合并并使下游迅速可见数据。只有当数据累积到一定程度时，才会进行 full compaction。这种策略避免了频繁的 full compaction，从而降低了维护成本。这是 Paimon 相比其他格式的一个显著优势。</p>
+<p><strong>李昂：</strong> 接下来由我作为 Iceberg 代表聊一下我对这个问题的看法。</p>
+<p>首先，我们的用户在日常维护工作中，如果希望提升查询性能需要做哪些工作？这时元数据和数据的优化非常重要。用元数据来说，Iceberg 的Manifest 文件可能包含数万数据文件的列统计信息，但实际查询中很少用到所有列的统计信息进行 CBO 优化。因此，用户在写入数据时，可能只需要提取特定几列的统计信息，避免写入不必要的元数据，这样可以在读取 Manifest 时显著提升性能。</p>
+<p>其次，元数据的分布也会影响查询效率。Iceberg 的查询规划data skipping简单来讲分为两层：首先是根据partition value的min/max过滤manifest list中的manifest，其次是根据非分区谓词进行过滤data file。如果 manifest list 层面的分区值非常精确，那么将极大减少本次读取的manifest文件。如果用户没有进行适当的维护，可能将几个月的文件都存储在一个 默认8MB大小 的 Manifest 中，这会导致即使是查询一天的数据，也需要读取整个 8MB 的 Manifest，增加了查询成本。</p>
+<p>此外，对于需要高性能查询的情况，用户可能会使用 Spark 等工具对数据进行重写，比如按照某一列进行排序，这样在查询时可以利用非分区列的谓词直接进行高效的数据过滤。</p>
+<p>总的来说，Iceberg 需要手动维护的地方较多，我个人觉得可能是这三个表格式中最多的。用户需要深入了解其写入和查询原理，才能制定出有效的优化策略。虽然 Iceberg 提供的接口能满足大部分用户需求，但对于深度使用的用户而言，这些可能不太足够。</p>
+<p>以上就是我们湖仓技术圆桌讨论的主要内容，感谢大家的阅读。</p>
+<p><strong>相关视频推荐：</strong></p>
+<p><a href="https://www.bilibili.com/video/BV11m421M7P2/?vd_source=1cb452610138142d1300dd37a6162a88">Paimon x StarRocks 构建极速实时湖仓分析</a></p>
+<p><a href="https://www.bilibili.com/video/BV15M4m1k7xg/?vd_source=1cb452610138142d1300dd37a6162a88">基于 Apache Amoro(incubating) 与 Apache Iceberg 的湖仓一体实践</a></p>
+<p><a href="https://www.bilibili.com/video/BV1H1421i7CD/?vd_source=1cb452610138142d1300dd37a6162a88">vivo 基于 Hudi + StarRocks 的湖仓一体实践</a></p>
+</div>
+<meta content="数仓还是湖仓？专家圆桌深度解析" itemprop="headline"/>
+<meta content="" itemprop="keywords"/>
+<div itemprop="interactionStatistic" itemscope="" itemtype="http://schema.org/InteractionCounter">
+<meta content="http://schema.org/LikeAction" itemprop="interactionType"/>
+<meta content="0" itemprop="userInteractionCount"/>
+<span class="post-likes"></span>
+</div>
+<div itemprop="interactionStatistic" itemscope="" itemtype="http://schema.org/InteractionCounter">
+<meta content="http://schema.org/CommentAction" itemprop="interactionType"/>
+<meta content="0" itemprop="userInteractionCount"/>
+</div>
+</div>
+</div>
+</article>
+</body>
+</html>

@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hologres实时数仓搭建</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>Hologres实时数仓搭建</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：未知</span>
+<span>来源：<a href="https://help.aliyun.com/zh/flink/realtime-flink/use-cases/build-real-time-data-warehouse-based-on-flink-hologres" target="_blank">help.aliyun.com</a></span>
+<span>平台：aliyun</span>
+<span>图片：1 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<div class="markdown-body"><div class="icms-help-docs-content" lang="zh">
+<main id="main-2360707">
+<p class="shortdesc" data-tag="shortdesc" id="c69ce2061c3xr">使用<span class="help-letter-space"></span>Flink+Hologres<span class="help-letter-space"></span>搭建实时数仓可以充分利用<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>强大的实时处理能力和<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>提供的<span class="help-letter-space"></span>Binlog、行列共存和资源强隔离等能力，实现高效、可扩展的实时数据处理和分析，帮助您更好地应对不断增长的数据量和实时业务需求。本文介绍如何通过实时计算<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>版和实时数仓<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>搭建实时数仓。</p>
+<div class="body" data-tag="body" id="381193cf79e4w">
+<section class="section" id="8a0c49801c0rx">
+<h2 id="8a0c49811cyvd"><b>背景信息</b></h2>
+<p id="915510511cejp">随着社会数字化发展，企业对数据时效性的需求越来越强烈。除传统的面向海量数据加工场景设计的离线场景外，大量业务需要解决面向实时加工、实时存储、实时分析的实时场景问题。传统离线数仓搭建的方法论比较明确，通过定时调度实现数仓分层（ODS-&gt;DWD-&gt;DWS-&gt;ADS）；但对于实时数仓的搭建，目前缺乏明确的方法体系。基于<span class="help-letter-space"></span>Streaming Warehouse<span class="help-letter-space"></span>理念，实现数仓分层之间实时数据的高效流动，可以解决实时数仓分层问题。</p>
+</section>
+<section class="section" id="ca260bf01c55a">
+<h2 id="ccc436701c55h" uuid="le876eaeqac6bnylni"><b>实践场景</b></h2>
+<p id="d1af10101cbp3">本文以某个电商平台为例，通过将<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>与<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>深度集成搭建一套实时数仓，实现数据的实时加工清洗和对接上层应用数据查询，形成实时数据的分层和复用，支撑各个业务方的报表查询（交易大屏、行为数据分析、用户画像标签）以及个性化推荐等多个业务场景。</p>
+<h3 id="ced70f6111eb9"><b>方案架构</b></h3>
+<hetu hetuid="5c22b711-929b-4771-a542-8f8bfbdd5077" id="5f4f51b444b8c" type="flowchart" uuid="5053246_20250416102807.672" versionid="CAEQVRiBgIClhdbysRkiIGNkNmQ2Y2E4YzI5NDQ0OWE5MmU4NWIzYjQ2NjNiOTA5"><img alt="image" class="image break flowchart hetu" src="https://help-static-aliyun-doc.aliyuncs.com/assets/img/zh-CN/6965460871/CAEQVRiBgIClhdbysRkiIGNkNmQ2Y2E4YzI5NDQ0OWE5MmU4NWIzYjQ2NjNiOTA55053246_20250416102807.672.svg"/></hetu>
+<ol id="a492423220b4d">
+<li id="a492423020vxf">
+<p id="a6f893d020xkx">构建<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层：业务数据库实时入仓</p>
+<p id="ae479c3020svu" uuid="ljp679xdw51z55ki74o">MySQL<span class="help-letter-space"></span>有<span class="help-letter-space"></span>orders（订单表），orders_pay（订单支付表），product_catalog（商品类别字典表）3<span class="help-letter-space"></span>张业务表，这<span class="help-letter-space"></span>3<span class="help-letter-space"></span>张表通过<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>实时同步到<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>中作为<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层。</p>
+</li>
+<li id="aa2cbcc12062m">
+<p id="b6bd4a40202z1">构建<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层：实时主题宽表</p>
+<p id="ba89466020kn3" uuid="ljp67gy8qpujg9mxo6">将订单表、商品类别字典表、订单支付表进行实时打宽，生成<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层宽表。</p>
+</li>
+<li id="b748252120rrk">
+<p id="cc1883a0204it">构建<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层：实时指标计算</p>
+<p id="cf965fc020am2" uuid="ljp691c8jqaans2gc7l">实时消费宽表的<span class="help-letter-space"></span>Binlog，事件驱动地聚合出相应的<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层的用户维度和商户维度的指标表。</p>
+</li>
+<li id="1bd86664225g8">
+<p id="929210e5cb3qv">通过<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>提供应用查询。</p>
+<ul id="971d1e9cd2gcl">
+<li id="5f4d367d6au3d">
+<p id="917e63e22362s">对<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层的聚合指标表进行查询，支持百万级<span class="help-letter-space"></span>RPS。</p>
+</li>
+<li id="35631b9e21b9s">
+<p id="1df196136280g">对<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层宽表进行<span class="help-letter-space"></span>OLAP<span class="help-letter-space"></span>分析或基于宽表数据展示实时报表，支持秒级响应。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="7b3d03028172z"><b>方案优势及核心能力</b></h3>
+<p id="0f253e3194wsu">该方案有如下优势：</p>
+<ul id="fcfb15965bcsz">
+<li id="708b6ce60ct5l">
+<p id="46f6063b3fa89"><b>高效更新与即时查询</b>：Hologres<span class="help-letter-space"></span>支持每一层数据的高效更新、修正和写入即可查，解决了传统实时数仓中间层数据难以查询、更新和修正的问题。</p>
+</li>
+<li id="96630b808eibm">
+<p id="8fed715938es5"><b>数据分层复用</b>：Hologres<span class="help-letter-space"></span>的所有层级数据都可单独对外提供服务，实现高效复用，真正达成数仓分层复用的目标。</p>
+</li>
+<li id="13da4e3c63led">
+<p id="22140d8528ny5"><b>架构简化与效率提升</b>：基于<span class="help-letter-space"></span>Flink SQL<span class="help-letter-space"></span>构建实时<span class="help-letter-space"></span>ETL<span class="help-letter-space"></span>链路，ODS<span class="help-letter-space"></span>层、DWD<span class="help-letter-space"></span>层和<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层的数据统一存储在<span class="help-letter-space"></span>Hologres，从而降低架构复杂度并提升数据处理效率。</p>
+</li>
+</ul>
+<p id="52e59be95a8fv" uuid="ljpdcx3guqrt9prc3xj">该方案依赖于<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>的<span class="help-letter-space"></span>3<span class="help-letter-space"></span>个核心能力，详情如下表所示。</p>
+<table autofit="false" class="table" id="279c8f82b8ygn" tablecolswidth="139 529" tablewidth="668">
+<colgroup colwidth="0.42*" style="width:20.81%"></colgroup>
+<colgroup colwidth="1.58*" style="width:79.19%"></colgroup>
+<tbody class="tbody">
+<tr id="1f9728a5a837i" style="height:36px">
+<td colspan="1" id="0ee874a263376" rowspan="1" style="background-color:#e5e5e5;vertical-align:middle">
+<p id="5f12c36e14bvo"><b>Hologres<span class="help-letter-space"></span>核心能力</b></p>
+</td>
+<td colspan="1" id="12b524d953r28" rowspan="1" style="background-color:#e5e5e5;vertical-align:middle">
+<p id="229b49044fj07"><b>详情</b></p>
+</td>
+</tr>
+<tr id="f7e0aac3dfpnm">
+<td colspan="1" id="653e74f2d1akd" rowspan="1" style="vertical-align:middle">
+<p id="61afb3fbd00mp"><a class="xref" href="https://help.aliyun.com/zh/hologres/user-guide/subscribe-to-hologres-binary-logs" id="219e31cca3d9v" title="">Binlog</a></p>
+</td>
+<td colspan="1" id="a890a0e1b376a" rowspan="1" style="vertical-align:middle">
+<p id="dc4bc379e8a1a">Hologres<span class="help-letter-space"></span>提供<span class="help-letter-space"></span>Binlog<span class="help-letter-space"></span>能力，用于驱动<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>进行实时计算，以此作为流式计算的上游。</p>
+</td>
+</tr>
+<tr id="536e27a9015jt" style="height:117px">
+<td colspan="1" id="d45248834fv5q" rowspan="1" style="vertical-align:middle">
+<p id="da9b90ebe5g8f"><a class="xref" href="https://help.aliyun.com/zh/hologres/user-guide/storage-models-of-tables" id="e1223728cbzrj" title="">行列共存</a></p>
+</td>
+<td colspan="1" id="1b09f09069tcu" rowspan="1" style="vertical-align:middle">
+<p id="212979d6e0bgq">Hologres<span class="help-letter-space"></span>支持行列共存的存储格式。一张表同时存储行存数据和列存数据，并且两份数据强一致。该特性保证中间层表既能作为<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>的源表，也能作为<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>的维表进行主键点查与维表<span class="help-letter-space"></span>Join，还能供其他应用（OLAP、线上服务等）查询。</p>
+</td>
+</tr>
+<tr id="1a37159544exw">
+<td colspan="1" id="5742c1f012k4z" rowspan="1" style="vertical-align:middle">
+<p id="31d159cb95ik6">资源强隔离</p>
+</td>
+<td colspan="1" id="7af90c2754bz9" rowspan="1" style="vertical-align:middle">
+<p id="8773bea976ssy">Hologres<span class="help-letter-space"></span>实例的负载较高时，可能影响中间层的点查性能。Hologres<span class="help-letter-space"></span>支持通过<a class="xref" href="https://help.aliyun.com/zh/hologres/user-guide/configure-multi-instance-high-availability-deployment" id="1de84fd8592dm" title="">主从实例读写分离部署（共享存储）</a><span class="ph" data-tag="ph" id="187b634cf1cej">或<a class="xref" href="https://help.aliyun.com/zh/hologres/user-guide/architecture-of-virtual-warehouses" id="3aeb567af2fg8" title="">计算组实例架构</a></span>实现资源强隔离，从而保证<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>对<span class="help-letter-space"></span>Hologres Binlog<span class="help-letter-space"></span>的数据拉取不影响线上服务。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" id="6523eea4c3x26">
+<h2 id="925dcd75245bq"><b>注意事项</b></h2>
+<ul id="74b752dc92ojv">
+<li id="6e819cf01fn80">
+<p id="00a248701flt2">仅独享<span class="help-letter-space"></span>Hologre<span class="help-letter-space"></span>实例支持该实时数仓方案。</p>
+</li>
+<li id="6e2242f0a48er">
+<p id="32318276d3kz9">实时计算<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>版、RDS MySQL<span class="help-letter-space"></span>和<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>需要在同一<span class="help-letter-space"></span>VPC。如果不在同一<span class="help-letter-space"></span>VPC，需要先打通跨<span class="help-letter-space"></span>VPC<span class="help-letter-space"></span>的网络或者使用公网的形式访问，详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/support/faq-about-network-connectivity#7e4dbb2506gos" id="ba7ae975e231e" title="">如何访问跨<span class="help-letter-space"></span>VPC<span class="help-letter-space"></span>的其他服务？</a>和<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/support/faq-about-network-connectivity#69d744e13et7x" id="e5961f7047g48" title="">如何访问公网？</a>。</p>
+</li>
+<li id="6c13250bbdma9">
+<p id="c7e9897177k2o">通过<span class="help-letter-space"></span>RAM<span class="help-letter-space"></span>用户或<span class="help-letter-space"></span>RAM<span class="help-letter-space"></span>角色等身份访问实时计算<span class="help-letter-space"></span>Flink、Hologres<span class="help-letter-space"></span>和<span class="help-letter-space"></span>RDS MySQL<span class="help-letter-space"></span>资源时，需要其具备对应资源的权限。</p>
+</li>
+</ul>
+</section>
+<section class="section" id="21febf65edkpj">
+<h2 id="33ce2339710hy"><b>步骤一：准备工作</b></h2>
+<section class="section" id="dcbd5e0813xfd">
+<h3 id="1de42e97echy6">创建<span class="help-letter-space"></span>RDS MySQL<span class="help-letter-space"></span>实例并准备数据源</h3>
+<ol id="8fe5efcdbdxq1">
+<li id="4650c89a2fjbq">
+<p id="297ca4593aych">创建<span class="help-letter-space"></span>RDS MySQL<span class="help-letter-space"></span>实例，详情请参见<a class="xref" href="https://help.aliyun.com/zh/rds/apsaradb-rds-for-mysql/create-an-apsaradb-rds-for-mysql-instance-1#p-j6u-2go-jaw" id="1ba419724bn44" title="">创建<span class="help-letter-space"></span>RDS MySQL<span class="help-letter-space"></span>实例</a>。</p>
+<p id="600c254d33gve">RDS MySQL<span class="help-letter-space"></span>实例需要与<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>工作空间和<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>实例在同一<span class="help-letter-space"></span>VPC。</p>
+</li>
+<li id="4393f69fd09bo">
+<p id="87d8037d865m2">创建数据库和账号。</p>
+<p id="f0ed9a811aii8">为目标实例创建名称为<span class="help-letter-space"></span>order_dw<span class="help-letter-space"></span>的数据库和具有对应数据库读写权限的普通账号。具体操作请参见<a class="xref" href="https://help.aliyun.com/zh/rds/apsaradb-rds-for-mysql/step-1-create-an-apsaradb-rds-for-mysql-instance-and-configure-databases#c8c8beda5dwet" id="af2f5b989een9" title="">创建数据库</a>和<a class="xref" href="https://help.aliyun.com/zh/rds/apsaradb-rds-for-mysql/step-1-create-an-apsaradb-rds-for-mysql-instance-and-configure-databases#dfcaa5aa632wq" id="d44e0e7841aqe" title="">创建账号</a>。</p>
+</li>
+<li id="35a3957755g4x">
+<p id="1975130a98bab">准备<span class="help-letter-space"></span>MySQL CDC<span class="help-letter-space"></span>数据源。</p>
+<ol id="8c4d3f245bvmx">
+<li id="1534e1a1245u8">
+<p id="071061c4425cp">在目标实例详情页面，单击上方的<b class="uicontrol ph" data-tag="uicontrol" id="391cdaa11egbe">登录数据库</b>。</p>
+</li>
+<li id="1534e1a324x2j">
+<p id="1534e1a4246sg">在弹出的登录实例页面中，填写创建的数据库账号名和密码，然后单击<b class="uicontrol ph" data-tag="uicontrol" id="47724c64377o3">登录</b>。</p>
+</li>
+<li id="1534e1a524v6f">
+<p id="1534e1a6245ez">登录成功后，在数据库实例页面双击<span class="help-letter-space"></span>order_dw<span class="help-letter-space"></span>数据库，切换数据库。</p>
+</li>
+<li id="a225974536x91">
+<p id="1cd7b92c47ht6">在<span class="help-letter-space"></span>SQL Console<span class="help-letter-space"></span>区域编写三张业务表的建表<span class="help-letter-space"></span>DDL<span class="help-letter-space"></span>以及插入的数据语句。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" height="300" id="ym75du" outputclass="language-sql"><code>CREATE TABLE `orders` (
+  order_id bigint not null primary key,
+  user_id varchar(50) not null,
+  shop_id bigint not null,
+  product_id bigint not null,
+  buy_fee numeric(20,2) not null,   
+  create_time timestamp not null,
+  update_time timestamp not null default now(),
+  state int not null 
+);
+CREATE TABLE `orders_pay` (
+  pay_id bigint not null primary key,
+  order_id bigint not null,
+  pay_platform int not null,
+  create_time timestamp not null
+);
+CREATE TABLE `product_catalog` (
+  product_id bigint not null primary key,
+  catalog_name varchar(50) not null
+);
+-- 准备数据
+INSERT INTO product_catalog VALUES(1, 'phone_aaa'),(2, 'phone_bbb'),(3, 'phone_ccc'),(4, 'phone_ddd'),(5, 'phone_eee');
+INSERT INTO orders VALUES
+(100001, 'user_001', 12345, 1, 5000.05, '2023-02-15 16:40:56', '2023-02-15 18:42:56', 1),
+(100002, 'user_002', 12346, 2, 4000.04, '2023-02-15 15:40:56', '2023-02-15 18:42:56', 1),
+(100003, 'user_003', 12347, 3, 3000.03, '2023-02-15 14:40:56', '2023-02-15 18:42:56', 1),
+(100004, 'user_001', 12347, 4, 2000.02, '2023-02-15 13:40:56', '2023-02-15 18:42:56', 1),
+(100005, 'user_002', 12348, 5, 1000.01, '2023-02-15 12:40:56', '2023-02-15 18:42:56', 1),
+(100006, 'user_001', 12348, 1, 1000.01, '2023-02-15 11:40:56', '2023-02-15 18:42:56', 1),
+(100007, 'user_003', 12347, 4, 2000.02, '2023-02-15 10:40:56', '2023-02-15 18:42:56', 1);
+INSERT INTO orders_pay VALUES
+(2001, 100001, 1, '2023-02-15 17:40:56'),
+(2002, 100002, 1, '2023-02-15 17:40:56'),
+(2003, 100003, 0, '2023-02-15 17:40:56'),
+(2004, 100004, 0, '2023-02-15 17:40:56'),
+(2005, 100005, 0, '2023-02-15 18:40:56'),
+(2006, 100006, 0, '2023-02-15 18:40:56'),
+(2007, 100007, 0, '2023-02-15 18:40:56');</code></pre>
+</li>
+</ol>
+</li>
+<li id="e497593624smf">
+<p id="0acffc71f2sbw">单击<b class="uicontrol" data-tag="uicontrol" id="8cdab0ba47tsz">执行</b>，单击<b class="uicontrol" data-tag="uicontrol" id="0c14bfbc53m4u">直接执行</b>。</p>
+</li>
+</ol>
+</section>
+<section class="section" id="d603e64095u62">
+<h3 id="5355c732dd0ay">创建<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>实例<span class="ph" data-tag="ph" id="fe57569796gui">和计算组</span></h3>
+<ol id="bd761ff2c6xy1">
+<li id="1ecfd3efac8rd">
+<p id="2f347d888eief">创建独享<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>实例，详情请参见<a class="xref" href="https://help.aliyun.com/zh/hologres/getting-started/purchase-a-hologres-instance" id="897ffa2e61k2i" title="">购买<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>实例</a>。</p>
+<p id="177d07dbf3uoa">Hologres<span class="help-letter-space"></span>实例需要与<span class="help-letter-space"></span>RDS MySQL<span class="help-letter-space"></span>实例在同一<span class="help-letter-space"></span>VPC。<span class="ph" data-tag="ph" id="3aee07591f4cc">为了体验<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>通过读写分离实现资源强隔离的核心能力，本文实例类型选择<b class="uicontrol" data-tag="uicontrol" id="099cadec33393">计算组型</b>，<b class="uicontrol" data-tag="uicontrol" id="fd7dacaef14rz">计算组预留计算资源</b>设置为<span class="help-letter-space"></span>64，从而支持新增计算组。</span></p>
+</li>
+<li id="2e44df2b13yur">
+<p id="d0c4ccb215vb7"><a class="xref" href="https://help.aliyun.com/zh/hologres/user-guide/log-on-to-an-instance#section-ds8-hm8-pa5" id="e8e0ae54ea6a4" title="">登录实例</a>后，创建数据库并授权。</p>
+<p id="b27e038db23p8">登录步骤创建名为<span class="help-letter-space"></span><b>order_dw</b><span class="help-letter-space"></span>的数据库（需要开启简单权限模型），并授予用户<span class="help-letter-space"></span>admin<span class="help-letter-space"></span>权限。数据库创建和授权操作，请参见<span class="help-letter-space"></span><a class="xref" href="https://help.aliyun.com/zh/hologres/user-guide/manage-databases" id="3cd8fa22f4p35" title="">DB<span class="help-letter-space"></span>管理</a>。</p>
+<div class="note note-note" id="20d3d3e381vjv" type="note"><div class="note-icon-wrapper"><i class="icon-note note note"></i></div><div class="noteContentSpan"><strong>说明 </strong>
+<ul id="6f20782ea7hba">
+<li id="8b1696278enoe">
+<p id="ae0e819ad99i7">如果在<b class="uicontrol" data-tag="uicontrol" id="uicontrol-hpc-7va-hgw">被授权账号</b>的下拉列表找不到对应的账号，则说明该账号并未添加至当前实例，您需要前往<b class="uicontrol" data-tag="uicontrol" id="uicontrol-o2s-y7c-wro">用户管理</b>页面添加用户为<span class="help-letter-space"></span>SuperUser。</p>
+</li>
+<li id="f935ef525dkx4">
+<p id="b37297cbf6695">Hologres2.0<span class="help-letter-space"></span>之后版本默认开启<span class="help-letter-space"></span>Binlog<span class="help-letter-space"></span>扩展，无需手动执行。</p>
+</li>
+</ul>
+</div></div>
+</li>
+<li id="c8d283eddcomf">
+<p id="6a62c9a915fd6">新增计算组。</p>
+<p id="912ac59df20em">您可以通过不同的计算组实现资源隔离，使用初始计算组<span class="help-letter-space"></span>init_warehouse<span class="help-letter-space"></span>用于写入数据，使用<span class="help-letter-space"></span>read_warehouse_1<span class="help-letter-space"></span>计算组用于服务查询。</p>
+<p id="95ebc28ec45p2">预留计算资源会全部分配给初始计算组<span class="help-letter-space"></span>init_warehouse，需先减少计算组资源，再新增计算组。详情请参见<a class="xref" href="https://help.aliyun.com/zh/hologres/user-guide/getting-started-with-virtual-warehouses#76e27560f35b0" id="00868d276dws7" title="">创建新计算组实例</a>。</p>
+<ol id="f9b390b449dz1">
+<li id="a9778fd36eytj">
+<p id="553f4da7b5dqz">单击<span class="menucascade" data-tag="menucascade" id="8f2364b579tf1"><b class="uicontrol" data-tag="uicontrol" id="01ba2f5999evi">安全中心</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="c918a5b491kpq">计算组管理</b></span>，确认实例名为目标实例名称。</p>
+</li>
+<li id="aeca5bdc835rm">
+<p id="5508c55a64jtc">单击已有资源组<span class="help-letter-space"></span>init_warehouse<span class="help-letter-space"></span><b class="uicontrol" data-tag="uicontrol" id="2469f18485gxu">操作</b>列下的<b class="uicontrol" data-tag="uicontrol" id="c91ae94ad7gl5">调整配置</b>，调小资源后单击<b class="uicontrol" data-tag="uicontrol" id="a44275663010x">确认</b>。</p>
+</li>
+<li id="fa102569fcmwx">
+<p id="ea43e6ab2e3rv">单击<b class="uicontrol" data-tag="uicontrol" id="b7aede3019np9">新增计算组</b>，新增名称为<span class="help-letter-space"></span>read_warehouse_1<span class="help-letter-space"></span>的计算组，单击<b class="uicontrol" data-tag="uicontrol" id="f0b158d029sz5">确认</b>。</p>
+</li>
+</ol>
+</li>
+</ol>
+</section>
+<section class="section" id="f95c8cf943vrj">
+<h3 id="e303fcbc3ee0e"><b>创建<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>工作空间和<span class="help-letter-space"></span>Catalog</b></h3>
+<ol id="a7864caaecdyj">
+<li id="d7500001dbgaf">
+<p id="dd0a8519909ho">创建<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>工作空间，详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/getting-started/activate-fully-managed-flink" id="74fcd360faauj" title="">开通实时计算<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>版</a>。</p>
+<p id="cedf122ab74xz">Flink<span class="help-letter-space"></span>工作空间需要与<span class="help-letter-space"></span>RDS MySQL<span class="help-letter-space"></span>实例、Hologres<span class="help-letter-space"></span>实例在同一<span class="help-letter-space"></span>VPC。</p>
+</li>
+<li id="b3a53ef308rn0">
+<p id="b15e64e42dghu">登录<a class="" href="https://realtime-compute.console.aliyun.com/regions/cn-shanghai" id="3d75e80021yhg" target="_blank">实时计算控制台</a>，单击目标工作空间操作列下的控制台。</p>
+</li>
+<li id="f77a30b5fbogv">
+<p id="85558fa16bne1">创建<span class="help-letter-space"></span>Session<span class="help-letter-space"></span>集群，为后续创建<span class="help-letter-space"></span>Catalog<span class="help-letter-space"></span>和查询脚本提供执行环境，详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/user-guide/debug-a-deployment#54d065d1e0z6e" id="017c8f8f01nw6" title="">步骤一：创建<span class="help-letter-space"></span>Session<span class="help-letter-space"></span>集群</a>。</p>
+</li>
+<li id="1a0b675605d4g">
+<p id="01013b1cdbub2">创建<span class="help-letter-space"></span>Hologres Catalog。</p>
+<p id="6ce80d51607i5">在<span class="menucascade" data-tag="menucascade" id="be2b2ceb7aywr"><b class="uicontrol" data-tag="uicontrol" id="707345c06cq4v">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="a716acd430h6n">数据查询</b></span>页面的<b class="uicontrol" data-tag="uicontrol" id="983c07befcvka">查询脚本</b>页签，将下面代码拷贝到查询脚本，并修改目标参数取值，选中目标片段后单击左侧代码行上的<b class="uicontrol" data-tag="uicontrol" id="71fe785959kzf">运行</b>。在页面右下角的执行环境使用的是创建的<span class="help-letter-space"></span>Session<span class="help-letter-space"></span>集群。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="0zzsgy" outputclass="language-sql"><code>CREATE CATALOG dw WITH (
+  'type' = 'hologres',
+  'endpoint' = '&lt;ENDPOINT&gt;', 
+  'username' = 'BASIC$flinktest',
+  'password' = '${secret_values.holosecrect}',
+  'dbname' = 'order_dw@init_warehouse', --数据库名称，并指定连接<span class="help-letter-space"></span>init_warehouse<span class="help-letter-space"></span>计算组。
+  'binlog' = 'true', -- 创建<span class="help-letter-space"></span>catalog<span class="help-letter-space"></span>时可以设置源表、维表和结果表支持的<span class="help-letter-space"></span>with<span class="help-letter-space"></span>参数，之后在使用此<span class="help-letter-space"></span>catalog<span class="help-letter-space"></span>下的表时会默认添加这些默认参数。
+  'sdkMode' = 'jdbc', -- 推荐使用<span class="help-letter-space"></span>jdbc<span class="help-letter-space"></span>模式。
+  'cdcmode' = 'true',
+  'connectionpoolname' = 'the_conn_pool',
+  'ignoredelete' = 'true',  -- 宽表<span class="help-letter-space"></span>merge<span class="help-letter-space"></span>需要开启，防止回撤。
+  'partial-insert.enabled' = 'true', -- 宽表<span class="help-letter-space"></span>merge<span class="help-letter-space"></span>需要开启此参数，实现部分列更新。
+  'mutateType' = 'insertOrUpdate', -- 宽表<span class="help-letter-space"></span>merge<span class="help-letter-space"></span>需要开启此参数，实现部分列更新。
+  'table_property.binlog.level' = 'replica', --也可以在创建<span class="help-letter-space"></span>catalog<span class="help-letter-space"></span>时传入持久化的<span class="help-letter-space"></span>hologres<span class="help-letter-space"></span>表属性，之后创建表时，默认都开启<span class="help-letter-space"></span>binlog。
+  'table_property.binlog.ttl' = '259200'
+);</code></pre>
+<p id="23b2e1a81etca">您需要修改以下参数取值为您实际<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>服务信息。</p>
+<table autofit="false" class="table" id="638f11601fm41" tablecolswidth="75 224 309" tablewidth="608">
+<colgroup colwidth="0.37*" style="width:12.34%"></colgroup>
+<colgroup colwidth="1.11*" style="width:36.84%"></colgroup>
+<colgroup colwidth="1.53*" style="width:50.82%"></colgroup>
+<tbody class="tbody">
+<tr id="638f11611f0th">
+<td colspan="1" id="638f11621f8sk" rowspan="1" style="background-color:#e5e5e5">
+<p id="c496eec28eu32"><b>参数</b></p>
+</td>
+<td colspan="1" id="638f11641f5x2" rowspan="1" style="background-color:#e5e5e5">
+<p id="d890813d3d9v7"><b>说明</b></p>
+</td>
+<td colspan="1" id="638f11661f1lj" rowspan="1" style="background-color:#e5e5e5">
+<p id="65ba2a04ecuf7"><b>备注</b></p>
+</td>
+</tr>
+<tr id="638f38701fvfq" style="height:42px">
+<td colspan="1" id="638f38711fldb" rowspan="1">
+<p id="3f3c5666a664x">endpoint</p>
+</td>
+<td colspan="1" id="638f38731fx1q" rowspan="1">
+<p id="ee3377d808ram">Hologres<span class="help-letter-space"></span>的<span class="help-letter-space"></span>Endpoint<span class="help-letter-space"></span>地址。</p>
+</td>
+<td colspan="1" id="638f38751ffvx" rowspan="1">
+<p id="fd01eb25f866f">在<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>实例详情页面获取网络类型为指定<span class="help-letter-space"></span>VPC<span class="help-letter-space"></span>的域名信息，域名详情请参见<a class="xref" href="https://help.aliyun.com/zh/hologres/user-guide/endpoints-for-connecting-to-hologres#title-x1t-a8f-6fp" id="a2301cdeb1070" title="">访问域名</a>。</p>
+</td>
+</tr>
+<tr id="638f38771ftv2" style="height:42px">
+<td colspan="1" id="638f38781fnbx" rowspan="1">
+<p id="f95647710eztm">username</p>
+</td>
+<td colspan="1" id="638f387a1fhqp" rowspan="1">
+<p id="eb68bfa512f2a">请任选其一：</p>
+<ul id="93cc298aa666q">
+<li id="a1466feac5oyv">
+<p id="44756cce32tfd">自定义账号的用户名，格式为<code class="code" data-tag="code" id="07f084cbd4l5i">BASIC$&lt;user_name&gt;</code>。</p>
+</li>
+<li id="167362b4fbrww">
+<p id="bbcc337608u1f">阿里云账号或<span class="help-letter-space"></span>RAM<span class="help-letter-space"></span>用户的<span class="help-letter-space"></span>AccessKey ID。</p>
+</li>
+</ul>
+</td>
+<td colspan="1" id="638f387c1fwh8" rowspan="2">
+<ul id="b469a9b6e02op">
+<li id="333853df7ekiz">
+<p id="c29f67085civh">当前配置的用户需要能够访问对应的<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>数据库，Hologres<span class="help-letter-space"></span>数据库权限及用户管理详情请参见<span class="help-letter-space"></span><a class="xref" href="https://help.aliyun.com/zh/hologres/security-and-compliance/hologres-permission-model/#concept-2021277" id="a83587077d810" title="">Hologres<span class="help-letter-space"></span>权限模型</a>和<a class="xref" href="https://help.aliyun.com/zh/hologres/user-guide/manage-users#section-fv0-kzc-n35" id="449ef7b42147o" title="">用户管理</a>。</p>
+</li>
+<li id="9c8f252acfh90">
+<p id="643f6df6d6c8o">本示例使用名为<code class="code" data-tag="code" id="14f46557d860r">BASIC$flinktest</code>的自定义账号，并通过名为<span class="help-letter-space"></span>holosecrect<span class="help-letter-space"></span>的项目变量来设置其密码值，从而避免明文存储带来的安全风险，详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/user-guide/manage-keys#c4662f9db50gb" id="e64e7d9794s1q" title="">项目变量</a>。</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr id="638f5f811f7kz">
+<td colspan="1" id="638f5f821fcv0" rowspan="1">
+<p id="8e8d65e7ae5xu">password</p>
+</td>
+<td colspan="1" id="638f5f841f6mh" rowspan="1">
+<ul id="e4903280183ua">
+<li id="b9c6dc67cawuo">
+<p id="50240c44f4lcc">自定义账号的密码。</p>
+</li>
+<li id="42595fa2c2r8j">
+<p id="e801e791a3hq0">阿里云账号或<span class="help-letter-space"></span>RAM<span class="help-letter-space"></span>用户的<span class="help-letter-space"></span>AccessKey Secret。</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="note note-note" id="40b9c88ee5ldo" type="note"><div class="note-icon-wrapper"><i class="icon-note note note"></i></div><div class="noteContentSpan"><strong>说明 </strong>
+<p id="974b778a58msx">创建<span class="help-letter-space"></span>Catalog<span class="help-letter-space"></span>时可以设置默认的源表、维表和结果表的<span class="help-letter-space"></span>WITH<span class="help-letter-space"></span>参数，也可以设置创建<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>物理表的默认属性，例如上方<span class="help-letter-space"></span>table_property<span class="help-letter-space"></span>开头的参数。详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/user-guide/manage-hologres-catalogs" id="851fdab360dey" title="">管理<span class="help-letter-space"></span>Hologres Catalog</a><span class="help-letter-space"></span>和<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/developer-reference/hologres-connector/" id="5477461d1f3m2" title="">实时数仓<span class="help-letter-space"></span>Hologres WITH<span class="help-letter-space"></span>参数</a>。</p>
+</div></div>
+</li>
+<li id="cad1106024msb">
+<p id="d19f65188e5oo">创建<span class="help-letter-space"></span>MySQL Catalog。</p>
+<p id="203f195438gfb">将如下代码拷贝到<b class="uicontrol" data-tag="uicontrol" id="8e9afa6b0161f">查询脚本</b>，并修改目标参数取值，选中目标片段后单击左侧代码行上的<b class="uicontrol" data-tag="uicontrol" id="c432c79303w4r">运行</b>。在页面右下角的执行环境使用的是创建的<span class="help-letter-space"></span>Session<span class="help-letter-space"></span>集群。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="qvnucg" outputclass="language-sql"><code>CREATE CATALOG mysqlcatalog WITH(
+  'type' = 'mysql',
+  'hostname' = '&lt;hostname&gt;',
+  'port' = '&lt;port&gt;',
+  'username' = '&lt;username&gt;',
+  'password' = '${secret_values.mysql_pw}',
+  'default-database' = 'order_dw'
+);</code></pre>
+<p id="345f72c43e5sd">您需要修改以下参数取值为您实际的<span class="help-letter-space"></span>MySQL<span class="help-letter-space"></span>服务信息。</p>
+<table autofit="false" class="table" id="d0f79b801fg0z" tablecolswidth="131 516" tablewidth="647">
+<colgroup colwidth="0.41*" style="width:20.25%"></colgroup>
+<colgroup colwidth="1.6*" style="width:79.75%"></colgroup>
+<tbody class="tbody">
+<tr id="d0f79b811flnh">
+<td colspan="1" id="d0f79b821frt4" rowspan="1" style="background-color:#e5e5e5">
+<p id="34624f108cqtp"><b>参数</b></p>
+</td>
+<td colspan="1" id="d0f79b841fjlr" rowspan="1" style="background-color:#e5e5e5">
+<p id="287eb318f09lp"><b>说明</b></p>
+</td>
+</tr>
+<tr id="d0f79b881foww" style="height:47px">
+<td colspan="1" id="d0f79b891fpsj" rowspan="1">
+<p id="570e3c40f3hml">hostname</p>
+</td>
+<td colspan="1" id="d0f79b8b1fdr4" rowspan="1">
+<p id="b59ee1fa325zg">MySQL<span class="help-letter-space"></span>数据库的<span class="help-letter-space"></span>IP<span class="help-letter-space"></span>地址或者<span class="help-letter-space"></span>Hostname。您可以在数据库基本信息页面单击<b class="uicontrol" data-tag="uicontrol" id="ca962343a5xx5">网络类型</b>区域的<b class="uicontrol" data-tag="uicontrol" id="3e4efdcdeenrd">查看连接详情</b>，获取内网地址。</p>
+</td>
+</tr>
+<tr id="d0f79b8f1f8l7" style="height:42px">
+<td colspan="1" id="d0f79b901f720" rowspan="1">
+<p id="8a3ba91e01tz2">port</p>
+</td>
+<td colspan="1" id="d0f79b921fipa" rowspan="1">
+<p id="5a299b3470msv">MySQL<span class="help-letter-space"></span>数据库服务的端口号，默认值为<span class="help-letter-space"></span>3306。</p>
+</td>
+</tr>
+<tr id="d0f79b961fb26">
+<td colspan="1" id="d0f79b971f4gd" rowspan="1">
+<p id="b9a03aa3b2wz5">username</p>
+</td>
+<td colspan="1" id="d0f79b991fl4k" rowspan="1">
+<p id="80e9e2b1b5a6n">MySQL<span class="help-letter-space"></span>数据库服务的用户名。</p>
+</td>
+</tr>
+<tr id="da7396001fhs2">
+<td colspan="1" id="da7396011fkef" rowspan="1">
+<p id="e121b0cd45xom">password</p>
+</td>
+<td colspan="1" id="da7396031fjqz" rowspan="1">
+<p id="5f133d9766nff">MySQL<span class="help-letter-space"></span>数据库服务的密码。</p>
+<p id="0f0bc735c6oi7">本示例通过使用名为<span class="help-letter-space"></span>mysql_pw<span class="help-letter-space"></span>变量的方式填写<span class="help-letter-space"></span>password<span class="help-letter-space"></span>取值，避免明文等风险，详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/user-guide/manage-keys" id="09cffbd42aqlq" title="">变量管理</a>。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+</section>
+</section>
+<section class="section" id="1a2700f01co7d">
+<h2 id="34534a601cjz3" uuid="la838kvu8e3p95is9e"><b>步骤二：搭建实时数仓</b></h2>
+<section class="section" id="de28b65898aa8">
+<h3 id="d2c665b0225fe" uuid="lk27r1jl31v6qt8bv2l"><b>构建<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层：业务数据库实时入仓</b></h3>
+<p id="594f85901cupf" uuid="la838kvvmqxek2s2f">基于<span class="help-letter-space"></span>Catalog<span class="help-letter-space"></span>的<span class="help-letter-space"></span><a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/developer-reference/create-database-as-statement" id="597165701c8kd" title="">CREATE DATABASE AS（CDAS）语句</a>功能，可以一次性把<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层建出来。ODS<span class="help-letter-space"></span>层一般不直接做<span class="help-letter-space"></span>OLAP<span class="help-letter-space"></span>或<span class="help-letter-space"></span>SERVING（KV<span class="help-letter-space"></span>点查），主要作为流式作业的事件驱动，开启<span class="help-letter-space"></span>Binlog<span class="help-letter-space"></span>即可满足需求。Binlog<span class="help-letter-space"></span>是<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>的核心能力之一，Hologres<span class="help-letter-space"></span>连接器也支持先全量读取再增量消费<span class="help-letter-space"></span>Binlog<span class="help-letter-space"></span>的全增量模式。</p>
+<ol id="2e9c3951220q1">
+<li id="c7644fd01f1va">
+<p id="f1f11a801ferq">创建<span class="help-letter-space"></span>CDAS<span class="help-letter-space"></span>同步作业<span class="help-letter-space"></span>ODS。</p>
+<ol id="4688f5013cscq">
+<li id="45fdf3103c7f4">
+<p id="45fdcc003co8s">在<span class="menucascade" data-tag="menucascade" id="b135d5fc0aj04"><b class="uicontrol" data-tag="uicontrol" id="dbac0537c2aup">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="5980809c300oh">ETL</b><span class="help-letter-space"></span></span>页面，新建名为<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>的<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>流作业，并将如下代码拷贝到<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>编辑器。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="s9qupc" outputclass="language-sql"><code>CREATE DATABASE IF NOT EXISTS dw.order_dw   -- 创建<span class="help-letter-space"></span>catalog<span class="help-letter-space"></span>时设置了<span class="help-letter-space"></span>table_property.binlog.level<span class="help-letter-space"></span>参数，因此通过<span class="help-letter-space"></span>CDAS<span class="help-letter-space"></span>创建的所有表都开启了<span class="help-letter-space"></span>binlog。
+AS DATABASE mysqlcatalog.order_dw INCLUDING all tables -- 可以根据需要选择上游数据库需要入仓的表。
+/*+ OPTIONS('server-id'='8001-8004') */ ;   -- 指定<span class="help-letter-space"></span>mysql-cdc<span class="help-letter-space"></span>实例<span class="help-letter-space"></span>server-id<span class="help-letter-space"></span>范围。</code></pre>
+<div class="note note-note" id="f3ff45006d6el" type="note"><div class="note-icon-wrapper"><i class="icon-note note note"></i></div><div class="noteContentSpan"><strong>说明 </strong>
+<ul id="9a5f71e1f1i4a">
+<li id="b8c5fe353cxq4">
+<p id="f3ff1df06djxj">本示例默认将数据同步到数据库<span class="help-letter-space"></span>order_dw<span class="help-letter-space"></span>的<span class="help-letter-space"></span>Public Schema<span class="help-letter-space"></span>下。您也可以将数据同步到<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>目标库的指定<span class="help-letter-space"></span>Schema<span class="help-letter-space"></span>中，详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/user-guide/manage-hologres-catalogs#b4aee380e20ck" id="4bd429d06dwg6" title="">作为<span class="help-letter-space"></span>CDAS<span class="help-letter-space"></span>的目标端<span class="help-letter-space"></span>Catalog</a>，指定后使用<span class="help-letter-space"></span>Catalog<span class="help-letter-space"></span>时的表名格式也会发生变化，详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/user-guide/manage-hologres-catalogs#section-x6a-as1-mbe" id="148381106dfhz" title="">使用<span class="help-letter-space"></span>Hologres Catalog</a>。</p>
+</li>
+<li id="5e6ccb945dr7g">
+<p id="57dcd2246cguq">如果源表的数据结构发生变化，则需要等待源表的数据出现变更（删除、插入、更新），结果表的数据结构才会看到变化。</p>
+</li>
+</ul>
+</div></div>
+</li>
+<li id="48e5d0c13cwu1">
+<p id="0312a7d024xqd">单击右上方的<b class="uicontrol" data-tag="uicontrol" id="54f82d903cbsh">部署</b>，进行作业部署。</p>
+</li>
+<li id="52f112f03cbjy">
+<p id="52f0c4d03c6uy">单击左侧导航栏的<span class="menucascade" data-tag="menucascade" id="f9e276fcac2h0"><b class="uicontrol" data-tag="uicontrol" id="1a7e949d14615">运维中心</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="af4edc5524gsd">作业运维</b></span>，单击刚刚部署的<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>作业<b class="uicontrol" data-tag="uicontrol" id="788485103ce64">操作</b>列的<b class="uicontrol" data-tag="uicontrol" id="7a4596003cwyj">启动</b>，选择<b class="uicontrol" data-diff-node="ins" data-operation-index="23" data-tag="uicontrol" id="5e6d9f8047ibb">无状态启动</b>后单击<b class="uicontrol" data-tag="uicontrol" id="813330b8c18ec">启动</b>。</p>
+</li>
+</ol>
+</li>
+<li id="25b731611fgnd">
+<p id="7165b1a476ela">向计算组加载数据。</p>
+<p id="187b9f1d8f8ws">Table Group<span class="help-letter-space"></span>是<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>中数据的载体。使用<span class="help-letter-space"></span>read_warehouse_1<span class="help-letter-space"></span>查询<span class="help-letter-space"></span>order_dw<span class="help-letter-space"></span>数据库中<span class="help-letter-space"></span>Table Group（本示例为<span class="help-letter-space"></span>order_dw_tg_default，创建步骤请参见<span class="help-letter-space"></span><a class="xref" href="https://help.aliyun.com/zh/hologres/user-guide/table-group-management" id="6f7473909c52a" title="">Table Group<span class="help-letter-space"></span>管理</a>）的数据时，为计算组<span class="help-letter-space"></span>read_warehouse_1<span class="help-letter-space"></span>加载<span class="help-letter-space"></span>order_dw_tg_default，从而实现使用<code class="code" code-type="xCode" data-tag="code" id="590844780e1p1">init_warehouse</code>计算组写入数据，使用<code class="code" code-type="xCode" data-tag="code" id="5c3dba6c0btxn">read_warehouse_1</code>计算组进行服务查询。</p>
+<p id="82b5e7b279igj">在<span class="help-letter-space"></span><b>HoloWeb</b><span class="help-letter-space"></span>开发页单击<span class="help-letter-space"></span><b class="uicontrol" data-tag="uicontrol" id="e1947cb9135lv">SQL<span class="help-letter-space"></span>编辑器</b>，确认实例名和数据库名称后，执行如下命令。更多详情请参见<a class="xref" href="https://help.aliyun.com/zh/hologres/user-guide/getting-started-with-virtual-warehouses#76e27560f35b0" id="d99c4a5ea7r8m" title="">创建新计算组实例</a>。加载后，可以查看到<span class="help-letter-space"></span>read_warehouse_1<span class="help-letter-space"></span>已经加载了<span class="help-letter-space"></span>order_dw_tg_default Table Group<span class="help-letter-space"></span>的数据。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="3va4eq" outputclass="language-sql"><code>--查看当前数据库有哪些<span class="help-letter-space"></span>Table Group
+SELECT tablegroup_name FROM hologres.hg_table_group_properties GROUP BY tablegroup_name;
+--为计算组加载<span class="help-letter-space"></span>Table Group
+CALL hg_table_group_load_to_warehouse ('order_dw.order_dw_tg_default', 'read_warehouse_1', 1);
+--查看计算组加载<span class="help-letter-space"></span>Table Group<span class="help-letter-space"></span>的情况
+select * from hologres.hg_warehouse_table_groups;</code></pre>
+</li>
+<li id="fc168110a9wi0">
+<p id="e800aa80d8tiu">在右上角切换计算组为<span class="help-letter-space"></span>read_warehouse_1，后续查询分析使用<span class="help-letter-space"></span>read_warehouse_1<span class="help-letter-space"></span>计算组。</p>
+<p id="p-e28813db69e4">在<span class="help-letter-space"></span>HoloWeb<span class="help-letter-space"></span>页面右上角的计算组下拉列表中，将当前计算组切换为<span class="help-letter-space"></span>read_warehouse_1。</p>
+</li>
+<li id="dc66a4e52b0il">
+<p id="ce0a74f051mvi">在<span class="help-letter-space"></span><b>SQL<span class="help-letter-space"></span>编辑器</b>页面执行如下命令，查看<span class="help-letter-space"></span>MySQL<span class="help-letter-space"></span>同步到<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>的<span class="help-letter-space"></span>3<span class="help-letter-space"></span>张表数据。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="seg8vg" outputclass="language-sql"><code>---查<span class="help-letter-space"></span>orders<span class="help-letter-space"></span>中的数据。
+SELECT * FROM orders;
+---查<span class="help-letter-space"></span>orders_pay<span class="help-letter-space"></span>中的数据。
+SELECT * FROM orders_pay;
+---查<span class="help-letter-space"></span>product_catalog<span class="help-letter-space"></span>中的数据。
+SELECT * FROM product_catalog;</code></pre>
+<p id="p-d1daacfbb12e"><code class="code" data-tag="code">product_catalog</code> 表查询结果包含 <b>product_id</b>（1~5）和 <b>catalog_name</b>（phone_aaa、phone_bbb、phone_ccc、phone_ddd、phone_eee）两列，共 5 条记录，表明数据已成功同步至 Hologres。</p>
+</li>
+</ol>
+</section>
+<section class="section" id="f7761324f060t">
+<h3 id="6fc04da01ci8y" uuid="la9gzuwa0m5a3uo2uqs"><b>构建<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层：实时主题宽表</b></h3>
+<p id="7c6f119dc5ldf" uuid="lu0z9nlj5s1poa7bpkx">构建<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层用到了<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>连接器特有的部分列更新能力，可以使用<span class="help-letter-space"></span>INSERT DML<span class="help-letter-space"></span>方便地表达部分列更新的语义。作业中需要对不同的维表进行查询，是基于<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>行存以及行列共存表提供的高性能的点查能力。同时，Hologres<span class="help-letter-space"></span>资源强隔离的架构，可以保证写入、读取、分析等作业之间互不干扰。 </p>
+<ol id="eedba7b21fyr8">
+<li id="eedba7b01fxv4">
+<p id="4213592024gaf">通过<span class="help-letter-space"></span>Flink Catalog<span class="help-letter-space"></span>功能在<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>中建<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层的宽表<span class="help-letter-space"></span>dwd_orders。</p>
+<p id="175e68fd8dnth">在<span class="menucascade" data-tag="menucascade" id="224cd02032p7e"><b class="uicontrol" data-tag="uicontrol" id="f83658a45e18e">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="a84fe38928dry">数据查询</b></span>页面的<b class="uicontrol" data-tag="uicontrol" id="62cbacbe8474s">查询脚本</b>页签，将如下代码拷贝到查询脚本后，选中目标片段后单击左侧代码行上的<b class="uicontrol" data-tag="uicontrol" id="75cdd36d8dt84">运行</b>。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" height="300" id="2glscw" outputclass="language-sql"><code>-- 宽表字段要<span class="help-letter-space"></span>nullable，因为不同的流写入到同一张结果表，每一列都可能出现<span class="help-letter-space"></span>null<span class="help-letter-space"></span>的情况。
+CREATE TABLE dw.order_dw.dwd_orders (
+  order_id bigint not null,
+  order_user_id string,
+  order_shop_id bigint,
+  order_product_id bigint,
+  order_product_catalog_name string,
+  order_fee numeric(20,2),
+  order_create_time timestamp,
+  order_update_time timestamp,
+  order_state int,
+  pay_id bigint,
+  pay_platform int comment 'platform 0: phone, 1: pc', 
+  pay_create_time timestamp,
+  PRIMARY KEY(order_id) NOT ENFORCED
+);
+-- 支持通过<span class="help-letter-space"></span>catalog<span class="help-letter-space"></span>修改<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>物理表属性。
+ALTER TABLE dw.order_dw.dwd_orders SET (
+  'table_property.binlog.ttl' = '604800' --修改<span class="help-letter-space"></span>binlog<span class="help-letter-space"></span>的超时时间为一周。
+);</code></pre>
+</li>
+<li id="f68f17311fnyo">
+<p id="54bd7c4024dzk" uuid="le6j05z2tlzg1r9n3dm">实现实时消费<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层<span class="help-letter-space"></span>orders、orders_pay<span class="help-letter-space"></span>表的<span class="help-letter-space"></span>Binlog。</p>
+<p id="502e7e4024edz">在<span class="menucascade" data-tag="menucascade" id="ff1b9f161855s"><b class="uicontrol" data-tag="uicontrol" id="1392d207e7or2">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="d116e211211k7">ETL</b><span class="help-letter-space"></span></span>页面，新建名为<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>的<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>流作业，并将如下代码拷贝到<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>编辑器后，<b class="uicontrol" data-tag="uicontrol" id="fc2cd81652x5p">部署</b>并<b class="uicontrol" data-tag="uicontrol" id="c660bd6a79d0z">启动</b>作业。通过如下<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>作业，orders<span class="help-letter-space"></span>表会与<span class="help-letter-space"></span>product_catalog<span class="help-letter-space"></span>表进行维表关联，将最终结果写入<span class="help-letter-space"></span>dwd_orders<span class="help-letter-space"></span>表中，实现数据的实时打宽。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" height="300" id="n19bcd" outputclass="language-sql"><code>BEGIN STATEMENT SET;
+INSERT INTO dw.order_dw.dwd_orders 
+ (
+   order_id,
+   order_user_id,
+   order_shop_id,
+   order_product_id,
+   order_fee,
+   order_create_time,
+   order_update_time,
+   order_state,
+   order_product_catalog_name
+ ) SELECT o.*, dim.catalog_name 
+   FROM dw.order_dw.orders as o
+   LEFT JOIN dw.order_dw.product_catalog FOR SYSTEM_TIME AS OF proctime() AS dim
+   ON o.product_id = dim.product_id;
+INSERT INTO dw.order_dw.dwd_orders 
+  (pay_id, order_id, pay_platform, pay_create_time)
+   SELECT * FROM dw.order_dw.orders_pay;
+END;</code></pre>
+</li>
+<li id="10881ba01f8nr">
+<p id="8b41c8c0245hg" uuid="ljo6tgx58en65sz60xc">查看宽表<span class="help-letter-space"></span>dwd_orders<span class="help-letter-space"></span>数据。</p>
+<p id="887e630024y58">在<span class="help-letter-space"></span><b>HoloWeb</b><span class="help-letter-space"></span>开发页面连接<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>实例并登录目标数据库后，在<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>编辑器上执行如下命令。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="so6ycl" outputclass="language-sql"><code>SELECT * FROM dwd_orders;</code></pre>
+<p id="p-9ddf407e8d65">执行成功后，查询结果返回 <b>dwd_orders</b> 宽表数据，包含 <b>order_id</b>、<b>order_user_id</b>、<b>order_shop_id</b>、<b>order_product_id</b>、<b>order_product_catalog_name</b>、<b>order_fee</b>、<b>order_create_time</b>、<b>order_update_time</b> 等字段。</p>
+</li>
+</ol>
+</section>
+<section class="section" id="4f1b0b22c906b">
+<h3 id="93a9e0501coce" uuid="la9gzuwa2m7fibojzb4"><b>构建<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层：实时指标计算</b></h3>
+<ol id="7b6d1be21fhvb">
+<li id="7b6d1be01f38d">
+<p id="a8d754e024rh1">通过<span class="help-letter-space"></span>Flink Catalog<span class="help-letter-space"></span>功能，在<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>中创建<span class="help-letter-space"></span>dws<span class="help-letter-space"></span>层的聚合<span class="help-letter-space"></span>dws_users<span class="help-letter-space"></span>以及<span class="help-letter-space"></span>dws_shops。</p>
+<p id="22e234bfffwut">在<span class="menucascade" data-tag="menucascade" id="ba17def2b5cyn"><b class="uicontrol" data-tag="uicontrol" id="9b7dabde8cqoc">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="10d2ebf2feav3">数据查询</b></span>页面的<b class="uicontrol" data-tag="uicontrol" id="c41bf23952yq6">查询脚本</b>页签，将如下代码拷贝到查询脚本后，选中目标片段后单击左侧代码行上的<b class="uicontrol" data-tag="uicontrol" id="28ee3ddf7cva3">运行</b>。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" height="300" id="zu07hs" outputclass="language-sql"><code>-- 用户维度聚合指标表。
+CREATE TABLE dw.order_dw.dws_users (
+  user_id string not null,
+  ds string not null,
+  paied_buy_fee_sum numeric(20,2) not null comment '当日完成支付的总金额',
+  primary key(user_id,ds) NOT ENFORCED
+);
+-- 商户维度聚合指标表。
+CREATE TABLE dw.order_dw.dws_shops (
+  shop_id bigint not null,
+  ds string not null,
+  paied_buy_fee_sum numeric(20,2) not null comment '当日完成支付总金额',
+  primary key(shop_id,ds) NOT ENFORCED
+);</code></pre>
+</li>
+<li id="7eb430901fzhp">
+<p id="d20f6500247ur">实时消费<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层的宽表<span class="help-letter-space"></span>dw.order_dw.dwd_orders，在<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>中做聚合计算，最终写入<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>中的<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>表。</p>
+<p id="cb7a0fb0240wo">在<span class="menucascade" data-tag="menucascade" id="cb7cdebf14nqz"><b class="uicontrol" data-tag="uicontrol" id="48ab14698ci7i">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="3be5c7c032ic8">ETL</b><span class="help-letter-space"></span></span>页面，新建名为<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>的<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>流作业，并将如下代码拷贝到<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>编辑器后，<b class="uicontrol" data-tag="uicontrol" id="9f1bcb0718dk7">部署</b>并<b class="uicontrol" data-tag="uicontrol" id="eff5264a02els">启动</b>作业。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" height="300" id="t68mak" outputclass="language-sql"><code>BEGIN STATEMENT SET;
+INSERT INTO dw.order_dw.dws_users
+  SELECT 
+    order_user_id,
+    DATE_FORMAT (pay_create_time, 'yyyyMMdd') as ds,
+    SUM (order_fee)
+    FROM dw.order_dw.dwd_orders c
+    WHERE pay_id IS NOT NULL AND order_fee IS NOT NULL -- 订单流和支付流数据都已写入宽表。
+    GROUP BY order_user_id, DATE_FORMAT (pay_create_time, 'yyyyMMdd');
+INSERT INTO dw.order_dw.dws_shops
+  SELECT 
+    order_shop_id,
+    DATE_FORMAT (pay_create_time, 'yyyyMMdd') as ds,
+    SUM (order_fee)
+   FROM dw.order_dw.dwd_orders c
+   WHERE pay_id IS NOT NULL AND order_fee IS NOT NULL -- 订单流和支付流数据都已写入宽表。
+   GROUP BY order_shop_id, DATE_FORMAT (pay_create_time, 'yyyyMMdd');
+END;</code></pre>
+</li>
+<li id="8a36a9711fr3r">
+<p id="0120cd70247ud">查看<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层的聚合结果，其结果会根据上游数据的变更实时更新。</p>
+<ol id="7bd677b1205da">
+<li id="f11f07285c0q4">
+<p id="30b090e0baqba">在<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>控制台查看变更前数据。</p>
+<section class="tabbed-content-box section" data-tag="tabbed-content-box" id="7a99f65d54jzu" outputclass="tabbed-content-box">
+<section class="section" id="51dbd822a8mjk">
+<h2 id="8102d5aa4d3qy">dws_users<span class="help-letter-space"></span>表</h2>
+<section class="section" id="82abfacbd651r"><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="cb7641db23q8p" index="0" outputclass="language-sql"><code>SELECT * FROM dws_users;</code></pre>
+<p id="p-74a2a150b020">执行查询后，返回 <b>dws_users</b> 表的数据，包含 <b>user_id</b>、<b>ds</b>、<b>paied_buy_fee_sur</b> 三列。示例结果中 <b>user_id</b> 列值为 <code class="code" data-tag="code">user_001</code>、<code class="code" data-tag="code">user_002</code>、<code class="code" data-tag="code">user_003</code>，<b>ds</b> 列值为 <code class="code" data-tag="code">20230215</code>，<b>paied_buy_fee_sur</b> 列分别为 <code class="code" data-tag="code">8000.08</code>、<code class="code" data-tag="code">5000.05</code>、<code class="code" data-tag="code">5000.05</code>。重点关注 <b>user_id</b> 列，该列标识了每位用户的唯一 ID。</p>
+</section>
+</section>
+<section class="section" id="42efb7f0cat28">
+<h2 id="cf2dfd48b02dl">dws_shops<span class="help-letter-space"></span>表</h2>
+<section class="section" id="c18d4723d46um"><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="ee7ad5b23a6cq" outputclass="language-sql"><code>SELECT * FROM dws_shops;</code></pre>
+<p id="p-f10e97d9bac3">查询结果显示 <code>dws_shops</code> 表包含 <b>shop_id</b>（店铺 ID）、<b>ds</b>（日期分区）、<b>paied_buy_fee_sur</b>（支付金额）三列，返回 4 行示例数据，确认 DWS 层表已成功构建。</p>
+</section>
+</section>
+</section>
+</li>
+<li id="27a47a5b81w99">
+<p id="bc795b5c5eq5t">在<span class="help-letter-space"></span>RDS<span class="help-letter-space"></span>控制台向<span class="help-letter-space"></span>order_dw<span class="help-letter-space"></span>数据库<span class="help-letter-space"></span>orders<span class="help-letter-space"></span>和<span class="help-letter-space"></span>orders_pay<span class="help-letter-space"></span>表中分别插入<span class="help-letter-space"></span>1<span class="help-letter-space"></span>条新数据。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="10beb9e3a0gzb" outputclass="language-sql"><code>INSERT INTO orders VALUES
+(100008, 'user_003', 12345, 5, 6000.02, '2023-02-15 09:40:56', '2023-02-15 18:42:56', 1);
+INSERT INTO orders_pay VALUES
+(2008, 100008, 1, '2023-02-15 19:40:56');</code></pre>
+</li>
+<li id="ebb48e2c4amc3">
+<p id="9e934c8fb5lvc">在<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>控制台查看变更后的数据。</p>
+<section class="section" id="6daf61fad7n5o">
+<section class="tabbed-content-box section" data-tag="tabbed-content-box" id="bcadcd0f95bu6" outputclass="tabbed-content-box">
+<section class="section" id="c4aa9a3c59hzi">
+<h2 id="ec2b998a87q3d">dwd_orders<span class="help-letter-space"></span>表</h2><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="1fc7047f04h4d" index="0" outputclass="language-sql"><code>SELECT * FROM dwd_orders;</code></pre>
+<p id="p-e87e7cf198b0">执行该查询后返回 dwd_orders 表中的 8 条订单记录，包含 <b>order_id</b>、<b>order_user_id</b>、<b>order_shop_id</b>、<b>order_product_id</b>、<b>order_product_category</b>、<b>order_fee</b>、<b>order_create_time</b>、<b>order_update_time</b> 字段。其中第 8 条记录（<code>order_id=100008</code>，<code>user_003</code>，<code>phone_eee</code>，<code>6000.02</code>）为新写入的数据。</p>
+</section>
+<section class="section" id="ba33a364d0geg">
+<h2 id="e188ee842dsdh">dws_users<span class="help-letter-space"></span>表</h2><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="578a05c4584i7" index="0" outputclass="language-sql"><code>SELECT * FROM dws_users;</code></pre>
+<p id="p-75c1e984cd9f">查询返回 3 行结果，包含 <b>user_id</b>、<b>ds</b>、<b>paied_buy_fee_sur</b> 三列：<code class="code" data-tag="code">user_001 / 20230215 / 8000.08</code>，<code class="code" data-tag="code">user_002 / 20230215 / 5000.05</code>，<code class="code" data-tag="code">user_003 / 20230215 / 11000.07</code>。其中 user_003 的支付费用汇总值最高（11000.07）。</p>
+</section>
+<section class="section" id="75badde95e6ly">
+<h2 id="0c8b1be68al60">dws_shops<span class="help-letter-space"></span>表</h2><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="b8804dc676qze" index="0" outputclass="language-sql"><code>SELECT * FROM dws_shops;</code></pre>
+<p id="p-b2c20583fadb">执行查询后，返回结果包含 <b>shop_id</b>、<b>ds</b>、<b>paied_buy_fee_sur</b> 三列，共 4 行数据，分别展示店铺 12345、12346、12347、12348 在 20230215 日期对应的费用值（11000.07、4000.04、7000.07、2000.02）。其中 <b>shop_id</b> 与 <b>paied_buy_fee_sur</b> 为关键指标列。</p>
+</section>
+</section>
+</section>
+</li>
+</ol>
+</li>
+</ol>
+</section>
+<section class="section" id="3a54b991a9njt">
+<h3 id="b4ac31901ceeb" uuid="la838kvv0zcrveidzaz9"><b>数据探查</b></h3>
+<p id="ba1d79401ccty" uuid="la83h62fvt2cy9w1wfd">因为开启了<span class="help-letter-space"></span>Binlog，所以可直接探查到数据的变化情况。如果对中间结果需要即席（Ad-hoc）性质的业务数据探查，或者对最终计算结果进行数据正确性排查，此方案的每一层数据都实现了持久化，可以便捷地探查中间过程。</p>
+<section class="tabbed-content-box section" data-tag="tabbed-content-box" id="ef8c75d284tez" outputclass="tabbed-content-box">
+<section class="section" id="73d02176c4skg">
+<h2 id="a3c92e070951v">流模式探查</h2>
+<p id="d53560e5bak3s">通过<span class="help-letter-space"></span>Print<span class="help-letter-space"></span>连接器可以辅助确认输出到其他结果表中的消息是否符合预期。</p>
+<ol id="7db321cd342d2">
+<li id="f39f44ea49mqm">
+<p id="c17cdcb65extk">新建并启动数据探查流作业。</p>
+<p id="541016c2bfu4u">在<span class="menucascade" data-tag="menucascade" id="a7fdc60ebc26s"><b class="uicontrol" data-tag="uicontrol" id="6fc65bd9e2g9i">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="26a91a7454bvm">ETL</b><span class="help-letter-space"></span></span>页面，新建名为<span class="help-letter-space"></span>Data-exploration<span class="help-letter-space"></span>的<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>流作业，并将如下代码拷贝到<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>编辑器后，<b class="uicontrol" data-tag="uicontrol" id="dee0cba485rk9">部署</b>并<b class="uicontrol" data-tag="uicontrol" id="45138c3b01r9a">启动</b>作业。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" height="300" id="afd810fb0dqy6" outputclass="language-sql"><code>-- 流模式探查，打印到<span class="help-letter-space"></span>print<span class="help-letter-space"></span>可以看到数据的变化情况。
+CREATE TEMPORARY TABLE print_sink(
+  order_id bigint not null,
+  order_user_id string,
+  order_shop_id bigint,
+  order_product_id bigint,
+  order_product_catalog_name string,
+  order_fee numeric(20,2),
+  order_create_time timestamp,
+  order_update_time timestamp,
+  order_state int,
+  pay_id bigint,
+  pay_platform int,
+  pay_create_time timestamp,
+  PRIMARY KEY(order_id) NOT ENFORCED
+) WITH (
+  'connector' = 'print'
+);
+INSERT INTO print_sink SELECT *
+FROM dw.order_dw.dwd_orders /*+ OPTIONS('startTime'='2023-02-15 12:00:00') */ --这里的<span class="help-letter-space"></span>startTime<span class="help-letter-space"></span>是<span class="help-letter-space"></span>binlog<span class="help-letter-space"></span>生成的时间
+WHERE order_user_id = 'user_001';</code></pre>
+</li>
+<li id="6d9ed7dc0fosa">
+<p id="41a6bb02a7bu1">查看数据探查结果。</p>
+<p id="5d4b8cc3dcprm">在<span class="menucascade" data-tag="menucascade" id="15abe1878fc6h"><b class="uicontrol" data-tag="uicontrol" id="edf60fb6a7f15">运维中心</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="96ca700f15usn">作业运维</b></span>详情页面，单击目标作业名称，在<b class="uicontrol" data-tag="uicontrol" id="uicontrol-j0r-co6-ika">作业日志</b>页签下左侧<b class="uicontrol" data-tag="uicontrol" id="d99ce04013mxy">运行日志</b>页签，单击<b class="uicontrol" data-tag="uicontrol" id="uicontrol-xoy-unr-rx0">运行<span class="help-letter-space"></span>Task Managers</b><span class="help-letter-space"></span>页签下的<span class="help-letter-space"></span><b class="uicontrol" data-tag="uicontrol" id="uicontrol-f75-my5-mb0">Path, ID</b>。在<span class="help-letter-space"></span>Stdout<span class="help-letter-space"></span>页面搜索<span class="help-letter-space"></span>user_001<span class="help-letter-space"></span>相关的日志信息。</p>
+<p id="p-19490911ce4b">日志输出中可查看 CDC 数据变更记录，记录以 <code class="code" data-tag="code">+I</code>（插入）、<code class="code" data-tag="code">-U</code>（更新前）、<code class="code" data-tag="code">+U</code>（更新后）为前缀，包含 order_id、order_user_id、order_shop_id、order_fee、order_create_time 等字段信息。</p>
+</li>
+</ol>
+</section>
+<section class="section" id="c6a95e6ed38ad">
+<h2 id="a1a6b223bbt7j">批模式探查</h2>
+<p id="54562a460bnjx">批模式探查不会将数据写入结果表，而是获取当前时刻的终态数据，直接通过调试查看结果。</p>
+<p id="9ecfacf0d1zv7">在<span class="menucascade" data-tag="menucascade" id="cdf5bb1a5bb4q"><b class="uicontrol" data-tag="uicontrol" id="6f75fe4f980a7">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="e86b211d56c1m">ETL</b><span class="help-letter-space"></span></span>页面，创建<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>流作业，并将如下代码拷贝到<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>编辑器后，单击<b class="uicontrol" data-tag="uicontrol" id="65dd15de38squ">调试</b>。详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/user-guide/debug-a-deployment" id="88d0582f25i85" title="">作业调试</a>。</p>
+<p id="c369217a41qmm">在<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>作业开发界面调试结果如下所示。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="26fcc59464yfy" outputclass="language-sql"><code>SELECT *
+FROM dw.order_dw.dwd_orders /*+ OPTIONS('binlog'='false') */ 
+WHERE order_user_id = 'user_001' and order_create_time &gt; '2023-02-15 12:00:00'; --批量模式支持filter下推，提升批作业执行效率。</code></pre>
+<p id="p-5cdc5815a053">调试执行完成后，查询结果返回两条满足筛选条件的订单记录，包含 <code class="code" data-tag="code">order_id</code>、<code class="code" data-tag="code">order_user_id</code>、<code class="code" data-tag="code">order_shop_id</code>、<code class="code" data-tag="code">order_product_id</code>、<code class="code" data-tag="code">order_product_catalog_name</code>、<code class="code" data-tag="code">order_fee</code>、<code class="code" data-tag="code">order_create_time</code>、<code class="code" data-tag="code">order_update_time</code> 等字段，可据此验证批模式探查结果符合预期。</p>
+</section>
+</section>
+</section>
+</section>
+<section class="section" id="f1b3f9101cwn7">
+<h2 id="f5383dd01cd54" uuid="la838kvvqbvfrw1iu1"><b>步骤三：使用实时数仓</b></h2>
+<p id="fb41f4f01chw1" uuid="lac6ybwvmuefqzn9tv">步骤二展示了通过<span class="help-letter-space"></span>Flink Catalog<span class="help-letter-space"></span>在<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>侧搭建一个基于<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>和<span class="help-letter-space"></span>Hologres<span class="help-letter-space"></span>的<span class="help-letter-space"></span>Streaming Warehouse<span class="help-letter-space"></span>实时分层数仓。接下来会介绍数仓搭建完成之后的一些简单应用场景。</p>
+<section class="section" id="a22a064e725je">
+<h3 id="05050a901czgt" uuid="la838kvvqq5g7g924hn"><b>Key-Value<span class="help-letter-space"></span>服务</b></h3>
+<p id="0c85f8601cytb" uuid="la838kvvy5pub20tb5">根据主键查询<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层的聚合指标表，支持百万级<span class="help-letter-space"></span>RPS。</p>
+<p id="1064a6802clue">在<span class="help-letter-space"></span><b>HoloWeb</b><span class="help-letter-space"></span>开发页面查询指定用户指定日期的消费额的代码示例如下。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="g8rfxy" outputclass="language-sql"><code>-- holo sql
+SELECT * FROM dws_users WHERE user_id ='user_001' AND ds = '20230215';</code></pre>
+<p id="p-c246d788eb89">查询结果返回 <code class="code" data-tag="code">user_id</code>、<code class="code" data-tag="code">ds</code> 和 <code class="code" data-tag="code">paied_buy_fee_sur</code>（消费额）三列，其中 <code class="code" data-tag="code">user_001</code> 在 <code class="code" data-tag="code">20230215</code> 的消费额为 <code class="code" data-tag="code">8000.08</code>。</p>
+</section>
+<section class="section" id="6f69c1bf8dexf">
+<h3 id="265358f01cdv7" uuid="lac71zxs1skg5zu4xwd"><b>明细查询</b></h3>
+<p id="2b542b901cafg" uuid="lac71zxsgv6entn2a4a">对<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层宽表进行<span class="help-letter-space"></span>OLAP<span class="help-letter-space"></span>分析。</p>
+<p id="152144302c68i">在<span class="help-letter-space"></span><b>HoloWeb</b><span class="help-letter-space"></span>开发页面查询某个客户<span class="help-letter-space"></span>23<span class="help-letter-space"></span>年<span class="help-letter-space"></span>2<span class="help-letter-space"></span>月特定支付平台支付的订单明细的代码示例如下。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="nq0lup" outputclass="language-sql"><code>-- holo sql
+SELECT * FROM dwd_orders
+WHERE order_create_time &gt;= '2023-02-01 00:00:00'  and order_create_time &lt; '2023-03-01 00:00:00'
+AND order_user_id = 'user_001'
+AND pay_platform = 0
+ORDER BY order_create_time LIMIT 100;</code></pre>
+<p id="p-219ccc35a48e">查询结果返回 2 条订单记录，包含 <code class="code" data-tag="code">order_id</code>、<code class="code" data-tag="code">order_user_id</code>、<code class="code" data-tag="code">order_shop_id</code>、<code class="code" data-tag="code">order_product_id</code>、<code class="code" data-tag="code">order_fee</code>、<code class="code" data-tag="code">order_create_time</code>、<code class="code" data-tag="code">order_update_time</code> 等字段，示例订单 <code class="code" data-tag="code">order_id</code> 分别为 100006 和 100004。</p>
+</section>
+<section class="section" id="158c3e215ba30">
+<h3 id="3c1e92301c4zl" uuid="la838kvvjaae1lwtgsq"><b>实时报表</b></h3>
+<p id="406bf3501cilm" uuid="la838kvvejl81mcvd4">基于<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层宽表数据展示实时报表，Hologres<span class="help-letter-space"></span>的行列共存以及列存表有非常优秀的<span class="help-letter-space"></span>OLAP<span class="help-letter-space"></span>分析能力，支持秒级响应。</p>
+<p id="1cc857a02c6gr">在<span class="help-letter-space"></span><b>HoloWeb</b><span class="help-letter-space"></span>开发页面查询<span class="help-letter-space"></span>23<span class="help-letter-space"></span>年<span class="help-letter-space"></span>2<span class="help-letter-space"></span>月内每个品类的订单总量和订单总金额的代码示例如下。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="dhghdt" outputclass="language-sql"><code>-- holo sql
+SELECT
+  TO_CHAR(order_create_time, 'YYYYMMDD') AS order_create_date,
+  order_product_catalog_name,
+  COUNT(*),
+  SUM(order_fee)
+FROM
+  dwd_orders
+WHERE
+  order_create_time &gt;= '2023-02-01 00:00:00'  and order_create_time &lt; '2023-03-01 00:00:00'
+GROUP BY
+  order_create_date, order_product_catalog_name
+ORDER BY
+  order_create_date, order_product_catalog_name;</code></pre>
+<p id="p-210512576eba">执行上述 SQL 语句后，在<b>结果</b>标签页中以表格形式返回 <b>order_create_date</b>、<b>order_product_catalog_name</b>、<b>count</b>、<b>sum</b> 四列数据。示例结果中，20230215 日期下包含 phone_aaa、phone_bbb、phone_ccc、phone_ddd、phone_eee 共五个品类，订单数量分别为 2、1、1、2、2，订单金额分别为 6000.06、4000.04、3000.03、4000.04、7000.03。</p>
+</section>
+</section>
+<section class="section" id="23d80a76cev1x">
+<h2 id="0746bd301c4kt"><b>相关文档</b></h2>
+<ul id="fd31ab3bc74sv">
+<li id="e5d2a22e6e6ay">
+<p id="9a88376f8ewpz">相关业务场景实践文档：</p>
+<ul id="c022565d76irf">
+<li id="365aad10610p9">
+<p id="aafd274ac0n5k"><a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/getting-started/ingest-data-into-data-warehouses-in-real-time" id="e5867fb3e419n" title="">数据库实时入仓</a></p>
+</li>
+<li id="98f14739a3rl8">
+<p id="d6e0c25c8fxv7"><a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/getting-started/ingest-log-data-into-data-warehouses-in-real-time" id="b1ad9647077pr" title="">日志实时入仓</a></p>
+</li>
+<li id="c6f9404265zhr">
+<p id="a535f2671dd45"><a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/use-cases/build-a-streaming-data-warehouse-based-on-flink-and-apache-paimon" id="1c8e4bbd7dh78" title="">Paimon+StarRocks<span class="help-letter-space"></span>流式湖仓构建</a></p>
+</li>
+</ul>
+</li>
+<li id="de070e1dfehkr">
+<p id="68b43bf0344bi">Hologres<span class="help-letter-space"></span>的<span class="help-letter-space"></span>Binlog<span class="help-letter-space"></span>能力详情，请参见<a class="xref" href="https://help.aliyun.com/zh/hologres/user-guide/subscribe-to-hologres-binary-logs" id="97f7f75bdbpxa" title="">订阅<span class="help-letter-space"></span>Hologres Binlog</a>。</p>
+</li>
+<li id="5c8a8e2495dp3">
+<p id="b536d0eb9dzpt">Flink<span class="help-letter-space"></span>支持在一个作业中写入多个<span class="help-letter-space"></span>INSERT INTO<span class="help-letter-space"></span>语句，语法请参见<span class="help-letter-space"></span><a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/developer-reference/insert-into-statement" id="cb074ba2d9iw9" title="">INSERT INTO<span class="help-letter-space"></span>语句</a>。</p>
+</li>
+<li id="bd989d3086aiz">
+<p id="92447fd04c68c">实时计算<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>版支持丰富的连接器，详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/developer-reference/supported-connectors" id="86c144740ekhh" title="">支持的连接器</a>。</p>
+</li>
+</ul>
+</section>
+</div>
+</main>
+</div></div>
+</div>
+</article>
+</body>
+</html>

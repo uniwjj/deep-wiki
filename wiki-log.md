@@ -764,3 +764,80 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - `ai-agent/harness/index` 补 1 页：dw-harness-practice
 - 结果：0 index 遗漏、0 真实断链、frontmatter 100% 完整
 - 注：CLI 报的 1058 broken wikilinks 仍为表格 \| 转义误报（已核实）
+
+## [2026-07-01] ingest | Apache Flink 主题（计算引擎）
+资料来源：用户提供两批技术文章清单（Flink/CDC/Gravitino/Iceberg/Paimon/湖仓一体/流批一体/实时数仓/实时计算），共下载 93 HTML + 4 PDF 到 article-downloads/。本次按主题分批摄取，第一批为 Flink 计算引擎（10 篇）。
+- created `apache-flink` — Flink 总览：有界/无界流、有状态计算、四层执行图、并行度/Slot、与 Spark/Storm 对比
+- created `flink-checkpoint` — Checkpoint 容错：Chandy-Lamport 分布式快照 → 异步 Barrier → 对齐/非对齐(1.11) → Checkpoint vs Savepoint
+- created `flink-state-backend` — 状态后端：Keyed/Operator State、Memory/Fs/RocksDB 三类原理与选型、增量快照、云原生演进
+- updated `big-data/index` — 新增"流计算引擎"分区，列出三个 Flink 页面；从"待建设"移除 Apache Flink 条目
+- added sources/2026/07/01/ 下 10 篇 Flink 来源 HTML + _ingested.md 摄取映射
+- PDF（Lakehouse CIDR/Iceberg TDG/IJSAT/Flink CDC）暂缓摄取，待后续逐页视觉复核
+- 注：知乎 16 篇经用户提供登录 cookie 成功下载，cookie 用完即删未持久化
+
+## [2026-07-01] fix | HTML 来源的 sidecar 追踪方式
+用户审核 Flink 摄取时质疑 `_ingested.md`。核查发现：llm-wiki CLI 只扫 `.md`（`endsWith(".md")` 过滤），`.html` 来源不被追踪；而 `_ingested.md` 聚合文件被 CLI 误当成 wiki 页面污染 Pages 计数，且无追踪意义。
+- removed `sources/2026/07/01/_ingested.md` — 聚合式 sidecar，违背来源纯净性且被误计为 page
+- created 10 个同名 `.md` sidecar（如 `flink-checkpoint-1-11.md`）— 每个 HTML 来源配一个仅含 frontmatter 的 .md，供 CLI 追踪 ingested 状态；HTML 本体不动
+- updated `wiki-agent.md` — 新增"来源格式约定（多模态/HTML 来源）"节，固化处理经验：非 md 来源需配同名 .md sidecar，不建聚合 _ingested.md，不往 HTML 插 frontmatter
+- 验证：Sources 113→122（+9 = +10 sidecar −1 删除），Pages 仍 182（sidecar 未污染）
+
+## [2026-07-01] fix | 强化来源格式约定：读原文必须回 HTML
+用户指出需明确"复核原文回到 HTML、避免找不到"。在 wiki-agent.md「来源格式约定」节补第 5 条强约束 + 末尾两行判定规则：
+- 读原文 → 打开原始格式文件（HTML/PDF），不得依赖 .md sidecar（sidecar 仅 frontmatter，无正文）
+- 判断是否已摄取 → 看同名 .md sidecar 的 ingested 字段
+- wiki 页面 sources frontmatter 指向原始格式文件路径，复核按此路径开 HTML
+
+## [2026-07-01] ingest | Flink CDC 主题
+第二批主题摄取。9 篇 CDC 资料（HTML），按 MUST/MAY 分级：原理剖析/增量快照框架/CDC3.0/Debezium协同 为 MUST，实践优化/企业集成 为 MAY 补充。
+- created `flink-cdc` — CDC 概念(Query/Log-based)、1.0 三痛点(锁/单并发/无checkpoint)、2.0 增量快照(DBLog算法+FLIP-27+chunk划分/读取/normalize+无锁+水平扩展+断点续传)、与 Debezium 协同(嵌入式引擎+RowData/RowKind changelog)、3.0 YAML pipeline 演进、链路简化
+- updated `big-data/index` — 流计算引擎分区加 flink-cdc；待建设移除 CDC 条目
+- added sources/2026/07/01/ 下 9 篇 CDC HTML + 同名 .md sidecar（按来源格式约定，HTML+MD 共存，读原文回 HTML）
+- PDF（flink-cdc-incremental-snapshot.pdf）仍暂缓，待后续逐页视觉复核
+
+## [2026-07-01] ingest | Apache Iceberg 主题
+第三批主题摄取。12 篇 Iceberg 文章（HTML）+ 2 个 PDF（Definitive Guide 344页 / IJSAT 论文 11页）。重写扩充已有 draft 页面。
+- updated `iceberg` — 从薄 draft 重写为完整页面：Netflix 三初衷（正确性/性能/易运维）、三层元数据架构（Catalog/Metadata/Data）、查询流程（metadata→snapshot→Manifest List→Manifest→data file）、时间旅行、分区演进与 Schema 演进、MVCC 快照隔离、v1→v2→v3 演进（v3 五大特性+成为行业标准）、与 Delta/Hudi/Paimon 定位对比（"娘家"论）、国内落地（腾讯/字节/小米/华为/阿里/网易）、跨云 Lakehouse 角色
+- updated `big-data/index` — iceberg 条目从"待扩充"改为正式描述
+- added sources/2026/07/01/ 下 12 篇 Iceberg HTML + 同名 .md sidecar
+- added 2 个 PDF（iceberg-definitive-guide-dremio / iceberg-ijsat-2024）+ sidecar，标记 status: pending-visual-review，待后续逐页视觉复核
+
+## [2026-07-01] ingest | Apache Paimon 主题
+第四批主题摄取。11 篇 Paimon 文章（HTML）。新建 paimon 页面。
+- created `paimon` — Streaming First 定位（大数据不可能三角、流计算+存储两代场景演进）、诞生（Flink Table Store→Paimon 2024毕业TLP、Hudi不为实时而生）、LSM Tree 核心结构、批流一体表抽象（批模式像Hive/流模式像消息队列）、三大核心能力（主键表更新/Changelog Producer/Merge Engine 去重-部分更新-预聚合）、流式湖仓分层实践（ODS→DWD→DWS + StarRocks）、生态集成、国内落地（抖音/蚂蚁/幸福里/阿里）、与 Iceberg/Hudi/Delta 关系
+- updated `iceberg` 的对比表已为 Paimon 预留对标（互链）
+- updated `big-data/index` — 表格式分区加 paimon；待建设移除 Paimon 条目
+- added sources/2026/07/01/ 下 11 篇 Paimon HTML + 同名 .md sidecar
+- 待补充：知乎 p/671077167（核心原理和Flink应用进阶）、p/1941451140853135196（事件溯源视角）两篇未下载，cookie 可能已过期，后续补抓
+
+## [2026-07-01] ingest | 补充知乎两篇 Paimon 文章
+用用户先前提供的知乎 cookie 补抓两篇漏下的 Paimon 文章（cookie 仍有效，用完即删）：
+- p/671077167《Apache Paimon 核心原理和 Flink 应用进阶》(11024字)
+- p/1941451140853135196《Apache Paimon（事件溯源视角）》(6421字)
+- updated `paimon` — 新增"事件溯源视角：流原生存储"节（表=数据+变更历史、Event Sourcing 哲学、LSM-Inspired 而非 LSM-Based 的澄清、文件级 LSM 工作流程）；新增"基本概念与文件布局"节（Snapshot/Partition/Bucket/两阶段提交一致性）；frontmatter sources 补两篇；待补充节移除已补项
+- added sources/2026/07/01/ 下 2 篇 HTML + 同名 .md sidecar
+
+## [2026-07-01] ingest | Apache Gravitino 主题
+第五批主题摄取。16 篇 Gravitino 文章（HTML，含微信8篇+CSDN多篇+知乎+B站案例）。新建 gravitino 页面。
+- created `gravitino` — 定位（高性能/地理分布式/联邦元数据湖）、要解决的三大挑战（多云孤岛/多源难治理/隐藏元数据）、四层对象模型（Metalake→Catalog→Schema→Table/Fileset/Topic/Model，Catalog 的 type/provider 抽象）、统一 REST API + Iceberg REST Catalog、与 Hive Metastore 关系（前置代理非替代）、统一结构化+非结构化+AI模型元数据（0.8引入）、RBAC+授权下推+Ranger、地理分布式联邦化、与 DataHub/Unity Catalog 对比、1.0 智能上下文工程方向、落地案例（小米/B站/腾讯TBDS）
+- updated `big-data/index` — 新增"元数据治理"分区；待建设移除 Gravitino 条目
+- added sources/2026/07/01/ 下 16 篇 Gravitino HTML + 同名 .md sidecar
+
+## [2026-07-01] ingest | 湖仓一体主题
+第六批主题摄取。10 篇湖仓一体文章（HTML）+ CIDR 2021 论文 PDF。新建 lakehouse 页面。
+- created `lakehouse` — 数据平台组成（存储+计算+接口）、演进（数仓→数据湖→湖仓一体，各自痛点）、湖仓一体定义（开放直存格式+ML一等公民+高性能查询）、三次架构迭代（离线仓库→实时补充→湖仓+批流一体）、湖仓一体vs批流一体（存储层vs计算层统一）、流批一体（Lambda/Kappa背景、阿里"一套班子一套系统一个逻辑"、Flink流批一体落点）、表格式基石、大厂落地、未来趋势
+- CIDR 论文 PDF 标记 pending-visual-review（当前环境 PDF 文字提取受限，论点暂以 Databricks 博客及中文转述为据，待复核校正）
+- updated `big-data/index` — 架构范式分区加 lakehouse
+- added sources/2026/07/01/ 下 10 篇 HTML + CIDR PDF + 同名 .md sidecar
+
+## [2026-07-01] ingest | 实时数仓主题
+第七批主题摄取。14 篇文章（实时数仓 11 + 实时计算 3）。新建 realtime-data-warehouse 页面。
+- created `realtime-data-warehouse` — 数仓概念与演进（离线大数据→Lambda→Kappa）、数仓分层（ODS/DWD/DWM/DWS/ADS 三层与五层）、Lambda 架构（批/速度/服务三层，Nathan Marz）、Kappa 架构（纯流、Kafka 重放）、Lambda vs Kappa 选型、实时数仓分层实践（各层职责/技术栈/维表关联）、实时计算引擎三代演进（Storm/Spark Streaming/Flink）、阿里云实时计算平台化、技术选型（Flink+Kafka+Doris / +Paimon / +Hologres）、落地路径与常见坑
+- updated `big-data/index` — 架构范式分区加 realtime-data-warehouse；待建设移除"湖仓一体/流批一体/实时数仓"和"实时计算落地实践"（已并入此页）
+- added sources/2026/07/01/ 下 14 篇 HTML + 同名 .md sidecar
+
+## [2026-07-01] ingest | 湖格式选型对比主题（收口）
+第八批（收口）。选型对比资料已分布于 Iceberg/Paimon/Lakehouse/实时数仓 主题，本页综合各页选型视角，无新来源。
+- created `table-format-selection` — 四格式定位速览、横向机制对比（更新机制/元数据/索引/CDC-changelog/流批一体/引擎绑定/国内采用度）、更新机制根本差异（Iceberg 快照+delete vs Paimon LSM）、CDC/changelog 能力对比、腾讯真实选型决策（CDC选Hudi/常规入湖选Iceberg）、专家圆桌观点、按场景选型建议、国内市场格局
+- updated `big-data/index` — 新增"选型对比"分区；移除整个"待建设"节（所有规划主题已建成）
+- 本次无新 sources（复用已有 sidecar）

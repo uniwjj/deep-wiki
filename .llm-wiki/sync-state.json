@@ -78,16 +78,52 @@
       "contentHash": "8d8497966f4bd48c",
       "lastSynced": "2026-07-01"
     },
+    "wiki/big-data/apache-flink.md": {
+      "path": "wiki/big-data/apache-flink.md",
+      "mtime": 1782877209381.3494,
+      "contentHash": "cfc12dc6c67b12db",
+      "lastSynced": "2026-07-01"
+    },
+    "wiki/big-data/flink-cdc.md": {
+      "path": "wiki/big-data/flink-cdc.md",
+      "mtime": 1782878332778.8643,
+      "contentHash": "bd202fb3ecc0b8d8",
+      "lastSynced": "2026-07-01"
+    },
+    "wiki/big-data/flink-checkpoint.md": {
+      "path": "wiki/big-data/flink-checkpoint.md",
+      "mtime": 1782877262806.1248,
+      "contentHash": "f1a60fe9aa97231e",
+      "lastSynced": "2026-07-01"
+    },
+    "wiki/big-data/flink-state-backend.md": {
+      "path": "wiki/big-data/flink-state-backend.md",
+      "mtime": 1782877302399.1558,
+      "contentHash": "4825fddd26202360",
+      "lastSynced": "2026-07-01"
+    },
+    "wiki/big-data/gravitino.md": {
+      "path": "wiki/big-data/gravitino.md",
+      "mtime": 1782880858604.8647,
+      "contentHash": "7492b2b32a760bda",
+      "lastSynced": "2026-07-01"
+    },
     "wiki/big-data/iceberg.md": {
       "path": "wiki/big-data/iceberg.md",
-      "mtime": 1782205291962.369,
-      "contentHash": "2b85a7ec2d967f09",
+      "mtime": 1782880418051.262,
+      "contentHash": "4f8a5d52a9c1062e",
       "lastSynced": "2026-07-01"
     },
     "wiki/big-data/index.md": {
       "path": "wiki/big-data/index.md",
-      "mtime": 1782872196201.4517,
-      "contentHash": "024c9a732180dcea",
+      "mtime": 1782881165796.5374,
+      "contentHash": "6bfcf5f29ba92cc3",
+      "lastSynced": "2026-07-01"
+    },
+    "wiki/big-data/lakehouse.md": {
+      "path": "wiki/big-data/lakehouse.md",
+      "mtime": 1782880975794.015,
+      "contentHash": "d940afd4b89da6a6",
       "lastSynced": "2026-07-01"
     },
     "wiki/big-data/ltap-architecture.md": {
@@ -100,6 +136,24 @@
       "path": "wiki/big-data/maxcompute-data-ai.md",
       "mtime": 1781503422309.4932,
       "contentHash": "40d0600c3b69c382",
+      "lastSynced": "2026-07-01"
+    },
+    "wiki/big-data/paimon.md": {
+      "path": "wiki/big-data/paimon.md",
+      "mtime": 1782880785350.3691,
+      "contentHash": "3afd6aba43c453cf",
+      "lastSynced": "2026-07-01"
+    },
+    "wiki/big-data/realtime-data-warehouse.md": {
+      "path": "wiki/big-data/realtime-data-warehouse.md",
+      "mtime": 1782881057408.4084,
+      "contentHash": "64e008288190573a",
+      "lastSynced": "2026-07-01"
+    },
+    "wiki/big-data/table-format-selection.md": {
+      "path": "wiki/big-data/table-format-selection.md",
+      "mtime": 1782881138637.273,
+      "contentHash": "ea4be705183a5a33",
       "lastSynced": "2026-07-01"
     },
     "wiki/distributed/index.md": {
@@ -1744,6 +1798,528 @@
       "path": "sources/2026/06/30/从Databricks产品发布会看-图片识别.md",
       "mtime": 1782798463600.3672,
       "contentHash": "615e0b2bbfcb3ff6",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/aliyun-realtime-flink-product.md": {
+      "path": "sources/2026/07/01/aliyun-realtime-flink-product.md",
+      "mtime": 1782877756544.9365,
+      "contentHash": "ad96aea5749fc9bc",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/distributed-snapshot-flink-checkpointing.md": {
+      "path": "sources/2026/07/01/distributed-snapshot-flink-checkpointing.md",
+      "mtime": 1782877756549.1233,
+      "contentHash": "80f45c1c2bc3d4c4",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-architecture-principle.md": {
+      "path": "sources/2026/07/01/flink-architecture-principle.md",
+      "mtime": 1782877756532.715,
+      "contentHash": "827496d88c9b072c",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-cdc-2-0-principle.md": {
+      "path": "sources/2026/07/01/flink-cdc-2-0-principle.md",
+      "mtime": 1782878286769.0344,
+      "contentHash": "016236e9c20673ef",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-cdc-2-2-release.md": {
+      "path": "sources/2026/07/01/flink-cdc-2-2-release.md",
+      "mtime": 1782878286808.4036,
+      "contentHash": "cdfe616d042c2232",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-cdc-debezium-collaboration.md": {
+      "path": "sources/2026/07/01/flink-cdc-debezium-collaboration.md",
+      "mtime": 1782878286829.7273,
+      "contentHash": "f0074d3d7f84200d",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-cdc-enterprise-integration.md": {
+      "path": "sources/2026/07/01/flink-cdc-enterprise-integration.md",
+      "mtime": 1782878286840.7144,
+      "contentHash": "3fdc1efb20bb0690",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-cdc-incremental-snapshot-algorithm.md": {
+      "path": "sources/2026/07/01/flink-cdc-incremental-snapshot-algorithm.md",
+      "mtime": 1782878286819.124,
+      "contentHash": "e7ad46ceffdcb0bd",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-cdc-incremental-snapshot-framework.md": {
+      "path": "sources/2026/07/01/flink-cdc-incremental-snapshot-framework.md",
+      "mtime": 1782878286782.8193,
+      "contentHash": "29bf962f7a68d066",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-cdc-incremental-snapshot-mechanism.md": {
+      "path": "sources/2026/07/01/flink-cdc-incremental-snapshot-mechanism.md",
+      "mtime": 1782878286864.158,
+      "contentHash": "253678948ab48422",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-cdc-practice-optimization.md": {
+      "path": "sources/2026/07/01/flink-cdc-practice-optimization.md",
+      "mtime": 1782878286853.345,
+      "contentHash": "11942f4fb7fec755",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-cdc-streaming-integration.md": {
+      "path": "sources/2026/07/01/flink-cdc-streaming-integration.md",
+      "mtime": 1782878286796.1084,
+      "contentHash": "1b62fb67a7e14689",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-checkpoint-1-11.md": {
+      "path": "sources/2026/07/01/flink-checkpoint-1-11.md",
+      "mtime": 1782877756552.543,
+      "contentHash": "1e6512968217f8f0",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-checkpoint-savepoint.md": {
+      "path": "sources/2026/07/01/flink-checkpoint-savepoint.md",
+      "mtime": 1782877756556.0679,
+      "contentHash": "4b40608736775614",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-design-implementation.md": {
+      "path": "sources/2026/07/01/flink-design-implementation.md",
+      "mtime": 1782877756529.3376,
+      "contentHash": "a1516a8c62c984da",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-embedded-to-cloudnative.md": {
+      "path": "sources/2026/07/01/flink-embedded-to-cloudnative.md",
+      "mtime": 1782877756564.428,
+      "contentHash": "e2f63e032f97194e",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-learning-roadmap.md": {
+      "path": "sources/2026/07/01/flink-learning-roadmap.md",
+      "mtime": 1782877756541.229,
+      "contentHash": "6ae75c3c54648dc1",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-state-backend-deep.md": {
+      "path": "sources/2026/07/01/flink-state-backend-deep.md",
+      "mtime": 1782877756560.7375,
+      "contentHash": "74ce61139fbd211c",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/flink-stream-batch-comparison.md": {
+      "path": "sources/2026/07/01/flink-stream-batch-comparison.md",
+      "mtime": 1782877756536.3413,
+      "contentHash": "698df2ff90893937",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-1-0-context.md": {
+      "path": "sources/2026/07/01/gravitino-1-0-context.md",
+      "mtime": 1782880821539.8003,
+      "contentHash": "6880adaacc956b37",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-ai-unified.md": {
+      "path": "sources/2026/07/01/gravitino-ai-unified.md",
+      "mtime": 1782880821714.4375,
+      "contentHash": "90e3f610e4d024be",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-bilibili-practice.md": {
+      "path": "sources/2026/07/01/gravitino-bilibili-practice.md",
+      "mtime": 1782880821682.2046,
+      "contentHash": "272caf86f36854b1",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-core-objects.md": {
+      "path": "sources/2026/07/01/gravitino-core-objects.md",
+      "mtime": 1782880821474.771,
+      "contentHash": "35980cda744270c0",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-datahub-unity-comparison.md": {
+      "path": "sources/2026/07/01/gravitino-datahub-unity-comparison.md",
+      "mtime": 1782880821667.111,
+      "contentHash": "56d499909bf83c7e",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-enterprise-architecture.md": {
+      "path": "sources/2026/07/01/gravitino-enterprise-architecture.md",
+      "mtime": 1782880821490.7756,
+      "contentHash": "0c50f6cd79f2d6f5",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-federated-lake.md": {
+      "path": "sources/2026/07/01/gravitino-federated-lake.md",
+      "mtime": 1782880821500.8704,
+      "contentHash": "057815ecbcdcc583",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-geo-distributed.md": {
+      "path": "sources/2026/07/01/gravitino-geo-distributed.md",
+      "mtime": 1782880821510.3625,
+      "contentHash": "9cd2469e5358827f",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-governance-paradigm.md": {
+      "path": "sources/2026/07/01/gravitino-governance-paradigm.md",
+      "mtime": 1782880821482.5286,
+      "contentHash": "8097af4be3865878",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-hive-iceberg-kafka.md": {
+      "path": "sources/2026/07/01/gravitino-hive-iceberg-kafka.md",
+      "mtime": 1782880821595.7356,
+      "contentHash": "4580d4dcb6fee9cb",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-ml-practice.md": {
+      "path": "sources/2026/07/01/gravitino-ml-practice.md",
+      "mtime": 1782880821529.8672,
+      "contentHash": "41e5dfdf0e766304",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-multimodal-lakehouse.md": {
+      "path": "sources/2026/07/01/gravitino-multimodal-lakehouse.md",
+      "mtime": 1782880821696.2893,
+      "contentHash": "08ab1aad5902cef5",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-ranger-auth.md": {
+      "path": "sources/2026/07/01/gravitino-ranger-auth.md",
+      "mtime": 1782880821561.31,
+      "contentHash": "017871159b4b2bf6",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-tbds-upgrade.md": {
+      "path": "sources/2026/07/01/gravitino-tbds-upgrade.md",
+      "mtime": 1782880821572.44,
+      "contentHash": "86b4484e97690b9c",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-unified-bloodline.md": {
+      "path": "sources/2026/07/01/gravitino-unified-bloodline.md",
+      "mtime": 1782880821519.5793,
+      "contentHash": "8fd5d02f9780b79b",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/gravitino-xiaomi-upgrade.md": {
+      "path": "sources/2026/07/01/gravitino-xiaomi-upgrade.md",
+      "mtime": 1782880821550.501,
+      "contentHash": "9924897e761a8679",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-aliyun-basics.md": {
+      "path": "sources/2026/07/01/iceberg-aliyun-basics.md",
+      "mtime": 1782880352775.913,
+      "contentHash": "0d15b98e304f65f3",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-architecture-design.md": {
+      "path": "sources/2026/07/01/iceberg-architecture-design.md",
+      "mtime": 1782880352746.8076,
+      "contentHash": "4013c2b7713ab7f6",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-bytedance-feature-store.md": {
+      "path": "sources/2026/07/01/iceberg-bytedance-feature-store.md",
+      "mtime": 1782880352806.747,
+      "contentHash": "7bc71f3b3dc7052a",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-definitive-guide-dremio.md": {
+      "path": "sources/2026/07/01/iceberg-definitive-guide-dremio.md",
+      "mtime": 1782880352848.2043,
+      "contentHash": "ff5730820f2a2cad",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-ijsat-2024.md": {
+      "path": "sources/2026/07/01/iceberg-ijsat-2024.md",
+      "mtime": 1782880352856.999,
+      "contentHash": "2e2e30abe3a5d3a9",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-principle-optimization.md": {
+      "path": "sources/2026/07/01/iceberg-principle-optimization.md",
+      "mtime": 1782880352768.7212,
+      "contentHash": "952b51f9249a8e01",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-query-principle.md": {
+      "path": "sources/2026/07/01/iceberg-query-principle.md",
+      "mtime": 1782880352754.1304,
+      "contentHash": "b75bbda47acb95d5",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-segmentfault-analysis.md": {
+      "path": "sources/2026/07/01/iceberg-segmentfault-analysis.md",
+      "mtime": 1782880352761.1775,
+      "contentHash": "d37f98cbb9ee2e74",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-snowflake-docs.md": {
+      "path": "sources/2026/07/01/iceberg-snowflake-docs.md",
+      "mtime": 1782880352783.9055,
+      "contentHash": "357f1d0c7ea70f28",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-tencent-batch-stream.md": {
+      "path": "sources/2026/07/01/iceberg-tencent-batch-stream.md",
+      "mtime": 1782880352798.472,
+      "contentHash": "5ec732fcea2e3e4c",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-tencent-governance.md": {
+      "path": "sources/2026/07/01/iceberg-tencent-governance.md",
+      "mtime": 1782880352815.1133,
+      "contentHash": "9d35093a76d9bb9b",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-v3-watershed.md": {
+      "path": "sources/2026/07/01/iceberg-v3-watershed.md",
+      "mtime": 1782880352791.2063,
+      "contentHash": "3cb8a4c4e664eb95",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-wikipedia.md": {
+      "path": "sources/2026/07/01/iceberg-wikipedia.md",
+      "mtime": 1782880352739.7263,
+      "contentHash": "1a23033990946da3",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/iceberg-xiaomi-practice.md": {
+      "path": "sources/2026/07/01/iceberg-xiaomi-practice.md",
+      "mtime": 1782880352825.3027,
+      "contentHash": "59694035914e179a",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/lakehouse-architecture-evolution.md": {
+      "path": "sources/2026/07/01/lakehouse-architecture-evolution.md",
+      "mtime": 1782880933853.9873,
+      "contentHash": "2a1392ca3e12b79e",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/lakehouse-bytehouse-practice.md": {
+      "path": "sources/2026/07/01/lakehouse-bytehouse-practice.md",
+      "mtime": 1782880933866.431,
+      "contentHash": "bea2fbfb209113b5",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/lakehouse-cidr-2021.md": {
+      "path": "sources/2026/07/01/lakehouse-cidr-2021.md",
+      "mtime": 1782880934018.657,
+      "contentHash": "5e6959d25e20aba1",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/lakehouse-citic-practice.md": {
+      "path": "sources/2026/07/01/lakehouse-citic-practice.md",
+      "mtime": 1782880933885.4001,
+      "contentHash": "6843526788b5054e",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/lakehouse-data-platform-history.md": {
+      "path": "sources/2026/07/01/lakehouse-data-platform-history.md",
+      "mtime": 1782880933836.395,
+      "contentHash": "08214385376231b0",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/lakehouse-databricks-what-is.md": {
+      "path": "sources/2026/07/01/lakehouse-databricks-what-is.md",
+      "mtime": 1782880933845.6816,
+      "contentHash": "a8dd3186f4105af1",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/lakehouse-jdcloud.md": {
+      "path": "sources/2026/07/01/lakehouse-jdcloud.md",
+      "mtime": 1782880933926.4912,
+      "contentHash": "a1db012e1e05d85e",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/lakehouse-roundtable.md": {
+      "path": "sources/2026/07/01/lakehouse-roundtable.md",
+      "mtime": 1782880933912.4187,
+      "contentHash": "4268917a03c13814",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/lakehouse-selectdb.md": {
+      "path": "sources/2026/07/01/lakehouse-selectdb.md",
+      "mtime": 1782880933893.9802,
+      "contentHash": "825108cee7f1dee1",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/lakehouse-tech-selection.md": {
+      "path": "sources/2026/07/01/lakehouse-tech-selection.md",
+      "mtime": 1782880933902.1577,
+      "contentHash": "d0090b5539fd5c62",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/lakehouse-tencent-practice.md": {
+      "path": "sources/2026/07/01/lakehouse-tencent-practice.md",
+      "mtime": 1782880933877.2646,
+      "contentHash": "33075c37468bdebe",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/paimon-ant-practice.md": {
+      "path": "sources/2026/07/01/paimon-ant-practice.md",
+      "mtime": 1782880581743.5032,
+      "contentHash": "dac354cd8cacf9b4",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/paimon-core-principle.md": {
+      "path": "sources/2026/07/01/paimon-core-principle.md",
+      "mtime": 1782880581662.3057,
+      "contentHash": "c991f1d21828c8ec",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/paimon-douyin-data-lake.md": {
+      "path": "sources/2026/07/01/paimon-douyin-data-lake.md",
+      "mtime": 1782880581788.4604,
+      "contentHash": "0f2ba38c1730bcfe",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/paimon-douyin-optimization.md": {
+      "path": "sources/2026/07/01/paimon-douyin-optimization.md",
+      "mtime": 1782880581731.1252,
+      "contentHash": "df4d5aa403758946",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/paimon-event-sourcing.md": {
+      "path": "sources/2026/07/01/paimon-event-sourcing.md",
+      "mtime": 1782880748537.6968,
+      "contentHash": "1eac9156171d0a8b",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/paimon-flink-advanced.md": {
+      "path": "sources/2026/07/01/paimon-flink-advanced.md",
+      "mtime": 1782880748533.366,
+      "contentHash": "dfc33717b1cdd4ae",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/paimon-flink-sql-lakehouse.md": {
+      "path": "sources/2026/07/01/paimon-flink-sql-lakehouse.md",
+      "mtime": 1782880581755.3916,
+      "contentHash": "f9fe40182984d9ed",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/paimon-four-vendors-practice.md": {
+      "path": "sources/2026/07/01/paimon-four-vendors-practice.md",
+      "mtime": 1782880581820.9487,
+      "contentHash": "fe88154efc98bf2a",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/paimon-gravitino-collaboration.md": {
+      "path": "sources/2026/07/01/paimon-gravitino-collaboration.md",
+      "mtime": 1782880581811.2017,
+      "contentHash": "a70fac8e8921f998",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/paimon-iceberg-hudi-comparison.md": {
+      "path": "sources/2026/07/01/paimon-iceberg-hudi-comparison.md",
+      "mtime": 1782880581838.1963,
+      "contentHash": "2dc92850cabcc3f8",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/paimon-starrocks-ali-lakehouse.md": {
+      "path": "sources/2026/07/01/paimon-starrocks-ali-lakehouse.md",
+      "mtime": 1782880581778.4392,
+      "contentHash": "d40f5a0e7df3bf18",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/paimon-starrocks-streaming-lakehouse.md": {
+      "path": "sources/2026/07/01/paimon-starrocks-streaming-lakehouse.md",
+      "mtime": 1782880581768.3728,
+      "contentHash": "d1c03eb86867a726",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/paimon-xingfuli-practice.md": {
+      "path": "sources/2026/07/01/paimon-xingfuli-practice.md",
+      "mtime": 1782880581799.8418,
+      "contentHash": "70b6be6ad504d840",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/realtime-computing-aliyun-platform.md": {
+      "path": "sources/2026/07/01/realtime-computing-aliyun-platform.md",
+      "mtime": 1782881019931.637,
+      "contentHash": "51ea594a6d41f81c",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/realtime-computing-aliyun-productization.md": {
+      "path": "sources/2026/07/01/realtime-computing-aliyun-productization.md",
+      "mtime": 1782881019943.703,
+      "contentHash": "27cea6a605855495",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/realtime-computing-engine-comparison.md": {
+      "path": "sources/2026/07/01/realtime-computing-engine-comparison.md",
+      "mtime": 1782881019880.1257,
+      "contentHash": "0f6c4e1d7ff711d6",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/realtime-warehouse-18k-words.md": {
+      "path": "sources/2026/07/01/realtime-warehouse-18k-words.md",
+      "mtime": 1782881019784.4453,
+      "contentHash": "01c2af1c78a24c76",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/realtime-warehouse-architecture-comparison.md": {
+      "path": "sources/2026/07/01/realtime-warehouse-architecture-comparison.md",
+      "mtime": 1782881019754.741,
+      "contentHash": "11072a726ae264b3",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/realtime-warehouse-architecture-techstack.md": {
+      "path": "sources/2026/07/01/realtime-warehouse-architecture-techstack.md",
+      "mtime": 1782881019773.8828,
+      "contentHash": "fa022f568ceae645",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/realtime-warehouse-hologres.md": {
+      "path": "sources/2026/07/01/realtime-warehouse-hologres.md",
+      "mtime": 1782881019794.99,
+      "contentHash": "c9e15e1626087d2b",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/realtime-warehouse-lambda-kappa-illustrated.md": {
+      "path": "sources/2026/07/01/realtime-warehouse-lambda-kappa-illustrated.md",
+      "mtime": 1782881019743.141,
+      "contentHash": "15aa3a166c3fddd6",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/realtime-warehouse-lambda-kappa.md": {
+      "path": "sources/2026/07/01/realtime-warehouse-lambda-kappa.md",
+      "mtime": 1782881019732.912,
+      "contentHash": "29355a581db59aeb",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/realtime-warehouse-landing-path.md": {
+      "path": "sources/2026/07/01/realtime-warehouse-landing-path.md",
+      "mtime": 1782881019815.9495,
+      "contentHash": "c6f635067a23016a",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/realtime-warehouse-layering-practice.md": {
+      "path": "sources/2026/07/01/realtime-warehouse-layering-practice.md",
+      "mtime": 1782881019764.0554,
+      "contentHash": "063b45da31109022",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/realtime-warehouse-scenarios.md": {
+      "path": "sources/2026/07/01/realtime-warehouse-scenarios.md",
+      "mtime": 1782881019805.5068,
+      "contentHash": "7bcb59a3c34a1b66",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/realtime-warehouse-tech-selection.md": {
+      "path": "sources/2026/07/01/realtime-warehouse-tech-selection.md",
+      "mtime": 1782881019826.3875,
+      "contentHash": "b95cd685b128efd2",
+      "lastSynced": "2026-07-01"
+    },
+    "sources/2026/07/01/warehouse-layering-maxcompute.md": {
+      "path": "sources/2026/07/01/warehouse-layering-maxcompute.md",
+      "mtime": 1782881019837.7705,
+      "contentHash": "bd6b62d9e9672f71",
       "lastSynced": "2026-07-01"
     }
   },

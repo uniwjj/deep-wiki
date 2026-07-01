@@ -15,26 +15,32 @@ updated: 2026-07-01
 ## 架构范式
 
 - [[ltap-architecture]] — Databricks LTAP 架构：存储层统一 OLTP/OLAP 的"第三条路"
+- [[lakehouse]] — 湖仓一体：数仓→数据湖→湖仓一体演进、存储层统一、批流一体（计算层统一）、CIDR 理论源头、大厂落地
+- [[realtime-data-warehouse]] — 实时数仓：离线→Lambda→Kappa 演进、ODS/DWD/DWM/DWS/ADS 分层、Lambda vs Kappa 选型、实时数仓分层实践、实时计算平台化
+
+## 流计算引擎
+
+- [[apache-flink]] — Apache Flink 流处理引擎：有界/无界流、有状态计算、运行时架构与四层图
+- [[flink-checkpoint]] — Flink Checkpoint 容错：Chandy-Lamport 分布式快照 → 异步 Barrier → 对齐/非对齐
+- [[flink-state-backend]] — Flink 状态后端：Keyed/Operator State、Memory/Fs/RocksDB 选型
+- [[flink-cdc]] — Flink CDC 变更数据捕获：增量快照(DBLog+FLIP-27)、与 Debezium 协同、3.0 pipeline 演进
 
 ## 表格式与数据湖
 
-- [[iceberg]] — Apache Iceberg 开放表格式标准（待扩充）
+- [[iceberg]] — Apache Iceberg 开放表格式：三层元数据架构、快照/Manifest、分区与 Schema 演进、v1→v3、四格式定位对比
+- [[paimon]] — Apache Paimon 流式湖仓：Streaming First、LSM Tree、三大核心能力(主键表/Changelog Producer/Merge Engine)、批流一体表抽象
+
+## 元数据治理
+
+- [[gravitino]] — Apache Gravitino 统一元数据湖：Metalake→Catalog→Schema→Table 四层模型、统一 REST API、与 Hive Metastore 关系、RBAC 授权下推、AI 模型元数据
+
+## 选型对比
+
+- [[table-format-selection]] — 湖格式选型：Iceberg vs Paimon vs Hudi vs Delta 横向机制对比、腾讯真实选型决策、按场景建议、国内格局
 
 ## 平台与产品
 
 - [[maxcompute-data-ai]] — MaxCompute Data+AI 演进
-
-## 待建设（学习规划中）
-
-以下主题为近期学习规划，页面随文章摄入逐步建立：
-
-- 湖仓一体 / 流批一体 / 实时数仓 — 架构范式总论
-- Apache Flink — 流处理引擎核心（窗口/状态/时间/Checkpoint）
-- CDC (Change Data Capture) — 变更捕获与 Flink CDC
-- Apache Paimon — 流批一体表格式
-- Apache Gravitino — 统一元数据治理
-- Iceberg vs Paimon vs Hudi — 表格式选型对比
-- 实时计算落地实践
 
 ## 相关页面
 

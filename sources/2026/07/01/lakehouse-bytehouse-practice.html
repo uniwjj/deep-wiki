@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>云数仓 ByteHouse 的湖仓一体设计与实践</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>云数仓 ByteHouse 的湖仓一体设计与实践</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：未知</span>
+<span>来源：<a href="https://www.cnblogs.com/bytedata/p/18582171" target="_blank">www.cnblogs.com</a></span>
+<span>平台：cnblogs</span>
+<span>图片：9 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<div class="blogpost-body blogpost-body-html" id="cnblogs_post_body">
+<p data-type="paragraph">本次交流将聚焦 ByteHouse 湖仓一体主题，主要介绍：</p>
+<ul data-type="bulletedlist">
+<li>
+<p data-type="paragraph">ByteHouse 简介</p>
+</li>
+<li>
+<p data-type="paragraph">当代分析平台的挑战与 ByteHouse 一体化理念</p>
+</li>
+<li>
+<p data-type="paragraph">ByteHouse 湖仓一体的核心能力</p>
+</li>
+<li>
+<p data-type="paragraph">最佳实践</p>
+</li>
+</ul>
+<h1 data-id="heading0" data-type="heading">ByteHouse 简介</h1>
+<h2 data-id="heading1" data-type="heading">ByteHouse 是什么</h2>
+<div data-type="image">
+<div data-content="" data-style-bordertype="none" data-style-width="75%"><img class="lazyload" src="https://static001.geekbang.org/infoq/40/40329fe9dd3efe9cf9682a0e371d893d.png"/></div>
+</div>
+<p data-type="paragraph">ByteHouse 作为新一代云原生架构的数据仓库，属于数据仓库技术流派。</p>
+<p data-type="paragraph">回顾分析生态的发展历程，自 2004 年 Google 发表 MapReduce 论文，以及 2006 年 Yahoo 推出 Hadoop 产品以来，分析生态领域就存在着多种技术流派。这些流派之间既有竞争，也有相互促进的良性互动。特别是随着 Hadoop 体系的成熟和开源生态的蓬勃发展，以 Hadoop 为代表的大数据技术流派越来越受到企业和开发者的青睐。</p>
+<p data-type="paragraph">然而，与此同时，以 MPP 为代表的传统数据仓库关系型数据库技术流派也并未退出历史舞台。近年来，如 Databricks 与 Snowflake 等厂商之间的“口水仗”，更是凸显了这两大技术流派之间的激烈竞争。其中，Databricks 提出的“Lakehouse”概念，虽被视为一种创新，但其实并非全新的技术品类。</p>
+<p data-type="paragraph">事实上，无论是 Hadoop 代表的“湖”技术路线，还是数据仓库代表的“仓”技术路线，近年来都在不断演进，呈现出相向而行的趋势。例如，湖上出现了越来越多的关系型能力，如 Hudi 等技术在 Hadoop 体系上发展了事务能力，以及支持数仓基础模型的算法等。同时，仓上也具备了越来越多的非结构化和半结构化分析能力。</p>
+<p data-type="paragraph">因此，业界不应再纠结于谁能取代谁，尤其是在大型企业场景下，湖和仓之间越来越呈现出一种融合共存的态势，这也是很多客户的诉求。他们希望数据仓库能够提升对湖的联邦能力，而湖也能具备更多数据仓库的特性。</p>
+<p data-type="paragraph">综上，ByteHouse 作为数据仓库关系数据库技术流派的代表，正是顺应了这一趋势。在接下来的讨论中，将更深入地探讨 ByteHouse 在湖仓一体方面的核心能力，以及在抖音集团内部的实践应用。</p>
+<h2 data-id="heading2" data-type="heading">ByteHouse 支持抖音集团大部分的数据分析应用</h2>
+<p data-type="paragraph">接下来，将着重阐述数据仓库技术流派中的 ByteHouse 是如何构建其数据仓库，如何实现湖仓一体化的，同时简要介绍 ByteHouse 在抖音集团的实际应用情况。</p>
+<p data-type="paragraph">ByteHouse 通过独特的技术架构和设计理念，成功实现了数据的高效存储、查询和分析。在湖仓一体化方面，ByteHouse 更是凭借其强大的数据处理能力和灵活的数据模型，打破了数据湖和数据仓库之间的界限，为用户提供了更加统一、便捷的数据分析体验。</p>
+<p data-type="paragraph">在抖音集团，ByteHouse 已经成为了事实上的分析型应用基座。无论是我们日常使用的抖音 APP 中的直播、音视频等功能，还是背后的用户数据分析、标签生成等任务，都离不开 ByteHouse 的支持。ByteHouse 凭借其卓越的性能和稳定性，为抖音集团提供了强大的数据支撑。</p>
+<p data-type="paragraph">从规模上看，ByteHouse 在抖音集团的应用已经达到了行业领先水平，不仅体现了 ByteHouse 在数据处理和分析方面的强大实力，也彰显了抖音集团对数据分析的深厚积累和持续投入。</p>
+<p data-type="paragraph">总的来说，ByteHouse 通过实现湖仓一体化，为抖音集团等大型企业提供了高效、便捷的数据分析解决方案<span data-type="strong">。</span></p>
+<h1 data-id="heading3" data-type="heading">当代分析平台的挑战与 ByteHouse 一体化理念</h1>
+<h2 data-id="heading4" data-type="heading">当下云数仓、分析平台发展趋势和面临挑战</h2>
+<div data-type="image">
+<div data-content="" data-style-bordertype="none" data-style-width="75%"><img class="lazyload" src="https://static001.geekbang.org/infoq/d4/d4c3dd06180aee3a4cb0047baec2c213.png"/></div>
+</div>
+<p data-type="paragraph">在数据分析平台和数据仓库领域，无论是云数仓还是数据湖，高并发、高吞吐的写入以及高并发的读取都是最基本的需求。然而，这些年来，我们始终面临着一系列的挑战。</p>
+<p data-type="paragraph">一个显著的挑战是，尽管业界推出了众多数据产品，但很少有能够完全满足所有主流业务需求的单一产品。因此，我们往往需要通过拼接不同的产品来满足业务需求，这导致了数据架构的复杂度极高，形成了一个拼凑的技术架构模式。这种拼凑的架构模式使得各个架构之间不兼容，进而产生了严重的孤岛现象。</p>
+<p data-type="paragraph">近年来，随着开源生态的发展，这种现象进一步加剧。众多开源数据产品如 ClickHouse、Doris 等不断涌现，各自有其优势，但也加剧了架构的孤岛化和复杂度。运维这样一个庞大复杂的数据架构或数据生态，为运维团队带来了极大的压力，学习成本也相对较高。</p>
+<p data-type="paragraph">为了解决这一问题，ByteHouse 立足于实现湖仓一体化，以打破这种孤岛化的现象。</p>
+<p data-type="paragraph">另一个挑战是成本的可控性。由于架构不灵活，企业往往需要为需求的峰值进行预置，这导致了资源的浪费和成本的增加。在抖音集团内部也存在这种现象。例如，当一个业务从存算一体的传统架构迁移到 ByteHouse 这种存算分离的云原生架构时，整个成本可以降低到原来的十分之一。</p>
+<p data-type="paragraph">那么，我们如何应对这些挑战呢？除了性能层面、架构层面的提升，本次分享将聚焦于一体化这一主题，探讨 ByteHouse 在这一方面做出的努力。</p>
+<h2 data-id="heading5" data-type="heading">ByteHouse 一体化理念：数据不再孤岛化、数据效能最大化</h2>
+<div data-type="image">
+<div data-content="" data-style-bordertype="none" data-style-width="75%"><img class="lazyload" src="https://static001.geekbang.org/infoq/18/1812080042dca128f9d14cd3610794fe.png"/></div>
+</div>
+<p data-type="paragraph">在 ByteHouse 中，如何应对数据孤岛化问题，以确保数据架构的有效性和高效性呢？答案在于一体化理念，不仅局限于湖仓一体，而是贯穿于整个数据生态。</p>
+<p data-type="paragraph">如果将数据架构比作人体，那么数据仓库就像是人体的腰部，它的力量来源于上游源数据等“腿部”的支持，并通过下游各类服务、AI 等“胳膊”的输出。没有这些部分的协同，数据仓库就无法充分发挥其潜力。</p>
+<p data-type="paragraph">因此，ByteHouse 提出了四个一体化的概念。</p>
+<p data-type="paragraph">首先，是 TP（事务处理）与 AP（分析处理）的一体化，这主要涉及到实时数据处理技术，如基于 binlog 的 CDC（变更数据捕获）技术路线。ByteHouse 支持与主流 CDC 解决方案的集成，以及 Streaming 流式数据的处理，如与 Flink 和 Kafka 等工具的对接也非常顺畅。</p>
+<p data-type="paragraph">其次，是湖仓一体化。湖和仓都是分析架构中的核心部分，它们的一体化融合程度直接决定了分析生态的有效性和成本可控性。</p>
+<p data-type="paragraph">再次，ByteHouse 还在探索 AP 与 AI 的一体化，这是未来一段时间内的发力方向。对于大型企业来说，数据仓库和数据集市之间的一体化也是至关重要的，有助于解决数据冗余和搬迁等问题。</p>
+<p data-type="paragraph">最后，随着这四个一体化的不断深入和强化，ZeroETL（无额外数据转换）的理念将越来越接近现实。通过一体化的融合，减少上下游之间的数据搬迁，使数据架构更加简洁和轻快。同时，ZeroETL 也能有效避免数据在多个地方的冗余存储，从而降低成本和提高效率。</p>
+<p data-type="paragraph">综上，ByteHouse 在一体化方面的追求是：通过一体化的逐渐深入，打破数据孤岛化，确保数据架构能够最大化地发挥数据效能。</p>
+<h1 data-id="heading6" data-type="heading">ByteHouse 湖仓一体的核心能力</h1>
+<div data-type="image">
+<div data-content="" data-style-bordertype="none" data-style-width="75%"><img class="lazyload" src="https://static001.geekbang.org/infoq/07/07eb7852f380e0fdb8b6972d405ceeba.png"/></div>
+</div>
+<p data-type="paragraph">接下来，将深入介绍 ByteHouse 在湖仓一体化方面的核心能力——快、通、全。</p>
+<p data-type="paragraph">首先，“快”是 ByteHouse 设计与规划的核心。ByteHouse 是基于 ClickHouse 的技术路线进行演进的，底层技术栈也源自 ClickHouse，但对其进行了极大的增强。比如，ClickHouse 在并发处理上存在不足，ByteHouse 已经很好地支持了并发；ClickHouse 在支持复杂数据模型时存在短板，如依赖宽表，对星型和雪花模型等复杂模型支持并不友好，而 ByteHouse 在支持这些模型时，通过自研优化器等手段，不仅场景支持得更宽，效率也更快。因此，“快”始终是 ByteHouse 规划和设计时秉承第一性原理，通过一系列的组合策略来不断提升性能。</p>
+<p data-type="paragraph">其次，“通”指的是仓和湖之间的双向互通。如果只是单向地以外表方式读取湖里的数据，那并不能算是真正的互通。ByteHouse 追求的是双向的，既能读也能写，从而简化整个数据架构。</p>
+<p data-type="paragraph">最后，“全”意味着 ByteHouse 能够通过站在“仓”的视角，预览并通览全局数据架构中的高价值数据，包括仓、湖、数据集市等，这也是 ByteHouse 在湖仓一体方面持续增强的能力。简单来说，就是更快、更融通以及更全面。通过 Multi Catalog（多元数据管理能力），做到一图览全域的效果。</p>
+<p data-type="paragraph">接下来，将详细介绍这三部分核心能力。</p>
+<h2 data-id="heading7" data-type="heading">快：加速联邦分析</h2>
+<div data-type="image">
+<div data-content="" data-style-bordertype="none" data-style-width="75%"><img class="lazyload" src="https://static001.geekbang.org/infoq/8b/8b579d2d5405faff733d9cef5a7c9229.png"/></div>
+</div>
+<p data-type="paragraph">在性能优化方面，无论是开发还是运维团队，日常工作中往往会将大量精力投入到性能调优与问题解决上。这些性能提升往往不仅仅是点对点的改进，更多的是体系化的提升。ByteHouse 在这一领域有着独特的做法。</p>
+<p data-type="paragraph">首先，立足于数据湖，无论是文件格式（如 Parquet、ORC）还是表格式（如 Hive、Hudi、Iceberg，甚至是新兴的 Paimon），底层数据格式多采用开放式架构。ByteHouse 针对这些开放格式，自研了 Native Reader 特性，旨在提升 Parquet 和 ORC 等开源格式的读取效率。</p>
+<p data-type="paragraph">与开源的 ClickHouse 通过 Arrow Table 方式进行中转不同，ByteHouse 的 Native Reader 能够直接将 Parquet 和 ORC 格式的数据读取为 ByteHouse 的内存格式，避免了内存中的多次拷贝，从而显著提高了读取性能。此外，对于采用字典编码的列，ByteHouse 在读取时也能直接转换为高效的数据格式，如低基列，进一步提升了文件层面的读取效率。</p>
+<p data-type="paragraph">其次，IO 优化是性能提升的关键领域。无论是文件系统、网络层面还是查询优化器，IO 优化都是持续迭代的关键点</p>
+<ul data-type="bulletedlist">
+<li>
+<p data-type="paragraph">ByteHouse 在文件系统层面，针对访问远端 HDFS 时可能出现的热点问题，采用了对冲读（Hedged Read）优化策略。当查询指令发出后超时，ByteHouse 会再次发送指令到其他 DataNode，以规避 Hadoop 或 DataNode 上的热点或抖动情况。实践表明，这种优化在负载较高的 HDFS 环境中，仅需增加约 10%的带宽负载，就能使 P95 查询性能得到极大提升。</p>
+</li>
+<li>
+<p data-type="paragraph">在网络层面，ByteHouse 通过 IO 合并策略，将多个小 IO 请求合并为一个大的请求，减少 IOPS，提升 IO 吞吐。同时，利用 Prebuffer 缓存段，方便后续查询或负载复用，减少网络层面的 IO 开销。</p>
+</li>
+<li>
+<p data-type="paragraph">此外，ByteHouse 还通过更智能的优化器，将谓词下推到远端执行，过滤掉远端数据，进一步减少网络 IO 开销。</p>
+</li>
+</ul>
+<p data-type="paragraph">第三，多级缓存策略也是 ByteHouse 性能提升的重要手段。在进行湖仓联邦数据查询时，ByteHouse 会与 Hive metadata 频繁交互。为了减少这种交互导致的查询延时，ByteHouse 构建了多级缓存体系。包括 Catalog 缓存、中间查询结果缓存以及磁盘缓存等。Catalog 缓存将关键的元数据信息（如 schema、partition list、file list 等）缓存到内存中，以便快速获取。中间查询结果缓存则用于存储中间结果，方便后续查询复用。磁盘缓存则用于缓存远端湖中的数据文件。这些缓存策略共同提升了 ByteHouse 的性能。</p>
+<p data-type="paragraph">第四，物化视图是 ByteHouse 性能优化的另一大利器。ByteHouse 支持对外表进行物化，包括基于视图的物化视图和单表物化视图等。此外，还支持多表缓存（带有业务属性的聚合）。这些功能不仅提升了湖仓性能，还可用于点查场景。同时，ByteHouse 还在内部业务中试点 auto MV（自动物化视图）功能，通过机器学习和强化学习手段分析查询日志和历史，自动为需要加物化视图或索引的字段和表添加相应的优化。目前 auto MV 功能尚未产品化，预计将在明年上半年择期推出。</p>
+<p data-type="paragraph">最后，优化器是 ByteHouse 性能提升的核心组件。为了制定更好的执行路径，统计信息至关重要。ByteHouse 支持对湖仓外表和表进行分区粒度的统计信息收集，并通过直方图方式展示数据分布，帮助优化器制定更优的执行计划。同时，ByteHouse 还提供了统计信息的手动刷新、定时刷新等能力。然而，在湖仓联邦场景中，由于远端湖的数据量巨大，自动刷新可能会对湖、仓的负载以及整个湖仓联邦分析性能产生较大冲击。因此，在当前视角下，我们更建议采用计划内的刷新方式，如手工触发或定时触发等。</p>
+<p data-type="paragraph">综上，ByteHouse 通过自研 Native Reader、IO 优化、多级缓存、物化视图以及优化器等多个领域的持续迭代和增强，加速了湖仓联邦分析的性能提升。</p>
+<p data-type="paragraph">接下来，将展示这些策略带来的成效。</p>
+<div data-type="image">
+<div data-content="" data-style-bordertype="none" data-style-width="75%"><img class="lazyload" src="https://static001.geekbang.org/infoq/7c/7cf8f73ae4174564bb1b21c5d337d22d.png"/></div>
+</div>
+<p data-type="paragraph">首先，第一个 Benchmark 是自己与自己对比的测试场景。在这个场景中，ByteHouse TPC-DS 所有数据都以 ORC 格式存储在 HDFS 分布式文件系统中。在此基础上，我们启用了之前提到的 Cache 能力和第一个 native reader 能力。开启这两个功能后，性能优化效果显著，直接提升了五倍。</p>
+<p data-type="paragraph">接下来，再看传统意义上的 OLAP 宽表分析场景。在 SSB 宽表分析领域，我们在测试环境中，将 ByteHouse 与行业同类产品进行了 Benchmark 比对。无论是 SSB 宽表模型，还是 TPC-DS 这种较为复杂的分析模型，如维度型、雪花型等，ByteHouse 的表现都相当出色。</p>
+<h2 data-id="heading8" data-type="heading">通：简化架构，实现 ZeroETL</h2>
+<div data-type="image">
+<div data-content="" data-style-bordertype="none" data-style-width="75%"><img class="lazyload" src="https://static001.geekbang.org/infoq/35/35221f9c606d5d8a4a1e0af0be44c74d.png"/></div>
+</div>
+<p data-type="paragraph">下面探讨第二个关键技术——“通”，这不仅仅是读取能力，更包括了写入能力，即双向的互操作性。这样的设计能够极大地简化数据湖与数据仓库之间的架构，甚至有可能完全规避复杂的 ETL 过程，从而实现 Zero ETL 理念的落地。</p>
+<p data-type="paragraph">关于数据湖的实现，目前存在两种主要流派。</p>
+<ul data-type="bulletedlist">
+<li>
+<p data-type="paragraph">第一种流派主要依赖于对象存储，并以文件格式（如 parquet、ORC 等开放格式）进行数据承载。这种方式在一些地区的大型企业中有案例，其主要目的是提升架构的简易性和通用性。这些企业会在对象存储上存储所有数据，然后利用 Presto、Trino 或 Spark 等分析引擎进行构建，形成数据湖。</p>
+</li>
+<li>
+<p data-type="paragraph">而在国内，无论是互联网企业还是金融等传统大型企业，其数据湖架构更多是基于表格式，通过 Hive、Hudi、Iceberg 以及 Paimon 等表格式进行数据承载。这种方式的目标是让数据湖更像数据库，因为数据库的 SQL 体验是简单且标准化的。</p>
+</li>
+</ul>
+<p data-type="paragraph">无论是哪种流派的数据湖实现方式，都在持续迭代和增强读写的双向互操作性。以文件格式为例，无论是 JSON、JSONB、Parquet 还是 CSV 等半结构化格式，我们都已经实现了双向的读写互操作性。从 ByteHouse（数据仓库）的视角来看，这些格式的数据都能自由地进出。</p>
+<p data-type="paragraph">在应用层面，比如 AI 领域，很多数据清洗工作都采用了这种模式，将数据存储在对象存储上，然后利用 Spark 引擎或其他 Reader 引擎进行直接读取。在这个流派中，ByteHouse 已经实现了读写的双向互操作性。</p>
+<p data-type="paragraph">对于表格式的数据湖实现方式，ByteHouse 目前还在进行迭代和完善，目前已经打通了大部分读链路，但写链路还在规划中。比如 Hive 的写功能预计在这个季度（Q4）完成，Hudi 的写功能可能会在 2025 年第一季度早些时候实现，而 Iceberg 的写功能也计划在这个季度（Q4）进行实现。</p>
+<p data-type="paragraph">此外，业务还可能从数据湖或 EMR 的视角出发。因此，ByteHouse 提供了中间管道和 Spark Connector（由 ByteHouse 开发并免费提供），让 Spark 能够方便地读取和写入 ByteHouse 的数据，进行逻辑加工，同时也可以将 ByteHouse 的数据拉取出来进行加工和负载，或者落回到 ByteHouse、EMR 或 Hive 中。这个链路的畅通性是没有问题的。</p>
+<p data-type="paragraph">至于 Flink，ByteHouse 有很多实时数仓的案例都是联合 Flink 构建的。例如，在某个游戏领域，利用 Flink 和 ByteHouse 实时去重写入能力，可以实现每秒 260 万笔数据的实时去重落盘，达到了业界领先的性能。</p>
+<h2 data-id="heading9" data-type="heading">全：Multi-Catalog 一图览全域</h2>
+<div data-type="image">
+<div data-content="" data-style-bordertype="none" data-style-width="75%"><img class="lazyload" src="https://static001.geekbang.org/infoq/16/166b11fe0530566ba3467d3eae49658b.png"/></div>
+</div>
+<p data-type="paragraph">第三个关键点聚焦于“全”，即全面性与整合性。具体来说，当我们站在数据仓库（Endpoint 或仓）的视角时，不仅能够看到仓库内的数据，还能无缝浏览到数据湖中的数据。简而言之，就是实现“一图览全域”的能力。这一能力在技术上并不涉及特别大的阻碍或壁垒，更多是关于与众多主流 Catalog（如 Hive、MA/MIMS、Hudi、Iceberg 乃至 Paimon 等）的打通、融合及兼容性工作。</p>
+<p data-type="paragraph">ByteHouse 正在致力于将这些 Catalog 进行整合，追求的效果是能够将全域数据真正汇聚成一张图。回顾过去，元数据的重要性早已被业界所认识。十多年前，业界就开始探讨如何构建企业的数据资产化。如果无法提供一个高效、全景式的数据视图，那么企业的数据资产化无疑会成为空谈，难以落地。</p>
+<p data-type="paragraph">通过技术的不断迭代，能帮助企业站在数据仓库的视角，清晰地看到全域数据，这将极大地加速企业数据资产化的转型进程。从数据治理的角度来看，ByteHouse 已能够追溯全域数据的血缘关系，实现全域数据治理和管控，包括管理全域的租户权限等。</p>
+<p data-type="paragraph">此外，业务层面也提出了将数据变现的需求。要实现全域数据共享和更好的数据变现，数据质量至关重要。如果数据质量不佳，数据变现将举步维艰，难以持续。</p>
+<p data-type="paragraph">“全”是湖仓一体架构中一个非常关键的技术点。尽管在技术实现上并没有太大的壁垒，但需要不断迭代，以兼容更多主流的数据湖 Catalog 格式。通过这一努力，ByteHouse 将为企业提供更全面、更整合的数据视图，助力企业实现数据资产化、数据治理和数据变现等目标。</p>
+<h1 data-id="heading10" data-type="heading">最佳实践</h1>
+<h2 data-id="heading11" data-type="heading">案例：抖音集团内部 BI 平台 Zero ETL 最佳实践</h2>
+<div data-type="image">
+<div data-content="" data-style-bordertype="none" data-style-width="75%"><img class="lazyload" src="https://static001.geekbang.org/infoq/4a/4a6fd566b29e7d16b5bf89afc0e39014.png"/></div>
+</div>
+<p data-type="paragraph">接下来分享抖音集团内部 BI 平台的实战案例。作为一个全面的 BI 平台，它涵盖了固定报表、灵活查询以及管理驾驶舱等多种功能。</p>
+<p data-type="paragraph">该 BI 平台的初衷源于对原有复杂架构的革新需求。在过去，架构是组合式的，包括基于 Hive 架构的“湖”和 ByteHouse（称之为“仓”）两部分。每天，加工好的数据都会从湖中推送到仓里，而 BI 报表则需要同时连接湖和仓。这种双连接的架构较为复杂，给管理和维护带来了不小的挑战。</p>
+<p data-type="paragraph">在 ETL 方面，研发人员也面临着规模庞大、SLA 不稳定等问题。因此，业务诉求是希望通过湖仓一体的融合模式来简化架构，实现 Zero ETL 的理念。虽然 Zero ETL 是一个理想状态，但至少先减轻 ETL 架构的负担。</p>
+<p data-type="paragraph">除了简化架构外，业务还希望 Zero ETL 能够支持复杂的查询，包括多维度的查询和新型维表查询等。同时，ETL 任务既可以在湖中运行，也可以在仓中运行，以减轻湖中的加工分析负载。</p>
+<p data-type="paragraph">此外，透明化目标之一。从 BI 用户的角度来看，他们不需要清楚数据是存储在湖中还是仓中，只需要通过链接访问一个地方即可。这种透明化将大大简化面向业务的开发工作。</p>
+<p data-type="paragraph">在以上诉求上，还期望实现降本和提效。</p>
+<p data-type="paragraph">为了满足这些业务诉求，ByteHouse 研发团队与业务团队进行了紧密合作，采用了新一代 Data Fabric 架构。这种架构能够助力实现 Zero ETL 或简化架构。</p>
+<p data-type="paragraph">在 Zero ETL 的关键技术方面，通过在 ByteHouse 中建立 Hive 外表，让外表能够自动感知 Hive 的 DDL 变化，无需人工刷新。这得益于 Hive 将 DDL 变化推送到 Kafka 中，ByteHouse 能够实时抓取这些信息。</p>
+<p data-type="paragraph">此外，ByteHouse 还支持在 SQL 中查询多个外表的组合。在 Data Fabric 架构中，物化视图是一个与性能密切相关的关键组件，ByteHouse 的物化视图既能构建在外表之上，也能构建在视图之上。同时，ByteHouse 还优化了单表和多表查询的性能，特别是多表 join 的场景。</p>
+<p data-type="paragraph">为了进一步提升智能化和性能优化能力，ByteHouse 还在业务上进行了 auto MV 的试点。这一举措让整个链路更加智能，减少 DBA 和优化层面的投入。同时，它还能根据日志自动发现慢查询并进行优化。</p>
+<p data-type="paragraph">从已经投产的部分业务来看，效果显著。在性能层面，实现了两到三倍的提升；在存储层面，降低了约三分之一的成本。这主要得益于 Zero ETL 和 Data Fabric 架构的轻量化设计，减少了中间结果的存储占用空间。</p>
+<p data-type="paragraph">以上就是关于抖音集团内部 BI 平台 Zero ETL 实战应用的一些阶段性产出和初步成果。</p>
+<h1 data-id="heading12" data-type="heading">后续发展规划</h1>
+<p data-type="paragraph">近期规划——让 ByteHouse 变得更加智能，即实现其智能化（smartization）。具体而言，聚焦于两个维度：</p>
+<ul data-type="bulletedlist">
+<li>
+<p data-type="paragraph">首先，致力于让查询加速过程更加智能，例如通过自动物化视图（auto MV）和自动索引（auto index）等技术手段，以及优化内部缓存机制，不仅限于使用 LRU 算法，还将引入 LFU 等更多算法，以提高缓存的效率和智能性。</p>
+</li>
+<li>
+<p data-type="paragraph">其次，实现运维的智能化和无人化，包括自动优化表的分布键、排序键以及选择最合适的压缩算法，以最大化性能和压缩空间。同时，ByteHouse 还将对集群内部的工作负载进行更智能的感知和优化，实现任务队列的智能化管理，以及自动参数优化，减少对人为或专家（如 DBA）的依赖。</p>
+</li>
+</ul>
+<p data-type="paragraph">中长期规划——持续增强 ByteHouse 作为 AI 底座的支撑能力，让更多的 AI 负载能够在 ByteHouse 上运行。</p>
+<ul data-type="bulletedlist">
+<li>
+<p data-type="paragraph">积极融入 AI 生态，特别是增强与 Python 的兼容性和融合能力，因为 Python 是 AI 生态中的主流语言。</p>
+</li>
+<li>
+<p data-type="paragraph">计划逐步加速 AI 全流程，包括数据清洗、特征工程、模型训练和模型推理等各个环节，充分发挥 ByteHouse 在性能方面的优势。</p>
+</li>
+<li>
+<p data-type="paragraph">在 AI on ByteHouse 方面，逐渐支持主流 AI 框架，如 Pytorch 和 TensorFlow 等，使 ByteHouse 成为一个综合性的平台，不仅满足传统 DBA 和开发者的需求，还能降低开发者从编码开发向数据科学家开发转型的时间成本和学习成本。</p>
+</li>
+</ul>
+<p data-type="paragraph">以上就是 ByteHouse 接下来的一些重点规划。我们将不断努力，推动 ByteHouse 向更加智能、高效和综合性的方向发展。</p>
+</div>
+</div>
+</article>
+</body>
+</html>

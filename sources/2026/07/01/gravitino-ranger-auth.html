@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gravitino Ranger 授权配置指南</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>Gravitino Ranger 授权配置指南</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：未知</span>
+<span>来源：<a href="https://blog.csdn.net/clj198606061111/article/details/161557310" target="_blank">blog.csdn.net</a></span>
+<span>平台：csdn</span>
+<span>图片：0 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<div class="markdown_views clearfix prism-atom-one-dark" id="content_views">
+
+
+
+<h2><a id="Gravitino_Ranger__1"></a>Gravitino Ranger 授权配置指南</h2>
+<h3><a id="1__5"></a>1. 接口逻辑链路梳理</h3>
+<h4><a id="11_REST_API__9"></a>1.1 REST API 层</h4>
+<p><strong>文件</strong>: <code>server/src/main/java/org/apache/gravitino/server/web/rest/RoleOperations\.java</code></p>
+<table><thead><tr><th>HTTP 方法</th><th>路径</th><th>功能</th></tr></thead><tbody><tr><td>GET</td><td><code>/metalakes/\{metalake\}/roles</code></td><td>列出所有角色名称</td></tr><tr><td>GET</td><td><code>/metalakes/\{metalake\}/roles/\{role\}</code></td><td>获取指定角色详情</td></tr><tr><td>POST</td><td><code>/metalakes/\{metalake\}/roles</code></td><td>创建新角色</td></tr><tr><td>DELETE</td><td><code>/metalakes/\{metalake\}/roles/\{role\}</code></td><td>删除角色</td></tr></tbody></table>
+<p><strong>关键逻辑</strong>:</p>
+<ul><li> <p>所有请求通过 <code>Utils\.doAs\(\)</code> 进行用户身份验证</p> </li><li> <p>创建角色时会验证：</p>
+<ul><li> <p>权限名称不重复 (<code>checkDuplicatedNamePrivilege</code>)</p> </li><li> <p>权限与对象类型匹配 (<code>checkPrivilege</code>)</p> </li><li> <p>元数据对象存在性 (<code>checkMetadataObject</code>)</p> </li></ul> </li></ul>
+<hr/>
+<h4><a id="12__44"></a>1.2 核心管理层</h4>
+<p><strong>文件</strong>: <code>core/src/main/java/org/apache/gravitino/authorization/AccessControlManager\.java</code></p>
+<p>作为统一入口，协调三个核心组件：</p>
+<pre><code class="prism language-Plain">AccessControlManager
+├── RoleManager        # 角色 CRUD 操作
+├── UserGroupManager   # 用户/组管理
+└── PermissionManager  # 权限授予/撤销
+</code></pre>
+<hr/>
+<h4><a id="13_RoleManager__69"></a>1.3 RoleManager 核心逻辑</h4>
+<p><strong>文件</strong>: <code>core/src/main/java/org/apache/gravitino/authorization/RoleManager\.java</code></p>
+<p><strong>createRole 流程</strong>:</p>
+<ol><li> <p>验证 Metalake 存在</p> </li><li> <p>构建 <code>RoleEntity</code> 并存储到 EntityStore</p> </li><li> <p><strong>调用 Ranger 插件同步角色</strong> (<code>callAuthorizationPluginForSecurableObjects</code>)</p> </li></ol>
+<p><strong>deleteRole 流程</strong>:</p>
+<ol><li> <p>先从 EntityStore 获取角色信息</p> </li><li> <p><strong>调用 Ranger 插件删除角色</strong></p> </li><li> <p>从 EntityStore 删除记录</p> </li></ol>
+<hr/>
+<h4><a id="14_Ranger__101"></a>1.4 Ranger 授权插件集成</h4>
+<p><strong>文件</strong>: <code>authorizations/authorization\-ranger/src/main/java/org/apache/gravitino/authorization/ranger/RangerAuthorizationPlugin\.java</code></p>
+<p><strong>关键方法</strong>:</p>
+<table><thead><tr><th>Gravitino 操作</th><th>Ranger 插件回调</th></tr></thead><tbody><tr><td><code>createRole</code></td><td><code>onRoleCreated\(\)</code> → 创建 Ranger Role + Policy</td></tr><tr><td><code>deleteRole</code></td><td><code>onRoleDeleted\(\)</code> → 删除 Ranger Role + Policy</td></tr><tr><td><code>grantPrivilegeToRole</code></td><td><code>onRoleUpdated\(\)</code> → 更新 Ranger Policy Items</td></tr><tr><td><code>grantRolesToUser</code></td><td><code>onGrantedRolesToUser\(\)</code> → 添加用户到 Ranger Role</td></tr><tr><td><code>revokeRolesFromUser</code></td><td><code>onRevokedRolesFromUser\(\)</code> → 从 Ranger Role 移除用户</td></tr></tbody></table>
+<p><strong>Ranger 数据模型映射</strong>:</p>
+<pre><code class="prism language-Plain">Gravitino Role        →  Ranger Role
+Gravitino Privilege   →  Ranger PolicyItemAccess
+Gravitino SecurableObject →  Ranger Policy Resource
+Gravitino User/Group  →  Ranger VXUser/VXGroup
+</code></pre>
+<hr/>
+<h4><a id="15__138"></a>1.5 关键设计模式</h4>
+<h5><a id="_AuthorizationPluginCallbackWrapper_142"></a>回调机制 (<code>AuthorizationPluginCallbackWrapper</code>)</h5>
+<p>在 <code>PermissionManager</code> 中，权限变更操作分两阶段执行：</p>
+<ol><li> <p>先在 EntityStore 中更新数据</p> </li><li> <p>通过回调同步到 Ranger</p> </li></ol>
+<pre><code class="prism language-Java">// PermissionManager 中的典型模式
+store.update(..., roleEntity -&gt; {
+    // 1. 构建新的 SecurableObjects
+    // 2. 设置回调
+    authorizationCallbackWrapper.setCallback(() -&gt; 
+        AuthorizationUtils.callAuthorizationPluginForMetadataObject(...)
+    );
+    return updatedRoleEntity;
+});
+// 3. 事务提交后执行回调
+authorizationCallbackWrapper.execute();
+</code></pre>
+<h5><a id="_170"></a>批量操作支持</h5>
+<ul><li> <p><code>grantPrivilegeToRoles\(\)</code> / <code>revokePrivilegesFromRoles\(\)</code> 支持批量处理</p> </li><li> <p>使用 <code>BatchAuthorizationPluginCallbackWrapper</code> 累积变更，一次性同步到 Ranger</p> </li></ul>
+<hr/>
+<h4><a id="16__182"></a>1.6 数据流总结</h4>
+<pre><code class="prism language-Plain">┌─────────────┐
+│   Client    │
+└──────┬──────┘
+       │ HTTP REST API
+       ▼
+┌─────────────────────────┐
+│  RoleOperations         │  ← Server 层 (Jetty)
+│  (REST Controller)      │
+└──────┬──────────────────┘
+       │
+       ▼
+┌─────────────────────────┐
+│  AccessControlManager   │  ← Core 层 (统一入口)
+└──────┬──────────────────┘
+       │
+       ├──────────────┬──────────────┐
+       ▼              ▼              ▼
+┌───────────┐  ┌───────────┐  ┌─────────────┐
+│RoleManager│  │Permission │  │UserGroup    │
+│           │  │Manager    │  │Manager      │
+└─────┬─────┘  └─────┬─────┘  └─────────────┘
+      │              │
+      │              │ Tree Lock + EntityStore
+      │              │
+      ▼              ▼
+┌─────────────────────────────────────────┐
+│     AuthorizationPlugin (Ranger)        │  ← 外部系统同步
+│  - onRoleCreated                        │
+│  - onRoleUpdated                        │
+│  - onRoleDeleted                        │
+│  - onGrantedRolesToUser/Group           │
+│  - onRevokedRolesFromUser/Group         │
+└─────────────────────────────────────────┘
+</code></pre>
+<hr/>
+<h3><a id="2__Ranger__228"></a>2. 多集群多 Ranger 配置方案</h3>
+<h4><a id="21__232"></a>2.1 架构设计原理</h4>
+<p>Gravitino 的授权插件是<strong>按 Catalog 维度</strong>加载的，每个 Catalog 可以独立配置连接不同的 Ranger 服务。</p>
+<pre><code class="prism language-Plain">┌─────────────────────────────────────────────────────────────┐
+│                    Gravitino Server                         │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  Metalake                                           │   │
+│  │  ┌───────────┐  ┌───────────┐  ┌───────────┐       │   │
+│  │  │ Catalog 1 │  │ Catalog 2 │  │ Catalog 3 │  ...  │   │
+│  │  │ (Hive)    │  │ (Iceberg) │  │ (HDFS)    │       │   │
+│  │  │           │  │           │  │           │       │   │
+│  │  │ Ranger 1  │  │ Ranger 2  │  │ Ranger 3  │       │   │
+│  │  │ Service   │  │ Service   │  │ Service   │       │   │
+│  │  └─────┬─────┘  └─────┬─────┘  └─────┬─────┘       │   │
+│  └────────┼──────────────┼──────────────┼─────────────┘   │
+└───────────┼──────────────┼──────────────┼─────────────────┘
+            │              │              │
+            ▼              ▼              ▼
+      ┌──────────┐  ┌──────────┐  ┌──────────┐
+      │ Ranger   │  │ Ranger   │  │ Ranger   │
+      │ Admin 1  │  │ Admin 2  │  │ Admin 3  │
+      │ (集群 A)  │  │ (集群 B)  │  │ (集群 C)  │
+      └──────────┘  └──────────┘  └──────────┘
+</code></pre>
+<hr/>
+<h4><a id="22__269"></a>2.2 配置方式</h4>
+<h5><a id="_Catalog__273"></a>方式一：在创建 Catalog 时配置（推荐）</h5>
+<p>通过 REST API 创建 Catalog 时，在 <code>properties</code> 中添加 Ranger 配置：</p>
+<pre><code class="prism language-Bash"># Catalog 1 - 连接集群 A 的 Ranger
+curl -X POST http://localhost:8090/api/metalakes/default/catalogs \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "hive-cluster-a",
+    "type": "RELATIONAL",
+    "provider": "hive",
+    "comment": "Hive catalog for Cluster A",
+    "properties": {
+      "authorization.provider": "ranger",
+      "authorization.ranger.admin.url": "http://ranger-a:6080",
+      "authorization.ranger.service.type": "HADOOPSQL",
+      "authorization.ranger.service.name": "hive-cluster-a",
+      "authorization.ranger.auth.type": "simple",
+      "authorization.ranger.username": "admin",
+      "authorization.ranger.password": "ranger-admin-pwd-a",
+      "authorization.ranger.obj.sync.enable": "true",
+      "authorization.ranger.jdbc.url": "jdbc:hive2://hive-a:10000",
+      "authorization.ranger.jdbc.driverClassName": "org.apache.hive.jdbc.HiveDriver"
+    }
+  }'
+
+# Catalog 2 - 连接集群 B 的 Ranger
+curl -X POST http://localhost:8090/api/metalakes/default/catalogs \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "hive-cluster-b",
+    "type": "RELATIONAL",
+    "provider": "hive",
+    "comment": "Hive catalog for Cluster B",
+    "properties": {
+      "authorization.provider": "ranger",
+      "authorization.ranger.admin.url": "http://ranger-b:6080",
+      "authorization.ranger.service.type": "HADOOPSQL",
+      "authorization.ranger.service.name": "hive-cluster-b",
+      "authorization.ranger.auth.type": "simple",
+      "authorization.ranger.username": "admin",
+      "authorization.ranger.password": "ranger-admin-pwd-b",
+      "authorization.ranger.obj.sync.enable": "true",
+      "authorization.ranger.jdbc.url": "jdbc:hive2://hive-b:10000",
+      "authorization.ranger.jdbc.driverClassName": "org.apache.hive.jdbc.HiveDriver"
+    }
+  }'
+
+# Catalog 3 - 连接集群 C 的 HDFS Ranger
+curl -X POST http://localhost:8090/api/metalakes/default/catalogs \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "hdfs-cluster-c",
+    "type": "FILESET",
+    "provider": "hadoop",
+    "comment": "HDFS catalog for Cluster C",
+    "properties": {
+      "authorization.provider": "ranger",
+      "authorization.ranger.admin.url": "http://ranger-c:6080",
+      "authorization.ranger.service.type": "HDFS",
+      "authorization.ranger.service.name": "hdfs-cluster-c",
+      "authorization.ranger.auth.type": "simple",
+      "authorization.ranger.username": "admin",
+      "authorization.ranger.password": "ranger-admin-pwd-c",
+      "authorization.ranger.obj.sync.enable": "true",
+      "authorization.ranger.fs.default.name": "hdfs://namenode-c:9000"
+    }
+  }'
+</code></pre>
+<hr/>
+<h4><a id="23__354"></a>2.3 完整配置参数说明</h4>
+<table><thead><tr><th>配置项</th><th>说明</th><th>示例值</th><th>必填</th></tr></thead><tbody><tr><td><code>authorization\.provider</code></td><td>授权提供者类型</td><td><code>ranger</code></td><td>是</td></tr><tr><td><code>authorization\.ranger\.admin\.url</code></td><td>Ranger Admin Web URL</td><td><code>http://ranger:6080</code></td><td>是</td></tr><tr><td><code>authorization\.ranger\.service\.type</code></td><td>Ranger 服务类型</td><td><code>HADOOPSQL</code> / <code>HDFS</code></td><td>是</td></tr><tr><td><code>authorization\.ranger\.service\.name</code></td><td>Ranger 中注册的服务名</td><td><code>hive\-cluster\-a</code></td><td>是</td></tr><tr><td><code>authorization\.ranger\.auth\.type</code></td><td>认证类型</td><td><code>simple</code> / <code>kerberos</code></td><td>是</td></tr><tr><td><code>authorization\.ranger\.username</code></td><td>Ranger 管理员用户名</td><td><code>admin</code></td><td>是</td></tr><tr><td><code>authorization\.ranger\.password</code></td><td>Ranger 管理员密码</td><td><code>password</code></td><td>是</td></tr><tr><td><code>authorization\.ranger\.obj\.sync\.enable</code></td><td>是否同步元数据变更</td><td><code>true</code> / <code>false</code></td><td>否</td></tr><tr><td><code>authorization\.ranger\.jdbc\.url</code></td><td>JDBC 连接 URL（Hive 用）</td><td><code>jdbc:hive2://host:10000</code></td><td>否</td></tr><tr><td><code>authorization\.ranger\.jdbc\.driverClassName</code></td><td>JDBC 驱动类名</td><td><code>org\.apache\.hive\.jdbc\.HiveDriver</code></td><td>否</td></tr><tr><td><code>authorization\.ranger\.fs\.default\.name</code></td><td>HDFS 默认名称（HDFS 用）</td><td><code>hdfs://namenode:9000</code></td><td>否</td></tr><tr><td><code>authorization\.ranger\.hadoop\.security\.authentication</code></td><td>Hadoop 认证方式</td><td><code>simple</code> / <code>kerberos</code></td><td>否</td></tr><tr><td><code>authorization\.ranger\.hadoop\.rpc\.protection</code></td><td>Hadoop RPC 保护级别</td><td><code>authentication</code></td><td>否</td></tr><tr><td><code>authorization\.ranger\.service\.create\-if\-absent</code></td><td>是否自动创建 Ranger Service</td><td><code>true</code> / <code>false</code></td><td>否</td></tr></tbody></table>
+<hr/>
+<h4><a id="24__Gravitino__381"></a>2.4 在 Gravitino 配置文件中预设（可选）</h4>
+<p>编辑 <code>conf/gravitino\.conf</code> 添加默认配置模板：</p>
+<pre><code class="prism language-Properties"># 默认 Ranger 配置（可被 Catalog 配置覆盖）
+authorization.ranger.admin.url=http://ranger-default:6080
+authorization.ranger.auth.type=simple
+authorization.ranger.username=gravitino-admin
+authorization.ranger.password=your-secure-password
+authorization.ranger.obj.sync.enable=true
+</code></pre>
+<hr/>
+<h4><a id="25__404"></a>2.5 角色与权限同步流程</h4>
+<p>当创建 Role 时，Gravitino 会：</p>
+<pre><code class="prism language-Plain">1. 用户调用 POST /api/metalakes/{metalake}/roles
+   └─&gt; 2. RoleOperations.createRole()
+       └─&gt; 3. AccessControlManager.createRole()
+           └─&gt; 4. RoleManager.createRole()
+               │
+               ├─&gt; 4a. 存储 Role 到 EntityStore (MySQL/PostgreSQL)
+               │
+               └─&gt; 4b. callAuthorizationPluginForSecurableObjects()
+                   │
+                   └─&gt; 遍历 SecurableObjects 找到对应 Catalog
+                       └─&gt; 调用该 Catalog 的 AuthorizationPlugin
+                           └─&gt; RangerAuthorizationPlugin.onRoleCreated()
+                               │
+                               ├─&gt; 在对应 Ranger 服务创建 Role
+                               └─&gt; 在对应 Ranger 服务创建/更新 Policy
+</code></pre>
+<hr/>
+<h3><a id="3__436"></a>3. 多集群配置示例场景</h3>
+<h4><a id="31__440"></a>3.1 场景描述</h4>
+<p>公司有 3 个大数据集群，每个集群有独立的 Ranger：</p>
+<table><thead><tr><th>集群</th><th>Catalog 名称</th><th>Ranger Admin URL</th><th>Service Name</th><th>类型</th></tr></thead><tbody><tr><td>集群 A</td><td><code>hive\-prod\-a</code></td><td><code>http://ranger\-a:6080</code></td><td><code>hive\-prod</code></td><td>HADOOPSQL</td></tr><tr><td>集群 B</td><td><code>hive\-prod\-b</code></td><td><code>http://ranger\-b:6080</code></td><td><code>hive\-prod</code></td><td>HADOOPSQL</td></tr><tr><td>集群 C</td><td><code>hdfs\-archive</code></td><td><code>http://ranger\-c:6080</code></td><td><code>hdfs\-archive</code></td><td>HDFS</td></tr></tbody></table>
+<hr/>
+<h4><a id="32__460"></a>3.2 配置步骤</h4>
+<p><strong>步骤 1</strong>: 在 Gravitino 中创建 Catalog</p>
+<pre><code class="prism language-Bash"># 集群 A - Hive Catalog
+curl -X POST http://localhost:8090/api/metalakes/default/catalogs \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "hive-prod-a",
+    "type": "RELATIONAL",
+    "provider": "hive",
+    "properties": {
+      "authorization.provider": "ranger",
+      "authorization.ranger.admin.url": "http://ranger-a:6080",
+      "authorization.ranger.service.type": "HADOOPSQL",
+      "authorization.ranger.service.name": "hive-prod",
+      "authorization.ranger.auth.type": "simple",
+      "authorization.ranger.username": "admin",
+      "authorization.ranger.password": "ranger-pwd-a",
+      "authorization.ranger.jdbc.url": "jdbc:hive2://hive-a:10000",
+      "authorization.ranger.jdbc.driverClassName": "org.apache.hive.jdbc.HiveDriver"
+    }
+  }'
+
+# 集群 B - Hive Catalog
+curl -X POST http://localhost:8090/api/metalakes/default/catalogs \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "hive-prod-b",
+    "type": "RELATIONAL",
+    "provider": "hive",
+    "properties": {
+      "authorization.provider": "ranger",
+      "authorization.ranger.admin.url": "http://ranger-b:6080",
+      "authorization.ranger.service.type": "HADOOPSQL",
+      "authorization.ranger.service.name": "hive-prod",
+      "authorization.ranger.auth.type": "simple",
+      "authorization.ranger.username": "admin",
+      "authorization.ranger.password": "ranger-pwd-b",
+      "authorization.ranger.jdbc.url": "jdbc:hive2://hive-b:10000",
+      "authorization.ranger.jdbc.driverClassName": "org.apache.hive.jdbc.HiveDriver"
+    }
+  }'
+
+# 集群 C - HDFS Catalog
+curl -X POST http://localhost:8090/api/metalakes/default/catalogs \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "hdfs-archive",
+    "type": "FILESET",
+    "provider": "hadoop",
+    "properties": {
+      "authorization.provider": "ranger",
+      "authorization.ranger.admin.url": "http://ranger-c:6080",
+      "authorization.ranger.service.type": "HDFS",
+      "authorization.ranger.service.name": "hdfs-archive",
+      "authorization.ranger.auth.type": "simple",
+      "authorization.ranger.username": "admin",
+      "authorization.ranger.password": "ranger-pwd-c",
+      "authorization.ranger.fs.default.name": "hdfs://namenode-c:9000"
+    }
+  }'
+</code></pre>
+<p><strong>步骤 2</strong>: 创建跨集群 Role</p>
+<pre><code class="prism language-Bash"># 创建一个角色，同时管理多个集群的权限
+curl -X POST http://localhost:8090/api/metalakes/default/roles \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "data-analyst",
+    "securableObjects": [
+      {
+        "fullName": "hive-prod-a.default.*",
+        "type": "SCHEMA",
+        "privileges": [
+          {"name": "SELECT_TABLE", "condition": "ALLOW"}
+        ]
+      },
+      {
+        "fullName": "hive-prod-b.default.sales",
+        "type": "TABLE",
+        "privileges": [
+          {"name": "SELECT_TABLE", "condition": "ALLOW"}
+        ]
+      },
+      {
+        "fullName": "hdfs-archive/data/warehouse",
+        "type": "FILESET",
+        "privileges": [
+          {"name": "READ_FILESET", "condition": "ALLOW"}
+        ]
+      }
+    ]
+  }'
+</code></pre>
+<p>Gravitino 会自动：</p>
+<ul><li> <p>在 Ranger-A 创建 <code>data\-analyst</code> 角色并授权 <code>default\.\*</code> 的 SELECT 权限</p> </li><li> <p>在 Ranger-B 创建 <code>data\-analyst</code> 角色并授权 <code>default\.sales</code> 的 SELECT 权限</p> </li><li> <p>在 Ranger-C 创建 <code>data\-analyst</code> 角色并授权 <code>/data/warehouse</code> 的 READ 权限</p> </li></ul>
+<p><strong>步骤 3</strong>: 将角色授予用户</p>
+<pre><code class="prism language-Bash"># 授予用户角色
+curl -X PUT http://localhost:8090/api/metalakes/default/users/data-user/roles \
+  -H "Content-Type: application/json" \
+  -d '{
+    "roleNames": ["data-analyst"]
+  }'
+</code></pre>
+<hr/>
+<h3><a id="4_RangerAuthorizationPlugin__598"></a>4. RangerAuthorizationPlugin 核心代码</h3>
+<h4><a id="41__602"></a>4.1 插件入口类</h4>
+<p><strong>文件</strong>: <code>authorizations/authorization\-ranger/src/main/java/org/apache/gravitino/authorization/ranger/RangerAuthorization\.java</code></p>
+<pre><code class="prism language-Java">public class RangerAuthorization extends BaseAuthorization&lt;RangerAuthorization&gt; {
+  @Override
+  public String shortName() {
+    return "ranger";
+  }
+
+  @Override
+  public AuthorizationPlugin newPlugin(
+      String metalake, String catalogProvider, Map&lt;String, String&gt; properties) {
+    String serviceType = properties.get(RangerAuthorizationProperties.RANGER_SERVICE_TYPE).toUpperCase();
+    switch (serviceType) {
+      case "HADOOPSQL":
+        return new RangerAuthorizationHadoopSQLPlugin(metalake, properties);
+      case "HDFS":
+        return new RangerAuthorizationHDFSPlugin(metalake, properties);
+      default:
+        throw new IllegalArgumentException("Unsupported service type: " + serviceType);
+    }
+  }
+}
+</code></pre>
+<h4><a id="42__635"></a>4.2 关键接口方法</h4>
+<p><strong>文件</strong>: <code>authorizations/authorization\-ranger/src/main/java/org/apache/gravitino/authorization/ranger/RangerAuthorizationPlugin\.java</code></p>
+<pre><code class="prism language-Java">public abstract class RangerAuthorizationPlugin 
+    implements AuthorizationPlugin, AuthorizationPrivilegesMappingProvider {
+  
+  // 创建角色时的回调
+  public Boolean onRoleCreated(Role role)
+  
+  // 删除角色时的回调
+  public Boolean onRoleDeleted(Role role)
+  
+  // 更新角色时的回调
+  public Boolean onRoleUpdated(Role role, RoleChange... changes)
+  
+  // 授予用户角色时的回调
+  public Boolean onGrantedRolesToUser(List&lt;Role&gt; roles, User user)
+  
+  // 撤销用户角色时的回调
+  public Boolean onRevokedRolesFromUser(List&lt;Role&gt; roles, User user)
+  
+  // 授予组角色时的回调
+  public Boolean onGrantedRolesToGroup(List&lt;Role&gt; roles, Group group)
+  
+  // 撤销组角色时的回调
+  public Boolean onRevokedRolesFromGroup(List&lt;Role&gt; roles, Group group)
+}
+</code></pre>
+<hr/>
+<h3><a id="5__676"></a>5. 注意事项</h3>
+<h4><a id="51_Ranger_Service__680"></a>5.1 Ranger Service 配置</h4>
+<ul><li> <p><strong>预先创建</strong>: 确保每个 Ranger Admin 中已创建对应的 Service</p> </li><li> <p><strong>自动创建</strong>: 可配置 <code>authorization\.ranger\.service\.create\-if\-absent=true</code> 让 Gravitino 自动创建</p> </li></ul>
+<h4><a id="52__690"></a>5.2 用户/组同步</h4>
+<ul><li> <p>Gravitino 中的用户/组名需要与 Ranger 中的一致，否则授权会失败</p> </li><li> <p>首次使用时，Gravitino 会自动在 Ranger 中创建不存在的用户/组</p> </li></ul>
+<h4><a id="53__700"></a>5.3 网络连通性</h4>
+<ul><li> <p>Gravitino Server 必须能访问所有 Ranger Admin 服务</p> </li><li> <p>如有防火墙，需开放对应端口（默认 6080）</p> </li></ul>
+<h4><a id="54__710"></a>5.4 权限冲突处理</h4>
+<ul><li> <p>如果多个 Catalog 配置了相同的 Ranger Service Name，可能导致权限冲突</p> </li><li> <p>建议为每个 Catalog 使用唯一的 <code>authorization\.ranger\.service\.name</code></p> </li></ul>
+<h4><a id="55_Kerberos__720"></a>5.5 Kerberos 认证</h4>
+<p>生产环境建议使用 Kerberos，配置示例：</p>
+<pre><code class="prism language-Properties">authorization.ranger.auth.type=kerberos
+authorization.ranger.username=gravitino/_HOST@EXAMPLE.COM
+authorization.ranger.password=/etc/security/keytabs/gravitino.keytab
+authorization.ranger.hadoop.security.authentication=kerberos
+authorization.ranger.hadoop.rpc.protection=privacy
+</code></pre>
+<h4><a id="56__738"></a>5.6 日志排查</h4>
+<p>遇到问题时，检查以下日志：</p>
+<pre><code class="prism language-Bash"># Gravitino Server 日志
+tail -f $GRAVITINO_HOME/logs/gravitino-server.log
+
+# Ranger Admin 日志
+tail -f /var/log/ranger/admin/ranger_admin.log
+</code></pre>
+<hr/>
+<h3><a id="6__FAQ_760"></a>6. 常见问题 FAQ</h3>
+<h4><a id="Q1__Ranger__764"></a>Q1: 如何验证 Ranger 配置是否生效？</h4>
+<pre><code class="prism language-Bash"># 1. 检查 Catalog 是否加载了授权插件
+curl http://localhost:8090/api/metalakes/default/catalogs/hive-prod-a
+
+# 2. 检查角色是否同步到 Ranger
+# 登录 Ranger Admin Web UI，查看对应 Service 的 Roles
+
+# 3. 检查策略是否创建
+# 登录 Ranger Admin Web UI，查看对应 Service 的 Policies
+</code></pre>
+<h4><a id="Q2__781"></a>Q2: 多集群场景下，如何隔离权限？</h4>
+<ul><li> <p>为每个集群创建独立的 Catalog</p> </li><li> <p>每个 Catalog 配置不同的 <code>authorization\.ranger\.service\.name</code></p> </li><li> <p>创建 Role 时，通过 <code>securableObjects</code> 指定作用范围</p> </li></ul>
+<h4><a id="Q3__Ranger__793"></a>Q3: 如何批量更新多个 Ranger 的权限？</h4>
+<p>使用批量操作接口：</p>
+<pre><code class="prism language-Java">// PermissionManager 中的批量方法
+grantPrivilegeToRoles(
+    String metalake,
+    MetadataObject object,
+    List&lt;Pair&lt;String, Set&lt;Privilege&gt;&gt;&gt; batchRoles,
+    boolean notSyncRanger)
+</code></pre>
+<h4><a id="Q4_Ranger_Gravitino__812"></a>Q4: Ranger 服务不可用时，Gravitino 能否继续工作？</h4>
+<ul><li> <p>可以。Gravitino 会将角色信息存储在本地 EntityStore 中</p> </li><li> <p>但同步到 Ranger 的操作会失败，并记录警告日志</p> </li><li> <p>建议配置监控告警，及时发现 Ranger 服务异常</p> </li></ul>
+<hr/>
+<h3><a id="7__828"></a>7. 参考资料</h3>
+<ul><li> <p><a href="https://gravitino.apache.org/docs/latest/" rel="nofollow">Apache Gravitino 官方文档</a></p> </li><li> <p><a href="https://ranger.apache.org/docs/" rel="nofollow">Apache Ranger 官方文档</a></p> </li><li> <p>Gravitino 源码路径:</p>
+<ul><li> <p><code>core/src/main/java/org/apache/gravitino/authorization/</code></p> </li><li> <p><code>authorizations/authorization\-ranger/src/main/java/</code></p> </li><li> <p><code>server/src/main/java/org/apache/gravitino/server/web/rest/RoleOperations\.java</code></p> </li></ul> </li></ul>
+<blockquote>
+<p>（注：文档内容基于gravitino 0.9 源码由 AI 整理生成）</p>
+</blockquote>
+</div>
+</div>
+</article>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一文搞懂 Gravitino 的核心对象：Metalake → Catalog → Schema → Table</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>一文搞懂 Gravitino 的核心对象：Metalake → Catalog → Schema → Table</h1>
+<div class="meta-info">
+<span>作者：架构师视角</span>
+<span>发表：未知</span>
+<span>来源：<a href="https://mp.weixin.qq.com/s/b6M-kPh9NZfEqaXVn2JD7w" target="_blank">mp.weixin.qq.com</a></span>
+<span>平台：wechat</span>
+<span>图片：5 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<div class="rich_media_content js_underline_content defaultNoSetting" id="js_content" style="visibility: hidden; opacity: 0; "><div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'PingFang SC','Microsoft YaHei',sans-serif;line-height:1.75;max-width:680px;margin:0 auto;padding:24px 20px 40px;color:#595959;background:#fff;font-size:15px;">
+<h1 style="font-size:22px;color:#1a1a1a;font-weight:700;border-bottom:2px solid #1a73e8;padding-bottom:12px;margin:24px 0 6px;line-height:1.4;">一文搞懂 Gravitino 的核心对象：Metalake → Catalog → Schema → Table</h1>
+<p style="color:#aaa;font-size:13px;font-style:italic;margin:4px 0 14px;line-height:1.5;">Understanding Gravitino's Core Object Model: Metalake, Catalog, Schema, and Beyond</p>
+<div style="font-size:15px;color:#595959;line-height:1.8;margin:16px 0 24px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:4px solid #1a73e8;">
+上一篇我们讲了 Gravitino 的四层架构。这一篇，我们把镜头拉近到<strong style="color:#1a73e8;font-weight:600;">核心对象模型</strong>——Metalake、Catalog、Schema、Table、Fileset、Topic、Model。理解了这些对象，你就能用 Gravitino 做几乎所有元数据管理工作。
+</div>
+<h2 style="font-size:17px;color:#1a73e8;font-weight:600;margin:32px 0 6px;padding:0 0 0 12px;border-left:4px solid #1a73e8;line-height:1.5;">一、全景：对象模型层级树</h2>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Gravitino 的对象模型是一个<strong style="color:#333;font-weight:600;">严格四层树形结构</strong>，从上到下分别是 Metalake → Catalog → Schema → 叶节点对象。先看一张全景图：</p>
+<img data-ratio="0.625" data-type="png" data-w="1080" src="https://mmbiz.qpic.cn/sz_mmbiz_png/ib9cXnJ19Z3QguQA1LxNMiaQX4bCqM4kb5hj1h0EkcgsD9jorDIIFPDcW8NxTNVm9wP7s7xTGhKPNpYhfIcXRRz4TpuOSdib1N0HEhZIZCuvsg/640?wx_fmt=png" style="max-width: 100%;border-radius: 8px;margin: 22px auto;display: block;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 4px;border: 1px solid rgb(232, 232, 232);height: auto !important;"/>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">关键特征：</p>
+<p style="margin:7px 0;line-height:1.75;font-size:15px;color:#595959;">• <strong style="color:#333;font-weight:600;">层级固定</strong>：Metalake → Catalog → Schema → Table/Fileset/Topic/Model，不能跳级</p>
+<p style="margin:7px 0;line-height:1.75;font-size:15px;color:#595959;">• <strong style="color:#333;font-weight:600;">同级类型混搭</strong>：一个 Schema 下可以同时有 Table、Fileset、Topic、Model</p>
+<p style="margin:7px 0;line-height:1.75;font-size:15px;color:#595959;">• <strong style="color:#333;font-weight:600;">统一 API</strong>：无论底层是 MySQL 还是 Kafka，操作方式完全相同</p>
+<h2 style="font-size:17px;color:#1a73e8;font-weight:600;margin:32px 0 6px;padding:0 0 0 12px;border-left:4px solid #1a73e8;line-height:1.5;">二、Metalake：元数据湖（顶层容器）</h2>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Metalake 是 Gravitino 对象模型的<strong style="color:#1a73e8;font-weight:600;">最顶层容器</strong>。你可以把它理解为一个「元数据租户」——每个团队、每个业务线拥有一个 Metalake，里面的所有元数据互不可见。</p>
+<img data-ratio="0.625" data-type="png" data-w="1080" src="https://mmbiz.qpic.cn/mmbiz_png/ib9cXnJ19Z3SWYibWcWSU6hBicLLvNdZC7vlLuLq5BbeZ8jaxb9tHBGiaxuibCDzN5w6xo1WGicEPwHBNDJSBJ2fkKQbgxMTXia7L7quPmlnDbuB8M/640?wx_fmt=png" style="max-width: 100%;border-radius: 8px;margin: 22px auto;display: block;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 4px;border: 1px solid rgb(232, 232, 232);height: auto !important;"/>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Metalake 的核心属性只有三个：</p>
+<div style="background:#282c34;padding:16px;border-radius:8px;white-space:pre;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;color:#abb2bf;overflow-x:auto;margin:16px 0;line-height:1.6;border:1px solid #3a3f4b;"><code style="background:none;padding:0;color:#abb2bf;font-size:13px;">// 创建 Metalake（REST API）
+POST /api/metalakes
+{
+  "name": "data_corp",         // 名称（全局唯一）
+  "comment": "数据平台团队",    // 描述（可选）
+  "properties": {}             // 自定义属性（可选）
+}
+
+// 响应
+{
+  "name": "data_corp",
+  "comment": "数据平台团队",
+  "audit": {
+    "creator": "admin",
+    "createTime": "2026-04-25T10:00:00Z"
+  },
+  "id": 1
+}</code></div>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;"><strong style="color:#333;font-weight:600;">使用建议</strong>：一个组织通常创建 1 个 Metalake（小团队）或按业务线创建多个（大组织）。Metalake 之间的元数据完全隔离，RBAC 权限也是独立生效的。</p>
+<h2 style="font-size:17px;color:#1a73e8;font-weight:600;margin:32px 0 6px;padding:0 0 0 12px;border-left:4px solid #1a73e8;line-height:1.5;">三、Catalog：数据源（核心抽象）</h2>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Catalog 是 Gravitino 最重要的抽象——<strong style="color:#1a73e8;font-weight:600;">每个 Catalog 代表一种数据源</strong>。一个 Metalake 下可以挂多个 Catalog，每个 Catalog 对应不同的数据源类型。</p>
+<img data-ratio="0.625" data-type="png" data-w="1080" src="https://mmbiz.qpic.cn/sz_mmbiz_png/ib9cXnJ19Z3SKyq4YrU7lD1ZuVPOaoPvonygUKFnlMcia7tPVdPDQHApx2XYgqQyrxGL96ia8Y2sj2qwicYicoC9ypAgN5sdw3YRoWHRv6fXtlDg/640?wx_fmt=png" style="max-width: 100%;border-radius: 8px;margin: 22px auto;display: block;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 4px;border: 1px solid rgb(232, 232, 232);height: auto !important;"/>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">创建 Catalog 时需要指定两个关键字段：</p>
+<p style="margin:7px 0;line-height:1.75;font-size:15px;color:#595959;">• <strong style="color:#333;font-weight:600;">type</strong>：数据源类型，包括 <code style="background:#f0f0f0;padding:1px 5px;color:#c7254e;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;border-radius:3px;">relational</code>（关系型）、<code style="background:#f0f0f0;padding:1px 5px;color:#c7254e;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;border-radius:3px;">lakehouse</code>（数据湖）、<code style="background:#f0f0f0;padding:1px 5px;color:#c7254e;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;border-radius:3px;">messaging</code>（消息队列）、<code style="background:#f0f0f0;padding:1px 5px;color:#c7254e;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;border-radius:3px;">file</code>（文件系统）等</p>
+<p style="margin:7px 0;line-height:1.75;font-size:15px;color:#595959;">• <strong style="color:#333;font-weight:600;">provider</strong>：具体实现，如 <code style="background:#f0f0f0;padding:1px 5px;color:#c7254e;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;border-radius:3px;">mysql</code>、<code style="background:#f0f0f0;padding:1px 5px;color:#c7254e;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;border-radius:3px;">hive</code>、<code style="background:#f0f0f0;padding:1px 5px;color:#c7254e;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;border-radius:3px;">kafka</code> 等</p>
+<div style="background:#282c34;padding:16px;border-radius:8px;white-space:pre;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;color:#abb2bf;overflow-x:auto;margin:16px 0;line-height:1.6;border:1px solid #3a3f4b;"><code style="background:none;padding:0;color:#abb2bf;font-size:13px;">// 创建 MySQL Catalog
+POST /api/metalakes/data_corp/catalogs
+{
+  "name": "mysql_prod",
+  "type": "relational",
+  "provider": "mysql",
+  "comment": "生产 MySQL 集群",
+  "properties": {
+    "jdbc-url": "jdbc:mysql://prod-mysql:3306",
+    "jdbc-user": "admin",
+    "jdbc-password": "***",
+    "jdbc-database": "*"      // * 表示暴露所有 database
+  }
+}
+
+// 创建 Kafka Catalog
+{
+  "name": "kafka_prod",
+  "type": "messaging",
+  "provider": "kafka",
+  "properties": {
+    "bootstrap.servers": "kafka-broker1:9092,kafka-broker2:9092"
+  }
+}</code></div>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">创建成功后，Catalog 下的 Schema 和 Table 就会自动从底层数据源同步过来——你不需要手动一个个创建，Gravitino 的 Connector 会直接操作底层系统获取元数据。</p>
+<h2 style="font-size:17px;color:#1a73e8;font-weight:600;margin:32px 0 6px;padding:0 0 0 12px;border-left:4px solid #1a73e8;line-height:1.5;">四、Schema：命名空间</h2>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Schema 是 Catalog 下的逻辑分组，对应关系型数据库中的「database」或「namespace」。它不需要手动创建——当你连接一个 MySQL Catalog 时，MySQL 中的所有 database 会自动以 Schema 的形式出现在 Gravitino 中。</p>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Schema 本身很简单，主要就是名称和注释。它的真正价值在于<strong style="color:#1a73e8;font-weight:600;">作为叶节点对象的容器</strong>。</p>
+<div style="background:#282c34;padding:16px;border-radius:8px;white-space:pre;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;color:#abb2bf;overflow-x:auto;margin:16px 0;line-height:1.6;border:1px solid #3a3f4b;"><code style="background:none;padding:0;color:#abb2bf;font-size:13px;">// 列出 Catalog 下的所有 Schema
+GET /api/metalakes/data_corp/catalogs/mysql_prod/schemas
+
+// 响应（自动从 MySQL 同步）
+{
+  "schemas": [
+    { "name": "ecommerce", "comment": null },
+    { "name": "inventory", "comment": null },
+    { "name": "analytics", "comment": "分析库" }
+  ]
+}</code></div>
+<h2 style="font-size:17px;color:#1a73e8;font-weight:600;margin:32px 0 6px;padding:0 0 0 12px;border-left:4px solid #1a73e8;line-height:1.5;">五、五种叶节点对象</h2>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Schema 之下有五种叶节点对象，每种对应不同类型的元数据：</p>
+<img data-ratio="0.625" data-type="png" data-w="1080" src="https://mmbiz.qpic.cn/mmbiz_png/ib9cXnJ19Z3RO57cjTPFZvQaaCDfImxysYRuLhuvKOt3aibq8kwWLDC7f5wdFZkdBCSY0FAOFNhGYRQ6PJ2NbuUaua39BXw3D3rRc7vpMgpb4/640?wx_fmt=png" style="max-width: 100%;border-radius: 8px;margin: 22px auto;display: block;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 4px;border: 1px solid rgb(232, 232, 232);height: auto !important;"/>
+<h3 style="font-size:16px;color:#333;font-weight:600;margin:24px 0 8px;">5.1 Table（关系型表）</h3>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Table 是最常见的叶节点对象，描述关系型数据的表结构。包含列定义（名称、类型、注释）、分区信息、表属性等。</p>
+<div style="background:#282c34;padding:16px;border-radius:8px;white-space:pre;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;color:#abb2bf;overflow-x:auto;margin:16px 0;line-height:1.6;border:1px solid #3a3f4b;"><code style="background:none;padding:0;color:#abb2bf;font-size:13px;">// 获取表结构
+GET /api/.../schemas/ecommerce/tables/users
+
+// 响应（自动从 MySQL INFORMATION_SCHEMA 同步）
+{
+  "name": "users",
+  "comment": "用户表",
+  "columns": [
+    { "name": "id", "type": "BIGINT", "nullable": false, "comment": "用户ID" },
+    { "name": "name", "type": "VARCHAR(100)", "nullable": false, "comment": "用户名" },
+    { "name": "email", "type": "VARCHAR(200)", "nullable": true, "comment": "邮箱" }
+  ]
+}</code></div>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Gravitino 的 Table API 不会改变底层的表数据，只负责<strong style="color:#333;font-weight:600;">元数据的读取和管理</strong>。你通过 Gravitino 读取一个 Iceberg 表的列定义，实际上是由 Iceberg Connector 调用底层 Iceberg REST Catalog 获取的。</p>
+<h3 style="font-size:16px;color:#333;font-weight:600;margin:24px 0 8px;">5.2 Fileset（文件集）</h3>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Fileset 是 Gravitino 对<strong style="color:#1a73e8;font-weight:600;">非结构化/半结构化文件</strong>的元数据抽象。它将底层存储系统（S3、HDFS、GCS）中的文件目录映射为一个逻辑名称，纳入统一的元数据管理。</p>
+<img data-ratio="0.625" data-type="png" data-w="1080" src="https://mmbiz.qpic.cn/mmbiz_png/ib9cXnJ19Z3Spx67cYkNDAJsSXkNAicTufQAqiauaE3HrRxLkvTBGvveeXW6LPWPggfMGUMNkecuwhxUsXMG9TTR2epteSL9fQ6ibMrYeWnDP1o/640?wx_fmt=png" style="max-width: 100%;border-radius: 8px;margin: 22px auto;display: block;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 4px;border: 1px solid rgb(232, 232, 232);height: auto !important;"/>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">典型场景：</p>
+<p style="margin:7px 0;line-height:1.75;font-size:15px;color:#595959;">• <strong style="color:#333;font-weight:600;">ETL 原始数据</strong>：日志文件、CSV、JSON 等原始数据目录的元数据管理</p>
+<p style="margin:7px 0;line-height:1.75;font-size:15px;color:#595959;">• <strong style="color:#333;font-weight:600;">ML 训练数据集</strong>：图片、音频、特征向量等训练素材目录</p>
+<p style="margin:7px 0;line-height:1.75;font-size:15px;color:#595959;">• <strong style="color:#333;font-weight:600;">数据湖 Staging 层</strong>：增量数据的暂存目录</p>
+<p style="margin:7px 0;line-height:1.75;font-size:15px;color:#595959;">• <strong style="color:#333;font-weight:600;">报表导出</strong>：BI 报表的输出目录</p>
+<div style="background:#282c34;padding:16px;border-radius:8px;white-space:pre;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;color:#abb2bf;overflow-x:auto;margin:16px 0;line-height:1.6;border:1px solid #3a3f4b;"><code style="background:none;padding:0;color:#abb2bf;font-size:13px;">// 创建 Fileset
+POST /api/.../schemas/data_lake/filesets
+{
+  "name": "raw_logs",
+  "comment": "ETL 原始日志文件",
+  "properties": {
+    "location": "s3://data-bucket/raw-logs/",
+    "storage-location": "s3://data-bucket/raw-logs/"
+  }
+}
+
+// 核心价值：用逻辑名称 catalog.schema.raw_logs
+// 代替物理路径 s3://data-bucket/raw-logs/
+// 享受统一的 RBAC、标签和审计</code></div>
+<h3 style="font-size:16px;color:#333;font-weight:600;margin:24px 0 8px;">5.3 Topic（消息主题）</h3>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Topic 对象管理 Kafka 等消息队列的元数据。在没有 Gravitino 之前，Kafka Topic 的管理通常需要单独的 Admin 工具，和关系型元数据完全割裂。有了 Topic 对象，Kafka 的元数据也能纳入统一管理。</p>
+<div style="background:#282c34;padding:16px;border-radius:8px;white-space:pre;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;color:#abb2bf;overflow-x:auto;margin:16px 0;line-height:1.6;border:1px solid #3a3f4b;"><code style="background:none;padding:0;color:#abb2bf;font-size:13px;">// 列出 Kafka Catalog 下的 Topic
+GET /api/.../catalogs/kafka_prod/schemas/events/topics
+
+// 响应（自动从 Kafka Cluster 同步）
+{
+  "topics": [
+    { "name": "order_created", "comment": "订单创建事件" },
+    { "name": "user_registered", "comment": "用户注册事件" }
+  ]
+}</code></div>
+<h3 style="font-size:16px;color:#333;font-weight:600;margin:24px 0 8px;">5.4 Model 和 ModelVersion（ML 模型）</h3>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">这是 Gravitino v1.0 引入的新对象，面向 AI/ML 场景。Model 对象描述一个机器学习模型，ModelVersion 描述模型的具体版本。</p>
+<div style="background:#282c34;padding:16px;border-radius:8px;white-space:pre;font-family:Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;color:#abb2bf;overflow-x:auto;margin:16px 0;line-height:1.6;border:1px solid #3a3f4b;"><code style="background:none;padding:0;color:#abb2bf;font-size:13px;">// Model 对象结构
+{
+  "name": "recommendation_v2",
+  "comment": "推荐模型 v2",
+  "properties": {
+    "algorithm": "deepfm",
+    "training_dataset": "s3://ml-datasets/recommendation/"
+  }
+}
+
+// ModelVersion 对象
+{
+  "version": 2,
+  "uri": "s3://ml-models/recommendation/v2/model.pt",
+  "alias": ["production", "champion"],
+  "comment": "AUC: 0.847, 上线测试通过"
+}
+
+// 一个 Model 下可以有多个 ModelVersion
+// 支持别名（alias）标记版本状态：staging / production / archived</code></div>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Model + ModelVersion 的设计灵感来自 MLflow，但 Gravitino 的优势在于<strong style="color:#1a73e8;font-weight:600;">模型元数据和数据元数据在同一个 Metalake 里</strong>——你可以直接追踪「这个模型用了哪些表的数据训练的」，实现真正的 Data + AI 统一治理。</p>
+<h2 style="font-size:17px;color:#1a73e8;font-weight:600;margin:32px 0 6px;padding:0 0 0 12px;border-left:4px solid #1a73e8;line-height:1.5;">六、对象继承：标签和策略如何向下传递</h2>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Gravitino 的对象模型有一个非常实用的设计：<strong style="color:#1a73e8;font-weight:600;">标签（Tag）和策略（Policy）支持继承</strong>。当你在 Metalake 级别打上「PII」标签，其下所有 Catalog、Schema、Table 都会自动继承这个标签。</p>
+<div style="background:#f0f7ff;border-radius:6px;padding:10px 16px;margin:16px 0;font-size:14px;color:#2d5fa3;border-left:3px solid #1a73e8;">
+<strong style="font-weight:600;">继承规则</strong>：Metalake 上的标签/策略会向下级联到所有 Catalog → Schema → Table。Catalog 级别的标签会级联到其下所有 Schema → Table。但如果子对象显式设置了不同的标签，以子对象为准（子覆盖父）。
+</div>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">这意味着你只需要在 Metalake 层面打一次标签，就不用逐个 Catalog、逐个 Table 去标记了。当安全团队要求「所有包含用户信息的表都标记 PII 并自动脱敏」，这个工作变得非常简单。</p>
+<h2 style="font-size:17px;color:#1a73e8;font-weight:600;margin:32px 0 6px;padding:0 0 0 12px;border-left:4px solid #1a73e8;line-height:1.5;">七、小结</h2>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">Gravitino 的核心对象模型用一套统一的四层命名空间，把关系型数据库、数据湖、消息队列、文件系统和 ML 模型这五种完全不同的元数据类型纳入了同一个管理体系。</p>
+<p style="margin:7px 0;line-height:1.75;font-size:15px;color:#595959;">• <strong style="color:#333;font-weight:600;">Metalake</strong>：顶层容器，提供多租户隔离</p>
+<p style="margin:7px 0;line-height:1.75;font-size:15px;color:#595959;">• <strong style="color:#333;font-weight:600;">Catalog</strong>：对应一种数据源，通过 type + provider + properties 描述连接信息</p>
+<p style="margin:7px 0;line-height:1.75;font-size:15px;color:#595959;">• <strong style="color:#333;font-weight:600;">Schema</strong>：命名空间，自动从底层数据源同步</p>
+<p style="margin:7px 0;line-height:1.75;font-size:15px;color:#595959;">• <strong style="color:#333;font-weight:600;">Table / Fileset / Topic / Model</strong>：四种叶节点对象，覆盖关系型数据、文件、消息流和 AI 模型</p>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">下一篇，我们进入<strong style="color:#1a73e8;font-weight:600;">实战环节</strong>——从零安装 Gravitino，创建第一个 Metalake，连接第一个 Catalog，完成一次完整的元数据操作。代码级别的教程，建议跟着动手实践。</p>
+<div style="margin-top:40px;padding-top:18px;border-top:1px solid #e8e8e8;">
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;">这是<strong style="color:#1a73e8;font-weight:600;">元数据管理系统系列</strong>第 7 篇，基于 Apache Gravitino v1.2.0 官方文档。</p>
+<p style="margin:14px 0;line-height:1.8;color:#595959;text-align:justify;"><strong style="color:#333;font-weight:600;">系列目录：</strong>元数据管理概论 → 演进史 → 核心能力 → 三大平台对比 → Gravitino 全景 → 四层架构 → <span style="background:#fff8e1;padding:1px 5px;border-radius:3px;color:#9a6e00;">核心对象模型</span> → 快速上手</p>
+</div>
+</div><p>
+</p><p style="display: none;"><mp-style-type data-value="10000"></mp-style-type></p></div>
+</div>
+</article>
+</body>
+</html>

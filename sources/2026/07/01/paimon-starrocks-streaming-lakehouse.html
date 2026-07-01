@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paimon+StarRocks流式湖仓构建</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>Paimon+StarRocks流式湖仓构建</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：未知</span>
+<span>来源：<a href="https://help.aliyun.com/zh/flink/realtime-flink/use-cases/build-a-streaming-data-warehouse-based-on-flink-and-apache-paimon" target="_blank">help.aliyun.com</a></span>
+<span>平台：aliyun</span>
+<span>图片：2 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<div class="markdown-body"><div class="icms-help-docs-content" lang="zh">
+<main id="main-2540554">
+<p class="shortdesc" data-tag="shortdesc" id="82893ab281p2i">本文为您介绍如何通过实时计算<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>版、流式数据湖仓<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>和分析型数据库<span class="help-letter-space"></span>StarRocks<span class="help-letter-space"></span>搭建流式湖仓。</p>
+<div class="body" data-tag="body" id="2a40d6f60daqm">
+<section class="section" id="889ab9c082sj8">
+<h2 id="891715b082n3i" uuid="lma1v8olsi0bnkv3zjn">背景信息</h2>
+<p id="89173cc08204v" uuid="lma1vd29j9rw1js3peb">随着社会数字化发展，企业对数据时效性的需求越来越强烈。传统的离线数仓搭建方法论比较明确，通过定时调度离线作业的方式，将上一时段产生的新鲜变更并入分层的数仓中（ODS-&gt;DWD-&gt;DWS-&gt;ADS），但是存在延时长和成本高两大问题。离线作业的调度通常每小时甚至每天才进行一次，数据的消费者仅能看到上一小时甚至昨天的数据。同时，数据的更新多以覆写（overwrite）分区的方式进行，需要重新读取分区中原有的数据，才能与新鲜变更合并，产生新的结果数据。</p>
+<p id="89173cc28296h" uuid="lma89pblwva41bw88sm">基于实时计算<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>版和流式数据湖仓<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>搭建流式湖仓可以解决上述传统离线数仓的问题。利用<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>的实时计算能力，数据可以在数仓分层之间实时流动。同时，利用<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>高效的更新能力，数据变更可以在分钟级的延时内传递给下游消费者。因此，流式湖仓在延时和成本上具有双重优势。</p>
+<p id="89173cc382r7h" uuid="lma8mi9zj9seygn7gbh">关于流式数据湖仓<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>的更多特性，请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/developer-reference/apache-paimon-connector#3267cb80e1civ" id="8987fff0820r2" title="">特色功能</a>和<span class="help-letter-space"></span><a class="" href="https://paimon.apache.org/" id="891763d082bhh">Apache Paimon<span class="help-letter-space"></span>官方网站</a>。</p>
+</section>
+<section class="section" id="8b425a208282x">
+<h2 id="a135b4d082iil" uuid="lma8lqm5cpb1ry9xhfl">方案架构和优势</h2>
+<h3 id="66f8159182zds"><b>架构</b></h3>
+<p id="a135b4d182zzh" uuid="lma8luaefkw4k3ozlu6">实时计算<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>版是强大的流式计算引擎，支持对海量实时数据高效处理。流式数据湖仓<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>是流批统一的湖存储格式，支持高吞吐的更新和低延迟的查询。Paimon<span class="help-letter-space"></span>与<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>深度集成，能够提供一体化的流式湖仓联合解决方案。本文基于<span class="help-letter-space"></span>Flink+Paimon<span class="help-letter-space"></span>搭建流式湖仓的方案架构如下：</p>
+<ol id="a135b4d282ofp">
+<li id="a135b4d3829es">
+<p id="a135b4d482le0">Flink<span class="help-letter-space"></span>将数据源写入<span class="help-letter-space"></span>Paimon，形成<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层。</p>
+</li>
+<li id="a135b4d582s5l">
+<p id="a135b4d682kow">Flink<span class="help-letter-space"></span>订阅<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层的变更数据（Changelog）进行加工，形成<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层再次写入<span class="help-letter-space"></span>Paimon。</p>
+</li>
+<li id="a135b4d7826l4">
+<p id="a135b4d88233t">Flink<span class="help-letter-space"></span>订阅<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层的<span class="help-letter-space"></span>Changelog<span class="help-letter-space"></span>进行加工，形成<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层再次写入<span class="help-letter-space"></span>Paimon。</p>
+</li>
+<li id="a135dbe0829lq">
+<p id="a135dbe182fo1">最后由<a class="xref" href="https://help.aliyun.com/zh/emr/emr-serverless-starrocks/product-overview/what-is-emr-serverless-starrocks" id="ae6c8edc7btyj" title="">开源大数据平台<span class="help-letter-space"></span>E-MapReduce<span class="help-letter-space"></span>的<span class="help-letter-space"></span>StarRocks</a><span class="help-letter-space"></span>读取<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>外部表，对外提供应用查询。</p>
+</li>
+</ol>
+<p id="0697b0c082foo"><img alt="image" class="image break" id="924945a2429gm" placement="break" src="https://help-static-aliyun-doc.aliyuncs.com/assets/img/zh-CN/8316807271/p843511.png"/></p>
+<h3 id="a823635082cmt"><b>优势</b></h3>
+<p id="6d1a5dc082apw">该方案有如下优势：</p>
+<ul id="ace3355082tv3">
+<li id="ace35c6082w2m">
+<p id="ace35c6182ivk">Paimon<span class="help-letter-space"></span>的每一层数据都可以在分钟级的延时内将变更传递给下游，将传统离线数仓的延时从小时级甚至天级降低至分钟级。</p>
+</li>
+<li id="ace35c628270j">
+<p id="ace35c6382qaf">Paimon<span class="help-letter-space"></span>的每一层数据都可以直接接受变更数据，无需覆写分区，极大地降低了传统离线数仓数据更新与订正的成本，解决了中间层数据不易查、不易更新、不易修正的问题。</p>
+</li>
+<li id="ace35c6482jvo">
+<p id="ace35c658292i">模型统一，架构简化。ETL<span class="help-letter-space"></span>链路的逻辑是基于<span class="help-letter-space"></span>Flink SQL<span class="help-letter-space"></span>实现的；ODS<span class="help-letter-space"></span>层、DWD<span class="help-letter-space"></span>层和<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层的数据统一存储在<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>中，可以降低架构复杂度，提高数据处理效率。</p>
+</li>
+</ul>
+<p id="ace35c6682g4h" left="0" uuid="lma8z8c0it4yddnis9">该方案依赖于<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>的三个核心能力，详情如下表所示。</p>
+<table autofit="true" class="table" id="ace35c6782oh4" tablecolswidth="26.37 73.63" tablewidth="100">
+<colgroup colwidth="0.53*" style="width:26.37%"></colgroup>
+<colgroup colwidth="1.47*" style="width:73.63%"></colgroup>
+<tbody class="tbody">
+<tr id="ace35c6882drd" style="height:42px">
+<td colspan="1" id="ace35c698239e" rowspan="1" style="background-color:#e5e5e5">
+<p id="ace35c6a82u7e" uuid="lma8zz2yy2gx5290qob"><b>Paimon<span class="help-letter-space"></span>核心能力</b></p>
+</td>
+<td colspan="1" id="ace35c6b82ocg" rowspan="1" style="background-color:#e5e5e5">
+<p id="ace35c6c82qch" uuid="lma8zz2yofjvf1687fe"><b>详情</b></p>
+</td>
+</tr>
+<tr id="ace35c6d82i7h">
+<td colspan="1" id="ace35c6e82rho" rowspan="1">
+<p id="ace35c6f82c92" uuid="lma8zz2y0j1lww60bzje">主键表更新</p>
+</td>
+<td colspan="1" id="ace35c70829aq" rowspan="1">
+<p id="ace35c7182uv1" uuid="lma8zz2y1slpkjlbx5c">Paimon<span class="help-letter-space"></span>底层使用<span class="help-letter-space"></span>LSM Tree<span class="help-letter-space"></span>数据结构，可以实现高效的数据更新。</p>
+<p id="bc3363c082i7m" uuid="loxy0wsdr1sm93gw5ro">关于<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>主键表、Paimon<span class="help-letter-space"></span>底层数据结构的介绍请参见<span class="help-letter-space"></span><a class="" href="https://paimon.apache.org/docs/master/primary-key-table/overview/" id="bb389b20387l4">Primary Key Table</a><span class="help-letter-space"></span>和<span class="help-letter-space"></span><a class="" href="https://paimon.apache.org/docs/master/concepts/basic-concepts/" id="2e8fc3e126glm">File Layouts</a>。</p>
+</td>
+</tr>
+<tr id="ace3837082xep">
+<td colspan="1" id="ace3837182g64" rowspan="1">
+<p id="ace3837282k3p" uuid="lma8zz2y273k8c9oxn2">增量数据产生机制（Changelog Producer）</p>
+</td>
+<td colspan="1" id="ace3837382m1p" rowspan="1">
+<p id="ace3837482u8w" uuid="lma8zz2ymurjdjk3zp">Paimon<span class="help-letter-space"></span>可以为任意输入数据流产生完整的增量数据（所有的<span class="help-letter-space"></span>update_after<span class="help-letter-space"></span>数据都有对应的<span class="help-letter-space"></span>update_before<span class="help-letter-space"></span>数据），保证数据变更可以完整地传递给下游。详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/developer-reference/apache-paimon-connector#c6b80280f8dbb" id="ad0cb65082s8v" title="">增量数据产生机制</a>。</p>
+</td>
+</tr>
+<tr id="ace3837682t1u">
+<td colspan="1" id="ace3837782meh" rowspan="1">
+<p id="ace3837882fam" uuid="lma96nlted6euue96tf">数据合并机制（Merge Engine）</p>
+</td>
+<td colspan="1" id="ace3837982kk4" rowspan="1">
+<p id="ace3837a8235m" uuid="lma96nlta3mgxwnkmc">当<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>主键表收到多条具有相同主键的数据时，为了保持主键的唯一性，Paimon<span class="help-letter-space"></span>结果表会将这些数据合并成一条数据。Paimon<span class="help-letter-space"></span>支持去重、部分更新、预聚合等丰富多样的数据合并行为，详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/developer-reference/apache-paimon-connector#11820d80e11tv" id="ad09d020828fo" title="">数据合并机制</a>。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" id="be0be89082064">
+<h2 id="c3ebd09082gxv" left="0" uuid="lma8zthvqlsxhmpyw1h">实践场景</h2>
+<p id="c3ebd09182otf" uuid="lmagokk2n8m6h6bruml">本文以某个电商平台为例，通过搭建一套流式湖仓，实现数据的加工清洗，并支持上层应用对数据的查询。流式湖仓实现了数据的分层和复用，并支撑各个业务方的报表查询（交易大屏、行为数据分析、用户画像标签）以及个性化推荐等多个业务场景。</p>
+<p id="3756107082464" uuid="loxy5c6va3e5mhqfp2"><img alt="image" class="image break" id="cc20329a12cx9" placement="break" src="https://help-static-aliyun-doc.aliyuncs.com/assets/img/zh-CN/8316807271/p843513.png"/></p>
+<ol id="c758e3d082sm6">
+<li id="c758e3d182p6p">
+<p id="c758e3d282dqr">构建<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层：业务数据库实时入仓<span class="help-letter-space"></span><br/>MySQL<span class="help-letter-space"></span>有<span class="help-letter-space"></span>orders（订单表），orders_pay（订单支付表）和<span class="help-letter-space"></span>product_catalog（商品类别字典表）三张业务表，这三张表通过<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>实时写入<span class="help-letter-space"></span>OSS，并以<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>格式进行存储，作为<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层。<br/><br/><br/><br/></p>
+</li>
+<li id="c758e3d3827zj">
+<p id="c758e3d482r6v">构建<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层：主题宽表<br/>将订单表、商品类别字典表、订单支付表利用<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>的部分更新（partial-update）合并机制进行打宽，以分钟级延时生成<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层宽表并产出变更数据（Changelog）。<br/><br/><br/><br/></p>
+</li>
+<li id="c758e3d582uh6">
+<p id="c758e3d682dtb">构建<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层：指标计算<span class="help-letter-space"></span><br/>Flink<span class="help-letter-space"></span>实时消费宽表的变更数据，利用<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>的预聚合（aggregation）合并机制产出<span class="help-letter-space"></span>DWM<span class="help-letter-space"></span>层<span class="help-letter-space"></span>dwm_users_shops（用户-商户聚合中间表），并最终产出<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层<span class="help-letter-space"></span>dws_users（用户聚合指标表）以及<span class="help-letter-space"></span>dws_shops（商户聚合指标表）。<br/><br/><br/><br/></p>
+</li>
+</ol>
+</section>
+<section class="section" id="cc4bfad082usy">
+<h2 id="d0d49030827ad"><b>前提条件</b></h2>
+<ul id="d270db1182dyw">
+<li id="d1e4eec082tm8">
+<p id="5f72348821g5o" uuid="m9tpslad85t2jmv5krf">已开通数据湖构建，推荐使用<span class="help-letter-space"></span>DLF 2.5<span class="help-letter-space"></span>提供作为存储服务，详情请参见<a class="xref" href="https://help.aliyun.com/zh/dlf/dlf-2-0/getting-started/data-catalog-quick-start" id="c13c32ec9f7yd" title="">快速使用<span class="help-letter-space"></span>DLF</a>。</p>
+</li>
+<li id="d0d5538082z21">
+<p id="d0d5538182p5g">已开通<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>全托管，详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/getting-started/activate-fully-managed-flink" id="d0f6be3082j0e" title="">开通实时计算<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>版</a>。</p>
+</li>
+<li id="8994ce3082p0i">
+<p id="8a182f0082yfz">已开通<span class="help-letter-space"></span>EMR<span class="help-letter-space"></span>的<span class="help-letter-space"></span>StarRocks，详情请参见<a class="xref" href="https://help.aliyun.com/zh/emr/emr-serverless-starrocks/getting-started/use-compute-storage-separation-instances" id="340d501a14ylm" title="">快速使用存算分离版实例</a>。 </p>
+</li>
+</ul>
+<div class="note note-note" id="b7b537c088vdi" type="note"><div class="note-icon-wrapper"><i class="icon-note note note"></i></div><div class="noteContentSpan"><strong>说明 </strong>
+<p id="6d10451087ydu">StarRocks<span class="help-letter-space"></span>实例、DLF<span class="help-letter-space"></span>需要与<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>工作空间处于相同地域。</p>
+</div></div>
+</section>
+<section class="section" id="dd74d52082t3f">
+<h2 id="dd74d521828bw"><b>使用限制</b></h2>
+<p id="e5f6df4282pjd">仅实时计算引擎<span class="help-letter-space"></span>VVR 11.1.0<span class="help-letter-space"></span>及以上版本支持该流式湖仓方案。</p>
+</section>
+<section class="section" id="9e63a2e082n83">
+<h2 id="ba66a82082flm" left="0" uuid="lmeakieatfc2bkk6oy">构建流式湖仓</h2>
+<section class="section" id="1b45d9e082tel">
+<h3 id="1b45d9e182s1h"><b>准备</b><span class="help-letter-space"></span>MySQL CDC<span class="help-letter-space"></span><b>数据源</b></h3>
+<p id="36056d3082k84">本文以云数据库<span class="help-letter-space"></span>RDS MySQL<span class="help-letter-space"></span>版为例，创建数据库名称为<span class="help-letter-space"></span>order_dw，并创建三张业务表及数据。</p>
+<ol id="a9590c12820j9">
+<li id="a9590c1082x2b">
+<p id="a864c10082r2d"><a class="xref" href="https://help.aliyun.com/zh/rds/create-an-apsaradb-rds-for-mysql-instance" id="b9f759a082mso" title="">快速创建<span class="help-letter-space"></span>RDS MySQL<span class="help-letter-space"></span>实例</a>。</p>
+<div class="note note-important" id="d5aa6a2182lfn" type="important"><div class="note-icon-wrapper"><i class="icon-note note important"></i></div><div class="noteContentSpan"><strong>重要 </strong>
+<p id="d638042082fij">RDS MySQL<span class="help-letter-space"></span>版实例需要与<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>工作空间处于同一<span class="help-letter-space"></span>VPC。不在同一<span class="help-letter-space"></span>VPC<span class="help-letter-space"></span>下时请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/support/faq-about-network-connectivity#0f0ec3e8desii" id="7174a87165yo2" title="">如何访问跨<span class="help-letter-space"></span>VPC<span class="help-letter-space"></span>的其他服务？</a></p>
+</div></div>
+</li>
+<li id="d348373182jbh">
+<p id="d3483730829j0"><a class="xref" href="https://help.aliyun.com/zh/rds/create-databases-and-accounts-for-an-apsaradb-rds-for-mysql-instance" id="dfa8978082rzv" title="">创建数据库和账号</a>。</p>
+<p id="e2dcdbd7a2ixe">创建名称为<span class="help-letter-space"></span>order_dw<span class="help-letter-space"></span>的数据库，并创建高权限账号或具有数据库<span class="help-letter-space"></span>order_dw<span class="help-letter-space"></span>读写权限的普通账号。</p>
+<p id="0f645a20e5hyq">创建三张表，并插入相应数据。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="1540517d4dp7j" outputclass="language-sql"><code>CREATE TABLE `orders` (
+  order_id bigint not null primary key,
+  user_id varchar(50) not null,
+  shop_id bigint not null,
+  product_id bigint not null,
+  buy_fee bigint not null,   
+  create_time timestamp not null,
+  update_time timestamp not null default now(),
+  state int not null
+);
+CREATE TABLE `orders_pay` (
+  pay_id bigint not null primary key,
+  order_id bigint not null,
+  pay_platform int not null, 
+  create_time timestamp not null
+);
+CREATE TABLE `product_catalog` (
+  product_id bigint not null primary key,
+  catalog_name varchar(50) not null
+);
+-- 准备数据
+INSERT INTO product_catalog VALUES(1, 'phone_aaa'),(2, 'phone_bbb'),(3, 'phone_ccc'),(4, 'phone_ddd'),(5, 'phone_eee');
+INSERT INTO orders VALUES
+(100001, 'user_001', 12345, 1, 5000, '2023-02-15 16:40:56', '2023-02-15 18:42:56', 1),
+(100002, 'user_002', 12346, 2, 4000, '2023-02-15 15:40:56', '2023-02-15 18:42:56', 1),
+(100003, 'user_003', 12347, 3, 3000, '2023-02-15 14:40:56', '2023-02-15 18:42:56', 1),
+(100004, 'user_001', 12347, 4, 2000, '2023-02-15 13:40:56', '2023-02-15 18:42:56', 1),
+(100005, 'user_002', 12348, 5, 1000, '2023-02-15 12:40:56', '2023-02-15 18:42:56', 1),
+(100006, 'user_001', 12348, 1, 1000, '2023-02-15 11:40:56', '2023-02-15 18:42:56', 1),
+(100007, 'user_003', 12347, 4, 2000, '2023-02-15 10:40:56', '2023-02-15 18:42:56', 1);
+INSERT INTO orders_pay VALUES
+(2001, 100001, 1, '2023-02-15 17:40:56'),
+(2002, 100002, 1, '2023-02-15 17:40:56'),
+(2003, 100003, 0, '2023-02-15 17:40:56'),
+(2004, 100004, 0, '2023-02-15 17:40:56'),
+(2005, 100005, 0, '2023-02-15 18:40:56'),
+(2006, 100006, 0, '2023-02-15 18:40:56'),
+(2007, 100007, 0, '2023-02-15 18:40:56');</code></pre>
+</li>
+</ol>
+</section>
+<section class="section" id="be15f480828pl">
+<h3 id="c1106fd0829cq" left="0" uuid="lmeaklxvk0f4p89wmea">管理元数据</h3>
+<h3 id="3c3dc0c5559oa"><b>创建<span class="help-letter-space"></span>Paimon Catalog</b></h3>
+<ol id="1198872652xwj">
+<li id="52ceea4550a89">
+<p id="d118ac43deis7">登录<a class="" href="https://realtime-compute.console.aliyun.com/regions" id="ed43a5458267c">实时计算控制台</a>。</p>
+</li>
+<li id="2ef89dcf02ahk">
+<p id="3652ac24f413f">在左侧导航栏，选择<b class="uicontrol" data-tag="uicontrol" id="ce09931082imd">元数据管理</b>页面，单击<b class="uicontrol" data-tag="uicontrol" id="ee17651afc9q0">创建<span class="help-letter-space"></span>Catalog</b>。</p>
+</li>
+<li id="3b20783a714hs">
+<p id="4e5659bfd9ly0">在<b class="uicontrol" data-tag="uicontrol" id="b6b289cc085se">内置<span class="help-letter-space"></span>Catalog</b><span class="help-letter-space"></span>页签，单击<span class="help-letter-space"></span><b class="uicontrol" data-tag="uicontrol" id="befa6b0a13326">Apache Paimon</b>，单击<b class="uicontrol" data-tag="uicontrol" id="a240795931xi5">下一步</b>。</p>
+</li>
+<li id="0bbd6e28f0wgi">
+<p id="9dc75c14eccmh">填写以下参数，选择<span class="help-letter-space"></span>DLF<span class="help-letter-space"></span>作为存储类型，单击<b class="uicontrol" data-tag="uicontrol" id="c8a45ae8cb3sp">确定</b>。</p>
+<table autofit="true" class="table" id="5f6d1e8448buj" tablecolswidth="23.91 25.22 7.83 43.04" tablewidth="100">
+<colgroup colwidth="0.96*" style="width:23.91%"></colgroup>
+<colgroup colwidth="1.01*" style="width:25.22%"></colgroup>
+<colgroup colwidth="0.31*" style="width:7.83%"></colgroup>
+<colgroup colwidth="1.72*" style="width:43.04%"></colgroup>
+<tbody class="tbody">
+<tr id="83fcb828ccm31">
+<td colspan="1" id="084cc818e38yh" rowspan="1" style="background-color:rgb(229, 229, 229);vertical-align:middle">
+<p id="bb3343fc57g0a" uuid="lmebl7si9ljj4oj2y">配置项</p>
+</td>
+<td colspan="1" id="9dafec98a2lee" rowspan="1" style="background-color:rgb(229, 229, 229);vertical-align:middle">
+<p id="3504482355bab" uuid="lmebl7siyykorbz9jz">说明</p>
+</td>
+<td colspan="1" id="654e294121j82" rowspan="1" style="background-color:rgb(229, 229, 229);vertical-align:middle">
+<p id="d1dc32caa52hv" uuid="lmebl7si51ahwa9xerk">是否必填</p>
+</td>
+<td colspan="1" id="1df4cd711ccl6" rowspan="1" style="background-color:rgb(229, 229, 229);vertical-align:middle">
+<p id="d5845ce8c1g2a" uuid="lmebl7sikn36lyctphi">备注</p>
+</td>
+</tr>
+<tr id="a73f41013cf7e">
+<td colspan="1" id="c4252f5681ijx" rowspan="1" style="vertical-align:middle">
+<p id="41b0fd3cfcvcv">metastore</p>
+</td>
+<td colspan="1" id="217af6b166ag7" rowspan="1" style="vertical-align:middle">
+<p id="1d0207f0831m7">元数据存储类型。</p>
+</td>
+<td colspan="1" id="7c509bad4439g" rowspan="1" style="vertical-align:middle">
+<p id="f2947e57f4eq7" uuid="lmebl7sj2yfm7ns0udo">是</p>
+</td>
+<td colspan="1" id="5443263637og7" rowspan="1" style="vertical-align:middle">
+<p id="c422470a9enr7">此示例选择为<span class="help-letter-space"></span>dlf<span class="help-letter-space"></span>存储类型。</p>
+</td>
+</tr>
+<tr id="60ab94c79bfco">
+<td colspan="1" id="2c59e3c8e7omd" rowspan="1" style="vertical-align:middle">
+<p id="0a6f6016eaftt">catalog name</p>
+</td>
+<td colspan="1" id="8061fc1160kci" rowspan="1" style="vertical-align:middle">
+<p id="73ee5e8df96gs">DLF<span class="help-letter-space"></span>数据目录名称。</p>
+<div class="note note-important" id="dc82c4a13a698" type="important"><div class="note-icon-wrapper"><i class="icon-note note important"></i></div><div class="noteContentSpan"><strong>重要 </strong>
+<p id="e056c769f6ml6">使用<span class="help-letter-space"></span>RAM<span class="help-letter-space"></span>用户或角色时，请确保拥有<span class="help-letter-space"></span>DLF<span class="help-letter-space"></span>数据读写权限，详情请参见<a class="xref" href="https://help.aliyun.com/zh/dlf/dlf-2-0/user-guide/manage-data-permissions" id="2b7d4617dcmxb" title="">数据授权管理</a>。</p>
+</div></div>
+</td>
+<td colspan="1" id="525bd306007qv" rowspan="1" style="vertical-align:middle">
+<p id="28b44a0996rbb">是</p>
+</td>
+<td colspan="1" id="c164ac0263jmp" rowspan="1" style="vertical-align:middle">
+<p id="64d95140a6g41">推荐使用<span class="help-letter-space"></span><a class="xref" href="https://help.aliyun.com/zh/dlf/dlf-2-0/product-overview/product-introduction/" id="efdd75cb2cizg" title="">DLF 2.5</a>，无需您再填写<span class="help-letter-space"></span>AccessKey<span class="help-letter-space"></span>等信息，支持快速选择已创建的<span class="help-letter-space"></span>DLF<span class="help-letter-space"></span>数据目录，创建数据目录操作请参见<a class="xref" href="https://help.aliyun.com/zh/dlf/dlf-2-0/user-guide/manage-catalogs" id="0227f25e7drab" title="">数据目录</a>。</p>
+<p id="38f1e1e106zz3">通过新建数据目录操作创建<span class="help-letter-space"></span>paimoncatalog<span class="help-letter-space"></span>后，选择名称为<span class="help-letter-space"></span>paimoncatalog<span class="help-letter-space"></span>的数据目录。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li id="ef0c246a65fna">
+<p id="352d5c3854urq">在数据目录下创建相应的<span class="help-letter-space"></span>order_dw<span class="help-letter-space"></span>数据库，以便后续同步<span class="help-letter-space"></span>MySQL<span class="help-letter-space"></span>中<span class="help-letter-space"></span>order_dw<span class="help-letter-space"></span>库下所有表的数据。</p>
+<p id="be9d3792b2v3k">在左侧导航栏，选择<span class="menucascade" data-tag="menucascade" id="bf350ce463cea"><b class="uicontrol" data-tag="uicontrol" id="5c8b9cf270yf4">数据查询</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="cef452f2b163a">查询脚本</b></span>，单击<b class="uicontrol" data-tag="uicontrol" id="35f6f2c279vox">新建</b>一个临时查询。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="ada2cf6962qxy" outputclass="language-sql"><code>-- 使用<span class="help-letter-space"></span>paimoncatalog<span class="help-letter-space"></span>数据源
+USE CATALOG paimoncatalog;
+-- 新建<span class="help-letter-space"></span>order_dw<span class="help-letter-space"></span>数据库
+CREATE DATABASE order_dw;</code></pre>
+<p id="eeb932f2c2qjv">返回<code class="code" code-type="xCode" data-tag="code" id="03b2f6c302gts">The following statement has been executed successfully!</code>表示创建库成功。</p>
+</li>
+</ol>
+<p id="c067ba60d1adi">关于<span class="help-letter-space"></span>Paimon Catalog<span class="help-letter-space"></span>的更多使用方法详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/user-guide/manage-apache-paimon-catalogs" id="28daf4c1677jb" title="">管理<span class="help-letter-space"></span>Paimon Catalog</a>。</p>
+<h4 id="70d9e5b247yay">创建<span class="help-letter-space"></span>MySQL Catalog</h4>
+<ol data-spm-anchor-id="a2c4g.11186623.0.i4.92a14224QTXhJ8" id="beadb09182z6r">
+<li id="be4503b082ds0">
+<p id="c62b258833txw">在<b class="uicontrol" data-tag="uicontrol" id="268f5336089to">元数据管理</b>页面，单击<b class="uicontrol" data-tag="uicontrol" id="1b9c854caar28">创建<span class="help-letter-space"></span>Catalog</b>。</p>
+</li>
+<li id="da1a694082u5j">
+<p id="8229b53df9vk9">在<b class="uicontrol" data-tag="uicontrol" id="36bdfaad09i36">内置<span class="help-letter-space"></span>Catalog</b><span class="help-letter-space"></span>页签，单击<span class="help-letter-space"></span><b class="uicontrol" data-tag="uicontrol" id="ff97631fc1jrn">MySQL</b>，单击<b class="uicontrol" data-tag="uicontrol" id="d3ba6c7d22qsa">下一步</b>。</p>
+</li>
+<li id="bc4d84008295d">
+<p id="376ba69c13kx1">填写以下参数，单击<b class="uicontrol" data-tag="uicontrol" id="9b125692735yj">确定</b>，新建名为<span class="help-letter-space"></span>mysqlcatalog<span class="help-letter-space"></span>的<span class="help-letter-space"></span>MySQL Catalog。</p>
+<table autofit="true" class="table" id="8b5b62c082hxd" tablecolswidth="23.78 25.24 7.83 43.15" tablewidth="100">
+<colgroup colwidth="0.95*" style="width:23.78%"></colgroup>
+<colgroup colwidth="1.01*" style="width:25.24%"></colgroup>
+<colgroup colwidth="0.31*" style="width:7.83%"></colgroup>
+<colgroup colwidth="1.73*" style="width:43.15%"></colgroup>
+<tbody class="tbody">
+<tr id="0821fea7e8i4z">
+<td colspan="1" id="2bc792de5a9uc" rowspan="1" style="background-color:rgb(229, 229, 229)">
+<p id="db59de86c6gbt" uuid="lmebl7si9ljj4oj2y">配置项</p>
+</td>
+<td colspan="1" id="90c05325339s5" rowspan="1" style="background-color:rgb(229, 229, 229)">
+<p id="ffb4c3cbb638a" uuid="lmebl7siyykorbz9jz">说明</p>
+</td>
+<td colspan="1" id="b9780edf0b3by" rowspan="1" style="background-color:rgb(229, 229, 229)">
+<p id="dd28312957dbz" uuid="lmebl7si51ahwa9xerk">是否必填</p>
+</td>
+<td colspan="1" id="4f4973d947yf2" rowspan="1" style="background-color:rgb(229, 229, 229)">
+<p id="2e2afe49afaok" uuid="lmebl7sikn36lyctphi">备注</p>
+</td>
+</tr>
+<tr id="8b5b89d68230v">
+<td colspan="1" id="8b5b89d7828j6" rowspan="1">
+<p id="06e01eed3aylu" uuid="lmebl7siu5fx8npqi6e">catalog name</p>
+</td>
+<td colspan="1" id="8b5b89d982h9r" rowspan="1">
+<p id="71c60d3bae8ml" uuid="lmebl7siulgrhidcrrc">Catalog<span class="help-letter-space"></span>名称。</p>
+</td>
+<td colspan="1" id="8b5b89db82i8h" rowspan="1">
+<p id="5e3ca649d7orl" uuid="lmebl7sifghxuizkoew">是</p>
+</td>
+<td colspan="1" id="8b5b89dd82psw" rowspan="1">
+<p id="6db5d16e566is" uuid="lmebl7siit8xpss5qg">填写为自定义的英文名。本文以<span class="help-letter-space"></span>mysqlcatalog<span class="help-letter-space"></span>为例。</p>
+</td>
+</tr>
+<tr id="8b5b89df822rk">
+<td colspan="1" id="8b5b89e082dem" rowspan="1">
+<p id="ee2ffca941kkd" uuid="lmebl7silo12acch4m">hostname</p>
+</td>
+<td colspan="1" id="8b5b89e282rrf" rowspan="1">
+<p id="7765b050aenum" uuid="lmebl7siolol19t5mrc">MySQL<span class="help-letter-space"></span>数据库的<span class="help-letter-space"></span>IP<span class="help-letter-space"></span>地址或者<span class="help-letter-space"></span>Hostname。</p>
+</td>
+<td colspan="1" id="8b5b89e482w1n" rowspan="1">
+<p id="c9b58f5937gly" uuid="lmebl7sj2yfm7ns0udo">是</p>
+</td>
+<td colspan="1" id="8b5bb0e0823ll" rowspan="1">
+<p id="33058962bcenk" uuid="lmebl7sjmexqagj7o6">详情请参见<a class="xref" href="https://help.aliyun.com/zh/rds/apsaradb-rds-for-mysql/view-and-change-the-internal-and-public-endpoints-and-port-numbers-of-an-apsaradb-rds-for-mysql-instance" id="6fc38bc159x03" title="">查看和管理实例连接地址和端口</a>。由于<span class="help-letter-space"></span>RDS MySQL<span class="help-letter-space"></span>版实例和<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>全托管处于相同<span class="help-letter-space"></span>VPC，此处应填写内网地址。</p>
+</td>
+</tr>
+<tr id="8b5bb0e38277u">
+<td colspan="1" id="8b5bb0e4822y3" rowspan="1">
+<p id="2343bdcc37227" uuid="lmedliuvgd6cfhcp0sa">port</p>
+</td>
+<td colspan="1" id="8b5bb0e6826z2" rowspan="1">
+<p id="291f26f175ua4" uuid="lmedliuv4nlfif7x6cn">MySQL<span class="help-letter-space"></span>数据库服务的端口号，默认值为<span class="help-letter-space"></span>3306。</p>
+</td>
+<td colspan="1" id="8b5bb0e8822de" rowspan="1">
+<p id="f79d722072u7e" uuid="lmedliuvcowctdx48ru">否</p>
+</td>
+<td colspan="1" id="8b5bb0ea82gcm" rowspan="1">
+<p id="3e59e2ad509zz" uuid="lmedliuvm2vnhfzw5jd">详情请参见<a class="xref" href="https://help.aliyun.com/zh/rds/apsaradb-rds-for-mysql/view-and-change-the-internal-and-public-endpoints-and-port-numbers-of-an-apsaradb-rds-for-mysql-instance" id="46a47b1924law" title="">查看和管理实例连接地址和端口</a>。</p>
+</td>
+</tr>
+<tr id="8b5bb0ed82f5j">
+<td colspan="1" id="8b5bb0ee82d0r" rowspan="1">
+<p id="2d78e4d560t39" uuid="lmedlxdgny0uszqj8xb">default-database</p>
+</td>
+<td colspan="1" id="8b5bb0f082y3c" rowspan="1">
+<p id="58caf615cf0vj" uuid="lmedlxdg4ebip7cz0e9">默认的<span class="help-letter-space"></span>MySQL<span class="help-letter-space"></span>数据库名称。</p>
+</td>
+<td colspan="1" id="8b5bb0f282qqq" rowspan="1">
+<p id="10b4d2b8f4tfw" uuid="lmedlxdg9029hv8vmyf">是</p>
+</td>
+<td colspan="1" id="8b5bb0f482p4p" rowspan="1">
+<p id="bdb28cb86bbm5" uuid="lmedlxdg34izkupb68k">本文填写需要同步的数据库名<span class="help-letter-space"></span>order_dw。</p>
+</td>
+</tr>
+<tr id="8b5bd7f082oqa">
+<td colspan="1" id="8b5bd7f182zhb" rowspan="1">
+<p id="5dd7ea9a004la" uuid="lmedn7e95xgv0ge86kw">username</p>
+</td>
+<td colspan="1" id="8b5bd7f3824fq" rowspan="1">
+<p id="1f0b1b0cefnqy" uuid="lmedn7ea34herzkuu4h">MySQL<span class="help-letter-space"></span>数据库服务的用户名。</p>
+</td>
+<td colspan="1" id="8b5bd7f5827mm" rowspan="1">
+<p id="75281f04f11ef" uuid="lmedn7eag7le0a9pm86">是</p>
+</td>
+<td colspan="1" id="8b5bd7f782es4" rowspan="1">
+<p id="a84ec3f193uyn" uuid="lmedn7eanv0bzoftjer">本文为<a class="xref" href="#1b45d9e082tel" id="a2f108526b4rh" title="">准备<span class="help-letter-space"></span>MySQL CDC<span class="help-letter-space"></span>数据源</a>中创建的账号。</p>
+</td>
+</tr>
+<tr id="8b5bd7f982mg6">
+<td colspan="1" id="8b5bd7fa82gxw" rowspan="1">
+<p id="328bcb2c0ezvi" uuid="lmednji4ml4j1sxnui">password</p>
+</td>
+<td colspan="1" id="8b5bd7fc82w5s" rowspan="1">
+<p id="2246e4718arqk" uuid="lmednji48w0ky8nci5x">MySQL<span class="help-letter-space"></span>数据库服务的密码。</p>
+</td>
+<td colspan="1" id="8b5bd7fe828tl" rowspan="1">
+<p id="2fb5fe8703yal" uuid="lmednji45e4srtow7p5">是</p>
+</td>
+<td colspan="1" id="8b5bd80082alx" rowspan="1">
+<p id="caf6b1274fmd7" uuid="lmedn7eanv0bzoftjer">本文为<a class="xref" href="#1b45d9e082tel" id="5c9714ac02k1x" title="">准备<span class="help-letter-space"></span>MySQL CDC<span class="help-letter-space"></span>数据源</a>中创建的密码。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+</section>
+<section class="section" id="b73cc420829ak">
+<h3 id="ba17d09082v4p" jc="left" left="0" style="text-align:left" uuid="lmebl7sf0p9c9y4r7u9">构建<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层：业务数据库实时入仓</h3>
+<p id="be829d1f54qh0">基于<span class="help-letter-space"></span>Flink CDC，通过数据摄入<span class="help-letter-space"></span>YAML<span class="help-letter-space"></span>作业实现<span class="help-letter-space"></span>MySQL<span class="help-letter-space"></span>数据同步至<span class="help-letter-space"></span>Paimon，一次性将<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层构建出来。</p>
+<ol id="59ff967967xuj">
+<li id="c0192bb644i2h">
+<p id="f0b0b4b0efj0v">创建并启动数据摄入<span class="help-letter-space"></span>YAML<span class="help-letter-space"></span>同步作业。</p>
+<ol id="5bf5d918c45dt">
+<li id="4a5f9628aei89">
+<p id="febefa8fd4r1o">在<a class="" href="https://realtime-compute.console.aliyun.com/regions" id="ebda765282q8c">实时计算控制台</a>的<span class="menucascade" data-tag="menucascade" id="e4760da053yhb"><b class="uicontrol" data-tag="uicontrol" id="90ef86bce5nxa">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="02b49cac90oim">数据摄入</b></span>页面，新建名为<span class="help-letter-space"></span>ods<span class="help-letter-space"></span>的<span class="help-letter-space"></span>YAML<span class="help-letter-space"></span>空白草稿作业。</p>
+</li>
+<li id="69b1a41613sww">
+<p id="c2a18ea58c35o">将如下代码复制到编辑器，注意修改相应的用户名和密码等参数。</p><pre class="pre codeblock language-yaml" code-type="xCode" data-tag="codeblock" id="a2ac566c7fm45" outputclass="language-yaml" title="" uuid="lmee7sqpemxcxfpxf4f"><code>source:
+  type: mysql
+  name: MySQL Source
+  hostname: rm-bp1e********566g.mysql.rds.aliyuncs.com
+  port: 3306
+  username: ${secret_values.username}
+  password: ${secret_values.password}
+  tables: order_dw.\.*  # 支持正则表达，读取<span class="help-letter-space"></span>order_dw<span class="help-letter-space"></span>库下所有的表
+  #（可选）同步增量阶段新创建的表的数据
+  scan.binlog.newly-added-table.enabled: true
+  #（可选）同步表注释和字段注释
+  include-comments.enabled: true
+  #（可选）优先分发无界的分片以避免可能出现的<span class="help-letter-space"></span>TaskManager OutOfMemory<span class="help-letter-space"></span>问题
+  scan.incremental.snapshot.unbounded-chunk-first.enabled: true
+  #（可选）开启解析过滤，加速读取
+  scan.only.deserialize.captured.tables.changelog.enabled: true
+sink:
+  type: paimon
+  name: Paimon Sink
+  catalog.properties.metastore: rest
+  catalog.properties.uri: http://cn-beijing-vpc.dlf.aliyuncs.com
+  catalog.properties.warehouse: paimoncatalog
+  catalog.properties.token.provider: dlf
+pipeline:
+  name: MySQL to Paimon Pipeline</code></pre>
+<table autofit="true" class="table" id="81af4a37bfkp3" tablecolswidth="21.16 41.01 12.9 24.93" tablewidth="100">
+<colgroup colwidth="0.85*" style="width:21.16%"></colgroup>
+<colgroup colwidth="1.64*" style="width:41.01%"></colgroup>
+<colgroup colwidth="0.52*" style="width:12.90%"></colgroup>
+<colgroup colwidth="1*" style="width:24.93%"></colgroup>
+<tbody class="tbody">
+<tr id="9c8b17e59f61o">
+<td colspan="1" id="1e1ed349b6vzh" rowspan="1" style="background-color:#e5e5e5;vertical-align:top">
+<p id="ed0c7a62d4yu6" uuid="m9v1u400ief58hrzec"><b>配置项</b></p>
+</td>
+<td colspan="1" id="1c2f990f5calo" rowspan="1" style="background-color:#e5e5e5;vertical-align:top">
+<p id="01f6cfeb5bfpd" uuid="m9v1u40034rz9wzymcy"><b>描述</b></p>
+</td>
+<td colspan="1" id="0022a108b64z8" rowspan="1" style="background-color:#e5e5e5;vertical-align:top">
+<p id="c7e3bb0381wv0" uuid="m9v1u400c5gh0sdgmls"><b>是否必填</b></p>
+</td>
+<td colspan="1" id="3f8ecd33445j2" rowspan="1" style="background-color:#e5e5e5;vertical-align:top">
+<p id="e9f3c278e95cz" uuid="m9v1u400pym7zgq8qs"><b>示例</b></p>
+</td>
+</tr>
+<tr id="3850ec6e7d4j6">
+<td colspan="1" id="74c781e087rel" rowspan="1" style="vertical-align:top">
+<p id="4b54574e87pvg" uuid="m9v1u400g2ela6rc94n"><code class="code" data-tag="code" id="e79afe9ab2pca">catalog.properties.metastore</code></p>
+</td>
+<td colspan="1" id="0d8c869adbt8w" rowspan="1" style="vertical-align:top">
+<p id="b5468648a5ytk" uuid="m9v1u400mwun3s4apj">Metastore<span class="help-letter-space"></span>类型，固定为<span class="help-letter-space"></span>rest。</p>
+</td>
+<td colspan="1" id="23cbb220eeuvn" rowspan="1" style="vertical-align:top">
+<p id="5d7b572d38fx1" uuid="m9v1u4006tewjs4p2t">是</p>
+</td>
+<td colspan="1" id="5fd6c3baa05cz" rowspan="1" style="vertical-align:top">
+<p id="cbabd450ffier" uuid="m9v1u4008b136sjura5">rest</p>
+</td>
+</tr>
+<tr id="6d841df8d3jzw">
+<td colspan="1" id="40e0d8f301np2" rowspan="1" style="vertical-align:top">
+<p id="18a9833108ypk" uuid="m9v1u4007ukntivwnj3"><code class="code" data-tag="code" id="1be8c085a8ebp">catalog.properties.token.provider</code></p>
+</td>
+<td colspan="1" id="177fbd9aa9525" rowspan="1" style="vertical-align:top">
+<p id="c03be41725ae5" uuid="m9v1u400n7z47v0t21q">Token<span class="help-letter-space"></span>提供方，固定为<span class="help-letter-space"></span>dlf。</p>
+</td>
+<td colspan="1" id="4f734d67395v2" rowspan="1" style="vertical-align:top">
+<p id="f2e17c7065icw" uuid="m9v1u400p53309sjeic">是</p>
+</td>
+<td colspan="1" id="a6b213514b4zw" rowspan="1" style="vertical-align:top">
+<p id="1a68f4c0690ww" uuid="m9v1u4006n8539cidgg">dlf</p>
+</td>
+</tr>
+<tr id="8eaba129bd8q9" style="height:118px">
+<td colspan="1" id="2186707d0f278" rowspan="1" style="vertical-align:top">
+<p id="02ff1f76d96fm" uuid="m9v1u40002h55oexrna9"><code class="code" data-tag="code" id="4dbfadbc18k0f">catalog.properties.uri</code></p>
+</td>
+<td colspan="1" id="2823311905ix7" rowspan="1" style="vertical-align:top">
+<p id="9d034424cet1b" uuid="ma0n93dv1f4wtv6egbf">访问<span class="help-letter-space"></span>DLF Rest Catalog Server<span class="help-letter-space"></span>的<span class="help-letter-space"></span>URI，格式为<code class="code" data-tag="code" id="4c2177de50ckj" uuid="m9qt7hf6geymwjy3cwt">http://[region-id]-vpc.dlf.aliyuncs.com</code>。详见<a class="xref" href="https://help.aliyun.com/zh/dlf/dlf-2-0/getting-started/service-access-point" id="e6feb152b48j9" title="">服务接入点</a>中的<span class="help-letter-space"></span>Region ID。</p>
+</td>
+<td colspan="1" id="00e579f6a6t12" rowspan="1" style="vertical-align:top">
+<p id="06e15ef4506pj" uuid="m9v1u400xt3r009oqmp">是</p>
+</td>
+<td colspan="1" id="47d422a08c8kf" rowspan="1" style="vertical-align:top">
+<p id="d8ad308415v81" uuid="m9v1u400k8f61as1pkk">http://cn-beijing-vpc.dlf.aliyuncs.com</p>
+</td>
+</tr>
+<tr id="e1de437228481">
+<td colspan="1" id="dd847d1c239xu" rowspan="1" style="vertical-align:top">
+<p id="60b4a44dfevbu" uuid="m9v1u40090osbg4qmy"><code class="code" data-tag="code" id="78aed93855n3v">catalog.properties.warehouse</code></p>
+</td>
+<td colspan="1" id="f6022bfaabrg0" rowspan="1" style="vertical-align:top">
+<p id="2e32175fdczq6" uuid="m9v1u400x38yaw83d1">DLF Catalog<span class="help-letter-space"></span>名称。</p>
+</td>
+<td colspan="1" id="b82d881984lb1" rowspan="1" style="vertical-align:top">
+<p id="62c8cac3c6ot8" uuid="m9v1u4001h51ectj894">是</p>
+</td>
+<td colspan="1" id="6158005810dmo" rowspan="1" style="vertical-align:top">
+<p id="373d1ece4aauz" uuid="m9v1u400p534rc7sc5">paimoncatalog</p>
+</td>
+</tr>
+<tr id="hostname-row">
+<td colspan="1" id="hostname-td1" rowspan="1" style="vertical-align:top">
+<p id="hostname-p1"><code class="code" data-tag="code" id="hostname-code">hostname</code></p>
+</td>
+<td colspan="1" id="hostname-td2" rowspan="1" style="vertical-align:top">
+<p id="hostname-p2">MySQL<span class="help-letter-space"></span>数据库的<span class="help-letter-space"></span>IP<span class="help-letter-space"></span>地址或者<span class="help-letter-space"></span>Hostname。详情请参见<a class="xref" href="https://help.aliyun.com/zh/rds/apsaradb-rds-for-mysql/view-and-change-the-internal-and-public-endpoints-and-port-numbers-of-an-apsaradb-rds-for-mysql-instance" id="hostname-xref" title="">查看和管理实例连接地址和端口</a>。由于<span class="help-letter-space"></span>RDS MySQL<span class="help-letter-space"></span>版实例和<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>全托管处于相同<span class="help-letter-space"></span>VPC，此处应填写内网地址。</p>
+</td>
+<td colspan="1" id="hostname-td3" rowspan="1" style="vertical-align:top">
+<p id="hostname-p3">是</p>
+</td>
+<td colspan="1" id="hostname-td4" rowspan="1" style="vertical-align:top">
+<p id="hostname-p4">rm-bp1e********566g.mysql.rds.aliyuncs.com</p>
+</td>
+</tr>
+<tr id="username-row">
+<td colspan="1" id="username-td1" rowspan="1" style="vertical-align:top">
+<p id="username-p1"><code class="code" data-tag="code" id="username-code">username</code></p>
+</td>
+<td colspan="1" id="username-td2" rowspan="1" style="vertical-align:top">
+<p id="username-p2">MySQL<span class="help-letter-space"></span>数据库用户名。建议使用密钥管理，详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/user-guide/manage-keys" id="username-xref" title="">变量管理</a>。</p>
+</td>
+<td colspan="1" id="username-td3" rowspan="1" style="vertical-align:top">
+<p id="username-p3">是</p>
+</td>
+<td colspan="1" id="username-td4" rowspan="1" style="vertical-align:top">
+<p id="username-p4">${secret_values.username}</p>
+</td>
+</tr>
+<tr id="password-row">
+<td colspan="1" id="password-td1" rowspan="1" style="vertical-align:top">
+<p id="password-p1"><code class="code" data-tag="code" id="password-code">password</code></p>
+</td>
+<td colspan="1" id="password-td2" rowspan="1" style="vertical-align:top">
+<p id="password-p2">MySQL<span class="help-letter-space"></span>数据库密码。建议使用密钥管理，详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/user-guide/manage-keys" id="password-xref" title="">变量管理</a>。</p>
+</td>
+<td colspan="1" id="password-td3" rowspan="1" style="vertical-align:top">
+<p id="password-p3">是</p>
+</td>
+<td colspan="1" id="password-td4" rowspan="1" style="vertical-align:top">
+<p id="password-p4">${secret_values.password}</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p id="0e4d43b38atp9">Paimon<span class="help-letter-space"></span>写入性能优化请参见<span class="help-letter-space"></span><a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/use-cases/paimon-performance-optimization" id="ed53ba1d8cylc" title="">Paimon<span class="help-letter-space"></span>性能优化</a>。</p>
+</li>
+<li id="c8b6f1909e0e3">
+<p id="25b05431ba2ky">单击右上方的<b>部署</b>。</p>
+</li>
+<li id="c8695784e13ml">
+<p id="cd1c9a1dfdchn">在<span class="menucascade" data-tag="menucascade" id="ea9dc7553efxl"><b class="uicontrol" data-tag="uicontrol" id="430b50f58ap11">运维中心</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="a4a850f2371eu">作业运维</b></span>，单击刚刚部署的<span class="help-letter-space"></span>ods<span class="help-letter-space"></span>作业<b class="uicontrol" data-tag="uicontrol" id="788485103ce64">操作</b>列的<b class="uicontrol" data-tag="uicontrol" id="7a4596003cwyj">启动</b>，选择<b class="uicontrol" data-diff-node="ins" data-operation-index="23" data-tag="uicontrol" id="5e6d9f8047ibb">无状态启动</b>启动作业。作业启动配置详情请参见<a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/user-guide/start-a-deployment" id="b955098530z7q" title="">作业启动</a>。</p>
+</li>
+</ol>
+</li>
+<li id="fdbeb16082nwj">
+<p id="cb62d8e582o8i">查看<span class="help-letter-space"></span>MySQL<span class="help-letter-space"></span>同步到<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>的三张表的数据。</p>
+<p id="0310b14082c96">在<a class="" href="https://realtime-compute.console.aliyun.com/regions" id="0353fbd282x70">实时计算控制台</a>的<span class="menucascade" data-tag="menucascade" id="0806b2469b8jx"><b class="uicontrol" data-tag="uicontrol" id="656a71869dzk4">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="765ace04c9kwh">数据查询</b></span>页面的<b class="uicontrol" data-tag="uicontrol" id="6e481f00a1u4r">查询脚本</b>页签，将如下代码拷贝到查询脚本后，选中目标片段后单击右上角的<b class="uicontrol" data-tag="uicontrol" id="db435e2020v2b">运行</b>。​</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="xyq5su" outputclass="language-sql"><code>SELECT * FROM paimoncatalog.order_dw.orders ORDER BY order_id;</code></pre>
+<p id="p-e4eead0a9169">执行查询后，返回 orders 表中的 7 条订单记录，包含 <b>order_id</b>（100001~100007）、<b>user_id</b>、<b>shop_id</b>、<b>product_id</b>、<b>buy_fee</b>（1000~5000）、<b>create_time</b>、<b>update_time</b> 和 <b>state</b> 列，<b>state</b> 值均为 1。</p>
+</li>
+</ol>
+</section>
+<section class="section" id="17fe5bc082lc3">
+<h3 id="1a89255082zl3" uuid="lmepdbn5438sqsm3mjr">构建<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层：主题宽表</h3>
+<ol id="776c700588cnh" start="1">
+<li id="f6560a3bbf1xa">
+<h4 id="48071d4685cws">创建<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>宽表<span class="help-letter-space"></span>dwd_orders</h4>
+<p id="d38e60cd02rg0">在<a class="" href="https://realtime-compute.console.aliyun.com/regions" id="25e810a482n87">实时计算控制台</a>的<b class="uicontrol" data-tag="uicontrol" id="c4edeb5dc7ue1"><span class="menucascade" data-tag="menucascade" id="d94ca3ac10w0l"><b class="uicontrol" data-tag="uicontrol" id="8cf135b593fpg">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="c7b5dbef52ny1">数据查询</b></span></b>页面的<b class="uicontrol" data-tag="uicontrol" id="983c07befcvka">查询脚本</b>页签，将如下代码拷贝到查询脚本后，选中目标片段后单击右上角的<b class="uicontrol" data-tag="uicontrol" id="e7d08b8e86awp">运行</b>。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="c6a258d9410ka" outputclass="language-sql"><code>CREATE TABLE paimoncatalog.order_dw.dwd_orders (
+    order_id BIGINT,
+    order_user_id STRING,
+    order_shop_id BIGINT,
+    order_product_id BIGINT,
+    order_product_catalog_name STRING,
+    order_fee BIGINT,
+    order_create_time TIMESTAMP,
+    order_update_time TIMESTAMP,
+    order_state INT,
+    pay_id BIGINT,
+    pay_platform INT COMMENT 'platform 0: phone, 1: pc',
+    pay_create_time TIMESTAMP,
+    PRIMARY KEY (order_id) NOT ENFORCED
+) WITH (
+    'merge-engine' = 'partial-update', -- 使用部分更新数据合并机制产生宽表
+    'changelog-producer' = 'lookup' -- 使用<span class="help-letter-space"></span>lookup<span class="help-letter-space"></span>增量数据产生机制以低延时产出变更数据
+);</code></pre>
+<p id="8e4c67f403z98">返回<code class="code" code-type="xCode" data-tag="code" id="d313592730je8">The following statement has been executed successfully!</code>表示创建成功。</p>
+</li>
+<li id="4606995fbdbjs">
+<h4 id="18762cb77cbwn">实时消费<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层<span class="help-letter-space"></span>orders、orders_pay<span class="help-letter-space"></span>表的变更数据</h4>
+<p id="d8a23b098dczx">在<a class="" href="https://realtime-compute.console.aliyun.com/regions" id="f3a0543443ze3">实时计算控制台</a>的<b class="uicontrol" data-tag="uicontrol" id="05a3451b0dxuj"><b class="uicontrol" data-tag="uicontrol" id="bc04a2aa72eoj"><span class="menucascade" data-tag="menucascade" id="0d4f98a7646ub"><b class="uicontrol" data-tag="uicontrol" id="9ac5e2e58cnwy">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="9a4a2a999aods">ETL</b></span></b></b>页面，新建名为<span class="help-letter-space"></span>dwd<span class="help-letter-space"></span>的<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>流作业，并将如下代码复制到<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>编辑器后，<b class="uicontrol" data-tag="uicontrol" id="17369a6087pmn">部署</b>作业并无状态<b class="uicontrol" data-tag="uicontrol" id="b57eb480872mi">启动</b>作业。​</p>
+<p id="bc8cbc40872pw">通过该<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>作业，orders<span class="help-letter-space"></span>表会与<span class="help-letter-space"></span>product_catalog<span class="help-letter-space"></span>表进行维表关联，关联后的结果将与<span class="help-letter-space"></span>orders_pay<span class="help-letter-space"></span>一起写入<span class="help-letter-space"></span>dwd_orders<span class="help-letter-space"></span>表中，利用<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>表的部分更新数据合并机制，将<span class="help-letter-space"></span>orders<span class="help-letter-space"></span>表和<span class="help-letter-space"></span>orders_pay<span class="help-letter-space"></span>表中<span class="help-letter-space"></span>order_id<span class="help-letter-space"></span>相同的数据进行打宽。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="b5acce4d66ukr" outputclass="language-sql"><code>SET 'execution.checkpointing.max-concurrent-checkpoints' = '3';
+SET 'table.exec.sink.upsert-materialize' = 'NONE';
+SET 'execution.checkpointing.interval' = '10s';
+SET 'execution.checkpointing.min-pause' = '10s';
+-- Paimon<span class="help-letter-space"></span>目前暂不支持在同一个作业里通过多条<span class="help-letter-space"></span>INSERT<span class="help-letter-space"></span>语句写入同一张表，因此这里使用<span class="help-letter-space"></span>UNION ALL。
+INSERT INTO paimoncatalog.order_dw.dwd_orders 
+SELECT 
+    o.order_id,
+    o.user_id,
+    o.shop_id,
+    o.product_id,
+    dim.catalog_name,
+    o.buy_fee,
+    o.create_time,
+    o.update_time,
+    o.state,
+    NULL,
+    NULL,
+    NULL
+FROM
+    paimoncatalog.order_dw.orders o 
+    LEFT JOIN paimoncatalog.order_dw.product_catalog FOR SYSTEM_TIME AS OF proctime() AS dim
+    ON o.product_id = dim.product_id
+UNION ALL
+SELECT
+    order_id,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    pay_id,
+    pay_platform,
+    create_time
+FROM
+    paimoncatalog.order_dw.orders_pay;</code></pre>
+</li>
+<li id="b859d4fef1qh3">
+<h4 id="56e28bb4afd3k">查看宽表<span class="help-letter-space"></span>dwd_orders<span class="help-letter-space"></span>的数据</h4>
+<p id="305455e4055qj">​在<a class="" href="https://realtime-compute.console.aliyun.com/regions" id="470feb4282ypt">实时计算控制台</a>的<b class="uicontrol" data-tag="uicontrol" id="435fb13383yz5"><b class="uicontrol" data-tag="uicontrol" id="2daa2606b9ano"><span class="menucascade" data-tag="menucascade" id="353d73b167p2i"><b class="uicontrol" data-tag="uicontrol" id="4358dbd70ev3j">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="9ddc33400629m">数据查询</b></span></b></b>页面的<b class="uicontrol" data-tag="uicontrol" id="e2fcd7a36d4p7">查询脚本</b>页签，将如下代码拷贝到查询脚本后，选中目标片段后单击右上角的<b class="uicontrol" data-tag="uicontrol" id="211083fbf76n6">运行</b>。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="dxy7uy" outputclass="language-sql"><code>SELECT * FROM paimoncatalog.order_dw.dwd_orders ORDER BY order_id;</code></pre>
+<p id="p-9cccb0531d85">执行成功后，返回 <code class="code" data-tag="code">dwd_orders</code> 宽表的 7 条订单记录，包含 <code class="code" data-tag="code">order_id</code>、<code class="code" data-tag="code">order_user_id</code>、<code class="code" data-tag="code">order_shop_id</code>、<code class="code" data-tag="code">order_product_id</code>、<code class="code" data-tag="code">order_product_catalog_name</code>、<code class="code" data-tag="code">order_fee</code>、<code class="code" data-tag="code">order_create_time</code>、<code class="code" data-tag="code">order_update_time</code> 共 8 个字段，<code class="code" data-tag="code">order_id</code> 范围为 100001～100007，订单金额从 1000 到 5000，创建时间均为 2023-02-15。</p>
+</li>
+</ol>
+</section>
+<section class="section" id="a8264db087vie">
+<h3 id="b36afa40871qz" uuid="lmh9wag2yfkhl83pbaf">构建<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层：指标计算</h3>
+<ol id="e0d942eecclbj" start="1">
+<li id="84314d1697lh0">
+<p id="c1039731792of">创建<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层的聚合表<span class="help-letter-space"></span>dws_users<span class="help-letter-space"></span>以及<span class="help-letter-space"></span>dws_shops</p>
+<p id="130a5e896113k">在<a class="" href="https://realtime-compute.console.aliyun.com/regions" id="8d3d683b4d1si">实时计算控制台</a>的<b class="uicontrol" data-tag="uicontrol" id="bd250ecb18dw1"><b class="uicontrol" data-tag="uicontrol" id="ce918e4616bmw"><span class="menucascade" data-tag="menucascade" id="a8ee3f3c0fv37"><b class="uicontrol" data-tag="uicontrol" id="9d83007ac1lip">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="a9578a6bc7iou">数据查询</b></span></b></b>页面的<b class="uicontrol" data-tag="uicontrol" id="059bd5e8dewpe">查询脚本</b>页签，将如下代码拷贝到查询脚本后，选中目标片段后单击右上角的<b class="uicontrol" data-tag="uicontrol" id="41cb539a3f7ph">运行</b>。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="016a3addb7043" outputclass="language-sql"><code>-- 用户维度聚合指标表。
+CREATE TABLE paimoncatalog.order_dw.dws_users (
+    user_id STRING,
+    ds STRING,
+    paid_buy_fee_sum BIGINT COMMENT '当日完成支付的总金额',
+    PRIMARY KEY (user_id, ds) NOT ENFORCED
+) WITH (
+    'merge-engine' = 'aggregation', -- 使用预聚合数据合并机制产生聚合表
+    'fields.paid_buy_fee_sum.aggregate-function' = 'sum' -- 对 paid_buy_fee_sum 的数据求和产生聚合结果
+    -- 由于<span class="help-letter-space"></span>dws_users<span class="help-letter-space"></span>表不再被下游流式消费，因此无需指定增量数据产生机制
+);
+-- 商户维度聚合指标表。
+CREATE TABLE paimoncatalog.order_dw.dws_shops (
+    shop_id BIGINT,
+    ds STRING,
+    paid_buy_fee_sum BIGINT COMMENT '当日完成支付总金额',
+    uv BIGINT COMMENT '当日不同购买用户总人数',
+    pv BIGINT COMMENT '当日购买用户总人次',
+    PRIMARY KEY (shop_id, ds) NOT ENFORCED
+) WITH (
+    'merge-engine' = 'aggregation', -- 使用预聚合数据合并机制产生聚合表
+    'fields.paid_buy_fee_sum.aggregate-function' = 'sum', -- 对 paid_buy_fee_sum 的数据求和产生聚合结果
+    'fields.uv.aggregate-function' = 'sum', -- 对 uv 的数据求和产生聚合结果
+    'fields.pv.aggregate-function' = 'sum' -- 对 pv 的数据求和产生聚合结果
+    -- 由于<span class="help-letter-space"></span>dws_shops<span class="help-letter-space"></span>表不再被下游流式消费，因此无需指定增量数据产生机制
+);
+-- 为了同时计算用户视角的聚合表以及商户视角的聚合表，另外创建一个以用户 + 商户为主键的中间表。
+CREATE TABLE paimoncatalog.order_dw.dwm_users_shops (
+    user_id STRING,
+    shop_id BIGINT,
+    ds STRING,
+    paid_buy_fee_sum BIGINT COMMENT '当日用户在商户完成支付的总金额',
+    pv BIGINT COMMENT '当日用户在商户购买的次数',
+    PRIMARY KEY (user_id, shop_id, ds) NOT ENFORCED
+) WITH (
+    'merge-engine' = 'aggregation', -- 使用预聚合数据合并机制产生聚合表
+    'fields.paid_buy_fee_sum.aggregate-function' = 'sum', -- 对 paid_buy_fee_sum 的数据求和产生聚合结果
+    'fields.pv.aggregate-function' = 'sum', -- 对 pv 的数据求和产生聚合结果
+    'changelog-producer' = 'lookup', -- 使用<span class="help-letter-space"></span>lookup<span class="help-letter-space"></span>增量数据产生机制以低延时产出变更数据
+    -- dwm<span class="help-letter-space"></span>层的中间表一般不直接提供上层应用查询，因此可以针对写入性能进行优化。
+    'file.format' = 'avro', -- 使用<span class="help-letter-space"></span>avro<span class="help-letter-space"></span>行存格式的写入性能更加高效。
+    'metadata.stats-mode' = 'none' -- 放弃统计信息会增加<span class="help-letter-space"></span>OLAP<span class="help-letter-space"></span>查询代价（对持续的流处理无影响），但会让写入性能更加高效。
+);</code></pre>
+<p id="20965ca41f3l6">返回<code class="code" code-type="xCode" data-tag="code" id="6b7a66b88awoe">The following statement has been executed successfully!</code>表示创建成功。</p>
+</li>
+<li id="e2fd0bc1d8bry">
+<p id="28e96965e78xm">DWD<span class="help-letter-space"></span>层<span class="help-letter-space"></span>dwd_orders<span class="help-letter-space"></span>表的变更数据</p>
+<p id="e5dd1f9181555">在<a class="" href="https://realtime-compute.console.aliyun.com/regions" id="bac01d2187k77">实时计算控制台</a><b class="uicontrol" data-tag="uicontrol" id="75a27f8505fiv"><b class="uicontrol" data-tag="uicontrol" id="8176e222481ti"><span class="menucascade" data-tag="menucascade" id="eba56d4e73f5u"><b class="uicontrol" data-tag="uicontrol" id="d755a197c29td">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="5db92fc17fzos">ETL</b></span></b></b>页签，新建名为<span class="help-letter-space"></span>dwm<span class="help-letter-space"></span>的<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span><b>流作业</b>，并将如下代码复制到<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>编辑器后，<b class="uicontrol" data-tag="uicontrol" id="7576358087cn1">部署</b>作业并无状态<b class="uicontrol" data-tag="uicontrol" id="7576358187a4a">启动</b>作业。</p>
+<p id="01c0bad0873e9">通过该<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>作业，dwd_orders<span class="help-letter-space"></span>表的数据会写入<span class="help-letter-space"></span>dwm_users_shops<span class="help-letter-space"></span>表中，利用<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>表的预聚合数据合并机制，自动对<span class="help-letter-space"></span>order_fee<span class="help-letter-space"></span>求和，算出用户在商户的消费总额。同时，自动对<span class="help-letter-space"></span>1<span class="help-letter-space"></span>求和，也能算出用户在商户的消费次数。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="79bb2c8920am9" outputclass="language-sql"><code>SET 'execution.checkpointing.max-concurrent-checkpoints' = '3';
+SET 'table.exec.sink.upsert-materialize' = 'NONE';
+SET 'execution.checkpointing.interval' = '10s';
+SET 'execution.checkpointing.min-pause' = '10s';
+INSERT INTO paimoncatalog.order_dw.dwm_users_shops
+SELECT
+    order_user_id,
+    order_shop_id,
+    DATE_FORMAT (pay_create_time, 'yyyyMMdd') as ds,
+    order_fee,
+    1 -- 一条输入记录代表一次消费
+FROM paimoncatalog.order_dw.dwd_orders
+WHERE pay_id IS NOT NULL AND order_fee IS NOT NULL;</code></pre>
+</li>
+<li id="df64eaf3ecerp">
+<p id="b60f823633p2f">实时消费<span class="help-letter-space"></span>DWM<span class="help-letter-space"></span>层<span class="help-letter-space"></span>dwm_users_shops<span class="help-letter-space"></span>表的变更数据</p>
+<p id="ec8fa291142r7">在<a class="" href="https://realtime-compute.console.aliyun.com/regions" id="49ee948b64vpx">实时计算控制台</a>的<b class="uicontrol" data-tag="uicontrol" id="c1c1041f7312w"><b class="uicontrol" data-tag="uicontrol" id="3c3fafe7a1npy"><span class="menucascade" data-tag="menucascade" id="2d8a2c5d74z2z"><b class="uicontrol" data-tag="uicontrol" id="66e8204178rs3">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="f797da9ad5ybi">ETL</b></span></b></b>页面，新建名为<span class="help-letter-space"></span>dws<span class="help-letter-space"></span>的<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span><b>流作业</b>，并将如下代码复制到<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>编辑器后，<b class="uicontrol" data-tag="uicontrol" id="75763582877qc">部署</b>作业并无状态<b class="uicontrol" data-tag="uicontrol" id="75763583879gf">启动</b>作业。</p>
+<p id="44b77bc3b9jr3">通过该<span class="help-letter-space"></span>SQL<span class="help-letter-space"></span>作业，dwm_users_shops<span class="help-letter-space"></span>表的数据会写入<span class="help-letter-space"></span>dws_users<span class="help-letter-space"></span>表和<span class="help-letter-space"></span>dws_shops<span class="help-letter-space"></span>表中，利用<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>表的预聚合数据合并机制，在<span class="help-letter-space"></span>dws_users<span class="help-letter-space"></span>表中，计算每个用户的总消费额（paid_buy_fee_sum），在<span class="help-letter-space"></span>dws_shops<span class="help-letter-space"></span>表中计算商户的总流水（paid_buy_fee_sum），商户的消费用户数量（对<span class="help-letter-space"></span>1<span class="help-letter-space"></span>求和）和消费总人次（pv）。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="94c048cf5dlek" outputclass="language-sql"><code>SET 'execution.checkpointing.max-concurrent-checkpoints' = '3';
+SET 'table.exec.sink.upsert-materialize' = 'NONE';
+SET 'execution.checkpointing.interval' = '10s';
+SET 'execution.checkpointing.min-pause' = '10s';
+-- 与<span class="help-letter-space"></span>dwd<span class="help-letter-space"></span>不同，此处每一条<span class="help-letter-space"></span>INSERT<span class="help-letter-space"></span>语句写入的是不同的<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>表，可以放在同一个作业中。
+BEGIN STATEMENT SET;
+INSERT INTO paimoncatalog.order_dw.dws_users
+SELECT 
+    user_id,
+    ds,
+    paid_buy_fee_sum
+FROM paimoncatalog.order_dw.dwm_users_shops;
+-- 以商户为主键，部分热门商户的数据量可能远高于其他商户。
+-- 因此使用<span class="help-letter-space"></span>local merge<span class="help-letter-space"></span>在写入<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>之前先在内存中进行预聚合，缓解数据倾斜问题。
+INSERT INTO paimoncatalog.order_dw.dws_shops /*+ OPTIONS('local-merge-buffer-size' = '64mb') */
+SELECT
+    shop_id,
+    ds,
+    paid_buy_fee_sum,
+    1, -- 一条输入记录代表一名用户在该商户的所有消费
+    pv
+FROM paimoncatalog.order_dw.dwm_users_shops;
+END;</code></pre>
+</li>
+<li id="6bcc52fb43bdr">
+<p id="7170d17934gij">查看<span class="help-letter-space"></span>dws_users<span class="help-letter-space"></span>表和<span class="help-letter-space"></span>dws_shops<span class="help-letter-space"></span>表的数据</p>
+<p id="5d25ee20b33x2">​在<a class="" href="https://realtime-compute.console.aliyun.com/regions" id="cbf3b63223gpj">实时计算控制台</a>的<b class="uicontrol" data-tag="uicontrol" id="789b718a3cgk7"><b class="uicontrol" data-tag="uicontrol" id="e102b384eeaeu"><span class="menucascade" data-tag="menucascade" id="2ec4ff40faerd"><b class="uicontrol" data-tag="uicontrol" id="a290d10110zvq">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="1ba355b7afp1b">数据查询</b></span></b></b>页面的<b class="uicontrol" data-tag="uicontrol" id="99f7c67b96qay">查询脚本</b>页签，将如下代码拷贝到查询脚本后，选中目标片段后单击右上角的<b class="uicontrol" data-tag="uicontrol" id="0f7b2c193e7n0">运行</b>。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="381445e52d1hj" outputclass="language-sql"><code>--查看<span class="help-letter-space"></span>dws_users<span class="help-letter-space"></span>表数据
+SELECT * FROM paimoncatalog.order_dw.dws_users ORDER BY user_id;</code></pre>
+<p id="p-a08bd518b5f2">执行查询后，<b>dws_users</b> 表返回三条记录，包含 <code class="code" data-tag="code">user_id</code>、<code class="code" data-tag="code">ds</code>、<code class="code" data-tag="code">payed_buy_fee_sum</code> 三列：<code class="code" data-tag="code">user_001</code> 对应 8,000.00，<code class="code" data-tag="code">user_002</code> 对应 5,000.00，<code class="code" data-tag="code">user_003</code> 对应 5,000.00，日期均为 20230215。</p>
+<pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="b876a7459ejb4" outputclass="language-sql"><code>--查看<span class="help-letter-space"></span>dws_shops<span class="help-letter-space"></span>表数据
+SELECT * FROM paimoncatalog.order_dw.dws_shops ORDER BY shop_id;</code></pre>
+<p id="p-44525870285e">执行 dws_shops 表查询后，结果包含 <code class="code" data-tag="code">shop_id</code>、<code class="code" data-tag="code">ds</code>、<code class="code" data-tag="code">payed_buy_fee_sum</code>、<code class="code" data-tag="code">uv</code>、<code class="code" data-tag="code">pv</code> 共 5 列，返回 4 行数据（shop_id 为 12345～12348，ds 均为 20230215，payed_buy_fee_sum 分别为 5000.00、4000.00、7000.00、2000.00，uv 分别为 1、1、2、2，pv 分别为 1、1、3、2）。</p>
+</li>
+</ol>
+</section>
+<section class="section" id="bcf6852087dy3">
+<h3 id="bedea610873cl" uuid="lmskkwhvzsief9s4vw">捕捉业务数据库的变化</h3>
+<p id="bf60f57187udr">前面已完成了流式湖仓的构建，下面将测试流式湖仓捕捉业务数据库变化的能力。</p>
+<ol id="c323a2c087g4z">
+<li id="c323a2c187cxz">
+<p id="c323a2c287v0l">向<span class="help-letter-space"></span>MySQL<span class="help-letter-space"></span>的<span class="help-letter-space"></span>order_dw<span class="help-letter-space"></span>数据库中插入如下数据。​</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="8z8kiu" outputclass="language-sql" title="" uuid="lmsktk3ohyl5pl6p28"><code>INSERT INTO orders VALUES
+(100008, 'user_001', 12345, 3, 3000, '2023-02-15 17:40:56', '2023-02-15 18:42:56', 1),
+(100009, 'user_002', 12348, 4, 1000, '2023-02-15 18:40:56', '2023-02-15 19:42:56', 1),
+(100010, 'user_003', 12348, 2, 2000, '2023-02-15 19:40:56', '2023-02-15 20:42:56', 1);
+INSERT INTO orders_pay VALUES
+(2008, 100008, 1, '2023-02-15 18:40:56'),
+(2009, 100009, 1, '2023-02-15 19:40:56'),
+(2010, 100010, 0, '2023-02-15 20:40:56');</code></pre>
+</li>
+<li id="c323a2c487jbe">
+<p id="c323a2c587z7x">查看<span class="help-letter-space"></span>dws_users<span class="help-letter-space"></span>表和<span class="help-letter-space"></span>dws_shops<span class="help-letter-space"></span>表的数据。 在<a class="" href="https://realtime-compute.console.aliyun.com/regions" id="3b263a06778se">实时计算控制台</a>的<b class="uicontrol" data-tag="uicontrol" id="ca09e5b184m0h"><b class="uicontrol" data-tag="uicontrol" id="c92dc9db46aic"><span class="menucascade" data-tag="menucascade" id="f17229e084i8g"><b class="uicontrol" data-tag="uicontrol" id="19b1000dd6of1">数据开发</b> &gt; <b class="uicontrol" data-tag="uicontrol" id="07ac6239195nn">数据查询</b></span></b></b>页面的<b class="uicontrol" data-tag="uicontrol" id="571f8f004e6og">查询脚本</b>页签，将如下代码拷贝到查询脚本后，选中目标片段后单击右上角的<b class="uicontrol" data-tag="uicontrol" id="5a1fe62bb2x1y">运行</b>。</p>
+<ul id="ed551f5187res">
+<li id="eca927e187txs">
+<p id="2aad29b087ff5">dws_users<span class="help-letter-space"></span>表</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="c322433887meh" outputclass="language-sql" title="" uuid="lmsngfo9zv3u8gpewdi"><code>SELECT * FROM paimoncatalog.order_dw.dws_users ORDER BY user_id;</code></pre>
+<p id="p-f366b71589f2">查询返回三行数据，包含 <code class="code" data-tag="code">user_id</code>、<code class="code" data-tag="code">ds</code>、<code class="code" data-tag="code">payed_buy_fee_sum</code> 三列：<code class="code" data-tag="code">user_001</code> / 20230215 / 11,000.00，<code class="code" data-tag="code">user_002</code> / 20230215 / 6,000.00，<code class="code" data-tag="code">user_003</code> / 20230215 / 7,000.00。</p>
+</li>
+<li id="2ec71ec087k61">
+<p id="2ec6f7b087qc8">dws_shops<span class="help-letter-space"></span>表 </p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="c322433e877wd" outputclass="language-sql" title="" uuid="lmsngjr7nfaz0rwzgbc"><code>SELECT * FROM paimoncatalog.order_dw.dws_shops ORDER BY shop_id;</code></pre>
+<p id="p-24334083916f">查询结果包含 5 列：<code class="code" data-tag="code">shop_id</code>、<code class="code" data-tag="code">ds</code>、<code class="code" data-tag="code">payed_buy_fee_sum</code>、<code class="code" data-tag="code">uv</code>、<code class="code" data-tag="code">pv</code>，共 4 行数据。shop_id 分别为 12345、12346、12347、12348，ds 均为 20230215，payed_buy_fee_sum 分别为 8000.00、4000.00、7000.00、5000.00，uv 分别为 1、1、2、3，pv 分别为 2、1、3、4。</p>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section class="section" id="c6f12580872n5">
+<h2 id="cb8ddf2087biu" left="0" uuid="lmhdisz05qbk3yorer7">
+          使用流式湖仓
+        </h2>
+<p id="cb8ddf218772x" left="0" uuid="lmo9ygmepu6qj9gna78">上一小节展示了在<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>中进行<span class="help-letter-space"></span>Paimon Catalog<span class="help-letter-space"></span>的创建与<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>表的写入。本节展示流式湖仓搭建完成后，利用<span class="help-letter-space"></span>StarRocks<span class="help-letter-space"></span>进行数据分析的一些简单应用场景。</p>
+<h3 id="connect-starrocks-dlf" uuid="connect_starrocks_dlf_uuid">连接<span class="help-letter-space"></span>StarRocks<span class="help-letter-space"></span>与<span class="help-letter-space"></span>DLF</h3>
+<p id="341140b09ejbd" uuid="m0bvt57z4vq7dbztj9a">详情请参见<span class="help-letter-space"></span><a class="xref" href="https://help.aliyun.com/zh/dlf/dlf-2-0/user-guide/integrate-serverless-starrocks-with-dlf-paimon-catalog" id="65cceeee5e9ok" title="">Serverless StarRocks<span class="help-letter-space"></span>访问<span class="help-letter-space"></span>DLF</a>。</p>
+<h3 id="cb8ddf23874fa" left="0" uuid="lmpp1kftgx241jt2kiq">排名查询</h3>
+<p id="cb8ddf2487xbh" uuid="lmpp1o18nnty2378ce">对<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层聚合表进行分析。本文使用<span class="help-letter-space"></span>StarRocks<span class="help-letter-space"></span>查询<span class="help-letter-space"></span>23<span class="help-letter-space"></span>年<span class="help-letter-space"></span>2<span class="help-letter-space"></span>月<span class="help-letter-space"></span>15<span class="help-letter-space"></span>日交易额前三高的商户的代码示例如下。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="1x5wcv" outputclass="language-sql" title="" uuid="lmpp7zb0ad52c1yj4d"><code>SELECT ROW_NUMBER() OVER (ORDER BY paid_buy_fee_sum DESC) AS rn, shop_id, paid_buy_fee_sum
+FROM paimoncatalog.order_dw.dws_shops
+WHERE ds = '20230215'
+ORDER BY rn LIMIT 3;</code></pre>
+<p id="p-3c867d1538c1">查询结果返回 3 行数据：<code class="code" data-tag="code">rn=1</code> 对应 <code class="code" data-tag="code">shop_id=12345</code>、<code class="code" data-tag="code">payed_buy_fee_sum=8000.00</code>；<code class="code" data-tag="code">rn=2</code> 对应 <code class="code" data-tag="code">shop_id=12347</code>、<code class="code" data-tag="code">payed_buy_fee_sum=7000.00</code>；<code class="code" data-tag="code">rn=3</code> 对应 <code class="code" data-tag="code">shop_id=12348</code>、<code class="code" data-tag="code">payed_buy_fee_sum=5000.00</code>。</p>
+<h3 id="cb8f17a087yf7" left="0" uuid="lmoa2r5y2we3n7c3uzg"><b>明细查询</b></h3>
+<p id="cb8f17a1873rm" left="0" uuid="lmoa2tbz211gum6j4u2">对<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层宽表进行分析。本文使用<span class="help-letter-space"></span>StarRocks<span class="help-letter-space"></span>查询某个客户<span class="help-letter-space"></span>23<span class="help-letter-space"></span>年<span class="help-letter-space"></span>2<span class="help-letter-space"></span>月特定支付平台支付的订单明细的代码示例如下。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="7bwgmi" outputclass="language-sql" title="" uuid="lmoj08gjcljq1z1pq5n"><code>SELECT * FROM paimoncatalog.order_dw.dwd_orders
+WHERE order_create_time &gt;= '2023-02-01 00:00:00' AND order_create_time &lt; '2023-03-01 00:00:00'
+AND order_user_id = 'user_001'
+AND pay_platform = 0
+ORDER BY order_create_time;;</code></pre>
+<p id="p-d934059924a9">查询返回结果如下。</p>
+<pre class="pre codeblock language-text" code-type="xCode" data-tag="codeblock" id="codeblock-01f271e3f652" outputclass="language-text"><code>   order_id  order_user_id  order_shop_id  order_product_id  order_product_catalog_name  order_fee
+0  100006    user_001       12348          1                 phone_aaa                   1000
+1  100004    user_001       12347          4                 phone_ddd                   2000</code></pre>
+<h3 id="cb8f3eb087c1j" left="0" uuid="lmpp0ecn3m4qhv1am4b"><b>数据报表</b></h3>
+<p id="cb8f3eb187zfy" left="0" uuid="lmpoxcuhl0n6us4kavd">对<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层宽表进行分析。本文使用<span class="help-letter-space"></span>StarRocks<span class="help-letter-space"></span>查询<span class="help-letter-space"></span>23<span class="help-letter-space"></span>年<span class="help-letter-space"></span>2<span class="help-letter-space"></span>月内每个品类的订单总量和订单总金额的代码示例如下。</p><pre class="pre codeblock language-sql" code-type="xCode" data-tag="codeblock" id="lyggmv" outputclass="language-sql" title="" uuid="lmpp9d1f87i197p189a"><code>SELECT
+  order_create_time AS order_create_date,
+  order_product_catalog_name,
+  COUNT(*),
+  SUM(order_fee)
+FROM
+  paimoncatalog.order_dw.dwd_orders
+WHERE
+  order_create_time &gt;= '2023-02-01 00:00:00'  and order_create_time &lt; '2023-03-01 00:00:00'
+GROUP BY
+  order_create_date, order_product_catalog_name
+ORDER BY
+  order_create_date, order_product_catalog_name;</code></pre>
+<p id="p-6acf776148c2">执行上述查询后返回<span class="help-letter-space"></span>9<span class="help-letter-space"></span>条记录，显示<span class="help-letter-space"></span>2023-02-15 10:40:56<span class="help-letter-space"></span>至<span class="help-letter-space"></span>18:40:56<span class="help-letter-space"></span>期间按小时粒度的订单数据。产品目录包括<code class="code" data-tag="code">phone_ddd</code>、<code class="code" data-tag="code">phone_aaa</code>、<code class="code" data-tag="code">phone_eee</code>、<code class="code" data-tag="code">phone_ccc</code>、<code class="code" data-tag="code">phone_bbb</code>等，每条记录的<code class="code" data-tag="code">count(*)</code>均为<span class="help-letter-space"></span>1，<code class="code" data-tag="code">sum(order_fee)</code>值分别为<span class="help-letter-space"></span>2000、1000、1000、2000、3000、4000、5000、3000、1000。</p>
+</section>
+<section class="section" id="587f447082ifx">
+<h2 id="587f447182156"><b>相关文档</b></h2>
+<ul id="eab93a928792v">
+<li id="eab93a9087gbt">
+<p id="5face22182ux8"><a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/use-cases/scheme-of-streaming-lakehouse-based-on-paimon/" id="598b6fcfe3plb" title="">Paimon<span class="help-letter-space"></span>流式湖仓架构方案</a></p>
+</li>
+<li id="ea11a89087yxx">
+<p id="ea115a70870l9"><a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/user-guide/manage-mysql-catalogs" id="b5d37b8087iez" title="">管理<span class="help-letter-space"></span>MySQL Catalog</a></p>
+</li>
+<li id="a3bce5d08742k">
+<p id="a3bcbec0873b1"><a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/use-cases/build-real-time-data-warehouse-based-on-flink-hologres" id="86f88c6087zs9" title="">Hologres<span class="help-letter-space"></span>实时数仓搭建</a></p>
+</li>
+<li id="8f24d2a907xdw">
+<p id="564b6d9ee8ckr" uuid="lxll1c9z4fv8hs9wtiv">通过<span class="help-letter-space"></span>Flink<span class="help-letter-space"></span>批处理能力搭建<span class="help-letter-space"></span>Paimon<span class="help-letter-space"></span>离线湖仓，详情请参见<span class="help-letter-space"></span><a class="xref" href="https://help.aliyun.com/zh/flink/realtime-flink/getting-started/create-a-batch-processing-workflow" id="29a22e70d9yaw" title="">Flink<span class="help-letter-space"></span>批处理</a>。</p>
+</li>
+</ul>
+</section>
+</div>
+</main>
+</div></div>
+</div>
+</article>
+</body>
+</html>

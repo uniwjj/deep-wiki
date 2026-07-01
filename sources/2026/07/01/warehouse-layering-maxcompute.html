@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数仓分层</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>数仓分层</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：未知</span>
+<span>来源：<a href="https://help.aliyun.com/zh/maxcompute/getting-started/divide-a-data-warehouse-into-layers" target="_blank">help.aliyun.com</a></span>
+<span>平台：aliyun</span>
+<span>图片：3 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<div class="markdown-body"><div class="icms-help-docs-content" lang="zh">
+<main id="concept-184862"><p class="shortdesc" data-tag="shortdesc" id="shortdesc-s8n-5dt-04y">在阿里巴巴的数据体系中，我们建议将数据仓库分为三层，自下而上为：数据引入层（ODS，Operation Data Store）、数据公共层（CDM，Common Data Model）和数据应用层（ADS，Application Data Service）。</p><div class="conbody" data-tag="conbody" id="conbody-qhw-qgc-l4f"><div class="p" data-tag="p" id="p-zc8-nj6-lyq"><p id="539de82af81m1">数据仓库的分层和各层级用途如下图所示。<img class="image break" data-tag="image" id="image-gzv-56r-j7n" placement="break" src="https://help-static-aliyun-doc.aliyuncs.com/assets/img/zh-CN/1582309951/p44631.png"/></p><ul class="ul" data-tag="ul" id="ul-0gq-tze-mwm"><li class="li" data-tag="li" id="li-hs7-bah-bjl"><p id="50d9045161brl">数据引入层<span class="help-letter-space"></span>ODS（Operation Data Store）：存放未经过处理的原始数据至数据仓库系统，结构上与源系统保持一致，是数据仓库的数据准备区。主要完成基础数据引入到<span class="help-letter-space"></span>MaxCompute<span class="help-letter-space"></span>的职责，同时记录基础数据的历史变化。</p></li><li class="li" data-tag="li" id="li-nms-f90-vyr"><p id="14d5ee2e17xyu">数据公共层<span class="help-letter-space"></span>CDM（Common Data Model，又称通用数据模型层），包括<span class="help-letter-space"></span>DIM<span class="help-letter-space"></span>维度表、DWD<span class="help-letter-space"></span>和<span class="help-letter-space"></span>DWS，由<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层数据加工而成。主要完成数据加工与整合，建立一致性的维度，构建可复用的面向分析和统计的明细事实表，以及汇总公共粒度的指标。 </p><ul class="ul" data-tag="ul" id="ul-f95-k27-11z"><li class="li" data-tag="li" id="li-s3l-u6m-v8n"><p id="36f3b82750r25">公共维度层（DIM）：基于维度建模理念，建立整个企业的一致性维度。降低数据计算口径和算法不统一风险。 </p><p class="p" data-tag="p" id="p-m0e-qx3-964">公共维度层的表通常也被称为逻辑维度表，维度和维度逻辑表通常一一对应。</p></li><li class="li" data-tag="li" id="li-p1s-h02-cb6"><p id="b85a8f9b099wt">公共汇总粒度事实层（DWS）：以分析的主题对象作为建模驱动，基于上层的应用和产品的指标需求，构建公共粒度的汇总指标事实表，以宽表化手段物理化模型。构建命名规范、口径一致的统计指标，为上层提供公共指标，建立汇总宽表。 </p><p class="p" data-tag="p" id="p-g60-9hk-fds">公共汇总粒度事实层的表通常也被称为汇总逻辑表，用于存放派生指标数据。</p></li><li class="li" data-tag="li" id="li-8e3-hoy-3uh"><p id="f9b85bf37efer">明细粒度事实层（DWD）：以业务过程作为建模驱动，基于每个具体的业务过程特点，构建最细粒度的明细层事实表。可以结合企业的数据使用特点，将明细事实表的某些重要维度属性字段做适当冗余，即宽表化处理。 </p><p class="p" data-tag="p" id="p-wbv-nlg-uvc">明细粒度事实层的表通常也被称为逻辑事实表。</p></li></ul></li><li class="li" data-tag="li" id="li-p98-txu-vc6"><p id="3d074df8742s7">数据应用层<span class="help-letter-space"></span>ADS（Application Data Service）：存放数据产品个性化的统计指标数据。根据<span class="help-letter-space"></span>CDM<span class="help-letter-space"></span>与<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层加工生成。</p></li></ul></div><div class="p" data-tag="p" id="p-xn2-oky-dj3"><p id="d916145cabv73">该数据分类架构在<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层分为三部分：数据准备区、离线数据和准实时数据区。整体数据分类架构如下图所示。<img class="image break" data-tag="image" id="image-pn2-oba-jh3" placement="break" src="https://help-static-aliyun-doc.aliyuncs.com/assets/img/zh-CN/1582309951/p44636.png"/>在本教程中，从交易数据系统的数据经过<span class="help-letter-space"></span>DataWorks<span class="help-letter-space"></span>数据集成，同步到数据仓库的<span class="help-letter-space"></span>ODS<span class="help-letter-space"></span>层。经过数据开发形成事实宽表后，再以商品、地域等为维度进行公共汇总。</p></div><div class="p" data-tag="p" id="p-71v-wty-kne"><p id="75dd7481fa2y2">整体的数据流向如下图所示。其中，ODS<span class="help-letter-space"></span>层到<span class="help-letter-space"></span>DIM<span class="help-letter-space"></span>层的<span class="help-letter-space"></span>ETL（萃取（Extract）、转置（Transform）及加载（Load））处理是在<span class="help-letter-space"></span>MaxCompute<span class="help-letter-space"></span>中进行的，处理完成后会同步到所有存储系统。ODS<span class="help-letter-space"></span>层和<span class="help-letter-space"></span>DWD<span class="help-letter-space"></span>层会放在数据中间件中，供下游订阅使用。而<span class="help-letter-space"></span>DWS<span class="help-letter-space"></span>层和<span class="help-letter-space"></span>ADS<span class="help-letter-space"></span>层的数据通常会落地到在线存储系统中，下游通过接口调用的形式使用。<img class="image break" data-tag="image" id="image-jnq-7fh-e1w" placement="break" src="https://help-static-aliyun-doc.aliyuncs.com/assets/img/zh-CN/1582309951/p46107.png"/></p></div></div></main>
+</div></div>
+</div>
+</article>
+</body>
+</html>

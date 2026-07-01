@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>实时计算框架对比-Flink/Spark Streaming/Storm</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>实时计算框架对比-Flink/Spark Streaming/Storm</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：未知</span>
+<span>来源：<a href="https://www.cnblogs.com/streaming-stack/p/16390457.html" target="_blank">www.cnblogs.com</a></span>
+<span>平台：cnblogs</span>
+<span>图片：10 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<div class="blogpost-body blogpost-body-html" id="cnblogs_post_body">
+<p><span style="font-size: 1.5em">欢迎关注公众号：实时计算</span></p>
+<p><span style="font-size: 1.5em"><img alt="" class="lazyload" src="https://img2022.cnblogs.com/blog/2908847/202206/2908847-20220619141922026-1302659906.png"/></span></p>
+<p> </p>
+<p> </p>
+<p><span style="font-size: 1.5em">引言</span></p>
+<div class="lake-content">
+<p class="ne-p" id="ue97fa8bf"><span class="ne-text">随着互联网和大数据技术的发展，实时计算框架也在推陈出新，向着高吞吐、高可用、低延迟准实时的方向发展。本文从几个方面全面对比业界流行的实时计算框架，总结了各框架的优缺点，希望对读者进行架构设计和技术选型提供帮助。</span></p>
+<p class="ne-p" id="uc701a564"> </p>
+<h2 id="tZ9LE"><span class="ne-text">各框架对比概览</span></h2>
+<p class="ne-p" id="u28a8cc7b"> </p>
+<table class="ne-table" id="MNEnt">
+<tbody>
+<tr>
+<td width="128"> </td>
+<td width="193">
+<p class="ne-p" id="u88204df3"><strong>Spark Streaming</strong></p>
+</td>
+<td width="199">
+<p class="ne-p" id="ubcb9f82a"><strong>Flink</strong></p>
+</td>
+<td width="201">
+<p class="ne-p" id="ueb1d5428"><strong>Storm</strong></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="ue5d4074b"><span class="ne-text">项目时间</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="u9883f59c"><span class="ne-text">2014年左右开始流行</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="u045f648f"><span class="ne-text">2016年左右开始流行</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="ua4f4d9cf"><span class="ne-text">2012年左右开始流行</span></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="u3397b83a"><span class="ne-text">设计理念</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="u0c9f529d"><span class="ne-text">流是批的特例</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="u918834ad"><span class="ne-text">批是流的特例</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="ue10d8cd6"><span class="ne-text">事件驱动</span></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="u3b6a0603"><span class="ne-text">时间语义</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="u187f158e"><span class="ne-text">处理时间</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="u9507093b"><span class="ne-text">事件时间，注入时间，处理时间</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="ue9997460"><span class="ne-text">事件时间，处理时间</span></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="u04a17316"><span class="ne-text">窗口</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="ubdb555ae"><span class="ne-text">滑动窗口</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="u74d96c07"><span class="ne-text">滚动窗口、滑动窗口、会话窗口</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="u6e9c16a5"><span class="ne-text">新版本也开始支持滚动窗口和滑动窗口</span></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="u869125d8"><span class="ne-text">一致性</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="u8b8b2fc1"><span class="ne-text">Exactly-Once</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="u4046b8b4"><span class="ne-text">Exactly-Once</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="uc6f23442"><span class="ne-text">At-Least-Once，通过Trident可以实现Exactly-Once</span></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="u5fd160a4"><span class="ne-text">反压</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="ua371f5de"><span class="ne-text">支持</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="u93c09db5"><span class="ne-text">支持</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="uc7a60984"><span class="ne-text">支持</span></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="u0c4a992a"><span class="ne-text">延迟</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="u8ab7de3c"><span class="ne-text">秒级</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="u4534f363"><span class="ne-text">毫秒级</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="u34fa1a79"><span class="ne-text">毫秒级</span></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="u2373a076"><span class="ne-text">吞吐量</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="u7cb95f41"><span class="ne-text">高</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="ud66c1256"><span class="ne-text">高</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="ua97a500b"><span class="ne-text">低</span></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="ub85106e1"><span class="ne-text">容错性</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="u0a2737a7"><span class="ne-text">checkpoint</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="u56f4f47b"><span class="ne-text">RDD checkpoint</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="ud3ae64d3"><span class="ne-text">Record ACKs</span></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="u9940c2b9"><span class="ne-text">状态</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="u98d9f27f"><span class="ne-text">支持（DStream）</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="ud2d7fb76"><span class="ne-text">支持（Operators）</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="u5f6da142"><span class="ne-text">不支持</span></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="u71a79568"><span class="ne-text">流批一体</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="ufafe8ec0"><span class="ne-text">支持</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="u950291c9"><span class="ne-text">支持</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="u30c70fd6"><span class="ne-text">不支持</span></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="u0b289def"><span class="ne-text">开发难度</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="u94f9ef08"><span class="ne-text">较容易，多语言API</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="uccd47cba"><span class="ne-text">容易，多语言API和SQL</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="u75c80751"><span class="ne-text">较难</span></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="uaedb91ee"><span class="ne-text">机器学习</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="ufd154cde"><span class="ne-text">支持（MLlib）</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="uff7cd3cd"><span class="ne-text">支持（FlinkML）</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="u8f7674d6"><span class="ne-text">不支持</span></p>
+</td>
+</tr>
+<tr>
+<td width="128">
+<p class="ne-p" id="ubeb7c982"><span class="ne-text">社区</span></p>
+</td>
+<td width="193">
+<p class="ne-p" id="ua9199ca9"><span class="ne-text">活跃</span></p>
+</td>
+<td width="199">
+<p class="ne-p" id="ua6661512"><span class="ne-text">活跃</span></p>
+</td>
+<td width="201">
+<p class="ne-p" id="u8e511881"><span class="ne-text">活跃较低</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="ne-p" id="ud0638ffc"><span class="ne-text">总结</span></p>
+<p class="ne-p" id="udc203846"><span class="ne-text">Flink目前已经被各大互联网公司广泛使用，已经成为业界事实标准。Spark Streaming 在高吞吐复杂计算场景仍具优势。Storm 是最早流行的实时计算框架，但由于开发维护较复杂，功能简单，后逐渐被取代，新版本也增加了对事件时间、watermark、窗口计算的支持，成熟度和易用性还不足</span></p>
+<p class="ne-p"> </p>
+<div class="lake-content">
+<h2 id="mSJLb"><span class="ne-text">01. 设计理念</span></h2>
+<h3 id="UCquS"><span class="ne-text">Spark Streaming</span></h3>
+<p class="ne-p" id="u973829ed"><span class="ne-text">Spark Streaming是在 Spark Core API基础上扩展出来的，以微批模式实现的近实时计算框架，<strong><span class="ne-text">它认为流是批的特例</span></strong><span class="ne-text">，将输入数据切分成一个个小的切片，利用Spark引擎作为一个个小的batch数据来处理，最终输出切片流，以此实现近似实时计算。</span></span></p>
+<p class="ne-p"> <img alt="" class="lazyload" src="https://img2022.cnblogs.com/blog/2908847/202206/2908847-20220619141512169-1450791811.png"/></p>
+<div class="lake-content">
+<h3 id="TW2pT"><span class="ne-text">Flink</span></h3>
+<p class="ne-p" id="u3020ecae"><span class="ne-text">Flink是事件驱动的实时计算框架，<strong><span class="ne-text">它认为批是流的特例</span></strong><span class="ne-text">，数据流分为有限流（Bounded）和无限流（Unbounded），离线计算是对有限数据流的批处理，实时计算是对无限数据流的连续处理。有限流是有明确的开始和结束时间，无限流有明确的开始时间但没有结束时间。Flink是基于事件驱动，内部是对消息逐条emit。</span></span></p>
+</div>
+<p class="ne-p"> <img alt="" class="lazyload" src="https://img2022.cnblogs.com/blog/2908847/202206/2908847-20220619141528512-1746635192.png"/></p>
+<div class="lake-content">
+<h3 id="zNKQQ"><span class="ne-text">Storm</span></h3>
+<p class="ne-p" id="u2751bd37"><span class="ne-text">Storm也是一个事件驱动的实时流计算框架，完全由开发者自己定义消息被处理的拓扑结构（Topology），它的结构和Mapreduce任务类似，通过自定定义Spout（数据输入处理模块）和Bolt（输出处理模块）逻辑，以及自定义Bolt之间的拓扑依赖关系，完成整个实时事件流的处理逻辑搭建。</span></p>
+<p class="ne-p" id="ubf6fe579"><span class="ne-text">Trident是在Storm核心API基础上更高层次的抽象，以微批的方式处理实时流，增加了窗口操作、聚合操作等，并且支持Exactly once。</span></p>
+</div>
+</div>
+<p class="ne-p"> </p>
+<div class="lake-content">
+<h2 id="dT5PQ"><span class="ne-text">基础架构</span></h2>
+<h3 id="C5TQ4"><span class="ne-text">Spark Streaming</span></h3>
+<p class="ne-p" id="u7241d1bf"><span class="ne-text">Spark Streaming是基于Spark核心API的扩展，整体架构和Spark一致，角色主要有：</span></p>
+<p class="ne-p" id="u28e7f885"><span class="ne-text">Master：负责集群资源管理和应用程序调度</span></p>
+<p class="ne-p" id="u0ce81bee"><span class="ne-text">Worker：负责单个节点的资源管理，driver 和 executor 的启动等</span></p>
+<p class="ne-p" id="u9746582f"><span class="ne-text">Driver：程序执行入口，初始化SparkContext，负责生成DAG 、划分stage、生成调度task；</span></p>
+<p class="ne-p" id="ua251bdd3"><span class="ne-text">Executor：负责执行 task，反馈执行状态和执行结果</span></p>
+<p class="ne-p" id="ucf7bf884"><span class="ne-text">对于输入的每个批次都是一个Spark Core任务，Spark Streaming每个批次执行的拓扑结构不固定，会根据数据本地性和资源情况进行调度。</span></p>
+<p class="ne-p"><img alt="" class="lazyload" src="https://img2022.cnblogs.com/blog/2908847/202206/2908847-20220619141620165-1038914077.jpg"/></p>
+<div class="lake-content">
+<h3 id="dFAFg"><span class="ne-text">Flink</span></h3>
+<p class="ne-p" id="u25337ba9"><span class="ne-text">JobManager:：协调分布式任务执行、调度、协调 checkpoints、协调故障恢复等。高可用情况下可以启动多个 JobManager，其中一个选举为 leader，其余为 standby</span></p>
+<p class="ne-p" id="ub31c2718"><span class="ne-text">TaskManager：负责执行具体的task、缓存、交换数据流</span></p>
+<p class="ne-p" id="u745a0bd6"><span class="ne-text">Slot：每个 task slot 代表 TaskManager 的一个固定资源，Slot 的个数代表着 TaskManager 可并行执行的 task 数。</span></p>
+<p class="ne-p" id="ud39be7db"><span class="ne-text">对于 Flink 任务客户端首先会生成 StreamGraph，然后生成 JobGraph，将 JobGraph 提交给 JobManager 由它完成 JobGraph 到 ExecutionGraph 的转换，最后由 JobManager 调度执行。</span></p>
+<h3 id="xnsPG"><span class="ne-text">Storm</span></h3>
+<p class="ne-p" id="ud60857ac"><span class="ne-text">Nimbus：master节点，负责提交任务，分配到supervisor的worker上</span></p>
+<p class="ne-p" id="ub38a7019"><span class="ne-text">Supervisor：slave节点，负责管理运行在supervisor节点上的worker进程，worker负责运行Topology上的Spout/Bolt任务</span></p>
+<p class="ne-p"> </p>
+</div>
+<p><img alt="" class="lazyload" src="https://img2022.cnblogs.com/blog/2908847/202206/2908847-20220619141625280-978461289.png"/></p>
+<p> </p>
+<div class="lake-content">
+<h2 id="VTB3k"><span class="ne-text">编程模型</span></h2>
+<h3 id="iwQAU"><span class="ne-text">Spark Streaming</span></h3>
+<p class="ne-p" id="u5ae6bef3"><span class="ne-text">Spark 的数据模型是弹性分布式数据集 RDD（Resilient Distributed Datasets），相对于 MapReduce 的文件模型，RDD 是一个更抽象的模型，只存在于内存中，RDD 靠血缘（lineage） 等方式来保证可恢复性。Spark 用 RDD 上的变换（算子）来描述数据处理。每个算子（如 map，filter，join）生成一个新的 RDD。所有的算子组成一个有向无环图（DAG）。</span></p>
+</div>
+<p><img alt="" class="lazyload" src="https://img2022.cnblogs.com/blog/2908847/202206/2908847-20220619141629997-998767562.jpg"/></p>
+<div class="lake-content">
+<p class="ne-p" id="uefc84206"><span class="ne-text">Spark DAG（来源：<a class="ne-link" data-href="http://datastrophic.io/core-concepts-architecture-and-internals-of-apache-spark/" href="http://datastrophic.io/core-concepts-architecture-and-internals-of-apache-spark/" rel="noopener nofollow" target="_blank"><span class="ne-text">http://datastrophic.io/core-concepts-architecture-and-internals-of-apache-spark/</span></a><span class="ne-text">）</span></span></p>
+<p class="ne-p" id="u495dbd28"> </p>
+<p class="ne-p" id="uab3ce9a9"><span class="ne-text">从 Spark 2.0 开始引入的 Structured Streaming 重新整理了流计算的语义，支持按事件时间处理和端到端的一致性，但在功能上和成熟度上相对于Flink仍有差距。</span></p>
+<p class="ne-p"> </p>
+<div class="lake-content">
+<h3 id="Xy0YI"><span class="ne-text">Flink</span></h3>
+<p class="ne-p" id="u55832850"><span class="ne-text">Flink 数据模型是基于流（Streams）和转换（Transformations），由一个或多个 Source作为输入，并终止于一个或多个 Sink，通过不同的转换算子对数据流进行处理，组成有向无环图（DAG）。</span></p>
+<p class="ne-p" id="uc16bfe71"><span class="ne-text">Flink 中每个运算子任务与另外一个运算子任务之间都是相互独立的，它们是在不同的线程中运行的，甚至有可能所运行的机器或者容器都完全不同。可以精细的定义每个算子的并行度，运算子任务的数量由算子的并发数确定。</span></p>
+</div>
+</div>
+<p><img alt="" class="lazyload" src="https://img2022.cnblogs.com/blog/2908847/202206/2908847-20220619141634901-1141065479.jpg"/></p>
+<div class="lake-content">
+<p class="ne-p" id="uef96bef7"><span class="ne-text">Flink 任务图（来源：<a class="ne-link" data-href="https://ci.apache.org/projects/flink/flink-docs-release-1.5/concepts/runtime.html" href="https://ci.apache.org/projects/flink/flink-docs-release-1.5/concepts/runtime.html" rel="noopener nofollow" target="_blank"><span class="ne-text">https://ci.apache.org/projects/flink/flink-docs-release-1.5/concepts/runtime.html</span></a><span class="ne-text">）</span></span></p>
+<h3 id="OMmRi"><span class="ne-text">Storm</span></h3>
+<p class="ne-p" id="u142b6442"><span class="ne-text">Storm实时任务是一个由开发者来自定义的拓扑结构（Topology），定义Spout来处理数据输入，定义Bolt来完成逻辑处理，Bolt即可以输出到一个或者多个Bolt也可以从多个Bolt作为输入，由此沟通一个DAG的Topology。</span></p>
+</div>
+<p><img alt="" class="lazyload" src="https://img2022.cnblogs.com/blog/2908847/202206/2908847-20220619141640363-408677144.png"/></p>
+<div class="lake-content">
+<h2 id="M1EAs"><span class="ne-text">时间语义</span></h2>
+<p class="ne-p" id="ud4823dae"><span class="ne-text">在实时计算中一般有三个时间概念：</span></p>
+<h4 id="o3SPo"><span class="ne-text">事件时间（Event Time）</span></h4>
+<p class="ne-p" id="u163ad22b"><span class="ne-text">事件时间指的是每个事件在设备上发生的时间，Flink可以从事件消息中提取该时间。例如一个按小时的事件时间窗口，所有事件时间落在这个小时的事件都会都会包含在计算结果里，跟事件消息到达的先后顺序无关。但窗口也不能无限的等待迟到的消息，因此需要结合watermark来使用，认为所有消息都已经到达窗口可以关闭。使用事件时间窗口需要等待后续事件和处理无序事件，会有一定的滞后性。</span></p>
+<h4 id="CEAmo"><span class="ne-text">注入时间（Ingestion Time）</span></h4>
+<p class="ne-p" id="u3cf89607"><span class="ne-text">注入时间是事件在 source 算子处获取当前时间作为事件注入时间。相比于事件时间，注入时间不能够处理无序事件或者滞后事件，但是应用程序无需指定如何生成 watermark。</span></p>
+<h4 id="orql8"><span class="ne-text">处理时间（Processing Time）</span></h4>
+<p class="ne-p" id="ueb6ebad1"><span class="ne-text">处理时间是运行各个算子实例机器的系统时间，是最简单的时间概念，它能提供最好的性能和最低延迟，但在分布式环境中不能保证事件的时序性。</span></p>
+</div>
+<p><img alt="" class="lazyload" src="https://img2022.cnblogs.com/blog/2908847/202206/2908847-20220619141645066-380084837.jpg"/></p>
+<div class="lake-content">
+<h3 id="zXy1V"><span class="ne-text">Spark Streaming</span></h3>
+<p class="ne-p" id="uf1dc74d0"><span class="ne-text">Spark Streaming 只支持处理时间，Structured streaming 支持处理时间和事件时间，同时支持 watermark 机制来处理滞后数据。</span></p>
+<h3 id="Jy8Pu"><span class="ne-text">Flink</span></h3>
+<p class="ne-p" id="u14393233"><span class="ne-text">Fink 支持三种时间机制：事件时间，注入时间，处理时间，同时支持 watermark 机制处理滞后数据。</span></p>
+<h3 id="tD3qJ"><span class="ne-text">Storm</span></h3>
+<p class="ne-p" id="u52310516"><span class="ne-text">新版本的Storm也支持事件时间，处理时间，同时支持watermark 机制。</span></p>
+<p class="ne-p" id="u4b03df94"> </p>
+<h2 id="g8NRJ"><span class="ne-text">反压机制（Back pressure）</span></h2>
+<p class="ne-p" id="uda1c0b2c"><span class="ne-text">在实时应用中，当实时处理的中间计算节点或者数据输出节点处理数据的速度变慢，需要通过反压机制将阻塞反馈给数据输入节点，降低数据输入速率，避免数据持续堆积。</span></p>
+<h3 id="VilHT"><span class="ne-text">Spark Streaming</span></h3>
+<p class="ne-p" id="u09370f05"><span class="ne-text">Spark Streaming 是增加了基于PID算法的 RateController，通过batch计算完成后反馈回来的任务处理的结束时间、调度时间、处理时间、消息条数来计算当前速率，进而可以计算得到一个 offset，然后跟限速设置最大消费条数比较得到一个最终要消费的消息最大 offset。</span></p>
+<p class="ne-p" id="uf8fb525a"><span class="ne-text">spark.streaming.backpressure.enabled 设置为 true 开启反压</span></p>
+<p class="ne-p" id="uf1b8af29"><span class="ne-text">spark.streaming.kafka.maxRatePerPartition 每个partition每秒最多消费条数</span></p>
+<p class="ne-p" id="ua24cf5c5"><span class="ne-text">spark.streaming.backpressure.rateEstimator 速率估算器类，目前只支持 pid 。</span></p>
+<h3 id="joqQq"><span class="ne-text">Flink</span></h3>
+<p class="ne-p" id="u18b87ab5"><span class="ne-text">与 Spark Streaming 的反压不同的是，Flink 是 Jobmanager 针对每一个 task 每 50ms 触发 100 次 Thread.getStackTrace() 调用，求出阻塞的占比。</span></p>
+</div>
+<p><img alt="" class="lazyload" src="https://img2022.cnblogs.com/blog/2908847/202206/2908847-20220619141649669-1332162331.png"/></p>
+<div class="lake-content">
+<p class="ne-p" id="u4e43915e"><span class="ne-text">阻塞占比划分了三个等级：</span></p>
+<p class="ne-p" id="u632f24fe"><span class="ne-text">OK：0 &lt;= Ratio &lt;= 0.10</span></p>
+<p class="ne-p" id="u9c8d24b0"><span class="ne-text">LOW：0.10 &lt; Ratio &lt;= 0.5</span></p>
+<p class="ne-p" id="ucd9331e2"><span class="ne-text">HIGH： 0.5 &lt; Ratio &lt;= 1</span></p>
+<p class="ne-p" id="u6a48a479"><span class="ne-text">当阻塞级别达到HIGH就需要进行任务优化了。一般调整资源分配和算子并行度来进行调优。</span></p>
+<p class="ne-p" id="u6b6d565e"> </p>
+<h3 id="SAZH3"><span class="ne-text">Storm</span></h3>
+<ol class="ne-ol">
+<li id="u39f4c11b"><span class="ne-text">当Worker Executor 的接收队列达到高水位，通知反压线程 （Backpressure thread）</span></li>
+<li id="u4bde9d6e"><span class="ne-text">反压线程通知 zookeeper，在zk的topology节点下增加worker节点信息</span></li>
+<li id="u7c8f6968"><span class="ne-text">所有 worker 监听 zookeeper executor 繁忙的事件 </span></li>
+<li id="u8d56c627"><span class="ne-text">worker节点接收到繁忙事件后 spouts 降低发送 tuple 速度</span></li>
+</ol>
+<p class="ne-p" id="u8c0678de"> </p>
+<h3 id="T2ERm"><span class="ne-text">引用</span></h3>
+<p class="ne-p" id="u0bd393dc"><a class="ne-link" data-href="https://flink.apache.org" href="https://flink.apache.org" rel="noopener nofollow" target="_blank"><span class="ne-text">https://flink.apache.org</span></a></p>
+<p class="ne-p" id="ue99b4336"><a class="ne-link" data-href="https://spark.apache.org" href="https://spark.apache.org" rel="noopener nofollow" target="_blank"><span class="ne-text">https://spark.apache.org</span></a></p>
+<p class="ne-p" id="ud7d6f27e"><span class="ne-text">Spark Streaming 和 Flink 详细对比（<a class="ne-link" data-href="https://mp.weixin.qq.com/s/jllAegJMYh_by95FhHt0jA" href="https://mp.weixin.qq.com/s/jllAegJMYh_by95FhHt0jA" rel="noopener nofollow" target="_blank"><span class="ne-text">https://mp.weixin.qq.com/s/jllAegJMYh_by95FhHt0jA</span></a><span class="ne-text">）</span></span></p>
+<p class="ne-p"> </p>
+</div>
+<p> </p>
+</div>
+<p class="ne-p"> </p>
+</div>
+</div>
+</div>
+</article>
+</body>
+</html>

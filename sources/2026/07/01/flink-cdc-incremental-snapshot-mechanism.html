@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深入解析 Flink CDC 增量快照读取机制</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>深入解析 Flink CDC 增量快照读取机制</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：2024-01-19T07:14:46.000Z</span>
+<span>来源：<a href="https://juejin.cn/post/7325370003192578075" target="_blank">juejin.cn</a></span>
+<span>平台：juejin</span>
+<span>图片：11 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<div class="article-viewer markdown-body result"><style>.markdown-body{word-break:break-word;line-height:1.75;font-weight:400;font-size:16px;overflow-x:hidden;color:#252933}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{line-height:1.5;margin-top:35px;margin-bottom:10px;padding-bottom:5px}.markdown-body h1{font-size:24px;line-height:38px;margin-bottom:5px}.markdown-body h2{font-size:22px;line-height:34px;padding-bottom:12px;border-bottom:1px solid #ececec}.markdown-body h3{font-size:20px;line-height:28px}.markdown-body h4{font-size:18px;line-height:26px}.markdown-body h5{font-size:17px;line-height:24px}.markdown-body h6{font-size:16px;line-height:24px}.markdown-body p{line-height:inherit;margin-top:22px;margin-bottom:22px}.markdown-body img{max-width:100%}.markdown-body hr{border:none;border-top:1px solid #ddd;margin-top:32px;margin-bottom:32px}.markdown-body code{word-break:break-word;border-radius:2px;overflow-x:auto;background-color:#fff5f5;color:#ff502c;font-size:.87em;padding:.065em .4em}.markdown-body code,.markdown-body pre{font-family:Menlo,Monaco,Consolas,Courier New,monospace}.markdown-body pre{overflow:auto;position:relative;line-height:1.75}.markdown-body pre>code{font-size:12px;padding:15px 12px;margin:0;word-break:normal;display:block;overflow-x:auto;color:#333;background:#f8f8f8}.markdown-body a{text-decoration:none;color:#0269c8;border-bottom:1px solid #d1e9ff}.markdown-body a:active,.markdown-body a:hover{color:#275b8c}.markdown-body table{display:inline-block!important;font-size:12px;width:auto;max-width:100%;overflow:auto;border:1px solid #f6f6f6}.markdown-body thead{background:#f6f6f6;color:#000;text-align:left}.markdown-body tr:nth-child(2n){background-color:#fcfcfc}.markdown-body td,.markdown-body th{padding:12px 7px;line-height:24px}.markdown-body td{min-width:120px}.markdown-body blockquote{color:#666;padding:1px 23px;margin:22px 0;border-left:4px solid #cbcbcb;background-color:#f8f8f8}.markdown-body blockquote:after{display:block;content:""}.markdown-body blockquote>p{margin:10px 0}.markdown-body ol,.markdown-body ul{padding-left:28px}.markdown-body ol li,.markdown-body ul li{margin-bottom:0;list-style:inherit}.markdown-body ol li .task-list-item,.markdown-body ul li .task-list-item{list-style:none}.markdown-body ol li .task-list-item ol,.markdown-body ol li .task-list-item ul,.markdown-body ul li .task-list-item ol,.markdown-body ul li .task-list-item ul{margin-top:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:3px}.markdown-body ol li{padding-left:6px}.markdown-body .contains-task-list{padding-left:0}.markdown-body .task-list-item{list-style:none}@media (max-width:720px){.markdown-body h1{font-size:24px}.markdown-body h2{font-size:20px}.markdown-body h3{font-size:18px}}</style><style data-highlight="" data-highlight-key="juejin">.markdown-body pre,.markdown-body pre>code.hljs{color:#333;background:#f8f8f8}.hljs-comment,.hljs-quote{color:#998;font-style:italic}.hljs-keyword,.hljs-selector-tag,.hljs-subst{color:#333;font-weight:700}.hljs-literal,.hljs-number,.hljs-tag .hljs-attr,.hljs-template-variable,.hljs-variable{color:teal}.hljs-doctag,.hljs-string{color:#d14}.hljs-section,.hljs-selector-id,.hljs-title{color:#900;font-weight:700}.hljs-subst{font-weight:400}.hljs-class .hljs-title,.hljs-type{color:#458;font-weight:700}.hljs-attribute,.hljs-name,.hljs-tag{color:navy;font-weight:400}.hljs-link,.hljs-regexp{color:#009926}.hljs-bullet,.hljs-symbol{color:#990073}.hljs-built_in,.hljs-builtin-name{color:#0086b3}.hljs-meta{color:#999;font-weight:700}.hljs-deletion{background:#fdd}.hljs-addition{background:#dfd}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}</style><h1 data-id="heading-0">深入解析 Flink CDC 增量快照读取机制</h1>
+<h1 data-id="heading-1">一、Flink-CDC 1.x 痛点</h1>
+<p>Flink CDC 1.x 使用 Debezium 引擎集成来实现数据采集，支持全量加增量模式，确保数据的一致性。然而，这种集成存在一些痛点需要注意：</p>
+<ol>
+<li><strong>一致性通过加锁保证</strong>：在保证数据一致性时，Debezium 需要对读取的库或表加锁。全局锁可能导致数据库出现挂起情况，而表级锁会影响表的写操作。</li>
+<li><strong>只支持单并发读取</strong>：Flink CDC 1.x版本只支持单并发读取，对于大表读取非常耗时。如果需要读取的数据量较大，可能会导致性能瓶颈。</li>
+<li><strong>全量读取阶段不支持 checkpoint</strong>：CDC 的initial模式下读取分为两个阶段，全量和增量。然而，在全量读取阶段，不支持 checkpoint 的功能。如果出现故障，必须重新进行全量读取操作。</li>
+</ol>
+<h2 data-id="heading-2">1.1、全局锁</h2>
+<p>在 Flink CDC 1.x 中，全量读取时的锁机制流程如下：</p>
+<ol>
+<li>开始全量读取：当 Flink CDC 启动全量读取任务时，它会与 MySQL 数据库建立连接，并开始读取源表的数据。</li>
+<li>获取读取的锁：为了保证数据的一致性，Flink CDC 在全量读取过程中需要获取读取的锁。在默认情况下，Flink CDC 使用全局锁（Global Lock）来确保数据的一致性。</li>
+<li>全局锁的获取：Flink CDC 通过向 MySQL 数据库发送命令来获取全局锁。全局锁将阻塞其他对源表进行写操作的事务，确保在全量读取期间不会有数据的变更。</li>
+<li>全量读取数据：一旦获得全局锁，Flink CDC 开始进行全量读取。它会扫描源表的所有数据，并将其传输到目标系统（如 Doris）进行加载和处理。</li>
+<li>释放全局锁：当全量读取完成后，Flink CDC 会释放全局锁，允许其他事务对源表进行写操作。</li>
+</ol>
+<p>全局锁的获取可能会导致一些潜在的问题：</p>
+<ol>
+<li>长时间锁定：全局锁通常需要在全量读取过程中长时间持有，这可能会对其他业务操作产生影响。如果全量读取任务的持续时间较长，其他事务可能需要等待较长时间才能执行读写操作。</li>
+<li>性能影响：获取全局锁可能导致性能下降。当全局锁被获取时，其他事务需要等待锁的释放，这可能导致并发性下降，特别是在高负载的情况下。长时间的等待可能会导致数据库挂起（hang），影响整体系统的吞吐量和响应时间。</li>
+</ol>
+<h2 data-id="heading-3">1.2、表级锁</h2>
+<p>在 Flink CDC 1.x 中，全量读取表时的表锁机制流程如下：</p>
+<ol>
+<li>开始全量读取：当 Flink CDC 启动全量读取任务时，它会与 MySQL 数据库建立连接，并准备开始读取源表的数据。</li>
+<li>获取表级锁：为了确保数据的一致性，在全量读取期间需要获取源表的表级锁。表级锁将阻塞其他事务对源表进行写操作，以保证读取过程中数据不会发生变化。</li>
+<li>发起锁请求：Flink CDC 向 MySQL 数据库发送请求，尝试获取源表的表级锁。这个请求将被发送到 MySQL 的锁管理器。</li>
+<li>等待锁释放：如果源表的表级锁已经被其他事务占用，Flink CDC 将等待锁释放的信号。在等待期间，Flink CDC 将一直保持连接并监测锁的状态。</li>
+<li>获取锁成功：一旦源表的表级锁被成功获取，Flink CDC 可以开始进行全量数据的读取操作。它会扫描源表的所有数据，并将其传输到目标系统进行加载和处理。</li>
+<li>释放表级锁：当全量读取完成后，Flink CDC 会释放源表的表级锁，允许其他事务对源表进行写操作。</li>
+</ol>
+<p>表级锁的获取和释放可能会带来一些潜在的问题：</p>
+<ol>
+<li>数据一致性问题：表级锁在全量读取期间会锁定整张表，以保证数据的一致性。然而，在某些情况下，如果全量读取过程中出现了长时间的阻塞或异常情况，可能会导致数据一致性问题。</li>
+<li>长时间锁定：表级锁通常需要在读取过程中长时间持有，特别是在全量读取时。这可能会对其他事务产生长时间的阻塞，影响系统的响应性能。</li>
+</ol>
+<h1 data-id="heading-4">二、Flink-CDC 2.x 新特性</h1>
+<p>Flink 2.x不仅引入了增量快照读取机制，还带来了一些其他功能的改进。以下是对Flink 2.x的主要功能的介绍：</p>
+<ol>
+<li>增量快照读取：Flink 2.x引入了增量快照读取机制，这是一种全新的数据读取方式。该机制支持并发读取和以chunk为粒度进行checkpoint。在增量快照读取过程中，Flink首先根据表的主键将其划分为多个块（chunk），然后将这些块分配给多个读取器并行读取数据。这一机制极大地提高了数据读取的效率。</li>
+<li>精确一次性处理：Flink 2.x引入了Exactly-Once语义，确保数据处理结果的精确一次性。MySQL CDC 连接器是Flink的Source连接器，可以利用Flink的checkpoint机制来确保精确一次性处理。</li>
+<li>动态加表：Flink 2.x支持动态加表，通过使用savepoint来复用之前作业的状态，解决了动态加表的问题。</li>
+<li>无主键表的处理：Flink 2.x对无主键表的读取和处理进行了优化。在无主键表中，Flink可以通过一些额外的字段来识别数据记录的唯一性，从而实现准确的数据读取和处理。</li>
+</ol>
+<p>本文主要介绍了Flink 2.x引入的重要特性之一：增量快照读取机制。该机制带来了并发读取、chunk粒度的checkpoint等优势，提升了数据读取的效率。</p>
+<h1 data-id="heading-5">三、增量快照读取机制</h1>
+<h2 data-id="heading-6">3.1、功能</h2>
+<p>增量快照读取是基本功能：</p>
+<ol>
+<li>并发读取：在增量快照读取期间，源（Source）可以支持并发读取。这意味着多个读取器可以同时读取数据，从而提高读取的速度和效率。</li>
+<li>Chunk级别的checkpoint：增量快照读取期间，源可以进行chunk级别的checkpoint。这意味着在读取过程中，可以对数据进行更细粒度的检查点，提高故障恢复的准确性和效率。</li>
+<li>全量增量无锁读取算法：相比于旧的快照机制，全量快照读取不需要源具有数据库锁权限。这降低了对数据库的依赖和权限要求，简化了配置和部署的过程。</li>
+</ol>
+<h2 data-id="heading-7">3.2、并发读取</h2>
+<p>增量快照读取的并行读取功能利用了Flink的Source并行度来控制源的并行度。你可以通过设置作业的并行度（parallelism.default）来实现。</p>
+<p>在SQL CLI中，可以使用以下命令进行设置：</p>
+<pre><code class="hljs language-ini" lang="ini">Flink SQL&gt; SET <span class="hljs-attr">'parallelism.default'</span> = <span class="hljs-number">4</span><span class="hljs-comment">;</span>
+</code></pre>
+<p>通过将并行度设置为4，Flink CDC Source算子将占用4个slot来并行读取数据。这样可以最大程度地利用系统资源，提高数据读取的效率和速度。</p>
+<h2 data-id="heading-8">3.3、Chunk级别的checkpoint</h2>
+<h3 data-id="heading-9">3.3.1、Chunk</h3>
+<p>为了充分利用并行Source，MySQL CDC Source在增量快照读取过程中使用主键列将表划分为多个分片（chunk）。默认情况下，MySQL CDC Source会识别表的主键列，并使用主键中的第一列作为分片列。如果表中没有主键，增量快照读取将失败。你可以通过禁用<code>scan.incremental.snapshot.enabled</code>来回退到旧的快照读取机制。</p>
+<p>对于数值和自动增量拆分列，MySQL CDC Source会按照固定步长高效地拆分块。例如，如果你有一个主键列为<code>id</code>的表，类型为自动增量的BIGINT，最小值为<code>0</code>，最大值为<code>100</code>，并设置表选项<code>scan.incremental.snapshot.chunk.size</code>的值为<code>25</code>，那么表将被拆分为以下块：</p>
+<pre><code class="hljs language-scss" lang="scss">(-∞, <span class="hljs-number">25</span>),
+<span class="hljs-selector-attr">[25, 50),[50, 75),[75, 100),[100, +∞)</span></code></pre>
+<p>对于其他类型的主键列，MySQL CDC Source执行类似以下形式的语句来获取每个块的低值和高值：<code>SELECT MAX(STR_ID) AS chunk_high FROM (SELECT * FROM TestTable WHERE STR_ID &gt; 'uuid-001' limit 25)</code>，然后将块集分割如下：</p>
+<pre><code class="hljs language-python" lang="python">(-∞, <span class="hljs-string">'uuid-001'</span>),
+[<span class="hljs-string">'uuid-001'</span>, <span class="hljs-string">'uuid-009'</span>),
+[<span class="hljs-string">'uuid-009'</span>, <span class="hljs-string">'uuid-abc'</span>),
+[<span class="hljs-string">'uuid-abc'</span>, <span class="hljs-string">'uuid-def'</span>),
+[uuid-<span class="hljs-keyword">def</span>, +∞).
+</code></pre>
+<p>通过这种分片方式，MySQL CDC Source可以高效地划分表数据，以实现并行的增量快照读取。每个读取器将负责读取和处理一个或多个分片的数据，从而提高整体的读取性能和效率。</p>
+<p>注意，<code>scan.incremental.snapshot.chunk.size</code>的默认值为<code>8096</code></p>
+<h3 data-id="heading-10">3.3.2、原理</h3>
+<p>在 Flink CDC 中实现 Chunk 级别的 checkpoint 本质是使用 Flink 的 Checkpointing 机制和相应的配置，启用 Chunk 级别的 checkpoint 后，Flink CDC 将在每个 Chunk 完成读取后进行一次 checkpoint，以确保数据的一致性和容错性。</p>
+<p>注意，Flink 的 checkpoint 机制包括两种类型的 checkpoint：时间驱动和计数驱动。但Flink CDC 中 Chunk 级别的 checkpoint 并不是直接利用Flink 计数驱动的 checkpoint 来实现的，相反，它是 Flink CDC 根据自身的机制自己实现的。它提供了在每个 Chunk 完成读取时进行一次 checkpoint 的能力，以实现更细粒度的数据一致性和容错性保障。</p>
+<h2 data-id="heading-11">3.4、全量增量无锁读取算法</h2>
+<h3 data-id="heading-12">3.4.1、原理</h3>
+<h4 data-id="heading-13">3.4.1.1、全量无锁读取算法流程</h4>
+<ol>
+<li>
+<p>首先，FlinkCDC 会先根据主键和粒度将要读取的表划分为多个分片（chunk）。</p>
+</li>
+<li>
+<p>每个 MySQL CDC Source 负责读取一个分片，多个Source 可以并发读取多个chunk，完成当前分片处理后才可以读取下一个分片，直到读取完所有分片。</p>
+</li>
+<li>
+<p>在读取每个分片时，FlinkCDC 使用一种名为<strong>偏移信号算法</strong>的方法来获取快照区块的最终一致输出。以下是该算法的简要步骤：</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>(1) 在读取chunk数据前先记录当前的 binlog 位置，即 <code>LOW</code> 偏移量。</p>
+</li>
+<li>
+<p>(2) 执行语句 <code>SELECT * FROM MyTable WHERE id &gt; chunk_low AND id &lt;= chunk_high</code>，读取chunk分片内的数据并缓存至快照区块。</p>
+</li>
+<li>
+<p>(3) 读取完chunk后再次记录当前的 binlog 位置记录，即 <code>HIGH</code> 偏移量，如下图：</p>
+</li>
+</ul>
+<p><img alt="image.png" src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/46f7de5bf750484093b547b25adf3b82~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=614&amp;h=146&amp;s=42622&amp;e=png&amp;b=fbf1eb"/></p>
+<ul>
+<li>
+<p>(4) 读取binlog：从 <code>LOW</code> 偏移量到 <code>HIGH</code> 偏移量之间的 binlog 记录，读取到的数据 append 到上个队列后面，并将此时binlog的最终offset保存至最后，如下图：</p>
+</li>
+</ul>
+<p><img alt="image.png" src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6347f02057284ba194421f225bfe376d~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=1176&amp;h=140&amp;s=87664&amp;e=png&amp;b=fbf1e7"/></p>
+<ul>
+<li>(5) 检查读取到的 binlog 每条记录，如果属于chunk分片范围，则对之前缓存的chunk队列里的数据进行修正，最后将修正后的记录作为快照区块的最终输出，如下图：</li>
+</ul>
+<p><img alt="image.png" src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/60c96a764ed24883a7d0d95fbbeca710~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=541&amp;h=247&amp;s=18038&amp;e=png&amp;a=1&amp;b=eaeaea"/></p>
+<ul>
+<li>(6) 将此次chunk的元信息【lw,hw等】保存至<code>MySqlSourceReader</code> 进行备份【checkponit阶段也会保存此数据】，为后续增量读取做准备。</li>
+</ul>
+<ol start="4">
+<li>chunk都被消费完毕后，即全量阶段同步完毕，此时将结束Source的并发读取，改为单线程读取binlog日志进行后续同步，此步骤在3.4.1.2、增量无锁读取算法流程。</li>
+</ol>
+<hr/>
+<ul>
+<li>为了方便理解举例：表当前总数据为9条，Chunk切分粒度<code>scan.incremental.snapshot.chunk.size=5</code>；作业的并发数为2，故Mysql CDC Source 会有两个Task并行读取Chunk01，Chunk02，读取过程如下：</li>
+</ul>
+<p><img alt="image.png" src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ff5e214b96354abb9f78bc0980792eed~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=1517&amp;h=1054&amp;s=146987&amp;e=png&amp;b=ffffff"/></p>
+<ul>
+<li>chunk01的数据流转过程如下：由于update#6、update#9 不属于chunk01分片范围故不做处理。</li>
+</ul>
+<p><img alt="image.png" src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ef3a22de561c4b679769c40e3f549583~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=922&amp;h=329&amp;s=22418&amp;e=png&amp;b=ffffff"/></p>
+<ul>
+<li>chunk02的数据流转过程如下：update#9、delete#7属于切片范围故修正缓存数据，而 update#4 不属于chunk02分片范围故不做处理。</li>
+</ul>
+<p><img alt="image.png" src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3015a8f66a76454882598f9c6bd4d400~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=1100&amp;h=367&amp;s=33142&amp;e=png&amp;b=ffffff"/></p>
+<p><strong>FAQ[常见问题]：</strong></p>
+<ul>
+<li>
+<p><strong>chunk01 与 chunk02阶段有重叠部分，即 update#9，是否会影响数据准确性？</strong></p>
+<ul>
+<li>答：不会，因为chunk只会对属于该分片范围的数据进行处理，故不会重复执行。</li>
+</ul>
+</li>
+<li>
+<p><strong>chunk01 与 chunk02 均未处理 update#4 日志，是否会影响数据准确性？</strong></p>
+<ul>
+<li>答：不会，因为当所有chunk阶段结束后，<code>MySqlSourceEnumerator</code>调查员会根据所有chunk中的min(lw) 再次读取binlog，选择性补全数据，具体细节在：3.4.1.2、增量无锁读取算法流程</li>
+</ul>
+</li>
+<li>
+<p><strong>chun02 没有读取update#6的日志，是否会影响数据准确性？</strong></p>
+<ul>
+<li>答：不会，因为update#6的日志 &lt; lw，说明chunk02在lw时已经读取到了update#6后的最新数据，故不会影响数据准确性。</li>
+</ul>
+</li>
+</ul>
+<h4 data-id="heading-14">3.4.1.2、增量无锁读取算法流程</h4>
+<ol>
+<li>
+<p>当全量阶段同步完毕后， <code>MySqlSourceReader</code> 会将每个 chunk 的 lw，hw等元数据汇报给 <code>MySqlSourceEnumerator</code>调查员，如下图：</p>
+</li>
+</ol>
+<p><img alt="image.png" src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f0da78b9ea454b73bca99fc623b4b45e~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=1307&amp;h=545&amp;s=58591&amp;e=png&amp;b=ffffff"/></p>
+<ol start="2">
+<li>
+<p><code>MySqlSourceEnumerator</code>调查员取所有chunk中最小的lw 作为offset 来读取binlog日志，如下图：</p>
+</li>
+</ol>
+<p><img alt="image.png" src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0a2c17e1514845aa992ca99f5301b720~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=1616&amp;h=875&amp;s=95373&amp;e=png&amp;b=ffffff"/></p>
+<ol start="3">
+<li>
+<p>当一个 binlog 记录属于一个分片的主键范围内时，如果该记录在这个分片的 hw 之后，则该记录应该发送给下游，如下图：update#6、update#9虽然数据chunk02分片范围但&lt;=hw 故舍弃；而update#4属于chunk01分片范围 且 &gt;hw 代表缺失该条记录故发送至下游。</p>
+</li>
+</ol>
+<p><img alt="image.png" src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/49161d0a26b349458c912997b88e6540~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=1468&amp;h=1025&amp;s=115030&amp;e=png&amp;b=ffffff"/></p>
+<ol start="4">
+<li>当一个 binlog 记录已经处于所有chunk中最大的hw时，即表示日志记录已经进入 Pure Binlog Phase，对于这样的 binlog 记录，不需进行比较，直接发送给下游，如下图：</li>
+</ol>
+<p><img alt="image.png" src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1a7ee41f706a4d308d30d32c809fe958~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=1034&amp;h=864&amp;s=66121&amp;e=png&amp;b=ffffff"/></p>
+<blockquote>
+<p>至此增量无所读取算法流程完毕</p>
+</blockquote>
+<h3 data-id="heading-15">3.4.2、源码分析</h3>
+<ul>
+<li>MySql cdc 类图关系如下：</li>
+</ul>
+<p><img alt="image.png" src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ddc6915d5a8642d8b069933afff0c8bd~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=2841&amp;h=2898&amp;s=726782&amp;e=png&amp;a=1&amp;b=bfe9e9"/></p>
+<ul>
+<li>快照读取chunk分片逻辑：<strong><a href="https://github.dev/ververica/flink-cdc-connectors/blob/release-2.1/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/debezium/task/MySqlSnapshotSplitReadTask.java#L125" ref="nofollow noopener noreferrer" target="_blank" title="https://github.dev/ververica/flink-cdc-connectors/blob/release-2.1/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/debezium/task/MySqlSnapshotSplitReadTask.java#L125">MySqlSnapshotSplitReadTask#doExecute</a></strong></li>
+</ul>
+<pre><code class="hljs language-ini" lang="ini">protected SnapshotResult doExecute(
+            ChangeEventSourceContext context,
+            SnapshotContext snapshotContext,
+            SnapshottingTask snapshottingTask)
+            throws Exception {
+        final RelationalSnapshotChangeEventSource.RelationalSnapshotContext <span class="hljs-attr">ctx</span> =
+                (RelationalSnapshotChangeEventSource.RelationalSnapshotContext) snapshotContext<span class="hljs-comment">;</span>
+        <span class="hljs-attr">ctx.offset</span> = <span class="hljs-literal">off</span>setContext<span class="hljs-comment">;</span>
+        final SignalEventDispatcher <span class="hljs-attr">signalEventDispatcher</span> =
+                new SignalEventDispatcher(
+                        offsetContext.getPartition(),
+                        topicSelector.topicNameFor(snapshotSplit.getTableId()),
+                        dispatcher.getQueue())<span class="hljs-comment">;</span>
+​
+        final BinlogOffset <span class="hljs-attr">lowWatermark</span> = currentBinlog<span class="hljs-literal">Off</span>set(jdbcConnection)<span class="hljs-comment">;</span>
+        LOG.info(
+                "Snapshot step 1 - Determining low watermark {} for split {}",
+                lowWatermark,
+                snapshotSplit)<span class="hljs-comment">;</span>
+        ((SnapshotSplitReader.SnapshotSplitChangeEventSourceContextImpl) (context))
+                .setLowWatermark(lowWatermark)<span class="hljs-comment">;</span>
+        signalEventDispatcher.dispatchWatermarkEvent(
+                snapshotSplit, lowWatermark, SignalEventDispatcher.WatermarkKind.LOW)<span class="hljs-comment">;</span>
+​
+        LOG.info("Snapshot step 2 - Snapshotting data")<span class="hljs-comment">;</span>
+        createDataEvents(ctx, snapshotSplit.getTableId())<span class="hljs-comment">;</span>
+​
+        final BinlogOffset <span class="hljs-attr">highWatermark</span> = currentBinlog<span class="hljs-literal">Off</span>set(jdbcConnection)<span class="hljs-comment">;</span>
+        LOG.info(
+                "Snapshot step 3 - Determining high watermark {} for split {}",
+                highWatermark,
+                snapshotSplit)<span class="hljs-comment">;</span>
+        signalEventDispatcher.dispatchWatermarkEvent(
+                snapshotSplit, highWatermark, SignalEventDispatcher.WatermarkKind.HIGH)<span class="hljs-comment">;</span>
+        ((SnapshotSplitReader.SnapshotSplitChangeEventSourceContextImpl) (context))
+                .setHighWatermark(highWatermark)<span class="hljs-comment">;</span>
+​
+        return SnapshotResult.completed(ctx.offset)<span class="hljs-comment">;</span>
+}
+</code></pre>
+<ul>
+<li>chunk分片数据读取后进行格式处理归一逻辑：<strong><a href="https://github.com/ververica/flink-cdc-connectors/blob/f83b2889e6aecb2f91c268404426e675fd63a484/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/utils/RecordUtils.java#L81" ref="nofollow noopener noreferrer" target="_blank" title="https://github.com/ververica/flink-cdc-connectors/blob/f83b2889e6aecb2f91c268404426e675fd63a484/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/utils/RecordUtils.java#L81">RecordUtils#normalizedSplitRecords</a></strong></li>
+</ul>
+<pre><code class="hljs language-ini" lang="ini">/**
+     * Normalize the records of snapshot split which represents the split records state on high
+     * watermark. data input: <span class="hljs-section">[low watermark event]</span> <span class="hljs-section">[snapshot events ]</span> <span class="hljs-section">[high watermark event]</span>
+     * <span class="hljs-section">[binlog events]</span> <span class="hljs-section">[binlog-end event]</span> data output: <span class="hljs-section">[low watermark event]</span> <span class="hljs-section">[normalized events]</span>
+     * <span class="hljs-section">[high watermark event]</span>
+     */
+    public static List&lt;SourceRecord&gt; normalizedSplitRecords(
+            MySqlSnapshotSplit snapshotSplit,
+            List&lt;SourceRecord&gt; sourceRecords,
+            SchemaNameAdjuster nameAdjuster) {
+        List&lt;SourceRecord&gt; <span class="hljs-attr">normalizedRecords</span> = new ArrayList&lt;&gt;()<span class="hljs-comment">;</span>
+        Map&lt;Struct, SourceRecord&gt; <span class="hljs-attr">snapshotRecords</span> = new HashMap&lt;&gt;()<span class="hljs-comment">;</span>
+        List&lt;SourceRecord&gt; <span class="hljs-attr">binlogRecords</span> = new ArrayList&lt;&gt;()<span class="hljs-comment">;</span>
+        if (!sourceRecords.isEmpty()) {
+​
+            SourceRecord <span class="hljs-attr">lowWatermark</span> = sourceRecords.get(<span class="hljs-number">0</span>)<span class="hljs-comment">;</span>
+            checkState(
+                    isLowWatermarkEvent(lowWatermark),
+                    String.format(
+                            "The first record should be low watermark signal event, but is %s",
+                            lowWatermark))<span class="hljs-comment">;</span>
+            SourceRecord <span class="hljs-attr">highWatermark</span> = null<span class="hljs-comment">;</span>
+            int <span class="hljs-attr">i</span> = <span class="hljs-number">1</span><span class="hljs-comment">;</span>
+            for (<span class="hljs-comment">; i &lt; sourceRecords.size(); i++) {</span>
+                SourceRecord <span class="hljs-attr">sourceRecord</span> = sourceRecords.get(i)<span class="hljs-comment">;</span>
+                if (!isHighWatermarkEvent(sourceRecord)) {
+                    snapshotRecords.put((Struct) sourceRecord.key(), sourceRecord)<span class="hljs-comment">;</span>
+                } else {
+                    <span class="hljs-attr">highWatermark</span> = sourceRecord<span class="hljs-comment">;</span>
+                    i++<span class="hljs-comment">;</span>
+                    break<span class="hljs-comment">;</span>
+                }
+            }
+​
+            if (i &lt; sourceRecords.size() - 1) {
+                List&lt;SourceRecord&gt; <span class="hljs-attr">allBinlogRecords</span> =
+                        sourceRecords.subList(i, sourceRecords.size() - 1)<span class="hljs-comment">;</span>
+                for (SourceRecord binlog : allBinlogRecords) {
+                    if (isDataChangeRecord(binlog)) {
+                        Object<span class="hljs-section">[]</span> <span class="hljs-attr">key</span> =
+                                getSplitKey(snapshotSplit.getSplitKeyType(), binlog, nameAdjuster)<span class="hljs-comment">;</span>
+                        // 当获取chunk lw hw 的binlog后会先判断是否数据chunk的区间内，只有负责chunk区间内的数据才会被更正
+                        if (splitKeyRangeContains(
+                                key, snapshotSplit.getSplitStart(), snapshotSplit.getSplitEnd())) {
+                            binlogRecords.add(binlog)<span class="hljs-comment">;</span>
+                        }
+                    }
+                }
+            }
+            checkState(
+                    isHighWatermarkEvent(highWatermark),
+                    String.format(
+                            "The last record should be high watermark signal event, but is %s",
+                            highWatermark))<span class="hljs-comment">;</span>
+            // chunk数据修正逻辑函数：upsertBinlog
+            <span class="hljs-attr">normalizedRecords</span> =
+                    upsertBinlog(
+                            snapshotSplit,
+                            lowWatermark,
+                            highWatermark,
+                            snapshotRecords,
+                            binlogRecords)<span class="hljs-comment">;</span>
+        }
+        return normalizedRecords<span class="hljs-comment">;</span>
+    }
+</code></pre>
+<ul>
+<li>
+<p>chunk数据修正逻辑：<strong><a href="https://github.com/ververica/flink-cdc-connectors/blob/f83b2889e6aecb2f91c268404426e675fd63a484/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/utils/RecordUtils.java#L139" ref="nofollow noopener noreferrer" target="_blank" title="https://github.com/ververica/flink-cdc-connectors/blob/f83b2889e6aecb2f91c268404426e675fd63a484/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/utils/RecordUtils.java#L139">RecordUtils#upsertBinlog</a></strong></p>
+<pre><code class="hljs language-scss" lang="scss">private static List&lt;SourceRecord&gt; <span class="hljs-built_in">upsertBinlog</span>(
+            MySqlSplit split,
+            SourceRecord lowWatermarkEvent,
+            SourceRecord highWatermarkEvent,
+            Map&lt;Struct, SourceRecord&gt; snapshotRecords,
+            List&lt;SourceRecord&gt; binlogRecords) {
+        final List&lt;SourceRecord&gt; normalizedBinlogRecords = new ArrayList&lt;&gt;();
+        normalizedBinlogRecords<span class="hljs-selector-class">.add</span>(lowWatermarkEvent);
+        <span class="hljs-comment">// upsert binlog events to snapshot events of split</span>
+        if (!binlogRecords.isEmpty()) {
+            for (SourceRecord binlog : binlogRecords) {
+                Struct key = (Struct) binlog<span class="hljs-selector-class">.key</span>();
+                Struct value = (Struct) binlog<span class="hljs-selector-class">.value</span>();
+                if (value != null) {
+                    Envelope<span class="hljs-selector-class">.Operation</span> operation =
+                            Envelope<span class="hljs-selector-class">.Operation</span><span class="hljs-selector-class">.forCode</span>(
+                                    value.getString(Envelope.FieldName.OPERATION));
+                    switch (operation) {
+                        case UPDATE:
+                            Envelope envelope = Envelope.<span class="hljs-built_in">fromSchema</span>(binlog.<span class="hljs-built_in">valueSchema</span>());
+                            Struct source = value<span class="hljs-selector-class">.getStruct</span>(Envelope.FieldName.SOURCE);
+                            Struct updateAfter = value<span class="hljs-selector-class">.getStruct</span>(Envelope.FieldName.AFTER);
+                            Instant ts =
+                                    Instant<span class="hljs-selector-class">.ofEpochMilli</span>(
+                                            (Long) source<span class="hljs-selector-class">.get</span>(Envelope.FieldName.TIMESTAMP));
+                            SourceRecord record =
+                                    new <span class="hljs-built_in">SourceRecord</span>(
+                                            binlog.sourcePartition(),
+                                            binlog<span class="hljs-selector-class">.sourceOffset</span>(),
+                                            binlog<span class="hljs-selector-class">.topic</span>(),
+                                            binlog<span class="hljs-selector-class">.kafkaPartition</span>(),
+                                            binlog<span class="hljs-selector-class">.keySchema</span>(),
+                                            binlog<span class="hljs-selector-class">.key</span>(),
+                                            binlog<span class="hljs-selector-class">.valueSchema</span>(),
+                                            envelope<span class="hljs-selector-class">.read</span>(updateAfter, source, ts));
+                            snapshotRecords<span class="hljs-selector-class">.put</span>(key, record);
+                            break;
+                        case DELETE:
+                            snapshotRecords.<span class="hljs-built_in">remove</span>(key);
+                            break;
+                        case CREATE:
+                            snapshotRecords.<span class="hljs-built_in">put</span>(key, binlog);
+                            break;
+                        case READ:
+                            throw new <span class="hljs-built_in">IllegalStateException</span>(
+                                    String.<span class="hljs-built_in">format</span>(
+                                            <span class="hljs-string">"Binlog record shouldn't use READ operation, the the record is %s."</span>,
+                                            binlog));
+                    }
+                }
+            }
+        }
+        normalizedBinlogRecords<span class="hljs-selector-class">.addAll</span>(snapshotRecords.values());
+        normalizedBinlogRecords<span class="hljs-selector-class">.add</span>(highWatermarkEvent);
+        return normalizedBinlogRecords;
+    }
+</code></pre>
+</li>
+<li>
+<p>全量快照结束后MySqlSourceReader 整合各个split，汇报给MySqlSourceEnumerator逻辑：<a href="https://github.com/ververica/flink-cdc-connectors/blob/f83b2889e6aecb2f91c268404426e675fd63a484/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/reader/MySqlSourceReader.java#L195" ref="nofollow noopener noreferrer" target="_blank" title="https://github.com/ververica/flink-cdc-connectors/blob/f83b2889e6aecb2f91c268404426e675fd63a484/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/reader/MySqlSourceReader.java#L195">handleSourceEvents</a></p>
+</li>
+</ul>
+<pre><code class="hljs language-scss" lang="scss"><span class="hljs-keyword">@Override</span>
+    public void handleSourceEvents(SourceEvent sourceEvent) {
+        if (sourceEvent instanceof FinishedSnapshotSplitsAckEvent) {
+            FinishedSnapshotSplitsAckEvent ackEvent = (FinishedSnapshotSplitsAckEvent) sourceEvent;
+            LOG<span class="hljs-selector-class">.debug</span>(
+                    "The subtask {} receives ack event for {} from enumerator.",
+                    subtaskId,
+                    ackEvent.getFinishedSplits());
+            for (String splitId : ackEvent.getFinishedSplits()) {
+                this<span class="hljs-selector-class">.finishedUnackedSplits</span><span class="hljs-selector-class">.remove</span>(splitId);
+            }
+        } else if (sourceEvent instanceof FinishedSnapshotSplitsRequestEvent) {
+            <span class="hljs-comment">// report finished snapshot splits</span>
+            LOG<span class="hljs-selector-class">.debug</span>(
+                    "The subtask {} receives request to report finished snapshot splits.",
+                    subtaskId);
+            <span class="hljs-built_in">reportFinishedSnapshotSplitsIfNeed</span>();
+        } else if (sourceEvent instanceof BinlogSplitMetaEvent) {
+            LOG<span class="hljs-selector-class">.debug</span>(
+                    "The subtask {} receives binlog meta with group id {}.",
+                    subtaskId,
+                    ((BinlogSplitMetaEvent) sourceEvent)<span class="hljs-selector-class">.getMetaGroupId</span>());
+            <span class="hljs-built_in">fillMetaDataForBinlogSplit</span>((BinlogSplitMetaEvent) sourceEvent);
+        } else {
+            super<span class="hljs-selector-class">.handleSourceEvents</span>(sourceEvent);
+        }
+    }
+​
+    private void <span class="hljs-built_in">reportFinishedSnapshotSplitsIfNeed</span>() {
+        if (!finishedUnackedSplits.isEmpty()) {
+            final Map&lt;String, BinlogOffset&gt; finishedOffsets = new HashMap&lt;&gt;();
+            for (MySqlSnapshotSplit split : finishedUnackedSplits.values()) {
+                finishedOffsets<span class="hljs-selector-class">.put</span>(split.splitId(), split<span class="hljs-selector-class">.getHighWatermark</span>());
+            }
+            FinishedSnapshotSplitsReportEvent reportEvent =
+                    new <span class="hljs-built_in">FinishedSnapshotSplitsReportEvent</span>(finishedOffsets);
+            context<span class="hljs-selector-class">.sendSourceEventToCoordinator</span>(reportEvent);
+            LOG<span class="hljs-selector-class">.debug</span>(
+                    "The subtask {} reports offsets of finished snapshot splits {}.",
+                    subtaskId,
+                    finishedOffsets);
+        }
+    }
+</code></pre>
+<ul>
+<li>MySqlSourceEnumerator 收到全量快照结束后处理逻辑：<a href="https://github.com/ververica/flink-cdc-connectors/blob/f83b2889e6aecb2f91c268404426e675fd63a484/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/assigners/MySqlHybridSplitAssigner.java#L164" ref="nofollow noopener noreferrer" target="_blank" title="https://github.com/ververica/flink-cdc-connectors/blob/f83b2889e6aecb2f91c268404426e675fd63a484/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/source/assigners/MySqlHybridSplitAssigner.java#L164">createBinlogSplit</a></li>
+</ul>
+<p>当 MySqlSourceEnumerator 将所有 split 的 hw 收齐之后，会创建一个 binlog split，该分片包含了需要读取 binlog 的起始位置（所有分片 hw 的最小值）和所有分片的 hw 信息。</p>
+<pre><code class="hljs language-ini" lang="ini">private MySqlBinlogSplit createBinlogSplit() {
+        final List&lt;MySqlSnapshotSplit&gt; <span class="hljs-attr">assignedSnapshotSplit</span> =
+                snapshotSplitAssigner.getAssignedSplits().values().stream()
+                        .sorted(Comparator.comparing(MySqlSplit::splitId))
+                        .collect(Collectors.toList())<span class="hljs-comment">;</span>
+​
+        Map&lt;String, BinlogOffset&gt; <span class="hljs-attr">splitFinishedOffsets</span> =
+                snapshotSplitAssigner.getSplitFinishedOffsets()<span class="hljs-comment">;</span>
+        final List&lt;FinishedSnapshotSplitInfo&gt; <span class="hljs-attr">finishedSnapshotSplitInfos</span> = new ArrayList&lt;&gt;()<span class="hljs-comment">;</span>
+​
+        BinlogOffset <span class="hljs-attr">minBinlogOffset</span> = null<span class="hljs-comment">;</span>
+        for (MySqlSnapshotSplit split : assignedSnapshotSplit) {
+            // find the min binlog offset
+            BinlogOffset <span class="hljs-attr">binlogOffset</span> = splitFinished<span class="hljs-literal">Off</span>sets.get(split.splitId())<span class="hljs-comment">;</span>
+            if (<span class="hljs-attr">minBinlogOffset</span> == null || binlog<span class="hljs-literal">Off</span>set.isBefore(minBinlog<span class="hljs-literal">Off</span>set)) {
+                <span class="hljs-attr">minBinlogOffset</span> = binlog<span class="hljs-literal">Off</span>set<span class="hljs-comment">;</span>
+            }
+            finishedSnapshotSplitInfos.add(
+                    new FinishedSnapshotSplitInfo(
+                            split.getTableId(),
+                            split.splitId(),
+                            split.getSplitStart(),
+                            split.getSplitEnd(),
+                            binlogOffset))<span class="hljs-comment">;</span>
+        }
+​
+        // the finishedSnapshotSplitInfos is too large for transmission, divide it to groups and
+        // then transfer them
+​
+        boolean <span class="hljs-attr">divideMetaToGroups</span> = finishedSnapshotSplitInfos.size() &gt; splitMetaGroupSize<span class="hljs-comment">;</span>
+        return new MySqlBinlogSplit(
+                BINLOG_SPLIT_ID,
+                <span class="hljs-attr">minBinlogOffset</span> == null ? Binlog<span class="hljs-literal">Off</span>set.INITIAL_<span class="hljs-literal">OFF</span>SET : minBinlog<span class="hljs-literal">Off</span>set,
+                BinlogOffset.NO_STOPPING_OFFSET,
+                divideMetaToGroups ? new ArrayList&lt;&gt;() : finishedSnapshotSplitInfos,
+                new HashMap&lt;&gt;(),
+                finishedSnapshotSplitInfos.size())<span class="hljs-comment">;</span>
+    }
+</code></pre>
+<ul>
+<li>增量阶段逻辑：<a href="https://github.com/ververica/flink-cdc-connectors/blob/f83b2889e6aecb2f91c268404426e675fd63a484/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/debezium/reader/BinlogSplitReader.java#L197" ref="nofollow noopener noreferrer" target="_blank" title="https://github.com/ververica/flink-cdc-connectors/blob/f83b2889e6aecb2f91c268404426e675fd63a484/flink-connector-mysql-cdc/src/main/java/com/ververica/cdc/connectors/mysql/debezium/reader/BinlogSplitReader.java#L197">shouldEmit</a></li>
+</ul>
+<p>当 <code>MySqlSourceEnumerator</code> 将 binlog 分片分配给 <code>MySqlSourceReader</code> 时，任务从全量阶段转变为增量阶段。<code>MySqlSourceReader</code> 在读取 binlog 数据后，使用 <code>shouldEmit</code> 来判断是否应该将该记录发送给下游。</p>
+<pre><code class="hljs language-scss" lang="scss"><span class="hljs-comment">/**
+     * Returns the record should emit or not.
+     *
+     * &lt;p&gt;The watermark signal algorithm is the binlog split reader only sends the binlog event that
+     * belongs to its finished snapshot splits. For each snapshot split, the binlog event is valid
+     * since the offset is after its high watermark.
+     *
+     * &lt;pre&gt; E.g: the data input is :
+     *    snapshot-split-0 info : [0,    1024) highWatermark0
+     *    snapshot-split-1 info : [1024, 2048) highWatermark1
+     *  the data output is:
+     *  only the binlog event belong to [0,    1024) and offset is after highWatermark0 should send,
+     *  only the binlog event belong to [1024, 2048) and offset is after highWatermark1 should send.
+     * &lt;/pre&gt;
+     */</span>
+    private boolean <span class="hljs-built_in">shouldEmit</span>(SourceRecord sourceRecord) {
+        if (isDataChangeRecord(sourceRecord)) {
+            TableId tableId = <span class="hljs-built_in">getTableId</span>(sourceRecord);
+            BinlogOffset <span class="hljs-attribute">position</span> = <span class="hljs-built_in">getBinlogPosition</span>(sourceRecord);
+            <span class="hljs-comment">// 判断是否处于纯净的binlog区域</span>
+            if (hasEnterPureBinlogPhase(tableId, position)) {
+                return true;
+            }
+            <span class="hljs-comment">// only the table who captured snapshot splits need to filter</span>
+            if (finishedSplitsInfo.containsKey(tableId)) {
+                RowType splitKeyType =
+                        ChunkUtils<span class="hljs-selector-class">.getSplitType</span>(
+                                statefulTaskContext.getDatabaseSchema()<span class="hljs-selector-class">.tableFor</span>(tableId));
+                <span class="hljs-selector-tag">Object</span><span class="hljs-selector-attr">[]</span> key =
+                        <span class="hljs-built_in">getSplitKey</span>(
+                                splitKeyType,
+                                sourceRecord,
+                                statefulTaskContext.getSchemaNameAdjuster());
+                for (FinishedSnapshotSplitInfo splitInfo : finishedSplitsInfo.get(tableId)) {
+                    if (RecordUtils.splitKeyRangeContains(
+                                    key, splitInfo.getSplitStart(), splitInfo<span class="hljs-selector-class">.getSplitEnd</span>())
+                            &amp;&amp; <span class="hljs-attribute">position</span><span class="hljs-selector-class">.isAfter</span>(splitInfo.getHighWatermark())) { <span class="hljs-comment">// 判断该binlog是否属于chunk区间且是否&gt;该chunk的hw</span>
+                        return true;
+                    }
+                }
+            }
+            <span class="hljs-comment">// not in the monitored splits scope, do not emit</span>
+            return false;
+        }
+        <span class="hljs-comment">// always send the schema change event and signal event</span>
+        <span class="hljs-comment">// we need record them to state of Flink</span>
+        return true;
+    }
+​
+    private boolean <span class="hljs-built_in">hasEnterPureBinlogPhase</span>(TableId tableId, BinlogOffset position) {
+        <span class="hljs-comment">// the existed tables those have finished snapshot reading</span>
+        if (maxSplitHighWatermarkMap.containsKey(tableId)
+                &amp;&amp; <span class="hljs-attribute">position</span><span class="hljs-selector-class">.isAtOrAfter</span>(maxSplitHighWatermarkMap.get(tableId))) {
+            return true;
+        }
+        <span class="hljs-comment">// capture dynamically new added tables</span>
+        <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> there is still very little chance that we can't capture new added table.</span>
+        <span class="hljs-comment">//  That the tables dynamically added after discovering captured tables in enumerator</span>
+        <span class="hljs-comment">//  and before the lowest binlog offset of all table splits. This interval should be</span>
+        <span class="hljs-comment">//  very short, so we don't support it for now.</span>
+        return !maxSplitHighWatermarkMap<span class="hljs-selector-class">.containsKey</span>(tableId)
+                &amp;&amp; capturedTableFilter<span class="hljs-selector-class">.isIncluded</span>(tableId);
+    }
+</code></pre>
+<h1 data-id="heading-16">四、相关文档</h1>
+<ul>
+<li><a href="https://ververica.github.io/flink-cdc-connectors/master/content/connectors/mysql-cdc%28ZH%29.html#id5" ref="nofollow noopener noreferrer" target="_blank" title="https://ververica.github.io/flink-cdc-connectors/master/content/connectors/mysql-cdc%28ZH%29.html#id5">官方文档</a></li>
+<li><a href="https://cwiki.apache.org/confluence/display/FLINK/FLIP-27:+Refactor+Source+Interface" ref="nofollow noopener noreferrer" target="_blank" title="https://cwiki.apache.org/confluence/display/FLINK/FLIP-27:+Refactor+Source+Interface">Flink CDC 设计文档</a></li>
+<li><a href="https://github.com/ververica/flink-cdc-connectors/wiki/FAQ%28ZH%29" ref="nofollow noopener noreferrer" target="_blank" title="https://github.com/ververica/flink-cdc-connectors/wiki/FAQ%28ZH%29">FAQ</a></li>
+</ul></div>
+</div>
+</article>
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据湖Iceberg技术在小米的落地与应用场景 - 袋鼠社区-袋鼠云丨数栈丨数据中台丨数据治理丨湖仓一体丨数据开发丨基础软件</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>数据湖Iceberg技术在小米的落地与应用场景 - 袋鼠社区-袋鼠云丨数栈丨数据中台丨数据治理丨湖仓一体丨数据开发丨基础软件</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：未知</span>
+<span>来源：<a href="https://www.dtstack.com/bbs/article/920" target="_blank">www.dtstack.com</a></span>
+<span>平台：dtstack</span>
+<span>图片：35 张</span>
+</div>
+</header>
+<hr>
+<div style="background:#fff3cd;padding:8px 12px;border-radius:4px;margin-bottom:16px;font-size:13px;color:#856404">⚠️ 未能精确定位正文区域，以下为页面正文降级内容，可能含少量非正文信息。</div>
+<div class="article-body">
+<body><style>
+	.my-head{background-color: rgba(83, 107, 158,0.6);border-radius: 100%}
+</style>
+<!-- 头部 -->
+
+<!-- 头部-END -->
+<div class="news_banner">
+
+<style>
+	.flexslider{width: 100%;margin:0 auto;padding: 0}
+	.flexslider .slides{width: 100%}
+	.flexslider .flex-control-nav{z-index: 99;bottom: 12px}
+	.slides li a{ display: block; width: 100%; height: 340px}
+	.flex-control-paging li a{
+		width: 10px;height: 10px;background: #FFFFFF;opacity: 0.4;border:none;margin: 0 6px;
+		-webkit-box-shadow: unset;
+		-moz-box-shadow: unset;
+		box-shadow: unset;
+	}
+	.flex-control-paging li a.flex-active {
+		opacity: unset;
+		background-color: #ffffff;
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ffffff));
+		background-image: -webkit-linear-gradient(top, #ffffff, #ffffff);
+		background-image: -moz-linear-gradient(top, #ffffff, #ffffff);
+		background-image: -o-linear-gradient(top, #ffffff, #ffffff);
+		background-image: linear-gradient(to bottom, #ffffff, #ffffff);
+	}
+</style>
+<div class="flexslider fs0">
+<ul class="slides">
+<li>
+<a href="https://www.dtstack.com/resources/1114/?src=bbs" style="background: url('https://assets.dtstack.com/2021bbs/files_user1/carousel/a806c69ce26bba2245f86a03bafcfd39.png?1981') center center / cover no-repeat; background-size: auto 340px" target="_self" title="能源矿产白皮书">
+</a>
+</li>
+<li>
+<a href="https://www.dtstack.com/resources/1101/?src=bbs" style="background: url('https://assets.dtstack.com/2021bbs/files_user1/carousel/19ae3ad34a940317f0211e595a934348.png?5185') center center / cover no-repeat; background-size: auto 340px" target="_self" title="指标AI白皮书">
+</a>
+</li>
+<li>
+<a href="https://www.dtstack.com/resources/1001/?src=bbs" style="background: url('https://www.dtstack.com/bbs/static/ask_carousel/5180d456f9d99e32f58b366a42aa05c1.png?4348') center center / cover no-repeat; background-size: auto 340px" target="_self" title="数据治理行业实践白皮书">
+</a>
+</li>
+<li>
+<a href="https://www.dtstack.com/resources/1057/?src=bbs" style="background: url('https://www.dtstack.com/bbs/static/ask_carousel/0f494ae99e776d30669c398bc168c49d.png?8354') center center / cover no-repeat; background-size: auto 340px" target="_self" title="行业指标体系白皮书">
+</a>
+</li>
+</ul>
+</div>
+
+
+</div>
+
+<style>
+    dl{margin-bottom: unset!important;}
+</style>
+<div class="conbox clearfiex">
+<!-- 左侧 -->
+<div class="left clearfiex">
+<div class="snav">
+<a href="https://www.dtstack.com/bbs/article/">博客</a>
+<i><img src="https://www.dtstack.com/bbs/static/css/daishu/img/snavicon.png"/></i>数据湖Iceberg技术在小米的落地与应用场景        </div>
+<div class="box course">
+<div class="article-details">
+<!-- 文章主体 -->
+<div class="details-info">
+<div>
+<h1 class="dname">
+                            数据湖Iceberg技术在小米的落地与应用场景                                                    </h1>
+<!-- 下拉菜单 -->
+<!-- end 下拉菜单 -->
+</div>
+<div class="auther-info">
+<span><img class="iconhead" src="https://www.dtstack.com/bbs/uploads/avatar/000/00/00/01_avatar_min.jpg?818"/>  
+                            <a href="https://www.dtstack.com/bbs/people/1">数栈君</a>  
+                            发表于 2023-03-07 10:05</span>
+<span><em><i><img src="https://www.dtstack.com/bbs/static/css/daishu/img/icon-ll.png"/></i> 3004</em></span>
+<span><em><i><img src="https://www.dtstack.com/bbs/static/css/daishu/img/icon-ly.png"/></i> 0</em></span>
+</div>
+<div class="acticebox">
+<div style="margin-bottom: 24px; outline: 0px; max-width: 100%; color: rgb(34, 34, 34); font-family: system-ui, -apple-system, BlinkMacSystemFont,"><div style="outline: 0px; max-width: 100%; visibility: visible; overflow-wrap: break-word !important;"><div style="outline: 0px; max-width: 100%; text-align: center; overflow-wrap: break-word !important;"><strong style="max-width:100%;color:rgb(0,128,255);font-size:50px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">01</strong></div><div style="outline: 0px; max-width: 100%; text-align: center; overflow-wrap: break-word !important;"><strong style="max-width:100%;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">Iceberg技术简介</span></strong></div></div></div><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">首先介绍一下Iceberg技术。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">Iceberg是一个基于大型分析型数据上的一个表格式，它允许将一些文件、数据集以表的形式提供给spark、trino、prestodb、flink、hive这些计算引擎。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/d4dddec99a28f183b87fffbeab2a959a..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/d4dddec99a28f183b87fffbeab2a959a..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/d4dddec99a28f183b87fffbeab2a959a..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/d4dddec99a28f183b87fffbeab2a959a..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">通过下面右图可以看到iceberg所处的位置，与hudi, delta lake相同。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">通过iceberg这个抽象层，将上层的计算与下层的存储进行分离，这样就使我们在存储和计算上的选择更灵活。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">下层有parquet、orc、avro可以选择，最底层的实际物理存储上可以选择s3, aliyun oss以及HDFS。通过iceberg这个抽象，最大的优势是可以将底层文件的细节对用户屏蔽，用户可以通过表的方式去访问，而不需要关心底层到底是存了什么格式的文件，或是存在哪里。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/e3976521ca7193826ddcafeaf6406f81..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/e3976521ca7193826ddcafeaf6406f81..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/e3976521ca7193826ddcafeaf6406f81..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/e3976521ca7193826ddcafeaf6406f81..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">Iceberg实现的本质原理是一种文件的组织方式，包括4级的结构。</span></strong></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">从下往上看，<strong style="max-width:100%;">最底层</strong>是一些写入的数据文件，即</span><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);"><strong style="max-width:100%;">data file</strong></span><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">。当我们写完这些data file之后，它的元数据文件，会有一些清单文件，即manifest文件，来记录文件和分区的关系。在iceberg也有分区的概念，分区和文件对应关系都记录在清单文件里面。当这个清单文件写完之后都会形成一个快照，每次commit都会形成一个新的快照。快照会通过metadata文件来进行记录。这样如果我们使用一些历史回溯，就可以通过这个文件索引去确定使用哪些快照。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/0dab8e8eb0eabe042df0d5c05eb81b7f..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/0dab8e8eb0eabe042df0d5c05eb81b7f..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/0dab8e8eb0eabe042df0d5c05eb81b7f..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/0dab8e8eb0eabe042df0d5c05eb81b7f..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">Iceberg有三大优势，即：事务性、隐式分区和行级更新。</span></strong></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">事务性带来的好处是：</span></p><ul style="margin-top:0px;margin-bottom:0px;margin-left:0px;padding-left:1.2em;max-width:100%;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;list-style-type:square;"><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">首先，可以避免写入失败带来的脏数据。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">其次，我们可以用刚才所说的快照的方式来实现读写分离。以hive为例，比如hive读的程序已经启动，结果这些文件刚好被overwrite了，就可能会导致读程序的失败。而iceberg这种使用快照方式通过读到不同的快照来进行分离，做到读写的隔离。</span></p></li></ul><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/1d76a9b7d1599c50f61b28b1500659cd..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/1d76a9b7d1599c50f61b28b1500659cd..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/1d76a9b7d1599c50f61b28b1500659cd..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/1d76a9b7d1599c50f61b28b1500659cd..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">Iceberg的第二大优势是它提供了一个隐式分区。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">我们可以在建表的时候对一个列做一个转换，用一个如transform的函数来做一个隐式分区。这样当我们写入数据的时候，不需要额外指定一个分区来写入，直接写就可以了，它会根据数据去判定到底落在哪个分区，而且它的分区也不跟目录强绑定。另外它提供了partition evolution机制，提供灵活的分区变更，当我们在把月替换成天，底层查询时会执行不同的查询计划。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/0f7df221bd358b052b949d57a0145197..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/0f7df221bd358b052b949d57a0145197..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/0f7df221bd358b052b949d57a0145197..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/0f7df221bd358b052b949d57a0145197..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">它的第三大优势是行级更新的能力。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">iceberg现有两个版本，即V1版本和V2版本，我们经常称V1表和V2表。V1表的更新采用Copy On Write（COW）模式，就是将需要更新的文件读取出来做更新后再写入。在V2表中除了Copy On Write，还增加了Merge On Read（MOR）。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">下图是对Merge On Read的一个简单介绍，它通过记录另外两个文件，即position delete和equality delete文件来对已有的文件进行删除，当读取的时候进行merge得到最终的结果。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/cddcc2034f49d514d398c4f1cf14f39f..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/cddcc2034f49d514d398c4f1cf14f39f..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/cddcc2034f49d514d398c4f1cf14f39f..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/cddcc2034f49d514d398c4f1cf14f39f..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;line-height:2em;text-align:center;"><span style="max-width:100%;color:rgb(0,128,255);font-size:50px;"><strong style="max-width:100%;">02</strong></span></p><p style="margin-top:0px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;line-height:2em;text-align:center;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">Iceberg在小米的应用实践</span></strong></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">介绍了iceberg的一些背景知识后，这一章将介绍iceberg在小米的一些实践场景。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">现在iceberg在小米大概有4000多张表，数据大概是8PB，其中v1表1000多张，v2表3000多张。v1表主要是一些日志场景，v2表是可以配一些需要通过主键进行更新的场景。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/eff06ef5719cf720abc3cdf04facd785..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/eff06ef5719cf720abc3cdf04facd785..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/eff06ef5719cf720abc3cdf04facd785..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/eff06ef5719cf720abc3cdf04facd785..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">v2表最多的场景就是一些cdc数据，也就是ChangeLog的数据入湖。<strong style="max-width:100%;">链路大概如下，通过flink cdc采集mysql、oracle、tidb的一些数据，打到中间的mq，然后通过flink写到iceberg的v2表里面。</strong></span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/75c50aaae27100b224c4a7ad43236493..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/75c50aaae27100b224c4a7ad43236493..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/75c50aaae27100b224c4a7ad43236493..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/75c50aaae27100b224c4a7ad43236493..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;color:rgb(58,79,89);font-size:15px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">这样做的</span><strong style="max-width:100%;color:rgb(58,79,89);font-size:15px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">优势</strong><span style="max-width:100%;color:rgb(58,79,89);font-size:15px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">在于：</span></p><ul style="margin-top:0px;margin-bottom:0px;margin-left:0px;padding-left:1.2em;max-width:100%;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;list-style-type:square;"><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">首先我们可以对cdc数据进行近实时分析。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">另外，iceberg可以实现支持flink引擎，因此我们可以进行流式消费，在这一块上我们开发了对v2表进行flink流式消费的支持。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第三，可以同步变更schema，比如上游的mysql schema变更了，我们可以在这个链路中将schema变更同步到iceberg。这样，用户不需要去关心整个链路的变动，直接去取下游的iceberg表就可以了。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第四，使用iceberg来替换一些专有型的数据库，价格更便宜。比如我们之前有些链路使用的是kudu，我们在某些适应场景用iceberg来替换它，成本更低。</span></p></li></ul><div style="margin-top: 24px; margin-bottom: 0em; outline: 0px; max-width: 100%; color: rgb(34, 34, 34); font-family: system-ui, -apple-system, BlinkMacSystemFont,"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/136f089a7e24842030f517a600f38dde..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/136f089a7e24842030f517a600f38dde..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/136f089a7e24842030f517a600f38dde..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/136f089a7e24842030f517a600f38dde..jpg"/></a><br/>
+</div><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><strong style="max-width:100%;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">我们在数据入湖之中也遇到了一些问题，主要是像mysql这类以自增id为主键的数据入湖。</span></strong><span style="max-width:100%;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:15px;color:rgb(58,79,89);"><strong style="max-width:100%;">我们给用户提供两种数据分区的方式，第一种是Bucket分区，第二种是Truncate分区</strong>。在以自增id为主键的场景我们更推荐用户使用Truncate分区而不是Bucket分区。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">Bucket分区示例如下，即分桶的形式，比如有4个桶，当自增id来了之后，相对来说可以比较均匀的分布。然而这样也就带来一个问题，因为merge on read的性能比较差，需要进行异步的compaction，可能就需要对所有的都进行compaction。另外在当前这个iceberg版本当中，不停止上游作业的情况下v2表的bucket分区是不可以修改的。这样随着数据量的增长，由于我们的分区不能变，可能会导致分区数据量变大，查询性能就会越来越差。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">而在truncate分区下，我们可以看到，它的分区是可以扩展的，而且由于基于自增id，数据写入和compaction只会集中在某几个分区。所以在这种场景下我们更建议用户使用truncation分区。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/37916337535eb62678744b31fa314d87..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/37916337535eb62678744b31fa314d87..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/37916337535eb62678744b31fa314d87..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/37916337535eb62678744b31fa314d87..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">以下是我们数据入湖的一个简单产品化的页面，有一个schema的对应关系，左边是mysql，右边是我们的iceberg表。在这个示例中，用户没有选择使用自增主键，而是选择了一个自己的业务id（order_id)来做key。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/2e882662a0edf40c9a1cd56f5de386c2..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/2e882662a0edf40c9a1cd56f5de386c2..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/2e882662a0edf40c9a1cd56f5de386c2..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/2e882662a0edf40c9a1cd56f5de386c2..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第二个iceberg常用的场景就是日志入湖。选用iceberg优于之前的hive的原因在于以下几点：</span></strong></p><ul style="margin-top:0px;margin-bottom:0px;margin-left:0px;padding-left:1.2em;max-width:100%;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;list-style-type:square;"><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第一点</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">是隐式分区避免了在凌晨的时候出现数据漂移问题。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第二点</span></strong><span style="max-width:100%;color:rgb(58,79,89);font-size:15px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">是隐式分区带来的特性，延迟的数据我们可以将它落入到正确的分区，这点是用户非常关心的，在小米电视设备上的一些打点上报的数据的延迟情况是非常严重的。</span><span style="max-width:100%;color:rgb(58,79,89);font-size:15px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">如果用户选择以前那种方式而不是数据湖，可能会导致最近几个分区错误，可能就需要去搞另外一个表把这些数据重新存一遍，那么下游也需要再重新算一遍。</span><span style="max-width:100%;color:rgb(58,79,89);font-size:15px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">隐式分区就可以帮助解决这个延时数据正确的问题。</span><span style="max-width:100%;color:rgb(58,79,89);font-size:15px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">用户只需要对下游重新算一遍就可以了。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第三点</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">是flink的exactly once以及iceberg事务性能够保证数据的不丢不重。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第四点</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">是在我们的日志场景下也可以支持schema同步变更。</span></p></li></ul><p style="margin-top:24px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/be6aa7f05ad8940fa2da8600b60eb51a..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/be6aa7f05ad8940fa2da8600b60eb51a..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/be6aa7f05ad8940fa2da8600b60eb51a..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/be6aa7f05ad8940fa2da8600b60eb51a..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">这是我们内部的一个日志入湖场景下的产品化。</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">我们在最后一行加了个时间分区的映射，用户可以选择Talos（Kafka）的一个记录时间，也可以选择以一个实际的业务时间来做时间分区。这样用户在数据入湖时就有更多选择。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/7868e7eb624a62b961f32ef5065ae799..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/7868e7eb624a62b961f32ef5065ae799..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/7868e7eb624a62b961f32ef5065ae799..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/7868e7eb624a62b961f32ef5065ae799..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">刚才我们提到了compaction，为了维护上层的作业正常，我们在后台有这样三个服务，这三个服务都是以spark的作业形式来运行：</span></strong></p><ul style="margin-top:0px;margin-bottom:0px;margin-left:0px;padding-left:1.2em;max-width:100%;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;list-style-type:square;"><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第一个是Compaction服务</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">，用于合并小文件。对于v2表来说，除了合并小文件，也可以对数据的delete文件进行提前merge。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第二个是Expire snapshots服务</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">，用于处理过期的snapshots。如果snapshots一直不清理，那么元数据的文件就会越来越多，这会导致膨胀问题。因此需要服务定期做一些清理。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第三个是Orphan Files clean服务</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">，由于一些事务的失败，或者一些快照的过期，导致文件在元数据文件中已经不再引用了，需要定期清理掉。</span></p></li></ul><div style="margin-top: 24px; margin-bottom: 0em; outline: 0px; max-width: 100%; color: rgb(34, 34, 34); font-family: system-ui, -apple-system, BlinkMacSystemFont,"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/d5448ed32a48029a76139ae7cd5e2ecf..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/d5448ed32a48029a76139ae7cd5e2ecf..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/d5448ed32a48029a76139ae7cd5e2ecf..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/d5448ed32a48029a76139ae7cd5e2ecf..jpg"/></a><br/>
+</div><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;color:rgb(58,79,89);font-size:15px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">以上两个产品基本上可以覆盖数据集成的所有场景，无论是cdc数据还是日志数据都可以灌到iceberg上。</span><span style="max-width:100%;color:rgb(58,79,89);font-size:15px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">下一步就是想让用户去做一下技术架构的迭代，推动从Hive升级到Iceberg。</span><span style="max-width:100%;color:rgb(58,79,89);font-size:15px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">在这一块其实也遇到了很多问题，主要问题是用户对这个新技术的接纳性并不是很高。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">后来我们调研了Parquet+ZSTD的技术方式</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">。除了iceberg本身的优点，Parquet+ZSTD的方式还可以节约成本，这个是用户比较关心的优点。如下可以看到当我们切换到Parquet + ZSTD之后，TEXT数据可以压缩节约80%，因为TEXT数据本身是没有压缩的，因此这个效果比较好。像一些通用的SNAPPY+Parquet，也可以节约30%的存储。当然，我们现在选择的ZSTD级别是国内比较流行的level3级别，这个是在压缩效率和压缩时间上都比较合适的一个level。如果我们选择更高的压缩率，可能会导致压缩时间更长，这可能在用户作业中是不可接受的。所以我们也提供可以在 Compaction 阶段配置更高的压缩级别的选项，供有需要获得更高的压缩率的用户自行选择。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/a2aced11ffca509d5b68c318d95aad02..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/a2aced11ffca509d5b68c318d95aad02..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/a2aced11ffca509d5b68c318d95aad02..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/a2aced11ffca509d5b68c318d95aad02..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">为了方便用户从Hive升级到Iceberg，我们也做了一个产品化。</span></strong></p><ul style="margin-top:0px;margin-bottom:0px;margin-left:0px;padding-left:1.2em;max-width:100%;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;list-style-type:square;"><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第一步会生成一张和hive表 schema 结构相同的iceberg表，并将历史数据拷贝过来，这里选择拷贝历史数据而不是引用原文件是因为这样可以对历史数据进行压缩，降低存储成本；</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第二步是对上游的写入作业做一个升级；</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第三步将下游作业也进行迁移。</span></p></li></ul><div style="margin-top: 24px; margin-bottom: 0em; outline: 0px; max-width: 100%; color: rgb(34, 34, 34); font-family: system-ui, -apple-system, BlinkMacSystemFont,"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/56bee17996a18cb860e4e3387fe531ea..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/56bee17996a18cb860e4e3387fe531ea..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/56bee17996a18cb860e4e3387fe531ea..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/56bee17996a18cb860e4e3387fe531ea..jpg"/></a><br/>
+</div><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;line-height:2em;text-align:center;"><span style="max-width:100%;color:rgb(0,128,255);font-size:50px;"><strong style="max-width:100%;">03</strong></span></p><p style="margin-top:0px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;line-height:2em;text-align:center;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">基于Iceberg的流批一体的探索</span></strong></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">介绍完当前场景后，我们更进一步基于iceberg，做了一些流批一体上的探索。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">我们现在的架构是基于常规的Lambda架构，如下的这条T+1链路，在ODS层算完之后，每天凌晨使用Spark或者MR去计算</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">。有时用户有实时的需求，比如一些实时大屏，就需要用Flink+Talos（Kafka）来搭建一条实时链路，这样用户就需要维护两条链路。在实时链路上提供时效性，在离线链路上提供准确性。在hive离线链路上，如果数据错误可以做回溯，离线入湖上也可以支持查。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">但是也存在一些<strong style="max-width:100%;">缺点</strong>，比如在实时链路上， Talos/Kafka目前没有办法做一些OLAP查询，由于它不能存储全量的数据，它的回溯处理能力也有限，这样我们就需要维护两套代码和两套存储。也要面临到实时离线数据不一致的情况。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/ff4f6dc08fb85025732113f100bfb60b..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/ff4f6dc08fb85025732113f100bfb60b..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/ff4f6dc08fb85025732113f100bfb60b..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/ff4f6dc08fb85025732113f100bfb60b..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">下面是我们对iceberg批流一体的建设，我们会将存储层，在ODS, DWD, DWS层全部换成iceberg。</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">这样的好处是可以在存储上实现统一，不需要Kafka和Hive两套存储。如果将离线链路引擎切换成Flink，可以在Flink上实现计算引擎的统一。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">另外，我们也可以做一些回溯，在一些开放的链路中提供一些实时查询。</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">基于iceberg的v2表我们还可以去构建一个变更流。从业务角度来看，也是一个不错的实现方式。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/33a65e473b58ab6fea8cfa0a1f697538..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/33a65e473b58ab6fea8cfa0a1f697538..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/33a65e473b58ab6fea8cfa0a1f697538..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/33a65e473b58ab6fea8cfa0a1f697538..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;color:rgb(58,79,89);font-size:15px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">我们经常提到，</span><strong style="max-width:100%;color:rgb(58,79,89);font-size:15px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">在批流一体中为什么需要一个离线作业来修数据？</strong><span style="max-width:100%;color:rgb(58,79,89);font-size:15px;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;">除了回溯数据导致的数据问题外，还有以下几个原因：</span></p><ul style="margin-top:0px;margin-bottom:0px;margin-left:0px;padding-left:1.2em;max-width:100%;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;list-style-type:square;"><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第一个就是Flink状态过期了，由于内存等一些原因，状态不能一直保存，Flink的状态过期了导致一直没能join上。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第二个是因为一些窗口的设置或者watermark的设置导致数据延迟数据丢失。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第三个就是Lookup join维表完成之后，维表又发生了一些变更。</span></p></li></ul><div style="margin-top: 24px; margin-bottom: 0em; outline: 0px; max-width: 100%; color: rgb(34, 34, 34); font-family: system-ui, -apple-system, BlinkMacSystemFont,"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/604ec1ea6a65ca80fab136c4c28c8f77..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/604ec1ea6a65ca80fab136c4c28c8f77..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/604ec1ea6a65ca80fab136c4c28c8f77..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/604ec1ea6a65ca80fab136c4c28c8f77..jpg"/></a><br/>
+</div><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">对于离线的修正</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">，目前一般用overwrite覆盖分区的方式，overwrite的语义是将原来的分区删除掉，然后追加进去新的数据。在spark，flink和iceberg的结合中，有一个merge Into的语法。它的语法简单如下，merge into到一个目标表，我们选择一个数据源，然后将数据源的数据merge到目标表中，需要一个on关键字指定连接词进行连接，在这里也可以指定一个目标表的分区来只对指定分区进行变更。在 merge into 语句中可以进行下面三个操作：如果我们join上（match）我们可以对目标表数据进行一个删除，或者是一个更新。如果没有match上，则可以执行插入操作。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/ea8d4bace38ddbfd930e08960826baaf..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/ea8d4bace38ddbfd930e08960826baaf..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/ea8d4bace38ddbfd930e08960826baaf..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/ea8d4bace38ddbfd930e08960826baaf..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">这两种修复数据的方式有它们自身的一些<strong style="max-width:100%;">特点</strong>。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">Overwrite是分区覆盖的方式，相对merge Into来说其自身语法简单，性能也比较好，不需要进行join操作，但缺点是使用overwrite去覆盖历史分区的时候，下游的实时作业还在跑，如果读到了这部分数据可能导致下游的实时数据出现波动。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">当使用merge Into的模式写入，可以实现增量的更新，只更新变更的记录。但语法比较复杂，并且需要做join，其性能比overwrite要差一些，但它的优点就是下游只会消费到一些变更的数据，对下游的影响比较小。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/5d427d9138c1ef80e64834f907b45e8e..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/5d427d9138c1ef80e64834f907b45e8e..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/5d427d9138c1ef80e64834f907b45e8e..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/5d427d9138c1ef80e64834f907b45e8e..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><strong style="max-width:100%;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">下图是用Merge Into去做修正的链路。</span></strong><span style="max-width:100%;font-family:'mp-quote', '-apple-system-font', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:15px;color:rgb(58,79,89);">上层的hive表或者iceberg表通过merge into的语法去增量的更新，这些增量更新的数据会通过flink sql对它做一些变更更新到下一层（MySQL）。这条链路还可以做增量同步。比如将Hive的一些数据变更增量同步到Mysql。如果我们全量同步写入MySQL的话会造成MySQL的一些波动。使用merge into写到iceberg里面，然后将iceberg的变更增量同步到mysql。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/871ab40dc71cf590d86a12a14c49a129..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/871ab40dc71cf590d86a12a14c49a129..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/871ab40dc71cf590d86a12a14c49a129..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/871ab40dc71cf590d86a12a14c49a129..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">因为iceberg的隐式分区的特性，会带来一些分区上的选择。比如在构建这个链路中，一般如果以天为分区的话，会有两种选择：</span></p><ul style="margin-top:0px;margin-bottom:0px;margin-left:0px;padding-left:1.2em;max-width:100%;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;list-style-type:square;"><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第一种是使用处理时间作为分区，</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">这样的话用户可以将实时的数据落到当天的分区，也可以离线的去修昨天的数据（overwrite或用merge into去修）。这样做的优点是实时和离线数据没有交集。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">另外一种是选择一些事物的时间作为分区</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">，比如最常见的一些订单的创建时间做为分区。这样，当我们在变更的场景下实时的写入数据会操作多个分区，离线修复全量数据也会操作多个分区，带来的一个问题就是实时和离线处理的数据存在一个交集，在 iceberg 中处理的数据有交集则有可能出现提交冲突导致作业失败。</span></p></li></ul><div style="margin-top: 24px; margin-bottom: 0em; outline: 0px; max-width: 100%; color: rgb(34, 34, 34); font-family: system-ui, -apple-system, BlinkMacSystemFont,"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/e72317f94133683c617d4760c093ddc2..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/e72317f94133683c617d4760c093ddc2..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/e72317f94133683c617d4760c093ddc2..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/e72317f94133683c617d4760c093ddc2..jpg"/></a><br/>
+</div><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">Merge Into通过隔离级别处理有存在交集数据（事务）带来的<strong style="max-width:100%;">问题。</strong></span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">在Merge Into实现上，每个引擎对不同的语法有不同的实现，它提供了两个隔离级别。</span></p><ul style="margin-top:0px;margin-bottom:0px;margin-left:0px;padding-left:1.2em;max-width:100%;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;list-style-type:square;"><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第一个隔离级别是最高的隔离级别</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">，“可序列化隔离级别”，它也是默认的隔离级别。如果配置这个级别，在merge into事务提交的过程中，如果有其它已经提交的事务和本次事务操作相同的文件，那么这个作业就会失败掉。这种情况下用户作业可能会经常失败，我们可能需要一些其它的办法，比如我们在实时上去做一个过滤只处理当天的一个分区，把其它的历史分区交由离线去做修正来避免这些冲突。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">第二个是“快照隔离级别”</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">，在快照隔离级别下，在我们merge Into提交的时候，会提交的一些冲突的事务给覆盖掉，此时如果有多个作业同时去写，它们到底是哪一个提交成功，这种情况是不可预知的。这导致我们结果其实也不准确。这两种问题也是当时我们设想过的使用这两种隔离界别都会存在一些问题。</span></p></li></ul><div style="margin-top: 24px; margin-bottom: 0em; outline: 0px; max-width: 100%; color: rgb(34, 34, 34); font-family: system-ui, -apple-system, BlinkMacSystemFont,"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/9aab1b4b4a56b925400599ab46207bd5..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/9aab1b4b4a56b925400599ab46207bd5..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/9aab1b4b4a56b925400599ab46207bd5..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/9aab1b4b4a56b925400599ab46207bd5..jpg"/></a><br/>
+</div><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">下图是一个正式应用中使用的批流一体链路，图中红线的流程是初始化数据的阶段，可以使用 spark 或者 flink。</span></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">当初始化完成之后，就可以把streaming作业跑起来，一般来说从ODS到DWD这一层，如果只是做一些简单的数据清洗逻辑，这块并不需要去做修正，当在DWD到下一层的时候，可能需要做一些修复，这里就选用spark merge into对DWM层做一个修复，完成之后这个streaming作业把包括当天实时的以及一些修正的数据都写到下一层，比较方便。</span></p><p style="margin-top:0px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/1fb6b3118ef6c7b4edc9ff893544f42c..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/1fb6b3118ef6c7b4edc9ff893544f42c..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/1fb6b3118ef6c7b4edc9ff893544f42c..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/1fb6b3118ef6c7b4edc9ff893544f42c..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">以上就是我们对批流一体的探索。</span></p><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;line-height:2em;text-align:center;"><span style="max-width:100%;color:rgb(0,128,255);font-size:50px;"><strong style="max-width:100%;">04</strong></span></p><p style="margin-top:0px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;line-height:2em;text-align:center;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">未来规划</span></strong></p><p style="margin-top:24px;margin-bottom:24px;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;line-height:2em;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">最后介绍一下我们对未来的规划。</span></p><ul style="margin-top:0px;margin-bottom:0px;margin-left:0px;padding-left:1.2em;max-width:100%;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:justify;list-style-type:square;"><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">对Flink CDC 2.0持续跟进</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">。Flink CDC2.0当中对全量和增量的切换比较友好，而我们现在的实现方式是参考hypersource的方式来做切换的。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">优化治理compaction 服务</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">。当前iceberg做compaction都是在后台去运行的，这样每个表（尤其是where表）都需要起一个作业，如果多了的话会有资源占用的问题。</span></p></li><li style="max-width:100%;"><p style="margin-top:24px;margin-bottom:0px;max-width:100%;clear:both;min-height:1em;line-height:2em;"><strong style="max-width:100%;"><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">跟进iceberg和flink1.14的结合</span></strong><span style="max-width:100%;font-size:15px;color:rgb(58,79,89);">。当前我们的flink是1.12的版本，它的source设计没有那么的稳定，我们去读iceberg的时候经常会遇到一些反压，我们会在后面去跟进一下flink1.14和iceberg的结合。</span></p></li></ul><p style="margin-top:24px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/81706a5f0361c955596b3c0b6cbec019..jpg" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/81706a5f0361c955596b3c0b6cbec019..jpg" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/81706a5f0361c955596b3c0b6cbec019..jpg" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/81706a5f0361c955596b3c0b6cbec019..jpg"/></a><br/>
+</p><p style="margin-top:24px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><br/></p><p style="margin-top:24px;margin-bottom:0em;max-width:100%;clear:both;min-height:1em;color:rgb(34,34,34);font-family:'system-ui', '-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;font-size:17px;letter-spacing:0.544px;text-align:center;"><br/></p><div style="margin-right: 8px; margin-left: 8px; color: rgb(34, 34, 34);"><span style="font-family:'system-ui', '-apple-system', 'system-ui', 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;max-width:100%;font-size:15px;letter-spacing:0.544px;">近日，袋鼠云重磅发布</span><span style="font-family:'system-ui', '-apple-system', 'system-ui', 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;max-width:100%;font-size:15px;letter-spacing:0.544px;color:rgb(0,175,254);"><span style="font-weight:700;max-width:100%;">《数据治理行业实践白皮书》</span></span><span style="font-family:'system-ui', '-apple-system', 'system-ui', 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', Arial, sans-serif;max-width:100%;font-size:15px;letter-spacing:0.544px;">，白皮书基于袋鼠云在数据治理领域的8年深厚积累与实践服务经验，从专业视角逐步剖析数据治理难题，阐述数据治理的概念内涵、目标价值、实施路线、保障体系与平台工具，并借助行业实践案例解析，为广大读者提供一种数据治理新思路。</span></div><div style="margin-right: 8px; margin-left: 8px; color: rgb(34, 34, 34);"><p style="margin-top:0px;margin-bottom:0px;font-family:'PingFangSC-Regular', 'PingFang SC';color:rgb(102,115,137);"><span style="font-weight:700;">免费获取链接：</span><a href="https://fs80.cn/4w2atu">https://fs80.cn/4w2atu</a></p><p style="margin-top:0px;margin-bottom:0px;font-family:'PingFangSC-Regular', 'PingFang SC';color:rgb(102,115,137);"><a href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/ebe6d9e302ee526ac0417a91b4d80f30..png" style="color:rgb(102,102,255);"></a><a data-fancybox-group="thumb" href="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/ebe6d9e302ee526ac0417a91b4d80f30..png" rel="lightbox" target="_blank"><img alt="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/ebe6d9e302ee526ac0417a91b4d80f30..png" class="img-polaroid" src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/ebe6d9e302ee526ac0417a91b4d80f30..png" title="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/article/ebe6d9e302ee526ac0417a91b4d80f30..png"/></a><br/>
+<br/><br/><br/><br/></p><p style="margin-top:0px;margin-bottom:0px;font-family:'PingFangSC-Regular', 'PingFang SC';color:rgb(102,115,137);"><br/></p><p style="margin-top:0px;margin-bottom:0px;font-family:'PingFangSC-Regular', 'PingFang SC';color:rgb(102,115,137);">免责申明：<br/><br/>本文系转载，版权归原作者所有，如若侵权请联系我们进行删除！</p><p style="margin-top:0px;margin-bottom:0px;font-family:'PingFangSC-Regular', 'PingFang SC';color:rgb(102,115,137);"><br/></p><p style="margin-top:0px;margin-bottom:0px;font-family:'PingFangSC-Regular', 'PingFang SC';color:rgb(102,115,137);"><span style="font-size:17px;font-weight:700;"><br/></span></p><p style="margin-top:0px;margin-bottom:0px;font-family:'PingFangSC-Regular', 'PingFang SC';color:rgb(102,115,137);"><span style="font-size:17px;font-weight:700;">想了解或咨询更多有关袋鼠云大数据产品、行业解决方案、客户案例的朋友，浏览袋鼠云官网：</span><br/><br/><a href="https://www.dtstack.com/?src=bbs" style="background-color:rgb(255,255,255);">https://www.dtstack.com/?src=bbs</a><span style="font-size:17px;font-weight:700;"><br/><br/></span><span style="font-size:17px;font-weight:700;">同时，欢迎对大数据开源项目有兴趣的同学加入「袋鼠云开源框架钉钉技术群」，交流最新开源技术信息，群号码：</span><span style="font-size:17px;font-weight:700;">30537511</span><span style="font-size:17px;font-weight:700;">，项目地址：</span><a href="https://github.com/DTStack" style="background-color:rgb(255,255,255);">https://github.com/DTStack</a></p></div> </div>
+<div class="aw-mod aw-topic-bar" data-id="920" data-type="article" id="question_topic_editor">
+<div class="tag-bar clearfix">
+<span class="topic-tag" data-id="115">
+<a class="text" href="https://www.dtstack.com/bbs/topic/115">dataops</a>
+</span>
+<span class="topic-tag" data-id="56">
+<a class="text" href="https://www.dtstack.com/bbs/topic/56">数字化转型</a>
+</span>
+<span class="topic-tag" data-id="117">
+<a class="text" href="https://www.dtstack.com/bbs/topic/117">解决方案</a>
+</span>
+<span class="topic-tag" data-id="75">
+<a class="text" href="https://www.dtstack.com/bbs/topic/75">实时数仓</a>
+</span>
+<span class="topic-tag" data-id="63">
+<a class="text" href="https://www.dtstack.com/bbs/topic/63">ChunJun</a>
+</span>
+<span class="topic-tag" data-id="99">
+<a class="text" href="https://www.dtstack.com/bbs/topic/99">数据湖</a>
+</span>
+</div>
+</div>
+</div>
+<!-- 文章主体—END -->
+<!-- 评论 -->
+<div class="evaluate">
+<div class="evaluate-title">0条评论</div>
+</div>
+<!-- 评论-END -->
+<!--上一篇 下一篇-->
+<div style="padding-top: 24px;padding-bottom: 24px">
+<div class="pull-left">
+                        上一篇：<a class="pre" href="https://www.dtstack.com/bbs/article/1">浅析百万级分布式调度引擎——DAGScheduleX能做...</a> </div>
+<div class="pull-right">
+                        下一篇：<a class="next" href="https://www.dtstack.com/bbs/article/921">基于Flink和Iceberg构建数据湖平台</a> </div>
+</div>
+<!--上一篇 下一篇end-->
+<!-- 回复 -->
+<!-- 回复-END -->
+</div>
+</div>
+</div>
+<!-- 左侧—END -->
+<!-- 右侧 -->
+<div class="right clearfiex">
+<div class="clearfix">
+<h4 class="questions"><a class="register-login" href="javascript:;" rel="nofollow">我要提问</a></h4>
+<h4 class="experience"><a class="register-login" href="javascript:;" rel="nofollow">分享经验</a></h4>
+</div>
+<!--社区公告-->
+<div class="rbox note rbox-note clearfix">
+<div class="rtitle clearfiex"><b>社区公告</b></div>
+<div class="note-list">
+<ul>
+<li class="clearfiex">
+<i></i><p class="aw-three-line" title="大数据领域最专业的产品&amp;技术交流社区，专注于探讨与分享大数据领域有趣又火热的信息，专业又专注的数据人园地">大数据领域最专业的产品&amp;技术交流社区，专注于探讨与分享大数据领域有趣又火热的信息，专业又专注的数据人园地</p>
+</li>
+</ul>
+</div>
+</div>
+<!--社区公告-END-->
+<!--最新活动-->
+<div class="rbox activity latest-project-box">
+<div class="rtitle clearfiex"><b>最新活动</b><a href="https://www.dtstack.com/bbs/project/">更多<i class="icon-font icon-right more-right-icon"></i></a></div>
+<div class="activity-list">
+<a href="https://www.dtstack.com/bbs/project/89"><img src="http://dtstack-static.oss-cn-hangzhou.aliyuncs.com/2021bbs/files_user1/project/0418d11a2e3ae1e2c324f98517135027.png?2702/project/89_main.jpg"/></a>
+</div>
+</div>
+<!--最新活动-END-->
+<!-- 二维码 -->
+<div class="rbox ewm">
+<img src="http://assets.dtstack.com/2019Website/v2022/common/wechat_qr_code.png"/>
+<h6>微信扫码获取数字化转型资料</h6>
+</div>
+<!-- <div class="rbox ewm">
+		<img src="http://assets.dtstack.com/2019Website/v2022/common/dingtalk_qr_code.png">
+		<h6>钉钉扫码加入技术交流群</h6>
+	</div> -->
+<!-- 二维码—END -->
+</div>
+<!-- 右侧-END -->
+</div>
+
+
+<style>
+    .footer_footer__5GPuZ { 
+    padding: 70px 0 36px; 
+    background: #f4f8ff; 
+    color: #64698b;
+    margin-top: 40px;
+} 
+
+*,:after,:before { 
+    box-sizing: border-box; 
+    border: 0 solid #e5e7eb;
+} 
+
+:selection { 
+    color: #fff; 
+    background: #1890ff;
+} 
+
+.footer_footer-top__nkNTm { 
+    width: 1060px; 
+    margin: 0 auto 64px;
+} 
+
+.footer_footer-btm__AN0KP { 
+    font-size: 12px; 
+    text-align: center; 
+    line-height: 28px;
+} 
+
+.footer_footer-list-group__nFMij { 
+    display: flex; 
+    margin-bottom: 32px;
+} 
+
+.footer_footer-hot__bWbFJ { 
+    display: flex; 
+    font-size: 13px; 
+    line-height: 20px;
+} 
+
+.footer_footer__5GPuZ p { 
+    margin-top:  0; 
+    margin-bottom:  1em;
+    margin: 0;
+} 
+
+.footer_footer-list__KqK7q { 
+    flex: 1;
+} 
+
+.footer_footer-list__KqK7q.footer_problem-group__PQgXE { 
+    flex: 2;
+} 
+
+.footer_footer-list__KqK7q:nth-last-child(2) { 
+    flex: 0 1 375px;
+} 
+
+.footer_qr-code-wrapper__NhozV { 
+    display: inline-block; 
+    width: 120px; 
+    font-size: 12px; 
+    color: #30364e; 
+    text-align: center;
+} 
+
+.footer_footer__5GPuZ a { 
+    color:  inherit; 
+    text-decoration:  inherit;
+    background-color:   transparent; 
+    outline:   none; 
+    cursor:   pointer; 
+    transition:   color .3s; 
+    -webkit-text-decoration-skip:   objects;
+    touch-action:  manipulation;
+} 
+
+.footer_friend-link__6Is1n:not(:last-child):after { 
+    content: " | ";
+} 
+
+.footer_footer__5GPuZ a:hover { 
+    color: #40a9ff;
+} 
+
+.footer_footer__5GPuZ a:active,.footer_footer__5GPuZ a:hover { 
+    text-decoration: none; 
+    outline: 0;
+} 
+
+.footer_footer__5GPuZ a:hover  { 
+    color: #1d78ff;
+} 
+
+.footer_footer-list__title__mvC0_ { 
+    font-size: 16px; 
+    color: #3d4461; 
+    margin-bottom: 14px;
+} 
+
+.footer_footer-list__content__casM_ { 
+    height: 160px;
+} 
+
+.footer_footer-list__KqK7q.footer_problem-group__PQgXE .footer_footer-list__content__casM_  { 
+    display: flex; 
+    flex-wrap: wrap;
+} 
+
+.footer_footer-list__node__cTKCF { 
+    display: block; 
+    font-size: 14px; 
+    line-height: 32px;
+} 
+
+.footer_footer-list__KqK7q.footer_problem-group__PQgXE .footer_footer-list__content__casM_ .footer_footer-list__node__cTKCF  { 
+    margin-right: 38px;
+} 
+
+.footer_footer__5GPuZ img { 
+    display:  block; 
+    vertical-align:   middle;
+    border-style:   none;
+    max-width: 100%; 
+    height: auto;
+} 
+
+.footer_police-img-wrapper__ceX_Q { 
+    position: relative; 
+    top: 3px; 
+    margin: 0 3px 0 5px;
+} 
+
+</style>
+<!-- 底部 -->
+<div class="footer_footer__5GPuZ snipcss-BWswG">
+<div class="footer_footer-top__nkNTm">
+<div class="footer_footer-list-group__nFMij">
+<div class="footer_footer-list__KqK7q">
+<div class="footer_footer-list__title__mvC0_">
+            热门产品
+          </div>
+<div class="footer_footer-list__content__casM_">
+<a class="footer_footer-list__node__cTKCF" href="/easydigit">
+              数雁EasyDigit
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="/dtinsight">
+              数栈DTinsight
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="/dtengine">
+              数驹DTengine
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="https://easyv.cloud/" rel="nofollow noopener noreferrer" target="_blank">
+              易知微EasyV
+            </a>
+</div>
+</div>
+<div class="footer_footer-list__KqK7q footer_problem-group__PQgXE">
+<div class="footer_footer-list__title__mvC0_">
+            解决方案
+          </div>
+<div class="footer_footer-list__content__casM_">
+<a class="footer_footer-list__node__cTKCF" href="/solution/government">
+              政务解决方案
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="/solution/harbor">
+              港口解决方案
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="/solution/fund">
+              基金解决方案
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="/solution/manufacture">
+              制造解决方案
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="/solution/insurance">
+              保险解决方案
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="/solution/college">
+              高校解决方案
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="/solution/securities">
+              证券解决方案
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="/solution/culture">
+              文旅解决方案
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="/solution/bank">
+              银行解决方案
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="/solution/bulktrade">
+              大宗商品解决方案
+            </a>
+</div>
+</div>
+<div class="footer_footer-list__KqK7q">
+<div class="footer_footer-list__title__mvC0_">
+            快速入口
+          </div>
+<div class="footer_footer-list__content__casM_">
+<a class="footer_footer-list__node__cTKCF" href="/partner">
+              合作与生态
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="https://www.dtstack.com/bbs">
+              开源社区
+            </a>
+<a class="footer_footer-list__node__cTKCF" href="https://github.com/DTStack" rel="nofollow noopener noreferrer" target="_blank">
+              Github
+            </a>
+</div>
+</div>
+<div class="footer_footer-list__KqK7q">
+<div class="footer_footer-list__title__mvC0_">
+            联系我们
+          </div>
+<div class="footer_footer-list__content__casM_">
+<p class="footer_footer-list__node__cTKCF">
+              合作咨询 market@dtstack.com
+            </p>
+<p class="footer_footer-list__node__cTKCF">
+              联系电话 400-002-1024
+            </p>
+<p class="footer_footer-list__node__cTKCF">
+              总部地址 杭州市余杭区五常街道阿里巴巴数字生态创新园4号楼袋鼠云
+            </p>
+</div>
+</div>
+<div class="footer_qr-code-wrapper__NhozV">
+<span style="box-sizing:border-box;display:inline-block;overflow:hidden;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;position:relative;max-width:100%">
+<span style="box-sizing:border-box;display:block;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;max-width:100%">
+<img alt="" aria-hidden="true" src="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27110%27%20height=%27110%27/%3E" style="display:block;max-width:100%;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0"/>
+</span>
+<img alt="袋鼠云官方订阅号" data-nimg="intrinsic" decoding="async" src="https://assets.dtstack.com/2019Website/v2022/common/qrCode_dingyuehao.png" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%"/>
+</span>
+<div>
+            袋鼠云官方订阅号
+          </div>
+</div>
+</div>
+<div class="footer_footer-hot__bWbFJ">
+<div style="flex:0 0 86px">
+          热门搜索：
+        </div>
+<div>
+<a href="/dtinsight" style="margin-right:10px">
+            数据中台
+          </a>
+<a href="/dtinsight" style="margin-right:10px">
+            企业数据中台
+          </a>
+<a href="/dtinsight" style="margin-right:10px">
+            金融数据中台
+          </a>
+<a href="/dtinsight" style="margin-right:10px">
+            离线数据中台
+          </a>
+<a href="/about" style="margin-right:10px">
+            数据中台公司
+          </a>
+<a href="/dtinsight" style="margin-right:10px">
+            一站式数据中台
+          </a>
+<a href="/dtinsight" style="margin-right:10px">
+            数据中台开发
+          </a>
+<a href="/dtinsight" style="margin-right:10px">
+            一站式数据开发
+          </a>
+<a href="/solution/datagovernance" style="margin-right:10px">
+            数据中台解决方案
+          </a>
+<a href="/dtinsight" style="margin-right:10px">
+            大数据分析
+          </a>
+<a href="/dtinsight" style="margin-right:10px">
+            数据分析平台
+          </a>
+<a href="/dtinsight" style="margin-right:10px">
+            新基建
+          </a>
+<a href="/dtinsight" style="margin-right:10px">
+            大数据开发
+          </a>
+<a href="/dtinsight" style="margin-right:10px">
+            大数据开发平台
+          </a>
+<a href="/solution/datagovernance" style="margin-right:10px">
+            数据化转型解决方案
+          </a>
+<a href="/dtinsight" style="margin-right:10px">
+            信创
+          </a>
+<a href="https://easyv.cloud" rel="nofollow noopener noreferrer" style="margin-right:10px" target="_blank">
+            数据可视化
+          </a>
+<a href="https://easyv.cloud" rel="nofollow noopener noreferrer" style="margin-right:10px" target="_blank">
+            数字孪生
+          </a>
+<a href="https://easyv.cloud" rel="nofollow noopener noreferrer" style="margin-right:10px" target="_blank">
+            可视化大屏
+          </a>
+<a href="/dtinsight" style="margin-right:10px">
+            数字化转型
+          </a>
+</div>
+</div>
+</div>
+<div class="footer_footer-btm__AN0KP">
+<p>
+<span>
+          友情链接：
+        </span>
+<a class="footer_friend-link__6Is1n" href="https://easyv.cloud/" rel="nofollow noopener noreferrer" target="_blank">
+          易知微
+        </a>
+<a class="footer_friend-link__6Is1n" href="https://yunche.pro/" rel="nofollow noopener noreferrer" target="_blank">
+          云掣
+        </a>
+</p>
+<p>
+<span>
+          @Copyrights 2016-2023 杭州玳数科技有限公司
+        </span>
+<a href="http://beian.miit.gov.cn/state/outPortal/loginPortal.action" rel="nofollow noopener noreferrer" style="margin:0 24px 0 4px" target="_blank">
+          浙ICP备15044486号-1
+        </a>
+<span>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33011002011932" rel="nofollow noopener noreferrer" target="_blank">
+<span class="footer_police-img-wrapper__ceX_Q">
+<span style="box-sizing:border-box;display:inline-block;overflow:hidden;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;position:relative;max-width:100%">
+<span style="box-sizing:border-box;display:block;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;max-width:100%">
+<img alt="" aria-hidden="true" src="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2716%27%20height=%2716%27/%3E" style="display:block;max-width:100%;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0"/>
+</span>
+<img alt="" data-nimg="intrinsic" decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAMAUExURUxpcfjxsuzNbOC3gOCzcezbl/PWkvnpveKrTPXMmtmTRu/ljumwSdq1geSbP+a8ae+zSurBV/LjrO7Yb+bNlfrrrtmNP/PgdenEWurKhenFdt2rYt/EjPXnu+e9faFjNbWReNq8fdi1hZ1xTuOtVVxBUlIxSGFPX+jGXvHgmu/hn/Hfj96tYe7Yqea7XfXimPLghP334+Cwbvr32N3CiN/Bd+K5fui0Wt2fUeS2U+zOeuO1Y/bmiuPEiuG0bqyKduG5hfvOWaBuWk8sPa6DW++jROfFZfLkl86JV/nuyOzZfvjVY9qkYd20dJ9yXL+YWWxSWcmjbpyQdoyHee7ZfOGsVuTBau3WeOW7V92nUdCSRee3UcaEQuOwVufJk4deQfPOgIpsTt2fR6R/Vtyzd86keNqsab6SX8GYdPWlPPy/VZySeevMYufDeenMZtqkT9KRU/LNYP3aj8imfLCMbdQsG+m+Xem4UurDXtYgF+e2Weq+VRgWb+/KXui7WOWzUxESfO3BWQ8JatIWEduVQdcKCw8PcttQJ+GjSenIZNZfLhcHX9dKKNqXUOnBaN+fR8pEIuO4YdOEPOm0T+/GXNdBJNS6c96jUNIeEsZRJOhyNPbKaedoLeR2OelcJG9wehkaeIN9etQ1HvDOYqqkhdhzNNg6H/jCUv3VWNEIBRUeidl+OPG+UtmjW+GQP9x0OsdeLMsLCPfFXSMOXfAsEcEOEaqBUaWOZU0GRM+wax81jbOgboeFf8izeu6uWaSbfb2ve+OtV9RqMt1rNN2DQt6IN49aOOaiQ7slGmlgblBMb8ovF91YKMcfEF9ujex/M2FkfYeMjJKNfnl3d5wGHpJ7Xu2NQuKxTNBZLseoWb9oOfY7GcE7LWUZSGYEOPevRp+AXDVGinSAi4ZvW60TFUcmU7Cbe7ipdNBGJv7oapJsSV8nUa81NL9GI/R6LbORVbJQOCgueogKJ3ZjXuNCHK4HGn1oYDMfXLp7Pi8LVmsuUKM7LkFXknNiZHtdUdwjFSsuVN8AAAB1dFJOUwAE/hMaDRsI/gH+FPw6/L/+9GT+cS/+7vyP0M0kQbD5w1uI/uf5+v7sTHyU3FvVPLgXvyRJ/aPk1fyq66Vn2NEt/Nv85/7eh2FLzPfvsvX9+N7m8trP7+ntyafrm/OH+Jz59+3Pn3/Mq+qq+NHq5MF4+InD117Lt0kAAAU3SURBVDjLbdV3VJNnFAdgE8gkCQkJS9nInspQRGSIu+496qhard3tySAkIYuEbCBkAAFCwpCN7CkgKGUvBffee1S7z+kXUiL2cP9+zu97733Pe79582YXaFFIAMHFJdqFEBCyCDRv7kLAYGbmMegoN5fo6Gg3AjrG3AwGQ8wBYdaObsfj4pydDx06cuTo0bi4427rHGFzBEJ8ok66bHJ3dr5w4enThoZNm1xOEgIgcwQ6nIj3XHnB+epVobC7qqK5tdHTM/6Ew/8jQTAoOv72SgBWVw/marIkFQboHo+GghCfdmt9eOMWj3tPCzVqjk7B56uJk6qOca8t4T9BZ2eCINahG7d6eLg3ZOVyknU6saKEMzLZWeDl9XM4GgozzQkUEmS51cPTa8v5kSJiQgJRp1CoOUMDZ9MmRj08jjkBnzdBxxWbH/zm9W7kJVENQKKiSM2pH1p1ti3vgefWY6EOINMEQ7fla7WXGjS5yclEIJPDIRLPnMnNedRBo+VvC40BzZwwyHVbPpN5qSHXBHUA5GvaC2i8ie2uQZBpiVgUc8ry63wmzf13/q/JyQkJuqIiXUJCSUkRX9lJ4+VtD15uPX3vIAf0qUAjHDRAokLMF+uIABw0wvXBjiEGCHH98qtVD9uYzNubRzTJJamX023g8J4qtTo3p/kRjZff8eOGNVYQExwHzvhq8iXnTGZ1OndqqrKHSMyabG6l8do6MmL9fA3QzC0cg2nvKC3tu4e6lfkiNfVcYVlZVVVZTyz90j88bUE7Fut00GwabsRgmh+Wlva/g6+qzkxNFQoLC7u7e5A1lA9eTG2BEotysjdA88X+NpVS5Z0WWu3r6pwc8ePUx0KhWNydU3X1N1rpHSW4F+O/2NwAF3xmYyNV/t3CE/31IiuLLzZkisUazeXXteyWO2FgDNcE09Nvnb07zGRfrK+7NijMzDxXmJN1ra7+vYg9fJdUzLWJtJwFx+4C8H1dHf8yAM9Nw4si3vAYq5iLDDTC8MVfyGqy2wtamE0379cPDQ0MDOj4fMX1tzd52o727Oykz43NmAEwpSY7rLOltKnp7cX7938B6vr1589vNtHePFIa4DJj107HkNwuajZ4bJjGFolEtU03btz4o1YkYvNGJwQbSFQ4fP4ycyOUIFVdNdKCsTdaNpstevDsz2e1Ijabp80bp8dSu2YgdH5YhUQiwfRKwzpb730YzWts3Pyqr7+/fzSvOQ3VK5PBk3avh07DbysAWYkhScOUjbfb2lqvXLkykdfXlz+eRu3FyGRTETuCDRBi5bsnQqVC2pSdL6/R6+n08nIslkTB4+msyvNIJHzKzpvgY3iKsHVWgXvgKiSysAxbfBqo4mIsNvb0kyexxQCUdEV4f+NjDZteTlAr39W4iKn0dK6Mrmex5HIGQ6/foE+RISVp0l2rCT4W/71tIHO1t10E0obLpdBJjKQkBomu1wtSZCqVFLxrfkDQzA6AOQasiLSzM5BEFoVComRksBhweBJVABZIF/q7zoJWKyIFAgqFSjVACoWewSCnpFAZYABG+kf5zEALv2BbPB6flkalMoBUEolBlslS4FQqiSQA422Xr7EwweW2tnjwR0iWA2OGUxkkEhhsOwuCoNZ+y7xxZDIro7xcLieTUSgyg8VKTKQIdu/w83WwQJi2N5RgHxi4fz8OlwgguRyFYuDs7HA47+/WB/taQT5uSAQIYhGDXvvDvn17dy5dunDhkiU7F1haHraPcnWAWkA+XfgIM/O1aw8c+H6vES4AoP3BUPTH38K/OmNBlhC2jIMAAAAASUVORK5CYII=" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%"/>
+</span>
+</span>
+<span>
+              浙公网安备33011002011932号
+            </span>
+</a>
+</span>
+</p>
+</div>
+</div>
+<!-- DO NOT REMOVE -->
+
+<!-- WowPop Code for https://www.wowpop.cn/ -->
+
+<!-- END WowPop Code -->
+
+<div class="aw-ajax-box" id="aw-ajax-box"></div>
+
+<!-- 底部-END -->
+<!-- Escape time: 1.088249206543 -->
+</body>
+</div>
+</article>
+</body>
+</html>

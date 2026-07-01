@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apache Paimon 在抖音集团多场景中的优化实践</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>Apache Paimon 在抖音集团多场景中的优化实践</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：未知</span>
+<span>来源：<a href="https://developer.volcengine.com/articles/7446997504043778099" target="_blank">developer.volcengine.com</a></span>
+<span>平台：volc</span>
+<span>图片：16 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<div class="markdown-body"><p><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/f858c9f3ac454d73b509889d1f16b348~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=oysK1mpOTLZLgZAAg%2BhWNs7luVI%3D"/></p>
+<p>本文将基于抖音集团内部两大业务的典型实时数仓场景，介绍Paimon在抖音集团内部的生产实践。</p>
+<p><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/b597664205e4452cb07cac333cbd0a12~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=3wvu50TC%2B%2F6JyYJwp9t6nq9hBgg%3D"/></p>
+<p><strong>作者：李明、苏兴、文杰</strong></p>
+<p><strong>抖音集团大数据工程师</strong></p>
+<hr/>
+<p>目前抖音集团内部主要使用 Lambda 架构进行实时数仓建设，其中实时处理链路主要采用 Flink + MQ 进行实现。
+在 Lambda 架构体系下，主要优势是数据新鲜度高，但采用两条处理链路也带来了其它问题：</p>
+<p><strong>1. 维护成本高：</strong>
+需要维护实时、离线两条不同技术栈的处理链路，开发和维护成本高；</p>
+<p><strong>2. 计算口径难对齐：</strong>
+没有统一的 Table 抽象，Schema 难对齐；两条链路同时跑，计算语义难对齐；</p>
+<p><strong>3. OLAP 查询能力差：</strong>
+消息队列只支持 APPEND 流，从流式数据转化为 Table 的成本开销高，需要不断处理 changelog，导致 OLAP 查询能力差；</p>
+<p><strong>4. 问题排查困难：</strong>
+如果数据有问题，用户需要排查数据 Pipeline，但由于中间结果不可查，导致排查难度高；</p>
+<p><strong>5. 数据订正困难：</strong>
+实时链路数据订正需要大量的人工介入，修改逻辑、双跑等，数据订正困难。</p>
+<p>随着流式计算引擎的不断完善，以 Flink 为代表的流式计算引擎提出了新的目标：
+<strong>为有限数据和无限数据提供一套统一的处理 API。</strong></p>
+<p>流批一体的计算模式进一步简化了数仓生产体系，将计算链路收敛到了相同的技术栈，降低了开发和维护成本。</p>
+<p>同时随着数据湖技术的兴起，它能够支持高效的数据流 / 批读写、数据回溯以及数据更新，进一步解决了Lambda 架构体系下的其它问题。</p>
+<p>Apache Paimon是一项流式数据湖存储技术，基于Flink Table Store独立孵化出来的项目，  <strong>主要目标是解决流式场景中的常见问题，为用户提供高吞吐、低延迟的数据摄入、流式订阅和实时查询，</strong> 支持主流的计算 / OLAP 引擎，尤其对 Flink 的支持最佳。</p>
+<p>因此在经过调研后，最终决定采用 Apache Paimon 作为数据湖底座，和业务进行新一代实时数仓建设。</p>
+<p>本文将基于抖音集团两个业务的典型实时数仓场景，介绍 Apache Paimon 在抖音集团内部的生产实践。</p>
+<p>01</p>
+<p>场景一：游戏视频指标上卷</p>
+<p><strong>/ 业务场景</strong></p>
+<p>游戏-新游场景在公测宣发、测试上线首日、首发等相关节点，产品和运营需要根据游戏短视频的点赞、曝光、评论等实时指标在第一时间挖掘优质作者和发现潜力热点。</p>
+<p>游戏实时数仓团队当前通过接入短视频实时数仓团队的分钟粒度流并关联游戏相关维表，通过分钟粒度上卷到天粒度指标的方案来提供相关指标。</p>
+<p><strong>/ 原有方案</strong></p>
+<p><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/f56d7780c77c49feae6d51b57aacccc3~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=OHM8YeKa4EYwOXaYLKyMj5GeyEA%3D"/></p>
+<p><strong>/ 方案痛点</strong></p>
+<ol>
+<li>
+<p>由于短视频 topic 流量在 100w+/s 左右，即使 Lookup Join HitRate 平均在 90% 左右，但是全链路峰值仍有60w+/s 的流量打到维表存储，  <strong>给维表服务带来比较大的访问压力。</strong></p>
+</li>
+</ol>
+<p><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/2b1b69987a37495bad14e2fcbe6d4f90~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=T8vzzRMPQvKp11VQLdSXmPfvQDk%3D"/></p>
+<p><em>Lookup Join HitRate</em></p>
+<p><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/4a035d0f8cb741a8a27e51d38a432678~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=zgkRUASInT16L%2F538PndPeV1qNw%3D"/></p>
+<p><em>Lookup Join Request Per Second</em></p>
+<ol start="2">
+<li>由于上卷任务的 source 是 append 流，分钟粒度的指标会实时的变化，所以需要消费 source 后通过 MAX / LAST_VALUE 等聚合函数去构建 retract 流、处理乱序等问题，  <strong>开发效率低且增加额外的状态成本。</strong></li>
+</ol>
+<pre><code class="hljs language-go">
+        
+  <span class="hljs-string">`CREATE VIEW view_01 AS`</span>
+  <span class="hljs-string">`SELECT id,`</span>
+  <span class="hljs-string">`f1,`</span>
+  <span class="hljs-string">`f2,`</span>
+  <span class="hljs-string">`MAX(f3) AS f3,`</span>
+  <span class="hljs-string">`f4,`</span>
+  <span class="hljs-string">`f5,`</span>
+  <span class="hljs-string">`MAX(f6) AS f6,`</span>
+  <span class="hljs-string">`MAX(f7) AS f7,`</span>
+  <span class="hljs-string">`LAST_VALUE(f8, f5) AS f8`</span>
+  <span class="hljs-string">`FROM source_table`</span>
+  <span class="hljs-string">`GROUP BY`</span>
+  <span class="hljs-string">`id,`</span>
+  <span class="hljs-string">`f1,`</span>
+  <span class="hljs-string">`f2,`</span>
+  <span class="hljs-string">`f4,`</span>
+  <span class="hljs-string">`f5;`</span>
+ 
+  <span class="hljs-string">`INSERT INTO sink_table`</span>
+  <span class="hljs-string">`SELECT id,`</span>
+  <span class="hljs-string">`f1,`</span>
+  <span class="hljs-string">`SUM(f3) AS f3,`</span>
+  <span class="hljs-string">`CAST(f2 AS BIGINT) AS f2,`</span>
+  <span class="hljs-string">`MAX(f4) AS f4,`</span>
+  <span class="hljs-string">`MAX(f5) AS f5,`</span>
+  <span class="hljs-string">`MAX(f6) AS f6,`</span>
+  <span class="hljs-string">`MAX(f7) AS f7,`</span>
+  <span class="hljs-string">`LAST_VALUE(f8, f5) AS f8`</span>
+  <span class="hljs-string">`FROM view_01`</span>
+  <span class="hljs-string">`GROUP BY`</span>
+  <span class="hljs-string">`id,`</span>
+  <span class="hljs-string">`f1,`</span>
+  <span class="hljs-string">`f2;`</span>
+ 
+      
+</code></pre>
+<p><strong>/ Paimon实践</strong></p>
+<p>使用 Paimon 作为游戏维表，在 Flink 中 Lookup Join 将打宽结果写入 Paimon 表中，Paimon 表基于 lookup changelog producer 产生完整的 changelog，下游消费 changelog 做上卷计算。在存储层基于 Paimon 的 Sequence Field 能力处理乱序。</p>
+<p><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/871a577fb71f4fd0b59d5e4a054cf489~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=00L8t%2BnyH4Z3JZ7dC%2B%2BFqjBSaaw%3D"/></p>
+<p><strong>1. 维表打宽</strong></p>
+<pre><code class="hljs language-go">
+        
+  <span class="hljs-string">`--维表模型DDL`</span>
+  <span class="hljs-string">`create table dim_table01 (`</span>
+  <span class="hljs-string">``</span>id<span class="hljs-string">` BIGINT,`</span>
+  <span class="hljs-string">``</span>f1<span class="hljs-string">` STRING,`</span>
+  <span class="hljs-string">``</span>f2<span class="hljs-string">` BIGINT`</span>
+  <span class="hljs-string">`PRIMART KEY (f1) NOT ENFORCED`</span>
+  <span class="hljs-string">`) WITH (`</span>
+  <span class="hljs-string">`'changelog-producer'='lookup',`</span>
+  <span class="hljs-string">`'changelog-producer.row-deduplicate'='true',`</span>
+  <span class="hljs-string">`'sequence.field'='f2',`</span>
+  <span class="hljs-string">`...`</span>
+  <span class="hljs-string">`)`</span>
+ 
+  <span class="hljs-string">`create table dim_table02 (`</span>
+  <span class="hljs-string">``</span>id<span class="hljs-string">` BIGINT,`</span>
+  <span class="hljs-string">``</span>f1<span class="hljs-string">` STRING,`</span>
+  <span class="hljs-string">``</span>f2<span class="hljs-string">` BIGINT`</span>
+  <span class="hljs-string">`PRIMART KEY (f1) NOT ENFORCED`</span>
+  <span class="hljs-string">`) WITH(`</span>
+  <span class="hljs-string">`'changelog-producer'='lookup',`</span>
+  <span class="hljs-string">`'changelog-producer.row-deduplicate'='true',`</span>
+  <span class="hljs-string">`'sequence.field'='f2',`</span>
+  <span class="hljs-string">`...`</span>
+  <span class="hljs-string">`)`</span>
+ 
+  <span class="hljs-string">`--分钟指标流关联维度`</span>
+  <span class="hljs-string">`SELECT`</span>
+  <span class="hljs-string">`AA.id,`</span>
+  <span class="hljs-string">`BB.f1 as bb_f1,`</span>
+  <span class="hljs-string">`CC.f1 as cc_f1`</span>
+  <span class="hljs-string">`FROM source_table AA`</span>
+  <span class="hljs-string">`LEFT JOIN`</span>
+  <span class="hljs-string">`paimon.db_name.dim_table01 /*+ OPTIONS('lookup.async'='true', 'lookup.async-thread-number'='8') */`</span>
+  <span class="hljs-string">`FOR SYSTEM_TIME AS OF proctime AS BB`</span>
+  <span class="hljs-string">`ON AA.id = BB.id`</span>
+  <span class="hljs-string">`LEFT JOIN`</span>
+  <span class="hljs-string">`paimon.db_name.dim_table02 /*+ OPTIONS('lookup.async'='true', 'lookup.async-thread-number'='8') */`</span>
+  <span class="hljs-string">`FOR SYSTEM_TIME AS OF proctime AS CC`</span>
+  <span class="hljs-string">`ON AA.id = CC.id;`</span>
+ 
+      
+</code></pre>
+<p><strong>2. 指标上卷</strong></p>
+<pre><code class="hljs language-go">
+        
+  <span class="hljs-string">`--分钟指标模型DDL`</span>
+  <span class="hljs-string">`create table `</span>db_name<span class="hljs-string">`.`</span>table_name<span class="hljs-string">` (`</span>
+  <span class="hljs-string">``</span>id<span class="hljs-string">` BIGINT,`</span>
+  <span class="hljs-string">``</span>f1<span class="hljs-string">` STRING,`</span>
+  <span class="hljs-string">``</span>f2<span class="hljs-string">` BIGINT,`</span>
+  <span class="hljs-string">``</span>f3<span class="hljs-string">` BIGINT,`</span>
+  <span class="hljs-string">``</span>f4<span class="hljs-string">` BIGINT,`</span>
+  <span class="hljs-string">``</span>f5<span class="hljs-string">` STRING,`</span>
+  <span class="hljs-string">``</span>f6<span class="hljs-string">` BIGINT,`</span>
+  <span class="hljs-string">``</span>f7<span class="hljs-string">` STRING,`</span>
+  <span class="hljs-string">``</span>f8<span class="hljs-string">` map&lt;STRING, STRING&gt;`</span>
+  <span class="hljs-string">`PRIMARY KEY (id, f1, f2, f4, f5, date, hour) NOT ENFORCED`</span>
+  <span class="hljs-string">`) PARTITIONED by (`</span>
+  <span class="hljs-string">``</span>date<span class="hljs-string">` STRING comment '日期',`</span>
+  <span class="hljs-string">``</span>hour<span class="hljs-string">` STRING comment '小时'`</span>
+  <span class="hljs-string">`) WITH (`</span>
+  <span class="hljs-string">`'changelog-producer'='lookup',`</span> 
+  <span class="hljs-string">`'partition.expiration-time'='30 d',`</span>
+  <span class="hljs-string">`'partition.timestamp-pattern'='$date',`</span>
+  <span class="hljs-string">`'partition.expiration-check-interval'='3h',`</span>
+  <span class="hljs-string">`'sequence.field'='f8,f3',`</span>
+  <span class="hljs-string">`...`</span>
+  <span class="hljs-string">`);`</span>
+ 
+  <span class="hljs-string">`--分钟指标上卷`</span>
+  <span class="hljs-string">`INSERT INTO sink_table`</span>
+  <span class="hljs-string">`SELECT id,`</span>
+  <span class="hljs-string">`f1,`</span>
+  <span class="hljs-string">`SUM(f3) AS f3,`</span>
+  <span class="hljs-string">`f2,`</span>
+  <span class="hljs-string">`MAX(f4) AS f4,`</span>
+  <span class="hljs-string">`MAX(f5) AS f5,`</span>
+  <span class="hljs-string">`MAX(f6) AS f6,`</span>
+  <span class="hljs-string">`MAX(f7) AS f7,`</span>
+  <span class="hljs-string">`LAST_VALUE(f8, f7) AS f8`</span>
+  <span class="hljs-string">`FROM paimon.db_name.table_name`</span>
+  <span class="hljs-string">`GROUP BY`</span>
+  <span class="hljs-string">`id,`</span>
+  <span class="hljs-string">`f1,`</span>
+  <span class="hljs-string">`f2;`</span>
+ 
+      
+</code></pre>
+<p><strong><strong>/ 方案收益</strong></strong></p>
+<p><strong>1. 流批一体模式开发：</strong>
+原有链路需要使用 MAX、LAST_VALUE 等函数来构造 retract 消息，以保证下游 SUM 计算结果正确，流与批的开发模式是分割的。</p>
+<p>基于 Paimon 存储数据并补齐 changelog，开发模式流与批是对齐的，获得流批一体的开发体验，提高了开发效率。</p>
+<p><strong>2. 维表新鲜度更高：</strong>
+原有链路中为了减少维表服务压力，所以本地 Cache TTL设置为 50 min，数据新鲜度较低，在Paimon 维表中默认每 10s 会主动检查维表数据是否有更新，并主动更新本地缓存，数据新鲜度更高。</p>
+<p><strong>3. 数据乱序问题：</strong>
+原链路中需要使用 LAST_VALUE 来处理数据乱序问题，增加了额外的状态成本。Paimon 合并数据时可以根据 sequence.field 来排序，从而在存储层解决数据乱序问题，不需要在 Flink 中维护状态。</p>
+<p><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/aa8c1f2c60e94658b310a8fe25a513d5~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=fdPMSISWwZqk0rYsTl9vlUHm5jE%3D"/></p>
+<p>02</p>
+<p>场景二：财经多流拼接</p>
+<p><strong>/ 业务场景</strong></p>
+<p>由于前端业务过程是由于多个功能模块通过接口拼接而成的，历史链路无法打通，关键节点指标缺失，  <strong>DA同学需要投入大量时间找数据拼凑数据，用数成本高、数据精度低、无法实时看到增长策略表现。</strong></p>
+<p>想要获得完整的用户交易过程的明细数据，财经侧在发起支付交易的时候创建了 trace_id，然后从支付开始透传到用户支付结束的所有流程中，利用 trace_id 构建用户交易行为宽表；</p>
+<p>宽表打宽的过程中，会去组合前后端埋点、会员、标签、策略、交易、营销等多个主题域的数据，降低业务同学用数、找数成本。</p>
+<p>/ 原有业务方案</p>
+<p><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/e2462c6a5a3a4333b84b5114df68089f~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=10M8u5DBOwsEEqbTPBfcHKuxV98%3D"/></p>
+<pre><code class="hljs language-go">
+        
+  <span class="hljs-string">`insert into sink`</span>
+  <span class="hljs-string">`select id,`</span>
+  <span class="hljs-string">`last_value(f1) as f1,`</span>
+  <span class="hljs-string">`last_value(f2) as f2,`</span>
+  <span class="hljs-string">`last_value(f3) as f3,`</span>
+  <span class="hljs-string">`last_value(f4) as f4,`</span>
+  <span class="hljs-string">`...`</span>
+  <span class="hljs-string">`from (`</span>
+  <span class="hljs-string">`select id,`</span>
+  <span class="hljs-string">`f1,`</span>
+  <span class="hljs-string">`f2,`</span>
+  <span class="hljs-string">`cast(null as STRING) as f3,`</span>
+  <span class="hljs-string">`cast(null as STRING) as f4,`</span>
+  <span class="hljs-string">`...`</span>
+  <span class="hljs-string">`from table1`</span>
+  <span class="hljs-string">`union all`</span>
+  <span class="hljs-string">`select id,`</span>
+  <span class="hljs-string">`cast(null as STRING) as f1,`</span>
+  <span class="hljs-string">`cast(null as STRING) as f2,`</span>
+  <span class="hljs-string">`f3,`</span>
+  <span class="hljs-string">`f4,`</span>
+  <span class="hljs-string">`...`</span>
+  <span class="hljs-string">`from table2`</span>
+  <span class="hljs-string">`union all`</span>
+  <span class="hljs-string">`......`</span>
+  <span class="hljs-string">`)`</span>
+  <span class="hljs-string">`group by id;`</span>
+ 
+      
+</code></pre>
+<p>/ 方案痛点</p>
+<p><strong>1. 资源开销和运维成本高：</strong>
+当前基于 MQ 和 Flink 做打宽任务的多流 Join，状态大小超过了 10TB，计算资源 1600+ CU。</p>
+<p>大状态会导致资源开销变高、任务吞吐抖动、故障恢复时间变长等问题。在当前场景下，宽表任务的异常抖动会带来下游超 10 min 的断流感知，运维成本较高，亟需优化。</p>
+<p><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/e673961ef2b9462dbb054069dbc3895b~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=s8jXb2xBhEAuxatiDm4h6ih7Zis%3D"/></p>
+<p><strong>2. 数据乱序问题：</strong>
+由于打宽任务的超大状态，因此在 Flink 任务中状态的 TTL 配置相对较小（小时级）。在状态过期后，乱序数据会导致拼接结果不正确问题，产生额外的运维和排查成本
+。</p>
+<p>/ Paimon实践</p>
+<p>结合 Paimon 的 Partial Update 能力，对财经用户行为打宽任务进行了改写，数据直接写入到 Paimon 表，原链路中的聚合算子得以消除，任务状态大幅下降。</p>
+<p>同时基于 Paimon 的 Sequence Group 机制，为每个流定义了相应字段的顺序，避免因为乱序出现的数据不一致问题。</p>
+<p><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/f1bc4f873ba54af48025f6dd19fa84a5~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=%2Bu1RoL1RaIbracfb4onaGRBPL%2BY%3D"/></p>
+<pre><code class="hljs language-less">
+        
+  `<span class="hljs-selector-tag">CREATE</span> <span class="hljs-selector-tag">TABLE</span> <span class="hljs-selector-tag">t</span> (<span class="hljs-built_in">`
+  `</span>trace_id BIGINT,<span class="hljs-built_in">`
+  `</span>f1 STRING,<span class="hljs-built_in">`
+  `</span>f2 STRING,<span class="hljs-built_in">`
+  `</span>g_1 BIGINT,<span class="hljs-built_in">`
+  `</span>f3 STRING,<span class="hljs-built_in">`
+  `</span>f4 STRING,<span class="hljs-built_in">`
+  `</span>g_2 BIGINT,<span class="hljs-built_in">`
+  `</span>PRIMARY KEY (trace_id) <span class="hljs-keyword">NOT</span> ENFORCED<span class="hljs-built_in">`
+  `</span>) <span class="hljs-selector-tag">WITH</span> (<span class="hljs-built_in">`
+  `</span><span class="hljs-string">'merge-engine'</span>=<span class="hljs-string">'partial-update'</span>,<span class="hljs-built_in">`
+  `</span><span class="hljs-string">'fields.g_1.sequence-group'</span>=<span class="hljs-string">'f1,f2'</span>, -- f1,f2字段根据 g_1 排序<span class="hljs-built_in">`
+  `</span><span class="hljs-string">'fields.g_2.sequence-group'</span>=<span class="hljs-string">'f3,f4'</span> -- f3,f4字段根据 g_2 排序<span class="hljs-built_in">`
+  `</span>);`
+ 
+  `<span class="hljs-selector-tag">insert</span> <span class="hljs-selector-tag">into</span> <span class="hljs-selector-tag">t</span>`
+  `<span class="hljs-selector-tag">select</span> <span class="hljs-selector-tag">trace_id</span>,`
+  `<span class="hljs-selector-tag">f1</span>,`
+  `<span class="hljs-selector-tag">f2</span>,`
+  `<span class="hljs-selector-tag">g_1</span>,`
+  `<span class="hljs-selector-tag">f3</span>,`
+  `<span class="hljs-selector-tag">f4</span>,`
+  `<span class="hljs-selector-tag">g_2</span>,`
+  `...`
+  `<span class="hljs-selector-tag">from</span> (<span class="hljs-built_in">`
+  `</span>select trace_id,<span class="hljs-built_in">`
+  `</span>f1,<span class="hljs-built_in">`
+  `</span>f2,<span class="hljs-built_in">`
+  `</span>g_1,<span class="hljs-built_in">`
+  `</span><span class="hljs-built_in">cast</span>(null as STRING) as f3,<span class="hljs-built_in">`
+  `</span><span class="hljs-built_in">cast</span>(null as STRING) as f4,<span class="hljs-built_in">`
+  `</span><span class="hljs-built_in">cast</span>(null as BIGINT) as g_2,<span class="hljs-built_in">`
+  `</span>xxx<span class="hljs-built_in">`
+  `</span>from table1<span class="hljs-built_in">`
+  `</span>union all<span class="hljs-built_in">`
+  `</span>select trace_id,<span class="hljs-built_in">`
+  `</span><span class="hljs-built_in">cast</span>(null as STRING) as f1,<span class="hljs-built_in">`
+  `</span><span class="hljs-built_in">cast</span>(null as STRING) as f2,<span class="hljs-built_in">`
+  `</span><span class="hljs-built_in">cast</span>(null as BIGINT) as g_1,<span class="hljs-built_in">`
+  `</span>f3,<span class="hljs-built_in">`
+  `</span>f4,<span class="hljs-built_in">`
+  `</span>g_2,<span class="hljs-built_in">`
+  `</span>xxx<span class="hljs-built_in">`
+  `</span>from table2<span class="hljs-built_in">`
+  `</span>union all<span class="hljs-built_in">`
+  `</span>......<span class="hljs-built_in">`
+  `</span>)`
+ 
+      
+</code></pre>
+<p>/ 方案收益</p>
+<p><strong>1. 计算资源下降：</strong>
+计算资源优化 50%+ (1600 CU 缩减到 800 CU)，收益主要来源于状态管理成本下降；</p>
+<p><strong>2. 状态优化：</strong>
+消除聚合状态后，作业状态由 10TB 缩减到小于 20GB；</p>
+<p><strong>3. 开发和运维成本下降：</strong>
+中间数据可查可复用，同时指标增减可以通过 DDL 直接操作 Paimon 表；</p>
+<p><strong>4. 数据乱序问题解决成本低：</strong>
+基于 Paimon 的 Sequence Group 机制可以对多流数据按序进行合并，处理更长时间范围内的乱序问题，并且不额外新增状态成本，较之于原链路方案，数据质量提升6%
+。</p>
+<p><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/4972475ffe55479c99abc6857136fb1d~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=jt8znnS9gLFYu7hwtVTGaXgb%2BzI%3D"/></p>
+<p>03</p>
+<p>未来展望</p>
+<p>我们期望未来以 Flink 为核心，以数据湖为底座，为用户提供全链路数据生产和管理的实时数仓解决方案，进一步简化用户的开发和使用成本。</p>
+<p>我们也将继续针对实际业务场景进行 Apache Paimon 优化，包括：</p>
+<p><strong>1. 千列大宽表合并性能优化：</strong>
+LSM Tree 架构使得 Apache Paimon 有很高的点查与合并性能，但在超大列数的业务场景中性能下降较多，内部将针对这一场景进行优化；</p>
+<p><strong>2. 维表性能优化：</strong>
+Apache Paimon 的本地维表可以极大的减少传统外部 KV 存储的请求数量，但在大流量场景中，我们注意到本地维表刷新是同步的，同时没有按照 bucket 进行 shuffle，导致维表变化较快时，吞吐有明显尖刺，我们将结合 Flink 继续优化维表的访问性能；</p>
+<p><strong>3. Merge Engine 扩展：</strong>
+部分业务场景中，业务需要自定义的 Merge Engine 来实现更加复杂的合并策略，因此我们将扩展 Merge Engine，使其支持业务进行扩展以应对更加复杂的业务场景。</p>
+<p><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/7fe9914078fe4a24ab345b72ee82df81~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=fk65b%2FMOG5lzdwMAVzMyzuip9O8%3D"/></p>
+<pre><code class="hljs">往期推荐   
+</code></pre>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzkwMzMwOTQwMg==&amp;mid=2247488325&amp;idx=1&amp;sn=6ec872429d47c5f53f9b5fb003b82ae0&amp;chksm=c0996270f7eeeb6614adb4c247f4f1749e84d25c3548c8ae9426118585569f36e970295239e5&amp;scene=21#wechat_redirect" rel="nofollow" target="_blank"><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/cd74b3c5f22b4ceebb8128624b778b63~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=xjHAH6OR36Ytk5wSyihMikuvBns%3D"/></a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzkwMzMwOTQwMg==&amp;mid=2247487427&amp;idx=1&amp;sn=64cf807f65a5dca3e69ba15bc1290688&amp;chksm=c0997ef6f7eef7e005059016d59c6bb03f8d965d5f12de9795539473335a66c415207f88e539&amp;scene=21#wechat_redirect" rel="nofollow" target="_blank"><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/baac70ae8edd4d9da960263d5a5184e4~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=0ebUi9Uy3vrzx7n1LfBCHhbr21U%3D"/></a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzkwMzMwOTQwMg==&amp;mid=2247487446&amp;idx=1&amp;sn=31eb37bf4d8f7b23f1d2db19a9697585&amp;chksm=c0997ee3f7eef7f53f8fe16a89bdfe7816080b6887fb0048b909d164ed4ff394945a429b758d&amp;scene=21#wechat_redirect" rel="nofollow" target="_blank"><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/25368aad2c544e209dfb0e9f21bf57c3~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=RjBjqMKXr0EVRo3GdO%2Fo260A0FY%3D"/></a></p>
+<p><img alt="picture.image" src="https://p3-volc-community-sign.byteimg.com/tos-cn-i-tlddhu82om/ff31b92159dd4d62b8400101d0e5fe2c~tplv-tlddhu82om-image.image?=&amp;rk3s=8031ce6d&amp;x-expires=1782961146&amp;x-signature=o0%2Fz%2F98kaqrImnvmKuy%2B86L1L1E%3D"/>
+点击阅读原文，了解更多</p></div>
+</div>
+</article>
+</body>
+</html>

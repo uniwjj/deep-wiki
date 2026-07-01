@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apache Iceberg™ 表¶</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 16px; line-height: 1.8; color: #333; max-width: 820px; margin: 0 auto; padding: 20px; }
+article { margin-bottom: 40px; }
+article .article-meta h1 { font-size: 24px; margin-bottom: 8px; line-height: 1.4; }
+article .article-meta .meta-info { font-size: 13px; color: #999; }
+article .article-meta .meta-info span { margin-right: 16px; display: inline-block; }
+article .article-meta .meta-info a { color: #666; }
+article hr { margin: 20px 0; border: none; border-top: 1px solid #eee; }
+article .article-body img { max-width: 100%; height: auto; }
+article .article-body pre { background: #f5f5f5; border-radius: 4px; padding: 16px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+article .article-body code { font-family: "SF Mono", Menlo, Monaco, Consolas, monospace; background: #f5f5f5; border-radius: 2px; padding: 2px 4px; font-size: 0.9em; }
+article .article-body pre code { background: transparent; padding: 0; }
+article .article-body blockquote { margin: 16px 0; padding: 8px 16px; border-left: 3px solid #ccc; background: #fafafa; color: #555; }
+article .article-body table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+article .article-body th, article .article-body td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+article .article-body th { background: #f0f0f0; font-weight: 600; }
+article .article-body ul, article .article-body ol { padding-left: 24px; }
+article .article-body a { color: #1a73e8; }
+article .article-body h1,article .article-body h2,article .article-body h3,article .article-body h4 { line-height: 1.4; margin: 1.2em 0 0.6em; }
+
+</style>
+</head>
+<body>
+<article>
+<header class="article-meta">
+<h1>Apache Iceberg™ 表¶</h1>
+<div class="meta-info">
+<span>作者：未知</span>
+<span>发表：未知</span>
+<span>来源：<a href="https://docs.snowflake.cn/zh/user-guide/tables-iceberg" target="_blank">docs.snowflake.cn</a></span>
+<span>平台：snowflake</span>
+<span>图片：2 张</span>
+</div>
+</header>
+<hr>
+
+<div class="article-body">
+<main class="flex overflow-y-hidden"><aside class="flex-none hidden lg:block overflow-y-auto bg-lightgray border-r pb-8 scroll-bar w-80 scroll-bar-stable" data-testid="toc-wrapper"><div class="pt-6 pl-1"><nav id="toc"><ol><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides" title="概述"><span>概述</span></a></div><ul></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/snowflake-horizon" title="Snowflake Horizon 目录"><span>Snowflake Horizon 目录</span></a></div><ul></ul></li><li class="border-t pb-1 mt-1 mx-5"></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-connecting" title="连接到 Snowflake 的应用程序和工具"><span>连接到 Snowflake 的应用程序和工具</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="border-t pb-1 mt-1 mx-5"></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/warehouses" title="虚拟仓库"><span>虚拟仓库</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-db" title="数据库、表和视图"><span>数据库、表和视图</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/data-types" title="Data types"><span>Data types</span></a></div><ul></ul></li><li class="border-t pb-1 mt-1 mx-5"></li><li><div class="flex items-center cursor-pointer group justify-between px-3 mx-5 py-2 text-sm"><span class="block">数据集成</span><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(90deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ol class="overflow-hidden" style="duration:100px;opacity:1"><div><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-5"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/data-integration/openflow/about" title="Snowflake Openflow"><span>Snowflake Openflow</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li><div class="flex items-center cursor-pointer group justify-between px-3 mx-5 py-2 text-sm pl-5"><span class="block">Apache Iceberg™</span><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(90deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ol class="overflow-hidden" style="duration:100px;opacity:1"><div><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center bg-highlight text-blue-60 dark:text-blue-30 pl-7" id="selected-item"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg" title="Apache Iceberg™ 表"><span>Apache Iceberg™ 表</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(90deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:auto;opacity:0"><div><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-storage" title="存储"><span>存储</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-metadata" title="Metadata And Retention"><span>Metadata And Retention</span></a></div><ul></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-transactions" title="事务"><span>事务</span></a></div><ul></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-data-types" title="数据类型"><span>数据类型</span></a></div><ul></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-v3-specification-support" title="Apache Iceberg™ V3 support (Preview)"><span>Apache Iceberg™ V3 support (Preview)</span></a></div><ul></ul></li><li class="pt-3 px-3 py-1 mx-5 pl-9"><span class="font-bold text-sm">教程</span></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tutorials/create-your-first-iceberg-table" title="教程：创建第一个 Apache Iceberg™ 表"><span>教程：创建第一个 Apache Iceberg™ 表</span></a></div><ul></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tutorials/tables-iceberg-set-up-bidirectional-access-to-unity-catalog" title="Tutorial: Set Up Bidirectional Access to Unity Catalog"><span>Tutorial: Set Up Bidirectional Access to Unity Catalog</span></a></div><ul></ul></li><li class="pt-3 px-3 py-1 mx-5 pl-9"><span class="font-bold text-sm">Work With Apache Iceberg™ Tables</span></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-best-practices" title="最佳实践"><span>最佳实践</span></a></div><ul></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-managing-external-volumes" title="Managing external volumes"><span>Managing external volumes</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-configure-catalog-integration" title="Configure A Catalog Integration"><span>Configure A Catalog Integration</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-auto-refresh" title="自动刷新"><span>自动刷新</span></a></div><ul></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-create" title="创建表"><span>创建表</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-load" title="加载数据"><span>加载数据</span></a></div><ul></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-manage" title="管理表"><span>管理表</span></a></div><ul></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-conversion" title="转换表"><span>转换表</span></a></div><ul></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-use-external-query-engine" title="Use an external query engine"><span>Use an external query engine</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-open-catalog" title="Snowflake Open Catalog"><span>Snowflake Open Catalog</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-9"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/tables-iceberg-catalog" title="Snowflake 目录 SDK"><span>Snowflake 目录 SDK</span></a></div><ul></ul></li></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-7"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/opencatalog/overview" title="Snowflake Open Catalog"><span>Snowflake Open Catalog</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li></div></ol></li></div></ol></li><li><div class="flex items-center cursor-pointer group justify-between px-3 mx-5 py-2 text-sm"><span class="block">Data engineering</span><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ol class="overflow-hidden" style="height:0;opacity:0"><div><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-5"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-loading-data" title="数据加载"><span>数据加载</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-5"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/dynamic-tables-about" title="动态表"><span>动态表</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-5"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/data-pipelines-intro" title="Streams and tasks"><span>Streams and tasks</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-5"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/data-engineering/row-timestamps" title="Row timestamps"><span>Row timestamps</span></a></div><ul></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-5"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/dcm-projects/dcm-projects-overview" title="DCM Projects"><span>DCM Projects</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-5"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/data-engineering/dbt-projects-on-snowflake" title="dbt Projects on Snowflake"><span>dbt Projects on Snowflake</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center pl-5"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-unloading-data" title="数据卸载"><span>数据卸载</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li></div></ol></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/storage-management/storage-lifecycle-policies" title="Storage lifecycle policies"><span>Storage lifecycle policies</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/migrations/README" title="Migrations"><span>Migrations</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="border-t pb-1 mt-1 mx-5"></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-queries" title="查询"><span>查询</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/collaboration/collaboration-listings-about" title="列表"><span>列表</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-sharing" title="Collaboration"><span>Collaboration</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="border-t pb-1 mt-1 mx-5"></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-ai-features" title="Snowflake AI 和 ML"><span>Snowflake AI 和 ML</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="border-t pb-1 mt-1 mx-5"></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/snowflake-postgres/about" title="Snowflake Postgres"><span>Snowflake Postgres</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="border-t pb-1 mt-1 mx-5"></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-alerts" title="警报和通知"><span>警报和通知</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="border-t pb-1 mt-1 mx-5"></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-secure" title="安全"><span>安全</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-govern" title="数据治理"><span>数据治理</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-privacy" title="隐私"><span>隐私</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="border-t pb-1 mt-1 mx-5"></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-manage" title="组织和账户"><span>组织和账户</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/user-guide/replication-intro" title="业务连续性和数据恢复"><span>业务连续性和数据恢复</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="border-t pb-1 mt-1 mx-5"></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-performance" title="Performance optimization"><span>Performance optimization</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li><li class="font-normal"><div class="px-3 text-sm rounded-md hover:bg-level-3 mx-5 flex justify-between items-center"><a class="w-full py-2 text-ellipsis overflow-hidden text-sm leading-4" href="/zh/guides-overview-cost" title="成本和计费"><span>成本和计费</span></a><div class="w-5 h-5 cursor-pointer flex justify-center items-center select-none py-2" style="transform:rotate(0deg)"><svg fill="none" height="8" viewbox="0 0 6 8" width="6" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 4L2 1.5" stroke="#8A96AD" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"></path></svg></div></div><ul><ol class="overflow-hidden" style="height:0;opacity:0"><div></div></ol></ul></li></ol></nav></div></aside><div class="w-full overflow-y-auto" id="scrolltarget"><div class="flex flex-col-reverse xl:flex-row xl:justify-between mx-auto pt-8 px-8 mb-12 max-w-[1175px]"><div class="w-full xl:w-9/12"><nav class="mb-2 flex space-x-4 text-sm flex-wrap"><a class="text-link hover:underline" href="/zh/guides">指南</a><span class="ui-icon mb-2"><svg aria-hidden="true" class="svg-inline--fa fa-chevron-right" data-icon="chevron-right" data-prefix="fas" focusable="false" role="img" viewbox="0 0 320 512" xmlns="http://www.w3.org/2000/svg"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"></path></svg></span><span class="font-semibold">数据集成</span><span class="ui-icon mb-2"><svg aria-hidden="true" class="svg-inline--fa fa-chevron-right" data-icon="chevron-right" data-prefix="fas" focusable="false" role="img" viewbox="0 0 320 512" xmlns="http://www.w3.org/2000/svg"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"></path></svg></span><span class="font-semibold">Apache Iceberg™</span><span class="ui-icon mb-2"><svg aria-hidden="true" class="svg-inline--fa fa-chevron-right" data-icon="chevron-right" data-prefix="fas" focusable="false" role="img" viewbox="0 0 320 512" xmlns="http://www.w3.org/2000/svg"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"></path></svg></span><span class="mb-2">Apache Iceberg™ 表</span></nav><article>
+<section id="iceberg-tm-tables">
+<h1>Apache Iceberg™ 表<a class="headerlink" data-nosnippet="" href="#iceberg-tm-tables" title="Link to this heading">¶</a></h1>
+<p>Snowflake 的 Apache Iceberg™ 表将典型 Snowflake 表的性能和查询语义与您管理的外部云存储结合在一起。它们非常适合您无法存储在或选择不存储在 Snowflake 中的现有数据湖。</p>
+<p>Iceberg 表使用 Apache Iceberg™ (https://iceberg.apache.org/) 开放表格式规范，该规范为以开放格式存储的数据文件提供了一个抽象层，并支持多种功能，例如：</p>
+<ul class="simple">
+<li><p>ACID（原子性、一致性、隔离性、持久性）事务</p></li>
+<li><p>架构演化</p></li>
+<li><p>隐藏式分区</p></li>
+<li><p>表快照</p></li>
+</ul>
+<p>Snowflake 支持使用 Apache Parquet™ (https://parquet.apache.org/) 文件格式的 Iceberg 表。</p>
+<section id="getting-started">
+<h2>开始使用<a class="headerlink" data-nosnippet="" href="#getting-started" title="Link to this heading">¶</a></h2>
+<p>要开始使用 Iceberg 表，请参阅 <a class="reference internal" href="tutorials/create-your-first-iceberg-table"><span class="doc">教程：创建第一个 Apache Iceberg™ 表</span></a>。</p>
+</section>
+<section id="how-it-works">
+<h2>工作原理<a class="headerlink" data-nosnippet="" href="#how-it-works" title="Link to this heading">¶</a></h2>
+<p>本部分提供有关在 <em>Snowflake</em> 中使用 Iceberg 表的特定信息。要详细了解 Iceberg 表格式规范，请参阅官方的 Apache Iceberg 文档 (https://iceberg.apache.org/docs/latest/) 和 Iceberg 表规范 (https://iceberg.apache.org/spec/)。</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#label-tables-iceberg-data-storage"><span class="std std-ref">数据存储</span></a></p></li>
+<li><p><a class="reference internal" href="#label-tables-iceberg-catalog-def"><span class="std std-ref">目录</span></a></p></li>
+<li><p><a class="reference internal" href="#label-tables-iceberg-snapshots"><span class="std std-ref">元数据和快照</span></a></p></li>
+<li><p><a class="reference internal" href="#label-tables-iceberg-cross-cloud-support"><span class="std std-ref">跨云/跨区域支持</span></a></p></li>
+<li><p><a class="reference internal" href="#label-tables-iceberg-billing"><span class="std std-ref">计费</span></a></p></li>
+</ul>
+<section id="data-storage">
+<span id="label-tables-iceberg-data-storage"></span><h3>数据存储<a class="headerlink" data-nosnippet="" href="#data-storage" title="Link to this heading">¶</a></h3>
+<p>Iceberg 表将其数据和元数据文件存储在外部云存储位置（Amazon S3、Google Cloud Storage 或 Azure Storage）。外部存储不是 Snowflake 的一部分。您负责外部云存储位置的所有管理，包括数据保护和恢复的配置。Snowflake 不为 Iceberg 表提供 <a class="reference internal" href="data-failsafe"><span class="doc">故障安全</span></a> 存储。</p>
+<p>Snowflake 使用 <a class="reference internal" href="#label-tables-iceberg-external-volume-def"><span class="std std-ref">外部卷</span></a> 连接到存储位置，Iceberg 表不会产生 Snowflake 存储成本。有关更多信息，请参阅 <a class="reference internal" href="#label-tables-iceberg-billing"><span class="std std-ref">计费</span></a>。</p>
+<p>要了解有关 Iceberg 表存储的更多信息，请参阅 <a class="reference internal" href="tables-iceberg-storage"><span class="doc">Apache Iceberg™ 表的存储</span></a>。</p>
+<section id="external-volume">
+<span id="label-tables-iceberg-external-volume-def"></span><h4>外部卷<a class="headerlink" data-nosnippet="" href="#external-volume" title="Link to this heading">¶</a></h4>
+<p>外部卷是一个命名的账户级 Snowflake 对象，用于将 Snowflake 连接到 Iceberg 表的外部云存储。外部卷存储您的存储位置的身份和访问管理 (IAM) 实体。Snowflake 使用 IAM 实体安全地连接到存储，以访问表数据、Iceberg 元数据以及存储表架构、分区和其他元数据的清单文件。</p>
+<p>单个外部卷可以支持一个或多个 Iceberg 表。</p>
+<p>要为 Iceberg 表设置外部卷，请参阅 <a class="reference internal" href="tables-iceberg-configure-external-volume"><span class="doc">配置外部卷</span></a>。</p>
+</section>
+</section>
+<section id="catalog">
+<span id="label-tables-iceberg-catalog-def"></span><h3>目录<a class="headerlink" data-nosnippet="" href="#catalog" title="Link to this heading">¶</a></h3>
+<p>Iceberg 目录使计算引擎能够管理和加载 Iceberg 表。该目录构成了 Iceberg 表规范 (https://iceberg.apache.org/spec/#overview) 的第一个架构层，并且必须支持：</p>
+<ul class="simple">
+<li><p>存储一个或多个 Iceberg 表的当前元数据指针。元数据指针将表名称映射到该表的当前元数据文件的位置。</p></li>
+<li><p>执行原子操作，以便您可以更新表的当前元数据指针。</p></li>
+</ul>
+<p>要了解有关 Iceberg 目录的更多信息，请参阅 Apache Iceberg 文档 (https://iceberg.apache.org/terms/#catalog-implementations)。</p>
+<p>Snowflake 支持不同的 <a class="reference internal" href="#label-tables-iceberg-catalog-options"><span class="std std-ref">目录选项</span></a>。例如，您可以使用 Snowflake 作为 Iceberg 目录，或者使用 <a class="reference internal" href="#label-tables-iceberg-catalog-integration-def"><span class="std std-ref">目录集成</span></a> 将 Snowflake 连接到外部 Iceberg 目录。</p>
+<section id="catalog-integration">
+<span id="label-tables-iceberg-catalog-integration-def"></span><h4>目录集成<a class="headerlink" data-nosnippet="" href="#catalog-integration" title="Link to this heading">¶</a></h4>
+<p>目录集成是一个命名的、账户级别的 Snowflake 对象，用于存储有关您的表元数据在以下场景中如何组织的信息：</p>
+<ul class="simple">
+<li><p>当您不使用 <a class="reference internal" href="#label-tables-iceberg-snowflake-as-catalog"><span class="std std-ref">Snowflake 作为 Iceberg 目录</span></a> 时。例如，如果您的表由 AWS Glue 管理，则需要目录集成。</p></li>
+<li><p>当您想要与 <a class="reference external" href="https://other-docs.snowflake.cn/en/opencatalog/overview">Snowflake Open Catalog</a> 集成时：</p>
+<ul>
+<li><p>在 Snowflake Open Catalog 中使用 Snowflake 查询 Iceberg 表。</p></li>
+<li><p>将 Snowflake 管理的 Iceberg 表与 Snowflake Open Catalog 集成，以便第三方计算引擎可以查询该表。</p></li>
+</ul>
+</li>
+</ul>
+<p>单个目录集成可以支持一个或多个使用相同外部目录的 Iceberg 表。</p>
+<p>要设置目录集成，请参阅 <a class="reference internal" href="tables-iceberg-configure-catalog-integration"><span class="doc">配置目录集成</span></a>。</p>
+</section>
+</section>
+<section id="metadata-and-snapshots">
+<span id="label-tables-iceberg-snapshots"></span><h3>元数据和快照<a class="headerlink" data-nosnippet="" href="#metadata-and-snapshots" title="Link to this heading">¶</a></h3>
+<p>Iceberg 使用基于快照的查询模型，在该模型中，使用清单文件和元数据文件映射数据文件。快照表示表在某个时间点的状态，用于访问表中数据文件的完整集合。</p>
+<p>要了解有关表元数据和 Time Travel 支持的信息，请参阅 <a class="reference internal" href="tables-iceberg-metadata"><span class="doc">Apache Iceberg™ 表的元数据与保留</span></a>。</p>
+</section>
+<section id="cross-cloud-cross-region-support">
+<span id="label-tables-iceberg-cross-cloud-support"></span><h3>跨云/跨区域支持<a class="headerlink" data-nosnippet="" href="#cross-cloud-cross-region-support" title="Link to this heading">¶</a></h3>
+<p>Snowflake 支持使用与托管您的 Snowflake 账户的云提供商不同的云提供商（位于不同的区域）的外部卷存储位置。</p>
+<div class="scrollable-table-wrapper relative group text-sm"><div class="scrollable-table-frame" data-scrollable-table-injected="true"><div class="scrollable-table-scroll-container"><table class="docutils align-default scrollable-table-toggleable" data-table-index="0"><caption class="scrollable-table-caption-generated scrollable-table-caption-bg"></caption>
+<colgroup>
+<col style="width: 36.4%"/>
+<col style="width: 27.3%"/>
+<col style="width: 36.4%"/>
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>表类型</p></th>
+<th class="head"><p>跨云/跨区域支持</p></th>
+<th class="head"><p>备注</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>使用有 <a class="reference internal" href="#label-tables-iceberg-catalog-integration"><span class="std std-ref">目录集成</span></a> 的外部目录的表</p></td>
+<td><p>✔</p></td>
+<td><p>如果 Snowflake 账户和外部卷位于不同区域，则在您查询表时，外部云存储账户会产生出口费用。</p></td>
+</tr>
+<tr class="row-odd"><td><p>使用 <a class="reference internal" href="#label-tables-iceberg-snowflake-as-catalog"><span class="std std-ref">Snowflake 作为目录</span></a> 的表</p></td>
+<td><p>✔</p></td>
+<td><p>如果 Snowflake 账户和外部卷位于不同区域，则在您查询表时，外部云存储账户会产生出口费用。</p>
+<p>这些表会产生跨区域数据传输的使用费用。有关更多信息，请参阅 <a class="reference internal" href="#label-tables-iceberg-billing"><span class="std std-ref">计费</span></a>。</p>
+</td>
+</tr>
+</tbody>
+</table></div><div class="scrollable-table-show-more-fab"><button aria-label="See more" class="codeblock-button scrollable-table-show-more" data-table-index="0" data-tooltip="See more" disabled="" type="button"><svg class="copybutton-icon double-chevron-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 7l5 5 5-5M7 13l5 5 5-5"></path></svg><span class="sr-only">See more</span></button><button aria-label="Show less" class="codeblock-button scrollable-table-show-less" data-table-index="0" data-tooltip="Show less" disabled="" type="button"><svg class="copybutton-icon double-chevron-icon is-up" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 7l5 5 5-5M7 13l5 5 5-5"></path></svg><span class="sr-only">Show less</span></button></div><div class="scrollable-table-toggle-fab"><button aria-expanded="false" aria-label="Expand table" class="codeblock-button scrollable-table-toggle" data-table-index="0" data-tooltip="Expand" type="button"><svg class="copybutton-icon toggle-icon toggle-icon-expand" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 3H21V9"></path><path d="M21 3L14 10"></path><path d="M9 21H3V15"></path><path d="M3 21L10 14"></path></svg><svg class="copybutton-icon toggle-icon toggle-icon-collapse" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 14H10V20"></path><path d="M20 10H14V4"></path><path d="M14 10L21 3"></path><path d="M10 14L3 21"></path></svg><span class="sr-only">Expand</span></button></div><div class="scrollable-table-bottom-fade"></div></div></div>
+</section>
+<section id="billing">
+<span id="label-tables-iceberg-billing"></span><h3>计费<a class="headerlink" data-nosnippet="" href="#billing" title="Link to this heading">¶</a></h3>
+<p>Snowflake bills your account for virtual warehouse (compute) usage and cloud services when you work with Iceberg tables.
+Snowflake also bills your account if you use <a class="reference internal" href="tables-iceberg-auto-refresh.html#label-tables-iceberg-auto-refresh-billing"><span class="std std-ref">automated refresh</span></a> or an
+<a class="reference internal" href="tables-iceberg-access-using-external-query-engine-snowflake-horizon.html#label-tables-iceberg-query-using-external-query-engine-snowflake-horizon-billing"><span class="std std-ref">external query engine through Snowflake Horizon Catalog</span></a>.</p>
+<p>如果 <a class="reference internal" href="#label-tables-iceberg-snowflake-as-catalog"><span class="std std-ref">Snowflake 管理的</span></a> Iceberg 表是跨云/跨区域的，则 Snowflake 会将您的跨区域数据传输费用按 DATA_LAKE 中的 TRANSFER_TYPE 类型计费。要了解更多信息，请参阅：</p>
+<ul class="simple">
+<li><p>ORGANIZATION_USAGE 架构中的 <a class="reference internal" href="../sql-reference/organization-usage/data_transfer_history"><span class="doc">DATA_TRANSFER_HISTORY 视图</span></a>。</p></li>
+<li><p>ACCOUNT_USAGE 架构中的 <a class="reference internal" href="../sql-reference/account-usage/data_transfer_history"><span class="doc">DATA_TRANSFER_HISTORY 视图</span></a>。</p></li>
+</ul>
+<p>Snowflake <span class="emph">不会</span> 向您的账户收取以下费用：</p>
+<ul class="simple">
+<li><p>Iceberg table storage costs when the table uses an external volume that you manage. Your cloud storage provider bills you
+directly for data storage usage. However, if the table uses
+<a class="reference internal" href="tables-iceberg-internal-storage"><span class="doc">Snowflake Storage</span></a> (<code class="docutils literal notranslate"><span class="pre">EXTERNAL_VOLUME</span> <span class="pre">=</span> <span class="pre">SNOWFLAKE_MANAGED</span></code>),
+Snowflake charges for the storage. For more information, see
+<a class="reference internal" href="tables-iceberg-internal-storage"><span class="doc">适用于 Apache Iceberg™ 表的 Snowflake Storage</span></a>.</p></li>
+<li><p>Iceberg 表使用的活动字节。但是，<a class="reference internal" href="../sql-reference/info-schema/table_storage_metrics"><span class="doc">INFORMATION_SCHEMA.TABLE_STORAGE_METRICS</span></a> 和 <a class="reference internal" href="../sql-reference/account-usage/table_storage_metrics"><span class="doc">ACCOUNT_USAGE.TABLE_STORAGE_METRICS</span></a> 视图会显示 Iceberg 表的 ACTIVE_BYTES，以帮助您跟踪表占用的存储空间。要查看示例，请参阅 <a class="reference internal" href="tables-iceberg-manage.html#label-tables-iceberg-get-storage-metrics"><span class="std std-ref">检索存储指标</span></a>。</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>如果 Snowflake 账户和外部卷位于不同区域，则在您查询表时，外部云存储账户会产生出口费用。</p>
+</div>
+</section>
+</section>
+<section id="catalog-options">
+<span id="label-tables-iceberg-catalog-options"></span><h2>目录选项<a class="headerlink" data-nosnippet="" href="#catalog-options" title="Link to this heading">¶</a></h2>
+<p>Snowflake 支持以下 Iceberg 目录选项：</p>
+<ul class="simple">
+<li><p>使用 Snowflake 作为 <a class="reference internal" href="#label-tables-iceberg-catalog-def"><span class="std std-ref">Iceberg 目录</span></a></p></li>
+<li><p>使用外部 Iceberg 目录</p></li>
+</ul>
+<p>下表总结了这两种目录选择之间的差异。</p>
+<div class="scrollable-table-wrapper relative group text-sm"><div class="scrollable-table-frame" data-scrollable-table-injected="true"><div class="scrollable-table-scroll-container"><table class="docutils align-center scrollable-table-toggleable" data-table-index="1"><caption class="scrollable-table-caption-generated scrollable-table-caption-bg"></caption>
+<colgroup>
+<col style="width: 27.3%"/>
+<col style="width: 36.4%"/>
+<col style="width: 36.4%"/>
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><a class="reference internal" href="#label-tables-iceberg-snowflake-as-catalog"><span class="std std-ref">使用 Snowflake 作为目录</span></a></p></th>
+<th class="head"><p><a class="reference internal" href="#label-tables-iceberg-catalog-integration"><span class="std std-ref">使用外部目录</span></a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>读取权限</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p>写入权限</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p>Catalog-vended credentials</p></td>
+<td></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p>跨区域写入权限</p></td>
+<td><p>✔</p></td>
+<td><p>✔ 与 <a class="reference internal" href="tables-iceberg-externally-managed-writes"><span class="doc">对外部托管表的写入支持</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>数据和元数据存储</p></td>
+<td><p>外部卷（云存储）</p></td>
+<td><p>外部卷（云存储）</p></td>
+</tr>
+<tr class="row-odd"><td><p>Snowflake 平台支持</p></td>
+<td><p>✔</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>与 Snowflake Open Catalog 集成</p></td>
+<td><p>✔</p>
+<p>您可以将 Snowflake 管理的表与 Open Catalog 同步，以使用其他计算引擎查询表。</p>
+</td>
+<td><p>✔</p>
+<p>您可以使用 Snowflake 来查询或写入由 Open Catalog 托管的 Iceberg 表。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>使用 <a class="reference internal" href="tables-iceberg-catalog"><span class="doc">Snowflake 目录 SDK</span></a></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p>Replication for tables</p></td>
+<td><p>✔</p>
+<p>See <a class="reference internal" href="tables-iceberg-replication"><span class="doc">为 Snowflake 管理的 Apache Iceberg™ 表配置复制</span></a>.</p>
+</td>
+<td></td>
+</tr>
+</tbody>
+</table></div><div class="scrollable-table-show-more-fab"><button aria-label="See more" class="codeblock-button scrollable-table-show-more" data-table-index="1" data-tooltip="See more" disabled="" type="button"><svg class="copybutton-icon double-chevron-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 7l5 5 5-5M7 13l5 5 5-5"></path></svg><span class="sr-only">See more</span></button><button aria-label="Show less" class="codeblock-button scrollable-table-show-less" data-table-index="1" data-tooltip="Show less" disabled="" type="button"><svg class="copybutton-icon double-chevron-icon is-up" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 7l5 5 5-5M7 13l5 5 5-5"></path></svg><span class="sr-only">Show less</span></button></div><div class="scrollable-table-toggle-fab"><button aria-expanded="false" aria-label="Expand table" class="codeblock-button scrollable-table-toggle" data-table-index="1" data-tooltip="Expand" type="button"><svg class="copybutton-icon toggle-icon toggle-icon-expand" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 3H21V9"></path><path d="M21 3L14 10"></path><path d="M9 21H3V15"></path><path d="M3 21L10 14"></path></svg><svg class="copybutton-icon toggle-icon toggle-icon-collapse" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 14H10V20"></path><path d="M20 10H14V4"></path><path d="M14 10L21 3"></path><path d="M10 14L3 21"></path></svg><span class="sr-only">Expand</span></button></div><div class="scrollable-table-bottom-fade"></div></div></div>
+<section id="use-snowflake-as-the-catalog">
+<span id="label-tables-iceberg-snowflake-as-catalog"></span><h3>使用 Snowflake 作为目录<a class="headerlink" data-nosnippet="" href="#use-snowflake-as-the-catalog" title="Link to this heading">¶</a></h3>
+<p>An Iceberg table that uses Snowflake as the Iceberg catalog (Snowflake-managed Iceberg table) provides full Snowflake platform support with
+read and write access. The table data and metadata are stored in external cloud storage, which Snowflake accesses using an
+<a class="reference internal" href="#label-tables-iceberg-external-volume-def"><span class="std std-ref">external volume</span></a>. Snowflake
+handles all life-cycle maintenance, such as compaction, for the table. However, you can <a class="reference internal" href="tables-iceberg-manage.html#label-tables-iceberg-manage-set-data-compaction"><span class="std std-ref">disable compaction for the table</span></a>
+, if needed.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/tables-iceberg-snowflake-as-catalog.svg"><img alt="使用 Snowflake 作为 Iceberg 目录的 Iceberg 表的工作原理" height="1000" src="../_images/tables-iceberg-snowflake-as-catalog.svg" width="1085"/></a>
+</figure>
+</section>
+<section id="use-an-external-catalog">
+<span id="label-tables-iceberg-catalog-integration"></span><h3>使用外部目录<a class="headerlink" data-nosnippet="" href="#use-an-external-catalog" title="Link to this heading">¶</a></h3>
+<p>使用外部目录的 Iceberg 表提供有限的 Snowflake 平台支持。</p>
+<p>对于此表类型，Snowflake 使用 <a class="reference internal" href="#label-tables-iceberg-catalog-integration-def"><span class="std std-ref">目录集成</span></a> 来检索有关 Iceberg 元数据和架构的信息。</p>
+<p>您可以使用该选项为以下来源创建 Iceberg 表：</p>
+<ul>
+<li><p><a class="reference internal" href="tables-iceberg-configure-catalog-integration-rest"><span class="doc">远程 Iceberg REST 目录</span></a>，包括 <a class="reference internal" href="tables-iceberg-configure-catalog-integration-rest-glue"><span class="doc">AWS Glue</span></a> 和 <a class="reference internal" href="tables-iceberg-open-catalog"><span class="doc">Snowflake Open Catalog</span></a>。Snowflake 支持对使用远程 Iceberg REST 目录的外部托管表进行写入。</p>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>To bring your external data from a remote Iceberg REST catalog into Snowflake, you can create a catalog-linked database.
+The database automatically discovers
+and stays in sync with the namespaces and tables in your remote catalog. You can use a catalog-linked database to read and
+write to the tables in your remote catalog from Snowflake, while preserving full interoperability with your existing
+Iceberg ecosystem. For more information, see the following topics:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="tables-iceberg-catalog-linked-database"><span class="doc">为 Apache Iceberg™ 表使用目录链接的数据库</span></a></p></li>
+<li><p>If your external data is in Unity Catalog, see <a class="reference internal" href="tutorials/tables-iceberg-set-up-bidirectional-access-to-unity-catalog"><span class="doc">教程：在 Databricks Unity Catalog 中设置 Apache Iceberg™ 表的双向访问</span></a></p></li>
+<li><p>If your external data is in AWS Glue, see <a class="reference external" href="https://www.snowflake.cn/en/developers/guides/data-lake-using-apache-iceberg-with-snowflake-and-aws-glue/">Build Data Lakes using Apache Iceberg with Snowflake and AWS Glue</a></p></li>
+</ul>
+</div>
+</li>
+<li><p><a class="reference internal" href="tables-iceberg-configure-catalog-integration-object-storage.html#label-tables-iceberg-create-cat-int-delta"><span class="std std-ref">Delta table files in object storage</span></a> (<strong>Delta Direct</strong>; see <a class="reference internal" href="../sql-reference/sql/create-iceberg-table-delta"><span class="doc">CREATE ICEBERG TABLE (Delta files in object storage)</span></a>)</p></li>
+<li><p><a class="reference internal" href="tables-iceberg-configure-catalog-integration-object-storage.html#label-tables-iceberg-create-cat-int-iceberg-files"><span class="std std-ref">对象存储中的 Iceberg 元数据文件</span></a></p></li>
+</ul>
+<p>Snowflake 不承担表的任何生命周期管理工作。</p>
+<p>表数据和元数据存储在 Snowflake 使用 <a class="reference internal" href="#label-tables-iceberg-external-volume-def"><span class="std std-ref">外部卷</span></a> 访问的外部云存储中。</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>如果您想为使用外部目录的 Iceberg 表提供全面的 Snowflake 平台支持，则可将其转换为使用 Snowflake 作为目录。有关更多信息，请参阅 <a class="reference internal" href="tables-iceberg-conversion"><span class="doc">转换 Apache Iceberg™ 表以使用 Snowflake 作为目录</span></a>。</p>
+</div>
+<p>下图显示了 Iceberg 表如何使用与外部 Iceberg 目录的目录集成。</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/tables-iceberg-external-catalog.svg"><img alt="使用目录集成的 Iceberg 表的工作原理" height="1049" src="../_images/tables-iceberg-external-catalog.svg" width="1681"/></a>
+</figure>
+</section>
+</section>
+<section id="iceberg-tm-v3-support-preview">
+<h2>Apache Iceberg™ V3 support (<em>Preview</em>)<a class="headerlink" data-nosnippet="" href="#iceberg-tm-v3-support-preview" title="Link to this heading">¶</a></h2>
+
+<p>Support for V3 of the Apache Iceberg™ table specification is now in public preview. For details, see
+<a class="reference internal" href="tables-iceberg-v3-specification-support"><span class="doc">Apache Iceberg™ 表：对 Apache Iceberg™ v3 的支持（预览版）</span></a>.</p>
+</section>
+<section id="considerations-and-limitations">
+<span id="label-tables-iceberg-considerations"></span><h2>注意事项和限制<a class="headerlink" data-nosnippet="" href="#considerations-and-limitations" title="Link to this heading">¶</a></h2>
+<p>以下注意事项和限制适用于 Iceberg 表，并且可能会发生变更：</p>
+<p><strong>云和区域</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Iceberg 表适用于所有 Snowflake 账户、所有云平台和所有区域。</p></li>
+<li><p>支持跨云/跨区域的表。有关更多信息，请参阅 <a class="reference internal" href="#label-tables-iceberg-cross-cloud-support"><span class="std std-ref">跨云/跨区域支持</span></a>。</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Iceberg</strong></p>
+<blockquote>
+<div><ul>
+<li><p>支持 Apache Iceberg 规范的版本 1 和 2，但以下 功能 (https://iceberg.apache.org/spec/) 除外：</p>
+<ul class="simple">
+<li><p>行级相等删除。不过，使用 Snowflake 作为目录的表支持 Snowflake <a class="reference internal" href="../sql-reference/sql/delete"><span class="doc">DELETE</span></a> 语句。</p></li>
+<li><p>使用 <code class="code docutils literal notranslate"><span class="pre">history.expire.min-snapshots-to-keep</span></code> 表属性 (https://iceberg.apache.org/docs/1.2.1/configuration/#table-behavior-properties) 来指定要保留的默认最少快照数量。有关更多信息，请参阅 <a class="reference internal" href="#label-tables-iceberg-snapshots"><span class="std std-ref">元数据和快照</span></a>。</p></li>
+</ul>
+</li>
+<li><p>利用 <code class="code docutils literal notranslate"><span class="pre">bucket</span></code> 转换函数进行的 Iceberg 分区会影响使用条件子句筛选结果的查询的性能。</p></li>
+<li><p>对于不由 Snowflake 管理的 Iceberg 表，请注意以下几点：</p>
+<ul>
+<li><p>只要在快照过期之前定期刷新表，就支持恢复到在创建表后生成的任何快照。</p></li>
+<li><p>不支持转换带有非物化标识分区列的表。当表使用 Parquet 文件中不存在的源列定义身份转换时，将创建非物化身份分区列。</p></li>
+<li><p>对于 <a class="reference internal" href="tables-iceberg-manage.html#label-tables-iceberg-row-level-deletes"><span class="std std-ref">行级删除</span></a>：</p>
+<ul>
+<li><p>Snowflake supports position deletes (https://iceberg.apache.org/spec/#position-delete-files) only for v2 Iceberg tables, and
+deletion vectors (https://iceberg.apache.org/spec/#deletion-vectors)  for v3 Iceberg tables.</p></li>
+<li><p>Snowflake only supports position deletes with externally managed Iceberg tables.</p></li>
+<li><p>为了在使用行级删除时获得最佳读取性能，请执行定期压缩和表维护以删除旧的删除文件。有关信息，请参阅 <a class="reference internal" href="tables-iceberg-manage.html#label-tables-iceberg-manage-external-catalog"><span class="std std-ref">维护使用外部目录的表</span></a>。</p></li>
+<li><p>过多的位置删除（尤其是悬空位置删除）可能会阻碍表的创建和刷新操作。要避免此问题，请执行表维护以删除多余的位置删除。</p>
+<p>使用的表维护方法取决于您的外部 Iceberg 引擎。例如，您可以使用带有 <code class="code docutils literal notranslate"><span class="pre">delete-file-threshold</span></code> 或 <code class="code docutils literal notranslate"><span class="pre">rewrite-all</span></code> 选项的 Spark <code class="code docutils literal notranslate"><span class="pre">rewrite_data_files</span></code> 方法。有关更多信息，请参阅 Apache Iceberg™ 文档中的 rewrite_data_files (https://iceberg.apache.org/docs/latest/spark-procedures/#rewrite_data_files)。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>文件格式</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Iceberg 表支持 Apache Parquet 文件。</p></li>
+<li><p>不支持使用无符号整型逻辑类型的 Parquet 文件。</p></li>
+<li><p>对于使用 <code class="code docutils literal notranslate"><span class="pre">LIST</span></code> 逻辑类型的 Parquet 文件，请注意以下几点：</p>
+<ul>
+<li><p>支持带 <code class="docutils literal notranslate"><span class="pre">element</span></code> 关键字的三级注释结构。有关更多信息，请参阅 ` Parquet 逻辑类型定义 &lt;https://github.com/apache/parquet-format/blob/master/LogicalTypes.md#lists (https://github.com/apache/parquet-format/blob/master/LogicalTypes.md#lists)&gt;`_。如果您的 Parquet 文件使用带 <code class="docutils literal notranslate"><span class="pre">array</span></code> 关键字的过时格式，您必须根据支持的格式重新生成数据。</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>外部卷</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>不得使用存储集成访问外部卷中的云存储位置。</p></li>
+<li><p>必须为创建的每个外部卷配置单独的信任关系。</p></li>
+<li><p>您可以使用 <a class="reference internal" href="private-connectivity-outbound"><span class="doc">出站专用连接</span></a> 访问由 Snowflake 管理的 Iceberg 表和使用目录集成进行对象存储的 Iceberg 表，但不能用于访问使用其他目录集成的 Iceberg 表。</p></li>
+<li><p>创建 Snowflake 管理的表后，即使您重命名表，其在外部存储中文件的路径也 <span class="emph">不会</span> 更改。</p></li>
+<li><p>Snowflake 不支持 S3 桶名称包含句点的外部卷（例如 <code class="docutils literal notranslate"><span class="pre">my.s3.bucket</span></code>）。S3 不支持名称中带句点的虚拟托管样式桶的 SSL，而 Snowflake 使用虚拟托管样式路径和 HTTPS 来访问 S3 中的数据。</p></li>
+</ul>
+</div></blockquote>
+<p><strong>元数据文件</strong></p>
+<blockquote>
+<div><ul>
+<li><p>元数据文件无法识别 Iceberg 表的最新快照。</p></li>
+<li><p>无法使用 ALTER ICEBERG TABLE 命令修改数据文件或快照的位置。要修改这些设置中的任一个，必须使用 CREATE OR REPLACE ICEBERG TABLE 语法重新创建表。</p></li>
+<li><p>使用外部目录的表：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>确保清单文件不包含重复内容。如果在 <em>相同</em> 的快照中存在重复文件，Snowflake 会返回一个包含重复文件路径的错误。</p></li>
+<li><p>如果 Parquet 元数据包含无效的 UTF-8 字符，则无法创建表。确保 Parquet 元数据符合 UTF-8 标准。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Snowflake 可检测在 Snowflake 外生成的 Parquet 元数据中的损坏和不一致，并通过错误消息突显问题。</p>
+<p>即使表元数据不一致，也可以创建、刷新或查询外部管理（或转换）的表。写入 Iceberg 表数据时，确保表元数据统计信息（如 <code class="code docutils literal notranslate"><span class="pre">RowCount</span></code> 或 <code class="code docutils literal notranslate"><span class="pre">NullCount</span></code>）与数据内容相匹配。</p>
+</li>
+<li><p>对于使用 Snowflake 作为目录的表，Snowflake 会单独处理 DDL 语句，且生成元数据的方式可能与其他目录不同。有关更多信息，请参阅 <a class="reference internal" href="tables-iceberg-transactions.html#label-tables-iceberg-transactions-ddl"><span class="std std-ref">DDL 语句</span></a>。</p></li>
+</ul>
+</div></blockquote>
+<p><strong>群集</strong></p>
+<blockquote>
+<div><p><a class="reference internal" href="tables-clustering-keys"><span class="doc">群集</span></a> 支持取决于 Iceberg 表的类型。</p>
+<div class="scrollable-table-wrapper relative group text-sm"><div class="scrollable-table-frame" data-scrollable-table-injected="true"><div class="scrollable-table-scroll-container"><table class="docutils align-default scrollable-table-toggleable" data-table-index="2"><caption class="scrollable-table-caption-generated scrollable-table-caption-bg"></caption>
+<colgroup>
+<col style="width: 50.0%"/>
+<col style="width: 50.0%"/>
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>表类型</p></th>
+<th class="head"><p>备注</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>使用 Snowflake 作为 Iceberg 目录的表</p></td>
+<td><p>使用 CREATE ICEBERG TABLE 或者 ALTER ICEBERG TABLE 命令设置群集密钥。要设置或管理群集密钥，请参阅 <a class="reference internal" href="../sql-reference/sql/create-iceberg-table-snowflake"><span class="doc">CREATE ICEBERG TABLE（使用 Snowflake 作为 Iceberg 目录）</span></a> 和 <a class="reference internal" href="../sql-reference/sql/alter-iceberg-table"><span class="doc">ALTER ICEBERG TABLE</span></a>。</p></td>
+</tr>
+<tr class="row-odd"><td><p>使用外部目录的表</p></td>
+<td><p>不支持群集。</p></td>
+</tr>
+<tr class="row-even"><td><p>转换的表</p></td>
+<td><p>仅当转换表后创建了文件，或者之后使用 DML 语句修改了文件，Snowflake 才会群集文件。</p></td>
+</tr>
+</tbody>
+</table></div><div class="scrollable-table-show-more-fab"><button aria-label="See more" class="codeblock-button scrollable-table-show-more" data-table-index="2" data-tooltip="See more" disabled="" type="button"><svg class="copybutton-icon double-chevron-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 7l5 5 5-5M7 13l5 5 5-5"></path></svg><span class="sr-only">See more</span></button><button aria-label="Show less" class="codeblock-button scrollable-table-show-less" data-table-index="2" data-tooltip="Show less" disabled="" type="button"><svg class="copybutton-icon double-chevron-icon is-up" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 7l5 5 5-5M7 13l5 5 5-5"></path></svg><span class="sr-only">Show less</span></button></div><div class="scrollable-table-toggle-fab"><button aria-expanded="false" aria-label="Expand table" class="codeblock-button scrollable-table-toggle" data-table-index="2" data-tooltip="Expand" type="button"><svg class="copybutton-icon toggle-icon toggle-icon-expand" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 3H21V9"></path><path d="M21 3L14 10"></path><path d="M9 21H3V15"></path><path d="M3 21L10 14"></path></svg><svg class="copybutton-icon toggle-icon toggle-icon-collapse" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 14H10V20"></path><path d="M20 10H14V4"></path><path d="M14 10L21 3"></path><path d="M10 14L3 21"></path></svg><span class="sr-only">Expand</span></button></div><div class="scrollable-table-bottom-fade"></div></div></div>
+</div></blockquote>
+<p><strong>Delta</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Snowflake supports minReaderVersion 3 and can read all tables written by engines that use the latest version of Delta Lake,
+which is 4.0.0. Delta Lake version 4.0.0 includes support for deletion vectors and liquid clustering.</p></li>
+<li><p>从带有分区列的 Delta 表文件创建的 Iceberg 表不支持 Snowflake 流。不过，从 <em>无</em> 分区列的 Delta 文件创建的表支持仅插入流。</p></li>
+<li><p>Iceberg tables created from Delta files that were created before the <a class="reference internal" href="../release-notes/bcr-bundles/2025_04_bundle"><span class="doc">2024_04</span></a> release bundle are not supported in dynamic tables.</p></li>
+<li><p>Snowflake 不支持从 AWS Glue Data Catalog 中的 Delta 表定义创建 Iceberg 表。</p></li>
+</ul>
+<ul class="simple">
+<li><p>不支持使用以下任何功能或数据类型的 Parquet 文件（Delta 表的数据文件）：</p>
+<ul>
+<li><p>字段 IDs。</p></li>
+<li><p>INTERVAL 数据类型。</p></li>
+<li><p>精度高于 38 的 DECIMAL 数据类型。</p></li>
+<li><p>LIST 或 MAP 类型的一级或两级表示。</p></li>
+<li><p>无符号整型 (INT(signed = false))。</p></li>
+<li><p>FLOAT16 数据类型。</p></li>
+</ul>
+</li>
+<li><p>您可以为 TIMESTAMP 使用 Parquet 物理类型 <code class="code docutils literal notranslate"><span class="pre">int96</span></code>，但 Snowflake 不支持为 TIMESTAMP_NTZ 使用 <code class="code docutils literal notranslate"><span class="pre">int96</span></code>。</p></li>
+</ul>
+<ul>
+<li><p>有关 Delta 数据类型和 Iceberg 表的更多信息，请参阅 <a class="reference internal" href="tables-iceberg-data-types.html#label-tables-iceberg-delta-source-data-types"><span class="std std-ref">Delta 数据类型</span></a>。</p></li>
+<li><p>每次您使用 CREATE/ALTER ...REFRESH。如果您的表有超过 1000 个提交文件，您可以进行额外的手动刷新。每次刷新过程都从上一次停止的地方继续进行。</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>Snowflake 在创建 Iceberg 表时使用 Delta 检查点文件。1,000 个提交文件限制只适用于最近一次检查点之后的提交。</p>
+<p>刷新现有表时，Snowflake 会处理 Delta 提交文件，但不会处理检查点文件。如果表维护移除了源 Delta 表的陈旧日志和数据文件，则 Snowflake 中基于 Delta 的 Iceberg 表的刷新频率应高于 Delta 日志和数据文件的保留期。</p>
+</div>
+</li>
+<li><p>The following Delta Lake features aren't currently supported: Row Tracking, change data files, change metadata,
+DataChange, CDC, protocol evolution.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>自动刷新</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>对于在 Snowflake 8.22 版之前创建的目录集成（基于 Delta 表的目录集成对应版本为 9.2 之前），必须先手动设置 <code class="code docutils literal notranslate"><span class="pre">REFRESH_INTERVAL_SECONDS</span></code> 参数，然后才能对依赖于该目录集成的表启用自动刷新。有关说明，请参阅 <a class="reference internal" href="../sql-reference/sql/alter-catalog-integration"><span class="doc">ALTER CATALOG INTEGRATION ... SET AUTO_REFRESH</span></a>。</p></li>
+<li><p>对于 <a class="reference internal" href="tables-iceberg-configure-catalog-integration-object-storage"><span class="doc">对象存储的目录集成</span></a>，只有与 <code class="code docutils literal notranslate"><span class="pre">TABLE_FORMAT</span> <span class="pre">=</span> <span class="pre">DELTA</span></code> 的集成才支持自动刷新。</p></li>
+<li><p>对于频繁更新的表，使用较短的轮询间隔 (<code class="code docutils literal notranslate"><span class="pre">REFRESH_INTERVAL_SECONDS</span></code>) 可能会导致性能下降。</p></li>
+<li><p>Automated refresh synchronizes schema changes alongside <a class="reference internal" href="../sql-reference/sql-dml"><span class="doc">DML</span></a> operations such as INSERT, UPDATE,
+or DELETE. To apply schema changes made through DDL operations alone, perform a <a class="reference internal" href="tables-iceberg-manage.html#label-tables-iceberg-refresh-metadata"><span class="std std-ref">manual refresh</span></a>.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>目录链接数据库和自动表发现</strong></p>
+<blockquote>
+<div><ul>
+<li><p>仅当您使用 Iceberg REST 的目录集成（例如 Snowflake Open Catalog）时才支持。</p></li>
+<li><p>要将自动表发现限制为一组特定的命名空间，请使用 ALLOWED_NAMESPACES 参数。您也可以使用 BLOCKED_NAMESPACES 参数来屏蔽一组命名空间。</p></li>
+<li><p>Snowflake doesn't sync remote catalog access control for users or roles.</p></li>
+<li><p>You can create schemas, externally managed Iceberg tables, or database roles in a catalog-linked database. Creating other Snowflake objects
+isn't currently supported.</p></li>
+<li><p>When you create a catalog-linked database, you can't specify the default Iceberg version or merge-on-read behavior to use for
+Iceberg tables.</p>
+<p>However, you can modify these properties for an existing database by using the <a class="reference internal" href="../sql-reference/sql/alter-database-catalog-linked"><span class="doc">ALTER DATABASE（目录链接）</span></a>
+command to set the following parameters:</p>
+<ul class="simple">
+<li><p>ICEBERG_VERSION_DEFAULT</p></li>
+<li><p>ENABLE_ICEBERG_MERGE_ON_READ</p></li>
+</ul>
+</li>
+<li><p>对于目录链接的数据库中的 Iceberg 表：</p>
+<ul>
+<li><p>Snowflake bidirectionally syncs table and column descriptions between the remote catalog and Snowflake. Sync can
+update a description to a new value, but never replaces a non-empty description with an empty one. Other remote catalog
+table properties, such as retention policies or buffers, aren't copied, and altering table properties isn't currently
+supported.</p></li>
+<li><p>默认情况下，<a class="reference internal" href="tables-iceberg-auto-refresh"><span class="doc">自动刷新</span></a> 处于启用状态。如果外部表的 <code class="docutils literal notranslate"><span class="pre">table-uuid</span></code> 和目录链接的数据库表不匹配，则刷新失败，Snowflake 将该表从目录链接的数据库中删除；Snowflake 不会更改远程表。</p></li>
+<li><p>如果您从远程目录中删除表，Snowflake 会将该表从目录链接的数据库中删除。此操作是异步进行的，因此您可能不会立即在远程目录中看到更改。</p></li>
+<li><p>如果您重命名远程目录中的表，Snowflake 会从目录链接的数据库中删除现有表，并使用新名称创建一个表。</p></li>
+<li><p>Masking policies and tags are supported. Other Snowflake-specific features, including replication and cloning, aren't supported.</p></li>
+<li><p>The character that you choose for the NAMESPACE_FLATTEN_DELIMITER parameter can't appear in your remote namespaces. During the auto discovery process,
+Snowflake skips any namespace that contains the delimiter, and doesn't create a corresponding schema in your catalog-linked database.</p></li>
+<li><p>If you specify anything other than <code class="docutils literal notranslate"><span class="pre">_</span></code>, <code class="docutils literal notranslate"><span class="pre">$</span></code>, or numbers for the NAMESPACE_FLATTEN_DELIMITER parameter,
+you must put the schema name in quotes when you query the table.</p></li>
+<li><p>对于链接到 AWS Glue 的数据库，必须使用小写字母，并将架构、表和列名称用双引号引起来。对于其他仅支持小写标识符的 Iceberg REST 目录，这也是必需的。</p>
+<p>以下示例显示了有效查询：</p>
+<div class="codeblock-wrapper relative group text-sm has-actions-bar"><div class="codeblock-actions-bar"><button aria-label="Copy code" class="codeblock-button scrollable-code-copy" data-codeblock-index="0" data-tooltip="Copy" type="button"><svg class="copybutton-icon icon-copy" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="copybutton-icon icon-copied hidden" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5"></path></svg><span class="sr-only">Copy</span></button><button aria-expanded="false" aria-label="Expand code block" class="codeblock-button scrollable-code-toggle" data-codeblock-index="0" data-tooltip="Expand" type="button"><svg class="copybutton-icon toggle-icon toggle-icon-expand" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 3H21V9"></path><path d="M21 3L14 10"></path><path d="M9 21H3V15"></path><path d="M3 21L10 14"></path></svg><svg class="copybutton-icon toggle-icon toggle-icon-collapse" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 14H10V20"></path><path d="M20 10H14V4"></path><path d="M14 10L21 3"></path><path d="M10 14L3 21"></path></svg><span class="sr-only">Expand</span></button></div><div class="highlight-sqlexample notranslate codeblock-toggleable"><div class="highlight"><pre><span></span><span class="ni">CREATE</span> <span class="ni">SCHEMA</span> <span class="vi">"s1"</span><span class="p">;</span>
+</pre></div>
+</div><div class="codeblock-show-more-fab"><button aria-label="Show less" class="codeblock-button scrollable-code-show-less codeblock-show-less-btn" data-codeblock-index="0" data-tooltip="Show less" disabled="" type="button"><svg class="copybutton-icon double-chevron-icon is-up" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 7l5 5 5-5M7 13l5 5 5-5"></path></svg><span class="sr-only">Show less</span></button><button aria-label="See more" class="codeblock-button scrollable-code-show-more codeblock-show-more-btn" data-codeblock-index="0" data-tooltip="See more" disabled="" type="button"><svg class="copybutton-icon double-chevron-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 7l5 5 5-5M7 13l5 5 5-5"></path></svg><span class="sr-only">See more</span></button></div><div class="codeblock-scroll-top-fab"><button aria-label="Scroll to top" class="codeblock-button scrollable-code-scroll-top" data-codeblock-index="0" data-tooltip="Scroll to top" disabled="" type="button"><svg class="copybutton-icon scroll-top-icon" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="2" viewbox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M11.5 10.5L9 8L6.5 10.5"></path></svg><span class="sr-only">Scroll to top</span></button></div><div class="codeblock-bottom-fade"></div></div>
+<p>以下语句无效，因为它们使用大写字母或省略了双引号：</p>
+<div class="codeblock-wrapper relative group text-sm has-actions-bar"><div class="codeblock-actions-bar"><button aria-label="Copy code" class="codeblock-button scrollable-code-copy" data-codeblock-index="1" data-tooltip="Copy" type="button"><svg class="copybutton-icon icon-copy" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="copybutton-icon icon-copied hidden" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5"></path></svg><span class="sr-only">Copy</span></button><button aria-expanded="false" aria-label="Expand code block" class="codeblock-button scrollable-code-toggle" data-codeblock-index="1" data-tooltip="Expand" type="button"><svg class="copybutton-icon toggle-icon toggle-icon-expand" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 3H21V9"></path><path d="M21 3L14 10"></path><path d="M9 21H3V15"></path><path d="M3 21L10 14"></path></svg><svg class="copybutton-icon toggle-icon toggle-icon-collapse" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 14H10V20"></path><path d="M20 10H14V4"></path><path d="M14 10L21 3"></path><path d="M10 14L3 21"></path></svg><span class="sr-only">Expand</span></button></div><div class="highlight-sqlexample notranslate codeblock-toggleable"><div class="highlight"><pre><span></span><span class="ni">CREATE</span> <span class="ni">SCHEMA</span> <span class="gi">s1</span><span class="p">;</span>
+<span class="ni">CREATE</span> <span class="ni">SCHEMA</span> <span class="vi">"Schema1"</span><span class="p">;</span>
+</pre></div>
+</div><div class="codeblock-show-more-fab"><button aria-label="Show less" class="codeblock-button scrollable-code-show-less codeblock-show-less-btn" data-codeblock-index="1" data-tooltip="Show less" disabled="" type="button"><svg class="copybutton-icon double-chevron-icon is-up" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 7l5 5 5-5M7 13l5 5 5-5"></path></svg><span class="sr-only">Show less</span></button><button aria-label="See more" class="codeblock-button scrollable-code-show-more codeblock-show-more-btn" data-codeblock-index="1" data-tooltip="See more" disabled="" type="button"><svg class="copybutton-icon double-chevron-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 7l5 5 5-5M7 13l5 5 5-5"></path></svg><span class="sr-only">See more</span></button></div><div class="codeblock-scroll-top-fab"><button aria-label="Scroll to top" class="codeblock-button scrollable-code-scroll-top" data-codeblock-index="1" data-tooltip="Scroll to top" disabled="" type="button"><svg class="copybutton-icon scroll-top-icon" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="2" viewbox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M11.5 10.5L9 8L6.5 10.5"></path></svg><span class="sr-only">Scroll to top</span></button></div><div class="codeblock-bottom-fade"></div></div>
+</li>
+<li><p>不支持使用 UNDROP ICEBERG TABLE。</p></li>
+<li><p>Sharing:</p>
+<ul class="simple">
+<li><p>Sharing with a listing isn't currently supported</p></li>
+<li><p>Direct sharing is supported</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>写入目录链接的数据库中的表：</p>
+<ul class="simple">
+<li><p>Creating tables in nested namespaces isn't currently supported.</p></li>
+<li><p>目前不支持写入嵌套命名空间中的表。</p></li>
+<li><p>Position row-level deletes (https://iceberg.apache.org/spec/#row-level-deletes) are supported for tables stored
+on Amazon S3, Azure, or Google Cloud. Row-level deletes with equality delete files aren’t supported. For more information about row-level deletes,
+see <a class="reference internal" href="tables-iceberg-manage.html#label-tables-iceberg-row-level-deletes"><span class="std std-ref">使用行级删除</span></a>. To turn off position deletes, which enable
+running the Data Manipulation Language (DML) operations in copy-on-write mode, set the <code class="code docutils literal notranslate"><span class="pre">ENABLE_ICEBERG_MERGE_ON_READ</span></code> parameter to FALSE at the table, schema, or
+database level.</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>外部托管写入支持</strong></p>
+<blockquote>
+<div><ul>
+<li><p>Snowflake supports externally managed writes for Iceberg tables that use version 2 of the
+Iceberg table specification (https://iceberg.apache.org/spec/).</p></li>
+<li><p>Snowflake 为外部托管的表提供数据定义语言 (DDL) 和数据操作语言 (DML) 命令。但是，您可以使用外部目录和外部存储提供商提供的工具来配置元数据和数据保留。有关更多信息，请参阅 <a class="reference internal" href="tables-iceberg-metadata.html#label-tables-iceberg-metadata-externally-managed"><span class="std std-ref">使用外部目录的表</span></a>。</p>
+<p>对于写入，Snowflake 确保在更新 Snowflake 中的表之前将更改提交到您的远程目录。</p>
+</li>
+<li><p>如果您使用目录链接的数据库，则可以使用带列定义的 CREATE ICEBERG TABLE 语法在 Snowflake <em>和</em> 远程目录中创建表。如果您使用标准的 Snowflake 数据库（未链接到目录），则必须先在远程目录中创建表。之后，您可以使用 <a class="reference internal" href="../sql-reference/sql/create-iceberg-table-rest"><span class="doc">CREATE ICEBERG TABLE（Iceberg REST 目录）</span></a> 语法在 Snowflake 中创建一个 Iceberg 表并将数据写入该表。</p></li>
+<li><p>For the AWS Glue Data Catalog: Dropping an externally managed table through Snowflake doesn't delete
+the underlying table files. This behavior is specific to the AWS Glue Data Catalog implementation.</p></li>
+<li><p>You can't drop an Amazon S3 Table through Snowflake. The Amazon S3 Tables service requires
+the <code class="docutils literal notranslate"><span class="pre">purge</span></code> option to be specified with the DROP command, which Snowflake doesn't currently support.</p></li>
+<li><p>Position row-level deletes (https://iceberg.apache.org/spec/#row-level-deletes) are supported for tables stored on
+Amazon S3, Azure, or Google Cloud. Row-level deletes with equality delete files aren't supported. For more information about row-level deletes,
+see <a class="reference internal" href="tables-iceberg-manage.html#label-tables-iceberg-row-level-deletes"><span class="std std-ref">使用行级删除</span></a>. To turn off position deletes, which enable
+running the DML operations in copy-on-write mode, set the
+<code class="code docutils literal notranslate"><span class="pre">ENABLE_ICEBERG_MERGE_ON_READ</span></code> parameter to FALSE at the table, schema, or database level.</p></li>
+<li><p>不支持对包含以下 Iceberg 数据类型的外部托管表进行写入操作：</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">uuid</span></code></p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">fixed(L)</span></code></p></li>
+</ul>
+</li>
+<li><p>在使用 Snowflake 写入外部托管的 Iceberg 表时，以下功能暂不支持：</p>
+<ul>
+<li><p>Server-side encryption (SSE) for Azure external volumes.</p></li>
+<li><p>多语句事务Snowflake 仅支持自动提交事务。</p></li>
+<li><p>转换为 Snowflake 托管的表。</p></li>
+<li><p>不符合 Iceberg REST 协议的外部 Iceberg 目录。</p></li>
+<li><p>创建表时使用 OR REPLACE 选项。</p></li>
+<li><p>Using the CREATE ICEBERG TABLE (catalog-linked database) ... AS SELECT syntax if you use one of the following catalogs as your remote catalog:</p>
+<ul class="simple">
+<li><p>AWS Glue</p></li>
+<li><p>Databricks Unity Catalog</p></li>
+</ul>
+<p>Alternatively, you can use the <a class="reference internal" href="../sql-reference/sql/create-iceberg-table-rest"><span class="doc">CREATE ICEBERG TABLE（Iceberg REST 目录）</span></a> syntax to create an empty Iceberg table and then use
+an <a class="reference internal" href="../sql-reference/sql/insert"><span class="doc">INSERT INTO ... SELECT</span></a> statement to insert data into the empty table. However, this alternative
+uses two separate transactions, so it doesn't guarantee atomicity.</p>
+</li>
+</ul>
+</li>
+<li><p>要在目录链接数据库中创建架构，请注意以下事项：</p>
+<ul class="simple">
+<li><p>仅当您使用目录链接的数据库时，CREATE SCHEMA 命令才会在远程目录中创建相应的命名空间。</p></li>
+<li><p>不支持 ALTER 和 CLONE 选项。</p></li>
+<li><p>架构名称不支持分隔符。仅支持字母数字架构名称。</p></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>支持跨云/跨区域的表。有关更多信息，请参阅 <a class="reference internal" href="#label-tables-iceberg-cross-cloud-support"><span class="std std-ref">跨云/跨区域支持</span></a>。</p></li>
+<li><p>For Azure cloud storage services: Snowflake only supports externally managed writes for Iceberg tables that use the following services for external storage:</p>
+<ul>
+<li><p>Blob Storage</p></li>
+<li><p>Data Lake Storage Gen2</p>
+
+<p>Connecting Snowflake to Data Lake Storage Gen2 storage by using an external volume is in public preview. This configuration enables externally managed
+writes to catalogs that
+are only configured to use Data Lake Storage, such as Unity Catalog. For more information, see <a class="reference internal" href="tables-iceberg-configure-external-volume-azure"><span class="doc">为 Azure 配置外部卷</span></a></p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>Connecting Snowflake to Data Lake Storage Gen2 storage by using catalog-vended credentials isn't supported.</p>
+</div>
+</li>
+<li><p>General-purpose v1</p></li>
+<li><p>General-purpose v2</p></li>
+<li><p>Microsoft Fabric OneLake</p></li>
+</ul>
+</li>
+<li><p>Sharing:</p>
+<ul class="simple">
+<li><p>Sharing with a listing isn't currently supported.</p></li>
+<li><p>Direct sharing isn’t currently supported.</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>第三方客户端对 Iceberg 数据、元数据的访问</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>第三方客户端无法向使用 Snowflake 作为目录的 Iceberg 表追加、删除或者更新或插入数据。</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Table optimization</strong></p>
+<ul class="simple">
+<li><p>Snowflake doesn't support orphan file deletion for Snowflake-managed Iceberg tables. If you see a mismatch between storage usage for your
+external cloud storage and Snowflake, you might have orphan files in your external cloud storage. To see your storage usage for Snowflake,
+you can use the <a class="reference internal" href="../sql-reference/info-schema/table_storage_metrics"><span class="doc">TABLE_STORAGE_METRICS 视图</span></a> or <a class="reference internal" href="../sql-reference/account-usage/table_storage_metrics"><span class="doc">TABLE_STORAGE_METRICS 视图</span></a>.
+If you see a mismatch, contact <a class="reference external" href="https://docs.snowflake.cn/user-guide/contacting-support">Snowflake Support</a> for assistance with determining whether you have orphan files and removing them.</p></li>
+<li><p>For Snowflake-managed Iceberg tables, if a DML operation fails unexpectedly and rolls back, some Parquet files might get written to your
+external cloud storage but won't be tracked or referenced by your Iceberg table metadata. These Parquet files are orphan files.</p></li>
+</ul>
+<p><strong>External query engines through Snowflake Horizon Catalog</strong></p>
+<p>This section lists the considerations for accessing, querying, and writing to Iceberg tables with an external query engine.</p>
+<p>Consider the following items when you access Iceberg tables with an external query engine:</p>
+<ul>
+<li><p>Iceberg</p>
+<ul class="simple">
+<li><p>For tables in Snowflake:</p>
+<ul>
+<li><p>Only Snowflake-managed Iceberg tables are supported.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Listings:</p>
+<ul class="simple">
+<li><p>Iceberg tables that you share through <a class="reference internal" href="../collaboration/provider-listings-auto-fulfillment"><span class="doc">auto-fulfillment for listings</span></a> aren't
+accessible through the consumer account's Horizon Iceberg REST Catalog API.</p></li>
+</ul>
+</li>
+<li><p>Network and private connectivity:</p>
+<ul class="simple">
+<li><p>Using network policies that are set at the user level isn't supported with this feature.</p></li>
+<li><p>For <a class="reference internal" href="network-rules.html#label-snowflake-managed-network-rules"><span class="std std-ref">Snowflake 管理的网络规则</span></a>, egress IP addresses that are static aren't supported.</p></li>
+<li><p>Explicitly granting the Horizon Catalog endpoint access to your storage accounts isn't supported. We recommend that you use private connectivity for
+secure connectivity from external engines to Horizon Catalog and from Horizon Catalog to your storage account.</p></li>
+</ul>
+</li>
+<li><p>Clouds:</p>
+<ul>
+<li><p>Commercial: This feature is only supported for Snowflake-managed Iceberg tables that are stored on Amazon S3, Google Cloud, or Microsoft Azure for
+all commercial cloud regions. S3-compatible non-AWS storage isn't yet supported.</p></li>
+<li><p>FedRAMP (Moderate): This feature is supported for Snowflake-managed Iceberg tables that are stored on FedRAMP (Moderate) deployments
+on AWS Commercial Gov (US) in the us-east-1 and us-west-2 regions.</p></li>
+<li><p>For Iceberg tables stored on Amazon S3:</p>
+<ul>
+<li><p>If you want to use SSE-KMS encryption, contact customer support or your account team for assistance with enabling access.</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>Writing to KMS-encrypted external volumes is not supported.</p>
+</div>
+</li>
+</ul>
+</li>
+<li><p>For Iceberg tables stored on Azure:</p>
+<ul class="simple">
+<li><p>Azure Virtual Network (VNet) isn't supported.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Authentication:</p>
+<ul class="simple">
+<li><p>For key-pair authentication, key-pair rotation isn't supported.</p></li>
+<li><p>Workload identity federation isn't supported with this feature.</p></li>
+</ul>
+</li>
+</ul>
+<p>Consider the following items when you query (read) Iceberg tables with an external query engine:</p>
+<ul>
+<li><p>Iceberg</p>
+<ul>
+<li><p>Querying the following tables isn't supported:</p>
+<ul class="simple">
+<li><p>Remote tables</p></li>
+<li><p>Snowflake native tables</p></li>
+<li><p>Externally managed Iceberg tables including Delta-based Iceberg tables and
+Snowflake-managed Iceberg tables that you loaded with data from Iceberg-compatible Parquet data files by using the COPY INTO table command</p></li>
+</ul>
+</li>
+<li><p>Reading Iceberg v2 tables is supported.</p></li>
+<li><p>Reading Iceberg V3 tables (public preview) is supported for the following capabilities:</p>
+<ul class="simple">
+<li><p>Variant data type</p></li>
+<li><p>Row lineage</p></li>
+</ul>
+<p>All other Iceberg V3 capabilities, including default values and the geography data type, aren't supported.</p>
+</li>
+</ul>
+</li>
+<li><p>Access control:</p>
+<ul>
+<li><p>Tables protected by the following fine-grained data policies can be accessed over Apache Spark™ through Snowflake Horizon Catalog:</p>
+<ul class="simple">
+<li><p>Masking policies</p></li>
+<li><p>Tag-based masking policies</p></li>
+<li><p>Row access policies</p></li>
+</ul>
+<p>For more information, see <a class="reference internal" href="tables-iceberg-query-using-external-query-engine-snowflake-horizon-enforce-access-policies"><span class="doc">从 Apache Spark™ 查询 Apache Iceberg™ 表时强制执行数据保护策略</span></a>.</p>
+</li>
+</ul>
+</li>
+<li><p>Cloned and converted tables:</p>
+<ul class="simple">
+<li><p>Reading cloned or converted tables is not supported with vended credentials. To read these tables, use direct access to object
+storage.</p></li>
+</ul>
+</li>
+</ul>
+<p>Consider the following items when you write to Iceberg tables with an external query engine:</p>
+
+<ul>
+<li><p>Table operations:</p>
+<ul>
+<li><p>You can't specify a base location with your CREATE TABLE statement.</p>
+<p>When you create a Snowflake-managed table without specifying a base location, Snowflake constructs the following path for your table:
+<code class="samp docutils literal notranslate"><span class="pre">STORAGE_BASE_URL/</span><em><span class="pre">database</span></em><span class="pre">/</span><em><span class="pre">schema</span></em><span class="pre">/</span><em><span class="pre">table_name</span></em><span class="pre">.</span><em><span class="pre">randomId</span></em><span class="pre">/[data</span> <span class="pre">|</span> <span class="pre">metadata]/</span></code></p>
+</li>
+<li><p>CREATE TABLE AS SELECT (CTAS) from an external engine is not supported.</p></li>
+<li><p>Equality deletes aren't supported.</p></li>
+<li><p>You can't write to tables by using row-level deletes; only copy-on-write mode is supported.</p></li>
+<li><p>Creating Iceberg tags and branches isn't supported.</p></li>
+<li><p>The external engine writes are supported only on Iceberg version 2; writing to Iceberg version 3 (v3)
+tables (public preview) is not currently supported.</p></li>
+<li><p>Writing to KMS-encrypted external volumes is not supported.</p></li>
+<li><p>Writing to dynamic tables in Snowflake isn't supported.</p></li>
+<li><p>Writing to shared Iceberg tables isn't supported.</p></li>
+<li><p>Registering Iceberg tables isn't supported.</p></li>
+</ul>
+</li>
+<li><p>Maintenance operations</p>
+<ul class="simple">
+<li><p>You can't roll back a table to a previous snapshot.</p></li>
+<li><p>The snapshot expiration operation isn't supported.</p></li>
+<li><p>You can't upgrade an Iceberg table from v2 to v3.</p></li>
+</ul>
+</li>
+<li><p>Cloned and converted tables:</p>
+<ul class="simple">
+<li><p>Writing to cloned or converted tables is not supported with vended credentials. To write to these tables, connect your external query
+engine directly to the object storage where your tables are stored.</p></li>
+<li><p>You can't write to an Iceberg table that was converted from externally managed to Snowflake managed.</p></li>
+</ul>
+</li>
+<li><p>Streams:</p>
+<ul class="simple">
+<li><p>On Iceberg V2 tables, copy-on-write operations cause standard streams to represent an updated or relocated row as a DELETE record followed
+by an INSERT record for the same row.</p></li>
+</ul>
+</li>
+<li><p>Fine-grained access control policies:</p>
+<ul class="simple">
+<li><p>Writing to tables that have fine-grained access control policies or tags isn't supported.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Native App Framework</strong></p>
+<blockquote>
+<div><p>You can share Iceberg tables with consumers through the
+<a class="reference internal" href="../developer-guide/native-apps/native-apps-about"><span class="doc">Snowflake Native App Framework</span></a>.
+Be aware of the following restrictions:</p>
+<ul class="simple">
+<li><p>Iceberg tables shared through a Native App are read-only for consumers.</p></li>
+<li><p>Cross-Cloud Auto-Fulfillment is not supported for apps that share Iceberg tables.</p></li>
+<li><p>Consumers must explicitly enable the <code class="docutils literal notranslate"><span class="pre">EXTERNAL_DATA</span></code> restricted feature to the app
+before it can resolve Iceberg tables. For more information, see
+<a class="reference internal" href="../developer-guide/native-apps/requesting-external-tables"><span class="doc">请求访问外部表和 Apache Iceberg™ 表</span></a>.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>不支持的功能</strong></p>
+<blockquote>
+<div><p>所有 Iceberg 表目前不支持以下 Snowflake 功能：</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../sql-reference/collation"><span class="doc">排序规则</span></a></p></li>
+<li><p><a class="reference internal" href="data-failsafe"><span class="doc">故障安全</span></a></p></li>
+<li><p><a class="reference internal" href="tables-hybrid"><span class="doc">混合表</span></a></p></li>
+<li><p>Snowflake 加密</p></li>
+<li><p><a class="reference internal" href="data-load-schema-evolution"><span class="doc">Snowflake 架构演化</span></a></p></li>
+<li><p><span class="xref std std-doc">使用 :doc:</span>/sql-reference/stored-procedures/associate_semantic_category_tags` 存储过程标记 &lt;/user-guide/object-tagging/introduction&gt;`</p></li>
+<li><p><a class="reference internal" href="tables-temp-transient"><span class="doc">临时表和瞬态表</span></a></p></li>
+</ul>
+<p>外部托管的 Iceberg 表不支持以下功能：</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="tables-storage-considerations.html#label-cloning-tables"><span class="std std-ref">克隆</span></a></p></li>
+<li><p><a class="reference internal" href="tables-clustering-micropartitions"><span class="doc">群集</span></a></p></li>
+<li><p>标准和仅追加 <a class="reference internal" href="streams-intro"><span class="doc">流</span></a>。支持仅插入流。</p></li>
+<li><p><a class="reference internal" href="account-replication-intro"><span class="doc">复制</span></a> Iceberg 表、外部卷或目录集成。</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+
+</article><footer class="mt-24 mb-12 print:hidden"><div class="mb-8"><div class="flex"><p class="mr-4 text-primary">此页面是否有帮助？</p><button class="button-primary-bg rounded-md button-primary-text py-1 px-3 text-sm mr-2"><svg aria-hidden="true" class="svg-inline--fa fa-thumbs-up pr-2" data-icon="thumbs-up" data-prefix="fas" focusable="false" role="img" viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2l144 0c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48l-97.5 0c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3l0-38.3 0-48 0-24.9c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192l64 0c17.7 0 32 14.3 32 32l0 224c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32L0 224c0-17.7 14.3-32 32-32z" fill="currentColor"></path></svg>是</button><button class="button-primary-bg rounded-md button-primary-text py-1 px-3 text-sm"><svg aria-hidden="true" class="svg-inline--fa fa-thumbs-down pr-2" data-icon="thumbs-down" data-prefix="fas" focusable="false" role="img" viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M313.4 479.1c26-5.2 42.9-30.5 37.7-56.5l-2.3-11.4c-5.3-26.7-15.1-52.1-28.8-75.2l144 0c26.5 0 48-21.5 48-48c0-18.5-10.5-34.6-25.9-42.6C497 236.6 504 223.1 504 208c0-23.4-16.8-42.9-38.9-47.1c4.4-7.3 6.9-15.8 6.9-24.9c0-21.3-13.9-39.4-33.1-45.6c.7-3.3 1.1-6.8 1.1-10.4c0-26.5-21.5-48-48-48l-97.5 0c-19 0-37.5 5.6-53.3 16.1L202.7 73.8C176 91.6 160 121.6 160 153.7l0 38.3 0 48 0 24.9c0 29.2 13.3 56.7 36 75l7.4 5.9c26.5 21.2 44.6 51 51.2 84.2l2.3 11.4c5.2 26 30.5 42.9 56.5 37.7zM32 384l64 0c17.7 0 32-14.3 32-32l0-224c0-17.7-14.3-32-32-32L32 96C14.3 96 0 110.3 0 128L0 352c0 17.7 14.3 32 32 32z" fill="currentColor"></path></svg>否</button></div></div><div class="flex justify-center gap-x-60 border-t border-b py-4"><div class="flex items-center text-card-description gap-3"><svg class="fill-gray-70 dark:fill-gray-55" fill="none" height="16" viewbox="0 0 19 19" width="16" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M6.08044 9.85246C6.11896 9.72629 6.13502 9.59631 6.13211 9.46798C6.12767 9.37501 6.11608 9.28222 6.09067 9.18929C6.01427 8.90076 5.83329 8.64297 5.56208 8.48046L1.70485 6.16593C1.16033 5.84021 0.466142 6.03386 0.153636 6.59893C-0.161893 7.16313 0.0242153 7.88369 0.568731 8.21023L2.72417 9.50569L0.568731 10.7976C0.0242153 11.1247 -0.161236 11.8454 0.153636 12.4119C0.466142 12.9754 1.16033 13.1682 1.70485 12.8425L5.56208 10.5264C5.82238 10.3707 5.99903 10.1266 6.08044 9.85246ZM7.12726 12.0214C6.90562 12.0017 6.6752 12.0501 6.46792 12.1756L2.60777 14.4886C2.0647 14.815 1.87925 15.5394 2.19267 16.1046C2.50755 16.6683 3.20108 16.8624 3.74335 16.5344L5.90603 15.2381V17.8285C5.90603 18.4812 6.41412 19.01 7.04293 19.01C7.66872 19.01 8.17841 18.4812 8.17841 17.8285V13.1976C8.17841 12.5758 7.71463 12.0652 7.12726 12.0214ZM11.0804 6.98844C11.3013 7.00744 11.5311 6.95837 11.7384 6.83439L15.5977 4.51919C16.1416 4.19265 16.3261 3.47126 16.0135 2.90459C15.7002 2.34051 15.006 2.14697 14.4629 2.47323L12.3017 3.77112V1.17982C12.3017 0.528953 11.7936 0 11.1648 0C10.536 0 10.0292 0.528953 10.0292 1.17982V5.81081C10.0292 6.43187 10.4917 6.94335 11.0804 6.98844ZM2.60777 4.51919L6.46792 6.83439C6.6752 6.95837 6.90562 7.00744 7.12726 6.98844C7.71463 6.94335 8.17841 6.43187 8.17841 5.81081V1.17982C8.17841 0.528953 7.66872 0 7.04293 0C6.41412 0 5.90603 0.528953 5.90603 1.17982V3.77112L3.74335 2.47323C3.20108 2.14697 2.50755 2.34051 2.19267 2.90459C1.87925 3.47126 2.0647 4.19265 2.60777 4.51919ZM9.86206 9.49596C9.86206 9.42874 9.82287 9.33499 9.7771 9.28524L9.31254 8.80465C9.26677 8.75722 9.17654 8.71787 9.11169 8.71787H9.09367C9.02896 8.71787 8.93888 8.75722 8.89375 8.80465L8.42922 9.28524C8.38267 9.33499 8.34703 9.42874 8.34703 9.49596V9.51486C8.34703 9.58126 8.38267 9.67419 8.42922 9.7226L8.89375 10.2045C8.93952 10.2521 9.02896 10.2913 9.09367 10.2913H9.11169C9.17654 10.2913 9.26677 10.2521 9.31254 10.2045L9.7771 9.7226C9.82287 9.67419 9.86206 9.58126 9.86206 9.51486V9.49596ZM11.1444 9.95821L9.54007 11.6234C9.49416 11.6723 9.40553 11.7124 9.33873 11.7124H9.22231H8.98529H8.86692C8.8021 11.7124 8.71198 11.6723 8.66543 11.6234L7.06187 9.95821C7.01596 9.91134 6.97889 9.81703 6.97889 9.75047V9.62732V9.38104V9.25953C6.97889 9.19145 7.01596 9.09702 7.06187 9.04944L8.66543 7.3844C8.71198 7.33536 8.8021 7.29679 8.86692 7.29679H8.98529H9.22231H9.33873C9.40408 7.29679 9.49416 7.33536 9.54007 7.3844L11.1444 9.04944C11.1902 9.09702 11.2273 9.19145 11.2273 9.25953V9.38104V9.62732V9.75047C11.2273 9.81703 11.1902 9.91134 11.1444 9.95821ZM15.5977 14.4886L11.7384 12.1756C11.5311 12.0501 11.3013 12.0017 11.0804 12.0214C10.4917 12.0652 10.0292 12.5758 10.0292 13.1976V17.8285C10.0292 18.4812 10.536 19.01 11.1648 19.01C11.7936 19.01 12.3017 18.4812 12.3017 17.8285V15.2381L14.4629 16.5344C15.0059 16.8624 15.7002 16.6683 16.0135 16.1046C16.3261 15.5394 16.1416 14.815 15.5977 14.4886ZM17.6383 8.21023L15.4828 9.50569L17.6383 10.7976C18.1828 11.1247 18.3689 11.8454 18.0541 12.4119C17.74 12.9754 17.0452 13.1682 16.5028 12.8425L12.6426 10.5264C12.3852 10.3707 12.2065 10.1266 12.1272 9.85246C12.0894 9.72629 12.0719 9.59631 12.0763 9.46798C12.0785 9.37501 12.0915 9.28222 12.1162 9.18929C12.1935 8.90076 12.3745 8.64308 12.6426 8.48046L16.5028 6.16593C17.0452 5.84021 17.74 6.03386 18.0541 6.59893C18.3689 7.16313 18.1828 7.88369 17.6383 8.21023Z" fill-rule="evenodd"></path></svg><a class="mx-1 hover:underline hover:text-primary" href="https://www.snowflake.cn" rel="noreferrer" target="_blank">访问 Snowflake</a></div><div class="flex items-center text-card-description gap-3"><svg class="stroke-gray-70 dark:stroke-gray-55" fill="none" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7.99999 6.09338L8.39332 6.92672L9.27332 7.06672L8.63999 7.71338L8.78665 8.64005L7.99999 8.20005L7.21332 8.64005L7.35999 7.71338L6.72665 7.06672L7.60665 6.92672L7.99999 6.09338Z" fill="#5D6A85"></path><path d="M11.82 6.09338L12.2133 6.92672L13.0933 7.06672L12.4533 7.71338L12.6067 8.64005L11.82 8.20005L11.0333 8.64005L11.18 7.71338L10.5467 7.06672L11.4267 6.92672L11.82 6.09338Z" fill="#5D6A85"></path><path d="M4.18001 6.09338L4.57334 6.92672L5.45334 7.06672L4.82001 7.71338L4.96668 8.64005L4.18001 8.20005L3.39334 8.64005L3.54668 7.71338L2.90668 7.06672L3.78668 6.92672L4.18001 6.09338Z" fill="#5D6A85"></path><path d="M1 5.45339V9.27339C1 9.6111 1.13415 9.93497 1.37295 10.1738C1.61175 10.4126 1.93562 10.5467 2.27333 10.5467H6.72667L8 11.8201L9.27333 10.5467H13.7267C14.0644 10.5467 14.3883 10.4126 14.6271 10.1738C14.8658 9.93497 15 9.6111 15 9.27339V5.45339C15 5.11568 14.8658 4.7918 14.6271 4.553C14.3883 4.31421 14.0644 4.18005 13.7267 4.18005H2.27333C1.93562 4.18005 1.61175 4.31421 1.37295 4.553C1.13415 4.7918 1 5.11568 1 5.45339Z" stroke-miterlimit="10" stroke-width="1.5"></path></svg><a class="mx-1 hover:underline hover:text-primary" href="/feedback">分享您的反馈</a></div></div><div class="pt-8 md:flex justify-between"><div class="flex space-x-4 text-xs mb-4 md:mb-0 text-secondary"><a class="hover:text-primary hover:underline" href="https://www.snowflake.cn/legal/privacy-policy.pdf">隐私策略</a><a class="hover:text-primary hover:underline" href="https://www.snowflake.cn/legal/terms-of-service.pdf">服务条款</a><div class="flex space-x-4"><span>© <!-- -->2026<!-- --> Snowflake <!-- -->保留所有权利<!-- -->.</span><span>@北京神州数码云计算有限公司版权所有.</span></div></div></div></footer></div><aside class="w-full xl:w-64 text-sm xl:sticky xl:top-8 xl:pb-32 block xl:pl-8 max-h-[calc(100vh-107px)] overflow-y-auto mb-4 md:mb-0 print:hidden"><div class="mb-4 md:mb-8 onthispage border md:border-0 rounded-md px-3 py-2 md:p-0" role="complementary"><label for="on-this-page-checkbox"><div class="flex items-center"><div class="block md:hidden mr-2"><svg aria-hidden="true" class="svg-inline--fa fa-caret-right" data-icon="caret-right" data-prefix="fas" focusable="false" role="img" viewbox="0 0 256 512" xmlns="http://www.w3.org/2000/svg"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z" fill="currentColor"></path></svg></div><p class="font-semibold text-header">在此页上</p></div></label><input class="peer hidden" id="on-this-page-checkbox" type="checkbox"/><ol class="hidden peer-checked:block md:block"><li class="my-3 break-words hover:underline"><a href="#getting-started">开始使用</a></li><li class="my-3 break-words hover:underline"><a href="#how-it-works">工作原理</a></li><li class="my-3 break-words hover:underline pl-4 opacity-80"><a href="#data-storage">数据存储</a></li><li class="my-3 break-words hover:underline pl-4 opacity-80"><a href="#catalog">目录</a></li><li class="my-3 break-words hover:underline pl-4 opacity-80"><a href="#metadata-and-snapshots">元数据和快照</a></li><li class="my-3 break-words hover:underline pl-4 opacity-80"><a href="#cross-cloud-cross-region-support">跨云/跨区域支持</a></li><li class="my-3 break-words hover:underline pl-4 opacity-80"><a href="#billing">计费</a></li><li class="my-3 break-words hover:underline"><a href="#catalog-options">目录选项</a></li><li class="my-3 break-words hover:underline pl-4 opacity-80"><a href="#use-snowflake-as-the-catalog">使用 Snowflake 作为目录</a></li><li class="my-3 break-words hover:underline pl-4 opacity-80"><a href="#use-an-external-catalog">使用外部目录</a></li><li class="my-3 break-words hover:underline"><a href="#iceberg-tm-v3-support-preview">Apache Iceberg™ V3 support (Preview)</a></li><li class="my-3 break-words hover:underline"><a href="#considerations-and-limitations">注意事项和限制</a></li></ol></div><div class="mb-8 border md:border-0 rounded-md px-3 py-2 md:p-0"><label for="related-topics-checkbox"><div class="flex items-center"><div class="block md:hidden mr-2"><svg aria-hidden="true" class="svg-inline--fa fa-caret-right" data-icon="caret-right" data-prefix="fas" focusable="false" role="img" viewbox="0 0 256 512" xmlns="http://www.w3.org/2000/svg"><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z" fill="currentColor"></path></svg></div><p class="font-semibold text-header">相关内容</p></div></label><input class="peer hidden" id="related-topics-checkbox" type="checkbox"/><ol class="hidden peer-checked:block md:block"><li class="my-2 hover:underline"><a href="/user-guide/tables-iceberg-configure-external-volume">配置外部卷</a></li><li class="my-2 hover:underline"><a href="/user-guide/tables-iceberg-configure-catalog-integration">配置目录集成</a></li><li class="my-2 hover:underline"><a href="/user-guide/tables-iceberg-create">在 Snowflake 中创建 Apache Iceberg™ 表</a></li><li class="my-2 hover:underline"><a href="/user-guide/tables-iceberg-manage">管理 Apache Iceberg™ 表</a></li></ol></div></aside></div></div></main>
+</div>
+</article>
+</body>
+</html>
