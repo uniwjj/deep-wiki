@@ -40,3 +40,4 @@ updated: 2026-05-18
 - [[agent-harness-overview]] — Harness 综述
 - [[agent-architecture-patterns]] — 架构模式
 - [[claude-code-harness]] — Claude Code Harness
+- [[ai-native-team-refactor]] — 重构协同（AI Native 团队）：角色专业深度决定面对 AI 产出能做哪一层的专业判断

@@ -3,9 +3,9 @@ title: 数字员工
 description: AI Agent 作为数字员工的概念、生态与演进趋势
 aliases: [digital-employee, Digital Employee, 数字员工]
 tags: [ai-agent, concept]
-sources: [2026/05/10/lint-stub.md]
+sources: [2026/05/10/lint-stub.md, "2026/09/07/重构协同：关于AI Native团队的思考.html"]
 created: 2026-05-14
-updated: 2026-05-14
+updated: 2026-09-07
 status: draft
 ---
 
@@ -25,7 +25,12 @@ status: draft
 - 调用企业系统与数据
 - 人类-数字员工协作模式
 
+## 协同形态视角：跳出数字员工本身（2026-09 补充）
+
+天猫技术团队书牧在《重构协同：关于AI Native团队的思考》中对"数字员工"方案提出批评性视角：公司内已有不少数字员工方向的探索（Aone 团队的 Devix、Qteam 团队的 Qoder 系列、企业智能的数字员工账号、ideawork 等），但都还不完善、属于探索阶段。**现在很多号称"数字员工"的方案，应该跳出数字员工本身，核心把重心放在 Agent 和人的协同形态上**——数字员工对应的是协同形态中"参与者"这一个概念（空间里的人类成员和各类 Agent，关联技能和知识），而不是全部；完整的协同形态还包括业务空间、任务、频道、产物与知识底座等概念雏形，见 [[ai-native-team-refactor]]。
+
 ## 相关页面
 
 - [[openclaw]] — 自托管 AI Agent 网关，从个人助手到数字员工原型
 - [[claude-managed-agents]] — 托管式 Agent 部署
+- [[ai-native-team-refactor]] — "数字员工方案应跳出本身、聚焦 Agent 与人的协同形态"的出处文章

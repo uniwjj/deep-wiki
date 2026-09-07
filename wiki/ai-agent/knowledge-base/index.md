@@ -5,17 +5,19 @@ aliases: [knowledge-base, 知识库索引]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-07-22
+updated: 2026-09-07
 ---
 
 # 知识库与 RAG
 
-AI 驱动的知识库方案与 RAG 技术，共 18 篇。
+AI 驱动的知识库方案与 RAG 技术，共 22 篇。
 
 ## 范式总览
 
 - [[knowledge-retrieval-paradigms]] — 知识检索三代范式（RAG/GraphRAG/LLM Wiki）
 - [[rag-vs-llm-wiki]] — RAG vs LLM Wiki 对比（Karpathy 五代演进视角）
+- [[legacy-business-knowledge-foundation]] — 存量业务的知识底座：知识五分类、权威事实来源锚定、三个坎（2026-09 天猫技术团队观点文章）
+- [[software-as-crystallized-knowledge]] — 软件是被固化的知识：TBox/ABox 视角下软件与知识底座的关系（2026-09 同源文章）
 
 ## 本体与语义层
 

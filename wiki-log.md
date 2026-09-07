@@ -1093,3 +1093,13 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `meta-jit-testing` — 相关页面新增业界对比互链
 - updated `agent-skill-test-case` — 相关页面新增跨部门实践互链
 - run `llm-wiki sync`
+
+## [2026-09-07] ingest | 重构协同：关于AI Native团队的思考（天猫技术团队 书牧，微信公众号 2026-08-14）
+- saved sources/2026/09/07/重构协同：关于AI Native团队的思考.html + images（12 张，img-03 对比图/img-05 三层架构图/img-09 知识分类表已视觉复核）+ .md sidecar
+- created `ai-native-team-refactor` — 主页面：单点提效/全局低效诊断、消费侧/生产侧二分、串联者从人换成 Agent（AI辅助 vs AI Native 判定）、知识底座+Agent+人 三层闭环、协同工具概念雏形（业务空间/参与者/任务/频道/产物/知识底座）、知识底座是瓶颈协同工具是基建、遮羞布结论
+- created `software-as-crystallized-knowledge` — 软件是被固化的知识：TBox/ABox 拆解、软件产品非必需品、AI Coding=固化动作、交付物从软件转向知识/Skill
+- created `legacy-business-knowledge-foundation` — 存量业务的知识底座：知识五分类表（业务/产品/技术/运行数据/经验知识 × 事实来源 × 落地难度）、锚定权威事实来源、三个坎、粒度边界与组织结构
+- updated `digital-employee` — 新增"协同形态视角"节：数字员工方案应跳出本身、聚焦 Agent 与人的协同形态
+- updated `architect-in-agent-era` — 相关页面互链（专业判断力与角色专业深度）
+- updated `ai-agent/knowledge-base/index`、`ai-agent/ecosystem/index` — 收录新页并修正篇数
+- run `llm-wiki sync`

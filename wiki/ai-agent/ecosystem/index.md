@@ -5,12 +5,12 @@ aliases: [ecosystem, Agent 生态]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-05-29
+updated: 2026-09-07
 ---
 
 # 工具生态与趋势
 
-AI Agent 工具生态与趋势分析，共 15 篇。
+AI Agent 工具生态与趋势分析，共 30 篇。
 
 ## 编程工具
 
@@ -54,6 +54,7 @@ AI Agent 工具生态与趋势分析，共 15 篇。
 
 - [[architect-in-agent-era]] — Agent 时代架构师
 - [[ai-career-trends]] — AI 职业趋势
+- [[ai-native-team-refactor]] — 重构协同——AI Native 团队的思考：串联者从人换成 Agent，「知识底座+Agent+人」三层闭环（2026-09 天猫技术团队观点文章）
 
 ## 相关页面
 
