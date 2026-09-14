@@ -125,3 +125,4 @@ Superpowers 则是**执行方法论**工具，与两者互补——无论选哪�
 - [[sdd-openspec-superpowers]] — SDD 双框架原始对比
 - [[superpowers-vs-openspec]] — 个体效率 vs 团队一致性哲学对决
 - [[progressive-spec-methodology]] — 渐进式 Spec 方法论
+- [[ai-plus-software-action-plan]] — 政策侧背景：方案（一）提出发展"智能体驱动的智能编程工具"、提升项目级全流程自主开发能力

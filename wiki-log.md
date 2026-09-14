@@ -1103,3 +1103,17 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `architect-in-agent-era` — 相关页面互链（专业判断力与角色专业深度）
 - updated `ai-agent/knowledge-base/index`、`ai-agent/ecosystem/index` — 收录新页并修正篇数
 - run `llm-wiki sync`
+
+## [2026-09-14] ingest | 工信部「人工智能+软件」专项行动实施方案 + 新闻发布会（微信公众号「工信微报」，2026-09-11）
+- 来源 1：https://mp.weixin.qq.com/s?__biz=MjM5OTUwMTc2OA==&mid=2650959130&idx=1&sn=683318ec504936bf4060c9f77687c6f5 《工信部印发《"人工智能+软件"专项行动实施方案》》2026-09-11 08:31 —— 政策全文（工信部信发〔2026〕209号，2026-09-02 印发），八章十九项措施
+- 来源 2：https://mp.weixin.qq.com/s/ln2cCkJccKf7vXpim3AHJg 《工信部举行《"人工智能+软件"专项行动实施方案》新闻发布会》2026-09-11 11:36 —— 发布会实录，九家媒体答记者问
+- 下载方式：Chrome headless --dump-dom（web_fetch 不可用于微信）→ #js_content 平衡提取 → 剥离微信页面外壳（script/data-*/framework CSS 全清）→ 注入基础 CSS 与 code-snippet 高亮；2 个 HTML 各留 677px 桌面宽度排版，截图复核渲染正常
+- added `sources/2026/09/14/`：2 个自包含 HTML + 2 个同名 .md sidecar + 2 个图片目录（7 + 2 张，图片已本地化为相对路径），9 张图片全部逐图视觉复核（1 张题头装饰 gif、5 张发布会人像/合影、2 张公众号二维码卡片；均无图表/架构图等正文外文字信息，无信息损失）
+- created `ai-plus-software-action-plan` — 政策原文要点：2028（2 万家规上企业/100 项技改/100 个智能体标杆应用/5 个以上优质开源项目）与 2030 两阶段目标、六大任务十九项措施逐条、组织保障
+- created `ai-plus-software-press-conference` — 发布会解读：软件产业三大变革判断（生产方式/产品形态/服务模式）、产业数据（2025 营收 15.48 万亿与 6.2 倍/15.1%、日均词元 500 万亿、AtomGit 8 万模型 37 万数据集 1200 万用户、OpenLET 10 万分钟真机数据）、智能编程置于首位的三点理由、工业软件 AI辅助 vs AI原生 两条路径、智能体软件官方定义与三层次、算力/数据/标准三支撑、就业与人才结构双向变化（FDE、编码能力权重下降）、发展与安全两环节
+- updated `ai-career-trends` — 新增"官方侧判断：软件人才能力结构与岗位结构的双向变化"节（能力结构三点 + 岗位结构两方向 + 官方"非等量置换"判断），补 sources 与 updated
+- updated `ai-agent/ecosystem/index` — 新增"产业政策"分类收录两页，修正篇数 30→32
+- updated `ai-agent/index` — 修正子领域表全部篇数为实际值（claude-code 37/data-agent 43/agent-core 42/sdd 22/knowledge-base 22/harness 16/test-agent 9/context-eng 4/ecosystem 31），ecosystem 行补产业政策说明
+- updated `agentic-skills`、`agent-skills-system`、`ai-agent-security`、`agent-multi-agent-collaboration`、`software-as-crystallized-knowledge`、`ai-governance`、`ai-programming-tools-comparison`、`ai-native-team-refactor`、`architect-in-agent-era`、`digital-employee` — 相关页面互链（政策侧印证/要求/呼应）
+- 复核记录：初稿曾把方案（四）与发布会的"模型原生"增补关系写反（实为发布会比方案多"模型原生"）；"人工编写→人机协同/被动响应→主动执行/产品交付→价值交付"三条转变经全文检索确认**仅见于发布会**、方案原文无此提法，已按原文修正表述并标注出处
+- run `llm-wiki sync`

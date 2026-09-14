@@ -34,3 +34,4 @@ status: draft
 - [[openclaw]] — 自托管 AI Agent 网关，从个人助手到数字员工原型
 - [[claude-managed-agents]] — 托管式 Agent 部署
 - [[ai-native-team-refactor]] — "数字员工方案应跳出本身、聚焦 Agent 与人的协同形态"的出处文章
+- [[ai-plus-software-press-conference]] — 政策语境：智能体软件作为软件新形态的官方定义与培育路径

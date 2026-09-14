@@ -36,3 +36,4 @@ Anthropic 观察到大型组织的 AI 编码工具落地通常涉及：
 - [[claude-code-large-codebase]] — 组织级落地模式
 - [[token-consumption-economics]] — Token 消耗经济学中的治理考量
 - [[obsidian-claudian]] — 跨模型记忆与数据主权
+- [[ai-plus-software-action-plan]] — 政策侧要求：智能体安全管理规范、AI 生成代码安全审查与知识产权合规治理

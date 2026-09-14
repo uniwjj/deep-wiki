@@ -98,3 +98,4 @@ updated: 2026-09-07
 - [[ai-native-data-platform-vision]] — AI Native 数据平台愿景：数据平台侧对 AI Native 的平行判断
 - [[agent-multi-agent-collaboration]] — 多 Agent 协作：各司其职 Agent 群的协作机制基础
 - [[data-agent-next-stage]] — Data Agent 下一阶段：数据知识与语义底座作为竞争焦点的行业侧印证
+- [[ai-plus-software-action-plan]] — 政策侧呼应：方案（十八）要求优化"人机协同的生产组织方式"

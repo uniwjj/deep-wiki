@@ -1,6 +1,6 @@
 ---
 title: 工具生态与趋势
-description: AI Agent 工具生态——OpenCode、Claw、Hermes、DeerFlow 等工具分析，及 Agent 时代职业趋势
+description: AI Agent 工具生态——OpenCode、Claw、Hermes、DeerFlow 等工具分析，Agent 时代职业趋势，及产业政策（工信部「人工智能+软件」专项行动）
 aliases: [ecosystem, Agent 生态]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
@@ -10,7 +10,7 @@ updated: 2026-09-07
 
 # 工具生态与趋势
 
-AI Agent 工具生态与趋势分析，共 30 篇。
+AI Agent 工具生态与趋势分析，共 32 篇。
 
 ## 编程工具
 
@@ -49,6 +49,11 @@ AI Agent 工具生态与趋势分析，共 30 篇。
 - [[fz-agent-os-supply-chain]] — 顺丰系 FZ Agent OS：供应链 Agent 操作系统（2026-08 论坛）
 - [[cosmo-claw-ontology-agent]] — 卡奥斯 COSMO-Claw：工业本体×大模型×多智能体可信落地（2026-08 论坛）
 - [[shokz-ai-first-step]] — 韶音科技 AI 建设第一步：五层技术栈与 AI Gateway 治理（2026-08 论坛）
+
+## 产业政策
+
+- [[ai-plus-software-action-plan]] — 工信部《"人工智能+软件"专项行动实施方案》：2028/2030 目标、六大任务十九项措施（工信部信发〔2026〕209号）
+- [[ai-plus-software-press-conference]] — 配套新闻发布会解读：软件产业三大变革判断、智能编程三点理由、AI辅助 vs AI原生、就业与安全
 
 ## 职业与趋势
 

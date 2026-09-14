@@ -53,3 +53,4 @@ TBox/ABox 是描述逻辑/本体论的标准术语；本文用它们给"知识�
 - [[legacy-business-knowledge-foundation]] — 知识底座的实际构建：知识五分类与 TBox/ABox 落地难度的对应
 - [[agentic-skills]] — Agentic Skills："交付物从软件变为 Skill"的技能包实践
 - [[code-agent-vs-data-agent]] — Code Agent 承担固化动作（AI Coding）与 Data Agent 的目标函数分叉
+- [[ai-plus-software-action-plan]] — 政策侧同构视角：方案（五）支持把工业经验、工艺参数封装为可复用的模型库和工业组件

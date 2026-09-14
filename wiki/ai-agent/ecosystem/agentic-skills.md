@@ -55,3 +55,4 @@ Agentic Skills 正在成为云厂商 Data Agent 生态的标准能力单元。Go
 - [[google-data-agent-kit]] — Agentic Skills 的原始出处与最完整实现
 - [[code-agent-vs-data-agent]] — 为什么 Code Agent 需要 Skills 层才能处理数据问题
 - [[data-agent-practice-guide]] — 上下文能力占 Data Agent 成功的 70%，Skills 正是上下文承载层
+- [[ai-plus-software-action-plan]] — 政策侧印证：方案（九）明确要建设"智能体软件应用商店和技能包（Skills）资源库"

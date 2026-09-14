@@ -27,3 +27,4 @@ Skills 扩展模型能做什么（内容，以指令注入）。参见 [[claude-
 - [[claude-code-extensibility]] — Claude Code Skills 和 Hooks 实现详解
 - [[claude-code-tool-system]] — 工具系统中的 SkillTool
 - [[agent-mcp-protocol]] — MCP 协议与 Skills 的关系
+- [[ai-plus-software-action-plan]] — 政策侧印证：方案（九）要求建设技能包（Skills）资源库

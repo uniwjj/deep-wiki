@@ -52,3 +52,4 @@ updated: 2026-05-17
 - [[claude-code-swarm]] — Swarm 对等协作
 - [[claude-code-subagent]] — 子代理委托的 10 步决策树
 - [[claude-managed-agents]] — Anthropic 托管 Agent
+- [[ai-plus-software-action-plan]] — 政策侧要求：方案（五）（七）提出提升多智能体协同决策与协同作业能力
