@@ -5,7 +5,7 @@ aliases: [ai-agent, Agent 开发]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-05-24
+updated: 2026-10-10
 ---
 
 # AI Agent 开发
@@ -24,7 +24,7 @@ Agent 开发领域的技术积累索引，按子领域分目录管理。
 | [[ai-agent/harness/index]] | 16 | Agent Harness 模式、工程实践 |
 | [[ai-agent/test-agent/index]] | 9 | AI 测试自动化：Test Agent、测试 Harness、Mara/Etest 平台、配表驱动数据测试 |
 | [[ai-agent/context-eng/index]] | 4 | Google/Manus 上下文工程、CLAUDE.md |
-| [[ai-agent/ecosystem/index]] | 31 | OpenCode、Claw、Hermes 等工具及职业趋势，工信部「人工智能+软件」产业政策 |
+| [[ai-agent/ecosystem/index]] | 32 | OpenCode、Claw、Hermes 等工具及职业趋势，工信部「人工智能+软件」产业政策 |
 
 ## 快速入口
 

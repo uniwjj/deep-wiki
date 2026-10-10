@@ -5,7 +5,7 @@ aliases: [AI Native 团队, 重构协同, 串联者, AI Native 组织形态, 知
 tags: [ai-agent, architecture, concept, product]
 sources: ["2026/09/07/重构协同：关于AI Native团队的思考.html"]
 created: 2026-09-07
-updated: 2026-09-07
+updated: 2026-10-10
 ---
 
 # 重构协同——AI Native 团队的思考
@@ -88,6 +88,7 @@ updated: 2026-09-07
 - [[legacy-business-knowledge-foundation]] — 存量业务的知识底座：知识五分类、权威事实来源锚定、三个坎与粒度边界（本文最难一关的展开）
 - [[software-as-crystallized-knowledge]] — 软件是被固化的知识：TBox/ABox 视角下软件的位置（本文"顺带厘清"一节的展开）
 - [[digital-employee]] — 数字员工：本文认为应跳出数字员工本身、重心放在 Agent 与人的协同形态
+- [[multica]] — 外部产品侧的"协同工具"实例：业务空间/参与者/任务/频道概念雏形在 issue + runtime 工作系统中的对应（Agent 可被指派、状态在共享 issue、触发层调度）
 - [[business-cognition-system]] — 业务认知系统：三类知识来源与可演进的业务认知组织方式
 - [[paozi-ai-knowledge-memory]] — 狍子AI 的知识工程与记忆工程：企业知识底座的一种落地实践
 - [[knowledge-retrieval-paradigms]] — 知识检索三代范式："文档总脱离代码"的老问题 AI 不会自动解决，需知识底座思路

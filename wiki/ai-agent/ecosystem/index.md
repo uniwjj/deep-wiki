@@ -5,7 +5,7 @@ aliases: [ecosystem, Agent 生态]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-09-07
+updated: 2026-10-10
 ---
 
 # 工具生态与趋势
@@ -26,6 +26,7 @@ AI Agent 工具生态与趋势分析，共 32 篇。
 - [[deerflow]] — DeerFlow
 - [[google-scion]] — Google Scion
 - [[claude-managed-agents]] — Anthropic 托管 Agent
+- [[multica]] — Multica：把 Agent 变成同事的人机协作工作系统（issue 为载体、daemon 执行面、wakeups 触发层调度、无沙箱安全模型）
 
 ## 工具与扩展
 

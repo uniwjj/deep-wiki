@@ -1117,3 +1117,13 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `agentic-skills`、`agent-skills-system`、`ai-agent-security`、`agent-multi-agent-collaboration`、`software-as-crystallized-knowledge`、`ai-governance`、`ai-programming-tools-comparison`、`ai-native-team-refactor`、`architect-in-agent-era`、`digital-employee` — 相关页面互链（政策侧印证/要求/呼应）
 - 复核记录：初稿曾把方案（四）与发布会的"模型原生"增补关系写反（实为发布会比方案多"模型原生"）；"人工编写→人机协同/被动响应→主动执行/产品交付→价值交付"三条转变经全文检索确认**仅见于发布会**、方案原文无此提法，已按原文修正表述并标注出处
 - run `llm-wiki sync`
+
+## [2026-10-10] ingest | Multica 是什么——从源码看一个把 Agent 变成同事的系统
+- created `multica` — Multica 完整系统分析：定位（人机工作的记录与行动系统；刻意不是模型/云端执行平台/工作流引擎/OSI 开源）、Issue→Run→Runtime 工作循环（Agent 不会自己开工、run 完成≠issue 完成）、控制面（Go/PostgreSQL 17/Next.js 16 + SaaS/自托管/桌面三选一）+ daemon 执行面（WS 唤醒+轮询兜底/每 run 隔离工作目录/26 种 CLI 探测注册/并发上限 20）、wakeups 触发层调度（事件 25 种/定时/条件/超时 + 事务性捕获/租约派发/严格串行/防失控三件套；网易内部二次开发 fast development/SDD）、团队治理（Skills/Squads/Autopilots/插话纠偏/review gate/插件与 IM-Git 集成）、「daemon 用户即边界」无沙箱安全模型、Multica License（内部免费/对外托管与嵌入商业产品需授权/品牌豁免单列）
+- updated `digital-employee` — 新增"系统化形态：Multica 把 Agent 变成同事"节（身份/常驻 runtime/共享 issue）；相关页面互链；补 sources
+- updated `ai-native-team-refactor` — 相关页面新增 Multica 作为协同工具层的外部产品实例
+- updated `ai-agent-security` — 新增"无沙箱化立场：daemon 用户即边界"节（官方理由/缩小爆散半径三件事/落地建议）；补 sources 与互链
+- updated `ai-agent/ecosystem/index` — 「设计与 Agent 平台」分类收录 multica
+- updated `ai-agent/index` — ecosystem 篇数 31→32
+- saved source: `sources/2026/10/10/Multica 是什么——从源码看一个把 Agent 变成同事的系统.md`
+- run `llm-wiki sync`
