@@ -5,7 +5,7 @@ aliases: [data-agent, Data Agent, AI 数据平台]
 tags: [ai-agent, big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-07-01
-updated: 2026-07-01
+updated: 2026-10-10
 ---
 
 # Data Agent 与 AI 数据平台
@@ -47,6 +47,7 @@ AI Agent 在数据领域的应用——Data Agent 产品、AI 原生数据平台
 - [[flink-skills]] — Flink Agent Skills 四层能力
 - [[emr-skills]] — EMR AI Native 与 Skills 全景
 - [[data-dev-skills-automation]] — 数开 Skills 自动化
+- [[easydata-ops-diagnosis]] — 猛犸（EasyData）智能运维诊断：mammut-task-analysis + mammut-baseline-analysis 双 Skill
 - [[superetl]] — 菜鸟基于 Data Agent 的 SuperETL
 
 ## AI 原生数据平台与厂商战略

@@ -5,7 +5,7 @@ aliases: [大数据运维Agent, 运维智能体, Ops Agent, OpsAgent, 从自动�
 tags: [ai-agent, big-data, practice]
 sources: [2026/08/11/自进化Agent论坛/01-熊伟-从自动化到自进化：大数据运维Agent实践与思考.pdf]
 created: 2026-08-11
-updated: 2026-08-11
+updated: 2026-10-10
 ---
 
 # 大数据运维 Agent 实践——从自动化到自进化
@@ -125,6 +125,7 @@ updated: 2026-08-11
 ## 相关页面
 
 - [[data-agent-enterprise-practice]] — Data Agent 企业级实践：蚂蚁企信四层架构（同为大数据领域的 Agent 落地）
+- [[easydata-ops-diagnosis]] — 猛犸智能运维诊断工具：单平台"规则引擎 + Claude Code"形态的任务级诊断实践
 - [[agent-mcp-protocol]] — MCP 协议（演讲中 MCP 承担"安全网关/管控"角色）
 - [[agent-autonomous-planning]] — Agent 自主规划（演讲中的自主决策、自主进化）
 - [[agent-multi-agent-collaboration]] — 多 Agent 协作（智能体与规则、模型的分工协同）

@@ -5,7 +5,7 @@ aliases: [数据开发Skills, EasyData Skills]
 tags: [big-data, ai-agent, practice]
 sources: [2026/04/09/数开的未来在哪？我用一套 Skills 干掉了数开 70% 的重复开发.md]
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-10-10
 ---
 
 # 数仓开发 Skills 自动化
@@ -42,6 +42,9 @@ ADS 表停更 7 天故障 → 对话窗口 3 秒定位根因 → 3 小时完成�
 - [[agent-skills-system]] — Agent Skills 体系
 - [[log-diagnosis-skill]] — 日志诊断 Skill
 - easydata — EasyData 平台
+- [[raven-sdd-data-development]] — Raven SDD 数据开发：猛犸平台上的 SDD 化数开（同类实践的流程侧）
+- [[data-task-increment-optimization]] — 数据任务全量→增量优化实践：猛犸平台上的完整案例
+- [[easydata-ops-diagnosis]] — 猛犸智能运维诊断工具：猛犸平台的运维侧 Skill 封装
 - [[superetl]] — 菜鸟 SuperETL：同类 Skills 编排实践
 - [[maxcompute-skills]] — MaxCompute 官方 Skills 体系
 - [[flink-skills]] — Flink Agent Skills

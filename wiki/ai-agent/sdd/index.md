@@ -1,16 +1,16 @@
 ---
 title: SDD 规范驱动开发
-description: 规范驱动开发（SDD）——OpenSpec、Superpowers、Spec-Kit 三大框架对比与实战
+description: 规范驱动开发（SDD）——OpenSpec、Superpowers、Spec-Kit 三大框架对比与实战，及 Raven SDD 数据开发实践
 aliases: [sdd, 规范驱动开发]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-07-07
+updated: 2026-10-10
 ---
 
 # SDD 规范驱动开发
 
-规范驱动开发（Spec-Driven Development）工具链与实战，共 13 篇。
+规范驱动开发（Spec-Driven Development）工具链与实战，共 24 篇。
 
 ## 三剑客对比
 
@@ -51,6 +51,11 @@ updated: 2026-07-07
 - [[openspec-custom-schema-guide]] — 自定义 schema 创建、模板设计与完整实战
 - [[openspec-skill-mechanism]] — SKILL 文件机制：Agent 操作手册
 - [[openspec-verify-extension]] — 扩展 verify 的三种方案与推荐组合
+
+## Raven SDD 与数据开发实践
+
+- [[raven-sdd-data-development]] — Raven SDD 数据开发：通用 SDD 的数据管道特化（6 项 gap 补充、8 步法、三层工具链、easy-data 双目录）
+- [[data-task-increment-optimization]] — 数据任务全量→增量优化实践：反垃圾大宽表案例（快 5.2 倍、V1→V3 迭代、32 次 API 调用）
 
 ## 相关页面
 

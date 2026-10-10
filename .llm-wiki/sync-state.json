@@ -8,8 +8,8 @@
     },
     "wiki/ai-agent/index.md": {
       "path": "wiki/ai-agent/index.md",
-      "mtime": 1791621672460.629,
-      "contentHash": "46ea977ef2f57ed4",
+      "mtime": 1791622281756.1873,
+      "contentHash": "fc8311e3478e42d9",
       "lastSynced": "2026-10-10"
     },
     "wiki/ai-ml/bookrag.md": {
@@ -392,8 +392,8 @@
     },
     "wiki/ai-agent/agent-core/bigdata-ops-agent-practice.md": {
       "path": "wiki/ai-agent/agent-core/bigdata-ops-agent-practice.md",
-      "mtime": 1786449769535.7112,
-      "contentHash": "ddc67484fc5a777d",
+      "mtime": 1791622295888.0166,
+      "contentHash": "7165e54f9257bc3f",
       "lastSynced": "2026-10-10"
     },
     "wiki/ai-agent/agent-core/business-cognition-system.md": {
@@ -884,8 +884,8 @@
     },
     "wiki/ai-agent/data-agent/data-dev-skills-automation.md": {
       "path": "wiki/ai-agent/data-agent/data-dev-skills-automation.md",
-      "mtime": 1781503422307.9753,
-      "contentHash": "5d96c308cca43af1",
+      "mtime": 1791622286988.7744,
+      "contentHash": "f709540a1f28d4fd",
       "lastSynced": "2026-10-10"
     },
     "wiki/ai-agent/data-agent/dataagent-semantic-layer.md": {
@@ -930,6 +930,12 @@
       "contentHash": "66391c3ac3c86d25",
       "lastSynced": "2026-10-10"
     },
+    "wiki/ai-agent/data-agent/easydata-ops-diagnosis.md": {
+      "path": "wiki/ai-agent/data-agent/easydata-ops-diagnosis.md",
+      "mtime": 1791622258354.8623,
+      "contentHash": "b2020ce889723548",
+      "lastSynced": "2026-10-10"
+    },
     "wiki/ai-agent/data-agent/emr-skills.md": {
       "path": "wiki/ai-agent/data-agent/emr-skills.md",
       "mtime": 1781503422308.7102,
@@ -962,8 +968,8 @@
     },
     "wiki/ai-agent/data-agent/index.md": {
       "path": "wiki/ai-agent/data-agent/index.md",
-      "mtime": 1787716487956.9941,
-      "contentHash": "cfd0bd819e4e5811",
+      "mtime": 1791622279992.2493,
+      "contentHash": "c051294755ca64a7",
       "lastSynced": "2026-10-10"
     },
     "wiki/ai-agent/data-agent/infinisynapse.md": {
@@ -1530,10 +1536,16 @@
       "contentHash": "8854964d96af4aaf",
       "lastSynced": "2026-10-10"
     },
+    "wiki/ai-agent/sdd/data-task-increment-optimization.md": {
+      "path": "wiki/ai-agent/sdd/data-task-increment-optimization.md",
+      "mtime": 1791622233468.7024,
+      "contentHash": "158fec3f55ae5621",
+      "lastSynced": "2026-10-10"
+    },
     "wiki/ai-agent/sdd/index.md": {
       "path": "wiki/ai-agent/sdd/index.md",
-      "mtime": 1786453173573.2776,
-      "contentHash": "2e9f9f5fffdc9222",
+      "mtime": 1791622276917.6494,
+      "contentHash": "dd151d8908693e1c",
       "lastSynced": "2026-10-10"
     },
     "wiki/ai-agent/sdd/openspec-custom-schema-guide.md": {
@@ -1570,6 +1582,12 @@
       "path": "wiki/ai-agent/sdd/progressive-spec-methodology.md",
       "mtime": 1781503422305.132,
       "contentHash": "c2817b0aac86aea5",
+      "lastSynced": "2026-10-10"
+    },
+    "wiki/ai-agent/sdd/raven-sdd-data-development.md": {
+      "path": "wiki/ai-agent/sdd/raven-sdd-data-development.md",
+      "mtime": 1791622219190.7332,
+      "contentHash": "2adf2515a70e3ee5",
       "lastSynced": "2026-10-10"
     },
     "wiki/ai-agent/sdd/sdd-custom-workflow.md": {
@@ -3376,6 +3394,24 @@
       "path": "sources/2026/10/10/Multica 是什么——从源码看一个把 Agent 变成同事的系统.md",
       "mtime": 1791621705674.5583,
       "contentHash": "9431cf9ef3714d6d",
+      "lastSynced": "2026-10-10"
+    },
+    "sources/2026/10/10/Raven Cloude Skill 猛犸(EasyData)智能运维诊断工具.md": {
+      "path": "sources/2026/10/10/Raven Cloude Skill 猛犸(EasyData)智能运维诊断工具.md",
+      "mtime": 1791622312435.531,
+      "contentHash": "92cfc6201b018a68",
+      "lastSynced": "2026-10-10"
+    },
+    "sources/2026/10/10/SDD 数据开发流程 - Raven SDD 能力补充.md": {
+      "path": "sources/2026/10/10/SDD 数据开发流程 - Raven SDD 能力补充.md",
+      "mtime": 1791622307809.3584,
+      "contentHash": "63aff071deec0feb",
+      "lastSynced": "2026-10-10"
+    },
+    "sources/2026/10/10/Sdd数据开发实践分享 — 数据任务优化.md": {
+      "path": "sources/2026/10/10/Sdd数据开发实践分享 — 数据任务优化.md",
+      "mtime": 1791622309745.4417,
+      "contentHash": "a70a5f6700226156",
       "lastSynced": "2026-10-10"
     },
     "sources/2026/08/11/AI Native数据湖让企业Agent拥有统一的智能数据底座（腾讯云专场）/1. AI 时代的数据基础设施展望.md": {

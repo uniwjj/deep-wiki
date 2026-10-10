@@ -1127,3 +1127,18 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `ai-agent/index` — ecosystem 篇数 31→32
 - saved source: `sources/2026/10/10/Multica 是什么——从源码看一个把 Agent 变成同事的系统.md`
 - run `llm-wiki sync`
+
+## [2026-10-10] ingest | 罗霄三篇（KM）：Raven SDD 数据开发 ×2 + 猛犸智能运维诊断工具
+- 来源：KM 文章三篇（罗霄，音乐安全数据团队），均经 popo-cli km resource_section 下载全文（sectionIndex=-1），无配图
+  - blog/269706《SDD 数据开发流程 - Raven SDD 能力补充》
+  - blog/268821《Sdd数据开发实践分享 — 数据任务优化》
+  - blog/267701《Raven Cloude Skill 猛犸(EasyData)智能运维诊断工具》
+- saved sources/2026/10/10/：3 个 .md（含 ingested/wiki_pages/source_url/author frontmatter）
+- created `raven-sdd-data-development` — Raven SDD 数据开发：SDD 简介与自动化/规范化能力、6 阶段通用流程、数据开发 6 项 gap 补充（平台操作/5维度验证/3000 SQL 知识库/性能基线/data-pipeline schema/安全门控）、8 步法、三层工具链（mammut-api/spark-sql-review/mammut-task-analysis）、easy-data 双目录体系、/sdd-explore 入口与 4 条注意事项
+- created `data-task-increment-optimization` — 反垃圾大宽表全量→增量优化实践：AI 擅长六项与必须人工把控五项（"AI 负责做到位，人负责拍板"）、10 步法实践、V1→V3 三轮迭代根因定位（边界重复→version=NULL 排序→线上自身问题）、265min→51min（5.2x）、32 次 API 调用、10 条流程规范、适用/不适用与复用价值
+- created `easydata-ops-diagnosis` — 猛犸智能运维诊断 Skill 对：整体架构（两 Skill + 四数据源 + 诊断引擎 + HTML 报告）、猛犸 OpenAPI 字段映射注意点、SHS 为错误根因唯一来源、12 条日志规则 + 8 条 SQL 规则、单任务/基线破线两模式、P0/P1/P2 分级、速查表与后续规划
+- updated `ai-agent/sdd/index` — 新增「Raven SDD 与数据开发实践」分区，篇数 13→24（修正历史漏计）
+- updated `ai-agent/data-agent/index` — 「厂商 Skills 体系」收录 easydata-ops-diagnosis
+- updated `ai-agent/index` — sdd 22→24、data-agent 43→44
+- updated `data-dev-skills-automation`、`bigdata-ops-agent-practice` — 相关页面互链（猛犸平台同类实践/运维诊断对照）
+- run `llm-wiki sync`
