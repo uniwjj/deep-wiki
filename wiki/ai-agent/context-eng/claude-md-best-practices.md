@@ -5,7 +5,7 @@ aliases: [CLAUDE.md, CLI配置, AI编程规则]
 tags: [ai-agent, practice]
 sources: [2026/04/26/Karpathy的CLAUDE.md爆火：AI不瞎改了但开始用聪明的方式犯错.md]
 created: 2026-05-09
-updated: 2026-05-18
+updated: 2026-10-12
 ---
 
 # CLAUDE.md 最佳实践
@@ -60,3 +60,4 @@ Claude 自动向上遍历加载所有 CLAUDE.md，因此根级上下文不会丢
 - [[claude-code-behavior-contract]] — CLAUDE.md 行为契约：从 41% 到 3% 的规则工程
 - [[claude-code-auto-dream]] — 自动梦境
 - [[progressive-spec-methodology]] — 渐进式 Spec
+- [[ai-native-sdlc-toolkit]] — Anthropic 官方 playbook 中的 CLAUDE.md 工程实践（"错误两次入档"、一页上限、与 review findings 的联动及度量指标）

@@ -248,3 +248,4 @@ ADK 和 LangGraph 都有内置 offload 能力，但只做到读侧——因为�
 - [[agent-harness-overview]] — Harness 六承重层，Hook 对应横切关注点层
 - [[agent-tdd-workflow]] — Agent 开发中的 TDD 流程，Hook 测试是其中一环
 - [[agent-mcp-protocol]] — MCP 工具协议，Hook 是对工具调用的切面增强
+- [[ai-native-sdlc-governance]] — Anthropic playbook 的 hook 定位：建议性 skill 背后的确定性层、审批门（allow/ask/block）与受管设置（managed settings）

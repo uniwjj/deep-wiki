@@ -1,16 +1,16 @@
 ---
 title: SDD 规范驱动开发
-description: 规范驱动开发（SDD）——OpenSpec、Superpowers、Spec-Kit 三大框架对比与实战，及 Raven SDD 数据开发实践
+description: 规范驱动开发（SDD）——OpenSpec、Superpowers、Spec-Kit 三大框架对比与实战，Raven SDD 数据开发实践，及 Anthropic AI-native SDLC playbook
 aliases: [sdd, 规范驱动开发]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-10-10
+updated: 2026-10-12
 ---
 
 # SDD 规范驱动开发
 
-规范驱动开发（Spec-Driven Development）工具链与实战，共 24 篇。
+规范驱动开发（Spec-Driven Development）工具链与实战，共 28 篇。
 
 ## 三剑客对比
 
@@ -56,6 +56,13 @@ updated: 2026-10-10
 
 - [[raven-sdd-data-development]] — Raven SDD 数据开发：通用 SDD 的数据管道特化（6 项 gap 补充、8 步法、三层工具链、easy-data 双目录）
 - [[data-task-increment-optimization]] — 数据任务全量→增量优化实践：反垃圾大宽表案例（快 5.2 倍、V1→V3 迭代、32 次 API 调用）
+
+## AI-native SDLC（Anthropic 官方 playbook）
+
+- [[ai-native-sdlc]] — 总览：代码不再是瓶颈后的三条断言、线性流程 → artifact 驱动 gate 的闭环、六阶段对照、九大 play 与采纳顺序
+- [[ai-native-sdlc-plays]] — 六阶段 × 全部 play 详解：intent.md/spec.md/plan.md 工作流、传统对比、Getting started、执行步骤、治理与度量指标
+- [[ai-native-sdlc-toolkit]] — Claude Code 工具链：CLAUDE.md、skills、hooks、并行会话与 subagent、反馈闭环与 evals、plan mode → auto mode 演进
+- [[ai-native-sdlc-governance]] — 治理与受管设置：控制分层、managed settings 逐键解释、分离职责与审计轨迹、存量系统与单一事实源
 
 ## 相关页面
 

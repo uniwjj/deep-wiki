@@ -43,3 +43,4 @@ AI Agent 在获得工具调用与自主决策能力后，面临独特的安全�
 - [[openclaw]] — OpenClaw 自托管方案的安全考量
 - [[claude-code-permission-system]] — Claude Code 权限系统（bypassPermissions 等模式）
 - [[ai-plus-software-action-plan]] — 政策侧要求：方案（十九）部署智能体身份标识、可信互联、行为管控与安全管理规范
+- [[ai-native-sdlc-governance]] — 受监管企业的受管设置配置（sandbox 域名 allowlist 与 credentials 精细化控制补权限的洞）

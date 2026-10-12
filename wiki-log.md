@@ -1142,3 +1142,19 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `ai-agent/index` — sdd 22→24、data-agent 43→44
 - updated `data-dev-skills-automation`、`bigdata-ops-agent-practice` — 相关页面互链（猛犸平台同类实践/运维诊断对照）
 - run `llm-wiki sync`
+
+## [2026-10-12] ingest | The AI-native SDLC playbook（Anthropic 官方文章，2026-08-21）
+- 来源：https://claude.com/resources/articles/the-ai-native-sdlc-playbook（Louis Claxton，Anthropic Applied AI 团队最佳实践合集）
+- 下载方式：curl 获取 Next.js 页面 HTML（787KB）→ DOM 解析提取 article 正文 → 剥离页面外壳；改写正文 `@scope (.w-richtext)` 样式块为 `.article-body` 普通选择器（headless Chrome 对 @scope 未生效，实测验证），并内联 CodeBlock 等 CSS Modules 规则与设计 token；13 个无功能 Copy 按钮清除；4 张配图（assets.claude.com 外链，URL 全部 200 验证）+ 4 条图题保留在原 figure 位置；正文 PDF 链接改为本地副本（Webflow CDN 链接易失效）。headless Chrome 截图逐区视觉复核（目录计数器/Play 卡片/对比卡/代码块/表格/配图均正常）
+- added `article-downloads/`：The AI-native SDLC playbook.html（自包含，118KB）+ AI-Native-SDLC-Playbook.pdf（1.5MB 本地副本）
+- saved `sources/2026/10/12/`：原始 HTML + 同名 .md sidecar + PDF（文内链接指向同目录副本）
+- created `ai-native-sdlc` — 总览：代码不再是瓶颈的三条断言（瓶颈迁移到人速阶段/控制脱节/治理成本上升）、线性 → artifact 驱动 gate 的闭环（intent.md → spec.md → plan.md → diff → PR → 事故记录，提交链即审计轨迹）、六阶段对照表、九大 play 一览与采纳顺序（clay play 先行）
+- created `ai-native-sdlc-plays` — 六阶段 × 全部 play 详解：Capture as intent.md / Requirements and design / plan mode / auto mode / CLAUDE.md / Skills / Hooks / 并行会话与 subagent / 反馈闭环 / continuous evals / PR review 循环 / 审批门 / CI/CD / 闭环（control band→intent.md）/ 定时扫描（Claude Security）/ Claude Tag on-call；逐 play 含传统对比、Getting started、执行步骤、治理与 Leading/Lagging 度量
+- created `ai-native-sdlc-toolkit` — Claude Code 工具链：五类手段与确定性分层、CLAUDE.md（错误两次入档/一页上限）、skills（建议性控制）、hooks（护栏+审批门）、并行会话（2-3 起步、review 是上限）与 subagent、反馈闭环与 evals、plan mode → auto mode 演进
+- created `ai-native-sdlc-governance` — 控制分层总表（建议性→确定性→审批门→branch protection→环境分层）、managed settings 受监管企业完整配置与逐键解释（sandbox/credentials 补 permissions 的洞）、分离职责与审计轨迹、度量、存量系统与单一事实源三种共存配置
+- updated `ai-agent/sdd/index` — 新增「AI-native SDLC（Anthropic 官方 playbook）」分区收录 4 页，篇数 24→28
+- updated `ai-agent/index` — sdd 24→28、context-eng 计数修正 4→5（补记 workbuddy 页）
+- updated `ai-agent/context-eng/index` — 描述与相关页面补 AI-native SDLC 工具链（修正篇数 3→4）
+- updated `claude-md-best-practices`、`agent-hook-governance`、`agent-skills-system`、`ai-agent-security` — 相关页面互链（官方 CLAUDE.md 工程实践/skill 工程实践/hook 确定性层/sandbox 精细化控制）
+- 复核记录：文中两处"小节标题无正文"实为 HtmlEmbed 组件块（Legacy systems 侧栏、Managed settings worked example、Resources 链接列表），已按完整原文内容撰写进 wiki，未遗漏
+- run `llm-wiki sync`
