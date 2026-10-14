@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://p.pages-hub.netease.im/p/34b8d5f69f9f44878a1178 -->
+<html lang="zh-CN" data-language-preloaded="true" data-theme="light"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Agent 项目落地方法论</title>
+<style>
+  :root{
+    --red:#c20c0c; --red-soft:#fdecec; --red-deep:#8f0a0a;
+    --blue:#0e5fd8; --blue-soft:#e8f0fc; --blue-deep:#0a459e;
+    --bg:#f6f7f9; --card:#ffffff; --ink:#1f2329; --gray:#6b7280;
+    --line:#e5e7eb;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.7; padding-bottom:48px;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+  /* ===== Hero ===== */
+  .hero{
+    background:linear-gradient(135deg,#ffffff 0%,#eef3fc 100%);
+    border-bottom:1px solid var(--line);
+    padding:52px 0 42px; position:relative; overflow:hidden;
+  }
+  .hero::after{
+    content:"标准 · 参与 · 扩面"; position:absolute; right:-16px; bottom:-30px;
+    font-size:84px; font-weight:800; color:var(--blue); opacity:.05; letter-spacing:2px; white-space:nowrap;
+  }
+  .hero .tag{
+    display:inline-block; font-size:12.5px; font-weight:700; color:var(--red-deep);
+    background:var(--red-soft); border:1px solid #f0c8c8; border-radius:20px; padding:4px 14px; letter-spacing:1px;
+  }
+  .hero h1{font-size:34px; font-weight:800; margin-top:14px; letter-spacing:.5px;}
+  .hero h1 .accent{color:var(--red);}
+  .hero .sub{margin-top:12px; font-size:15.5px; color:var(--gray); max-width:860px;}
+  .hero .sub b{color:var(--ink);}
+  .hero .sub .r{color:var(--red); font-weight:700;}
+  .hero .sub .b{color:var(--blue); font-weight:700;}
+
+  /* ===== Section ===== */
+  section{margin-top:44px;}
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:18px;}
+  .sec-no{
+    font-size:13px; font-weight:800; color:#fff; background:var(--blue); border-radius:6px;
+    padding:3px 10px; letter-spacing:1px; flex-shrink:0;
+  }
+  .sec-head h2{font-size:22px; font-weight:800;}
+  .sec-head .tag{font-size:13px; color:var(--gray);}
+
+  /* ===== 核心命题 ===== */
+  .thesis{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:26px 30px; box-shadow:0 1px 3px rgba(16,24,40,.05);
+    border-left:4px solid var(--red);
+  }
+  .thesis .q{font-size:17px; font-weight:700; color:var(--ink);}
+  .thesis .q span{color:var(--red);}
+  .thesis .a{margin-top:8px; font-size:14.5px; color:var(--gray);}
+
+  /* ===== 标准公式 ===== */
+  .std-formula{
+    margin-top:14px; background:var(--red-soft); border:1px solid #f0c8c8; border-radius:10px;
+    padding:12px 16px; font-size:15.5px; font-weight:800; color:var(--red-deep); text-align:center; letter-spacing:.5px;
+  }
+
+  /* ===== 推进链 ===== */
+  .chain{
+    margin-top:6px; margin-bottom:18px; background:var(--blue-soft); border:1px solid #c9dcf7;
+    border-radius:12px; padding:14px 20px; font-size:13.5px; color:var(--ink); line-height:1.8;
+  }
+  .chain b{color:var(--blue-deep);}
+  .chain .arrow{color:var(--red); font-weight:800; margin:0 4px;}
+
+  /* ===== 两论对比 ===== */
+  .duo{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:6px;}
+  .duo-card{border-radius:14px; padding:24px 26px; border:1px solid var(--line); background:var(--card); box-shadow:0 1px 3px rgba(16,24,40,.05);}
+  .duo-card .tag2{display:inline-block; font-size:12px; font-weight:800; padding:3px 12px; border-radius:14px; letter-spacing:1px;}
+  .duo-card.value{border-top:3px solid var(--red);}
+  .duo-card.value .tag2{background:var(--red-soft); color:var(--red-deep);}
+  .duo-card.acc{border-top:3px solid var(--blue);}
+  .duo-card.acc .tag2{background:var(--blue-soft); color:var(--blue-deep);}
+  .duo-card h3{font-size:19px; font-weight:800; margin-top:12px;}
+  .duo-card .def{font-size:14px; color:var(--gray); margin-top:6px;}
+  .duo-card .core{font-size:13.5px; margin-top:12px; padding:12px 14px; border-radius:10px; background:var(--bg);}
+  .duo-card .core b{font-size:13px;}
+  .duo-card .core ul{margin:8px 0 0 18px; font-size:13px; color:var(--gray);}
+  .duo-card .core li{margin-top:4px;}
+  .duo-card .risk{font-size:13px; margin-top:12px; color:var(--gray);}
+  .duo-card .risk b{color:var(--red-deep);}
+
+  /* ===== 铁律横幅 ===== */
+  .law{
+    margin-top:18px; border-radius:14px; padding:22px 28px;
+    background:linear-gradient(135deg,var(--red) 0%,#a00a0a 100%);
+    color:#fff; display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+  }
+  .law .ic{font-size:38px; flex-shrink:0;}
+  .law .txt{flex:1; min-width:280px;}
+  .law .txt .t1{font-size:19px; font-weight:800; letter-spacing:.5px;}
+  .law .txt .t2{font-size:13.5px; opacity:.92; margin-top:6px;}
+  .law .nums{display:flex; gap:12px; flex-wrap:wrap;}
+  .law .num{background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.35); border-radius:12px; padding:12px 16px; min-width:132px;}
+  .law .num .n{font-size:13px; font-weight:700; opacity:.9;}
+  .law .num .v{font-size:12.5px; margin-top:3px; opacity:.85; line-height:1.5;}
+
+  /* ===== 导向选择 ===== */
+  .choice{margin-top:18px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px 26px; box-shadow:0 1px 3px rgba(16,24,40,.05);}
+  .choice .head{display:flex; align-items:center; gap:10px; margin-bottom:6px; flex-wrap:wrap;}
+  .choice .head .tag3{display:inline-block; font-size:12px; font-weight:800; padding:3px 12px; border-radius:14px; background:var(--blue-soft); color:var(--blue-deep); letter-spacing:1px;}
+  .choice .head .t1{font-size:17px; font-weight:800;}
+  .choice .head .t2{font-size:12.5px; color:var(--gray);}
+  .ch-row{display:flex; gap:14px; padding:15px 0; border-top:1px dashed var(--line);}
+  .ch-row:first-of-type{border-top:none;}
+  .ch-no{width:30px; height:30px; border-radius:50%; background:var(--blue); color:#fff; font-size:14px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;}
+  .ch-no.final{background:var(--red);}
+  .ch-body .ch-t{font-size:14.5px; font-weight:700;}
+  .ch-body .ch-d{font-size:13px; color:var(--gray); margin-top:4px; line-height:1.7;}
+  .ch-body .ch-d b{color:var(--ink);}
+
+  /* ===== 结论横幅 ===== */
+  .conclusion{
+    margin-top:16px; border-radius:14px; padding:22px 24px;
+    background:linear-gradient(135deg,var(--red) 0%,#a00a0a 100%);
+    color:#fff; text-align:center; box-shadow:0 2px 8px rgba(192,12,12,.18);
+  }
+  .conclusion .t{font-size:22px; font-weight:800; letter-spacing:1px;}
+  .conclusion .d{font-size:13px; opacity:.94; margin-top:8px; line-height:1.7; max-width:740px; margin-left:auto; margin-right:auto;}
+  .conclusion .d b{color:#ffd9d9;}
+  .conclusion .tags{display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap;}
+  .conclusion .tag4{font-size:12.5px; font-weight:700; padding:4px 14px; border-radius:16px; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.4); letter-spacing:.5px;}
+
+  /* ===== 两大阶段总览 ===== */
+  .stages{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .stage{border-radius:14px; padding:24px 26px; border:1px solid var(--line); background:var(--card); box-shadow:0 1px 3px rgba(16,24,40,.05);}
+  .stage.deliver{border-top:4px solid var(--blue);}
+  .stage.operate{border-top:4px solid var(--red);}
+  .stage .ph{display:inline-block; font-size:12px; font-weight:800; padding:3px 12px; border-radius:14px; letter-spacing:1px;}
+  .stage.deliver .ph{background:var(--blue-soft); color:var(--blue-deep);}
+  .stage.operate .ph{background:var(--red-soft); color:var(--red-deep);}
+  .stage h3{font-size:20px; font-weight:800; margin-top:12px;}
+  .stage .prob{font-size:14px; margin-top:4px;}
+  .stage.deliver .prob b{color:var(--blue-deep);}
+  .stage.operate .prob b{color:var(--red-deep);}
+  .stage .desc{font-size:13.5px; color:var(--gray); margin-top:10px; line-height:1.7;}
+  .stage .items{margin-top:14px; border-top:1px dashed var(--line); padding-top:12px;}
+  .stage .items .lbl{font-size:11.5px; font-weight:800; letter-spacing:.5px;}
+  .stage.deliver .items .lbl{color:var(--blue-deep);}
+  .stage.operate .items .lbl{color:var(--red-deep);}
+  .stage .items ul{margin:6px 0 0 16px; font-size:13px; color:var(--ink);}
+  .stage .items li{margin-top:4px;}
+
+  /* ===== 用户参与横幅 ===== */
+  .join{
+    margin-top:18px; border-radius:14px; padding:22px 28px;
+    background:linear-gradient(135deg,var(--blue) 0%,#0a459e 100%);
+    color:#fff; display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+  }
+  .join .ic{font-size:38px; flex-shrink:0;}
+  .join .txt{flex:1; min-width:280px;}
+  .join .txt .t1{font-size:18px; font-weight:800; letter-spacing:.5px;}
+  .join .txt .t2{font-size:13.5px; opacity:.92; margin-top:6px; line-height:1.7;}
+  .join .points{display:flex; gap:12px; flex-wrap:wrap;}
+  .join .pt{background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.35); border-radius:12px; padding:12px 16px; min-width:170px;}
+  .join .pt .n{font-size:13px; font-weight:700; opacity:.95;}
+  .join .pt .v{font-size:12px; margin-top:3px; opacity:.85; line-height:1.55;}
+
+  /* ===== 以点扩面 ===== */
+  .expand{
+    background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px 28px;
+    box-shadow:0 1px 3px rgba(16,24,40,.05);
+  }
+  .expand .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; position:relative; margin-top:10px;}
+  .expand .step{
+    text-align:center; border:1px solid var(--line); border-radius:12px; padding:18px 14px; background:var(--bg); position:relative;
+  }
+  .expand .step .n{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;}
+  .expand .step .t{font-size:14.5px; font-weight:800;}
+  .expand .step .d{font-size:12px; color:var(--gray); margin-top:6px; line-height:1.55;}
+  .expand .step.st2 .n{background:var(--blue);}
+  .expand .step.st3 .n{background:var(--blue);}
+  .expand .step.st4 .n{background:var(--blue);}
+  .expand .arrow{position:absolute; top:50%; right:-10px; transform:translateY(-50%); color:var(--gray); font-size:18px; font-weight:800; z-index:2;}
+  .expand .note{margin-top:16px; font-size:13px; color:var(--gray); text-align:center;}
+  .expand .note b{color:var(--red);}
+
+  /* ===== 四支柱 ===== */
+  .pillars{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  .pillar{
+    background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 20px;
+    box-shadow:0 1px 3px rgba(16,24,40,.05); position:relative; overflow:hidden;
+  }
+  .pillar::before{content:""; position:absolute; top:0; left:0; right:0; height:4px;}
+  .pillar.p1::before{background:var(--red);}
+  .pillar.p2::before{background:var(--blue);}
+  .pillar.p3::before{background:var(--red);}
+  .pillar.p4::before{background:var(--blue);}
+  .pillar .idx{font-size:12px; font-weight:800; color:var(--gray); letter-spacing:1px;}
+  .pillar .ic{font-size:30px; margin-top:8px;}
+  .pillar h3{font-size:16.5px; font-weight:800; margin-top:8px; line-height:1.4;}
+  .pillar .why{font-size:12.5px; color:var(--gray); margin-top:8px; line-height:1.6;}
+  .pillar .acts{margin-top:12px; border-top:1px dashed var(--line); padding-top:10px;}
+  .pillar .acts .lbl{font-size:11.5px; font-weight:800; color:var(--blue-deep); letter-spacing:.5px;}
+  .pillar .acts .sub{font-size:12.5px; font-weight:800; margin-top:12px; color:var(--ink);}
+  .pillar .acts .sub:first-child{margin-top:0;}
+  .pillar .acts .sub i{font-style:normal; color:var(--red);}
+  .pillar .acts ul{margin:6px 0 0 16px; font-size:12.5px; color:var(--ink);}
+  .pillar .acts li{margin-top:4px; line-height:1.55;}
+  .pillar .chk{margin-top:12px; background:var(--bg); border-radius:10px; padding:10px 12px; font-size:12px; color:var(--gray);}
+  .pillar .chk b{color:var(--red-deep);}
+
+  /* ===== 运营支柱 ===== */
+  .ops{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .op{
+    background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 20px;
+    box-shadow:0 1px 3px rgba(16,24,40,.05); position:relative; overflow:hidden;
+  }
+  .op::before{content:""; position:absolute; top:0; left:0; right:0; height:4px; background:var(--red);}
+  .op .idx{font-size:12px; font-weight:800; color:var(--gray); letter-spacing:1px;}
+  .op .ic{font-size:30px; margin-top:8px;}
+  .op h3{font-size:16.5px; font-weight:800; margin-top:8px; line-height:1.4;}
+  .op .why{font-size:12.5px; color:var(--gray); margin-top:8px; line-height:1.6;}
+  .op .acts{margin-top:12px; border-top:1px dashed var(--line); padding-top:10px;}
+  .op .acts .lbl{font-size:11.5px; font-weight:800; color:var(--red-deep); letter-spacing:.5px;}
+  .op .acts .sub{font-size:12.5px; font-weight:800; margin-top:12px; color:var(--ink);}
+  .op .acts .sub:first-child{margin-top:0;}
+  .op .acts .sub i{font-style:normal; color:var(--red);}
+  .op .acts ul{margin:6px 0 0 16px; font-size:12.5px; color:var(--ink);}
+  .op .acts li{margin-top:4px; line-height:1.55;}
+  .op .chk{margin-top:12px; background:var(--bg); border-radius:10px; padding:10px 12px; font-size:12px; color:var(--gray);}
+  .op .chk b{color:var(--red-deep);}
+
+  /* ===== 底部架构图 ===== */
+  .arch{
+    margin-top:44px; background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:30px; box-shadow:0 1px 3px rgba(16,24,40,.05);
+  }
+  .arch .title{font-size:16px; font-weight:800; margin-bottom:6px; display:flex; align-items:center; gap:8px;}
+  .arch .title .bar{width:4px; height:18px; background:var(--red); border-radius:2px;}
+  .arch .sub{font-size:12.5px; color:var(--gray); margin-bottom:20px;}
+  .arch svg{width:100%; height:auto; display:block;}
+  .arch .legend{display:flex; gap:18px; margin-top:14px; font-size:12px; color:var(--gray); flex-wrap:wrap;}
+  .arch .legend span{display:flex; align-items:center; gap:6px;}
+  .arch .legend i{width:12px; height:12px; border-radius:3px; display:inline-block;}
+
+  /* ===== 执行检查清单 ===== */
+  .checklist{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .check-item{
+    background:var(--card); border:1px solid var(--line); border-radius:10px; padding:13px 16px;
+    font-size:13px; display:flex; gap:12px; align-items:flex-start; line-height:1.6;
+  }
+  .check-item .box{width:16px; height:16px; border:2px solid var(--blue); border-radius:4px; flex-shrink:0; margin-top:2px;}
+  .check-item b{color:var(--blue-deep);}
+  .check-item .who{font-size:11px; color:var(--gray); margin-top:2px;}
+
+  footer{margin-top:44px; padding:16px 24px; background:var(--card); border:1px solid var(--line); border-radius:12px; font-size:12px; color:var(--gray); line-height:1.8;}
+
+  @media (max-width:960px){
+    .pillars{grid-template-columns:repeat(2,1fr);}
+    .ops{grid-template-columns:repeat(2,1fr);}
+    .duo{grid-template-columns:1fr;}
+    .stages{grid-template-columns:1fr;}
+    .expand .steps{grid-template-columns:1fr 1fr;}
+    .expand .arrow{display:none;}
+    .hero h1{font-size:26px;}
+  }
+  @media (max-width:560px){
+    .pillars{grid-template-columns:1fr;}
+    .ops{grid-template-columns:1fr;}
+    .expand .steps{grid-template-columns:1fr;}
+  }
+</style>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJQYWdlc0h1YiI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiNjODE2MWQiLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMiAzMikgc2NhbGUoMS4yNCkgdHJhbnNsYXRlKC0zMiAtMzIpIj4KICAgIDxwYXRoCiAgICAgIGQ9Ik0xOSA1MWM1LjYtMTEuOCA4LTI1LjUgNy4yLTQxIDcuMiAwIDEzLjEgMS4yIDE3LjYgMy42IDQuNyAyLjUgNyA2LjQgNyAxMS41IDAgNC43LTEuOCA4LjQtNS41IDExLjEtMy42IDIuNy04LjcgNC4xLTE1LjQgNC4xaC0zLjdjLTEuMSA0LTIuNSA3LjYtNCAxMC43SDE5WiIKICAgICAgZmlsbD0iI2ZmZiIKICAgICAgc3Ryb2tlPSIjZmZmIgogICAgICBzdHJva2Utd2lkdGg9IjIuMiIKICAgICAgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIKICAgIC8+CiAgICA8cGF0aAogICAgICBkPSJNMzAuOCAxNy4xYy4yIDUuNS0uMiAxMC42LTEuMiAxNS40aDIuMmM0LjYgMCA4LS43IDEwLjItMi4yIDIuMi0xLjUgMy4zLTMuNSAzLjMtNiAwLTIuNy0xLjItNC41LTMuNy01LjYtMi4zLTEuMS01LjktMS42LTEwLjgtMS42WiIKICAgICAgZmlsbD0iI2M4MTYxZCIKICAgIC8+CiAgPC9nPgo8L3N2Zz4K"></head>
+<body data-theme="light"><!-- PagesHub chrome -->
+<style>
+.pagehub-render-chrome{position:fixed;top:12px;right:16px;z-index:2147483647;font:11px/1.4 "JetBrains Mono","SF Mono",ui-monospace,Menlo,monospace;color:#fff;max-width:calc(100vw - 24px)}
+.pagehub-render-chrome details{position:relative}
+.pagehub-render-chrome summary{list-style:none;display:flex;align-items:center;gap:6px;cursor:grab;user-select:none;background:rgba(20,22,28,.9);border-radius:6px;padding:5px 8px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.pagehub-render-chrome summary:active{cursor:grabbing}
+.pagehub-render-chrome summary::-webkit-details-marker{display:none}
+.pagehub-render-chrome .mark{width:8px;height:8px;border-radius:2px;background:#c8161d}
+.pagehub-render-chrome .summary-text{font-size:10px;color:rgba(255,255,255,.72)}
+.pagehub-render-chrome .panel{position:absolute;right:0;top:32px;width:min(320px,calc(100vw - 32px));padding:12px;border:1px solid rgba(255,255,255,.14);border-radius:8px;background:rgba(20,22,28,.94);box-shadow:0 8px 26px rgba(0,0,0,.25)}
+.pagehub-render-chrome.is-moved .panel{right:auto;left:0}
+.pagehub-render-chrome.is-moved.panel-align-right .panel{left:auto;right:0}
+.pagehub-render-chrome .title{font:600 13px/1.4 Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;margin-bottom:6px;overflow-wrap:anywhere}
+.pagehub-render-chrome .row{display:grid;grid-template-columns:52px minmax(0,1fr);gap:10px;align-items:start;margin-top:5px}
+.pagehub-render-chrome .label{color:rgba(255,255,255,.52)}
+.pagehub-render-chrome .value{color:rgba(255,255,255,.86);overflow-wrap:anywhere}
+.pagehub-render-chrome .section{margin-top:9px;padding-top:8px;border-top:1px solid rgba(255,255,255,.12)}
+.pagehub-render-chrome .uploader{display:flex;align-items:center;gap:6px;flex-wrap:wrap;color:#fff}
+.pagehub-render-chrome .agent-tip{position:relative;display:inline-flex;align-items:center;outline:none}
+.pagehub-render-chrome .agent-badge{border-radius:999px;background:rgba(200,22,29,.22);color:#fff;padding:1px 6px;font-size:10px;white-space:nowrap}
+.pagehub-render-chrome .agent-tip-panel{display:none;position:absolute;z-index:2;right:0;top:calc(100% + 5px);width:max-content;max-width:240px;padding:5px 7px;border:1px solid rgba(255,255,255,.2);border-radius:4px;background:#fff;color:#20232a;font:500 11px/1.4 Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;white-space:normal;overflow-wrap:anywhere;box-shadow:0 4px 12px rgba(0,0,0,.22)}
+.pagehub-render-chrome .agent-tip:hover .agent-tip-panel,.pagehub-render-chrome .agent-tip:focus .agent-tip-panel,.pagehub-render-chrome .agent-tip:focus-within .agent-tip-panel{display:block}
+.pagehub-render-chrome .logout{margin-top:10px;width:100%;border:1px solid rgba(255,255,255,.18);border-radius:6px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.9);padding:6px 8px;font:600 11px/1.3 Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;cursor:pointer}
+.pagehub-render-chrome .logout:hover{background:rgba(200,22,29,.24);border-color:rgba(200,22,29,.5);color:#fff}
+</style>
+<div class="pagehub-render-chrome" data-pagehub-draggable="true" aria-label="PagesHub 页面工具条">
+  <details>
+    <summary title="点击展开，拖动可移动位置"><span class="mark"></span><span class="summary-text">展开</span></summary>
+    <div class="panel">
+      <div class="title">DataAgent项目落地方法论</div>
+      <div class="row"><div class="label">作者</div><div class="value uploader">余聪勇</div></div>
+      <div class="row"><div class="label">创建时间</div><div class="value">2026-08-31 11:52</div></div>
+      <div class="row"><div class="label">更新时间</div><div class="value">2026-08-31 11:52 · 版本 1</div></div>
+      
+      <button class="logout" type="button" onclick="fetch('/auth/render/logout',{method:'POST',credentials:'same-origin'}).finally(function(){window.location.reload();})">退出当前页面登录</button>
+    </div>
+  </details>
+</div>
+<script>
+(function(){
+  var root=document.querySelector('.pagehub-render-chrome[data-pagehub-draggable="true"]');
+  if(!root||!window.PointerEvent)return;
+  var summary=root.querySelector('summary');
+  var details=root.querySelector('details');
+  var key='pagehub.renderChrome.position';
+  function clamp(value,min,max){return Math.max(min,Math.min(max,value));}
+  function apply(pos){
+    var w=root.offsetWidth||80,h=root.offsetHeight||28;
+    var left=clamp(pos.left,8,Math.max(8,window.innerWidth-w-8));
+    var top=clamp(pos.top,8,Math.max(8,window.innerHeight-h-8));
+    root.style.left=left+'px';root.style.top=top+'px';root.style.right='auto';root.style.bottom='auto';root.classList.add('is-moved');
+    root.classList.toggle('panel-align-right',left>window.innerWidth-340);
+  }
+  try{var saved=JSON.parse(localStorage.getItem(key)||'null');if(saved&&typeof saved.left==='number'&&typeof saved.top==='number')apply(saved);}catch(e){}
+  var state=null,blockClick=false;
+  summary.addEventListener('pointerdown',function(e){
+    if(e.button!==0)return;
+    var rect=root.getBoundingClientRect();
+    state={startX:e.clientX,startY:e.clientY,left:rect.left,top:rect.top,moved:false};
+    summary.setPointerCapture(e.pointerId);
+  });
+  summary.addEventListener('pointermove',function(e){
+    if(!state)return;
+    var dx=e.clientX-state.startX,dy=e.clientY-state.startY;
+    if(!state.moved&&Math.abs(dx)+Math.abs(dy)<4)return;
+    state.moved=true;blockClick=true;
+    if(details)details.open=false;
+    apply({left:state.left+dx,top:state.top+dy});
+  });
+  summary.addEventListener('pointerup',function(e){
+    if(!state)return;
+    if(state.moved){
+      try{localStorage.setItem(key,JSON.stringify({left:parseFloat(root.style.left)||8,top:parseFloat(root.style.top)||8}));}catch(err){}
+    }
+    state=null;
+    try{summary.releasePointerCapture(e.pointerId);}catch(err){}
+  });
+  summary.addEventListener('click',function(e){if(blockClick){e.preventDefault();blockClick=false;}},true);
+  window.addEventListener('resize',function(){
+    if(root.classList.contains('is-moved'))apply({left:parseFloat(root.style.left)||8,top:parseFloat(root.style.top)||8});
+  });
+})();
+</script>
+
+<!-- ================= HERO ================= -->
+<div class="hero">
+  <div class="wrap">
+    <span class="tag">内部方法论</span>
+    <h1>Data Agent <span class="accent">项目落地方法论</span></h1>
+    <p class="sub">
+      项目落地分两大阶段：<span class="b">交付阶段</span>解决验收问题，<span class="r">运营阶段</span>解决价值持续性问题。
+      无论哪个阶段，<b>用户都全程参与</b>。AI 时代以场景切入让用户感知价值，更要让客户具备创造场景的能力——<span class="r">以场景切入，以点扩面</span>。
+    </p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ================= 01 核心命题 ================= -->
+  <section>
+    <div class="sec-head"><span class="sec-no">01</span><h2>核心命题：项目标准</h2><span class="tag">一切从"什么叫成功"开始</span></div>
+    <div class="thesis">
+      <div class="q">一个 Data Agent 项目，<span>第一件事是确定项目标准</span>。</div>
+      <div class="a">
+        很多人不清楚项目标准是什么——团队凭感觉做，客户凭感觉验收，标准悬空，后期全是"预期管理"的拉扯。
+        标准不立，方法无效。整个项目落地逻辑，从回答"什么叫成功"开始。
+      </div>
+      <div class="std-formula">验收标准 = 核心问题列表 + 数值目标 + 双方签字</div>
+    </div>
+  </section>
+
+  <!-- ================= 02 两种导向论 ================= -->
+  <section>
+    <div class="sec-head"><span class="sec-no">02</span><h2>两种导向论</h2><span class="tag">标准的两种定义方式，没有对错，只有选择</span></div>
+    <div class="duo">
+      <div class="duo-card value">
+        <span class="tag2">价值导向论</span>
+        <h3>客户使用者觉得好不好用</h3>
+        <div class="def">以体验和业务价值为尺度：能不能用起来、用起来顺不顺、有没有解决业务问题。</div>
+        <div class="core">
+          <b>量化维度</b>
+          <ul>
+            <li>使用率 / 活跃度 / 留存</li>
+            <li>任务完成率、操作效率</li>
+            <li>满意度评分</li>
+            <li>业务结果指标（工单时长、检索复用率等）</li>
+          </ul>
+        </div>
+        <div class="risk"><b>风险：</b>主观、难横向比较，容易被"感觉"带偏——今天说好明天说不好，无据可查。</div>
+      </div>
+      <div class="duo-card acc">
+        <span class="tag2">准确性导向论</span>
+        <h3>答案准不准</h3>
+        <div class="def">以答案质量为尺度：问得对不对、答得准不准、错了能不能被识别。</div>
+        <div class="core">
+          <b>量化维度</b>
+          <ul>
+            <li>准确率 / 命中率</li>
+            <li>置信度分布</li>
+            <li>反馈率、纠错闭环率</li>
+            <li>问题类型分布（检索/口径/规则/幻觉）</li>
+          </ul>
+        </div>
+        <div class="risk"><b>风险：</b>准确 ≠ 有用——答得全对但没人用，项目照样失败；盲目追求 100% 准确可能把项目拖死。</div>
+      </div>
+    </div>
+
+    <!-- 导向选择 -->
+    <div class="choice">
+      <div class="head">
+        <span class="tag3">导向选择</span>
+        <span class="t1">本方法论倾向准确性导向</span>
+        <span class="tag3" style="background:var(--red-soft);color:var(--red-deep);border:1px solid #f0c8c8;">不盲目追求 100% 准确</span>
+        <span class="t2">价值定方向，准确性定量尺</span>
+      </div>
+      <div class="ch-row">
+        <div class="ch-no">1</div>
+        <div class="ch-body">
+          <div class="ch-t">价值导向的软肋：价值由用户主导，但未必得到所有人认可</div>
+          <div class="ch-d">场景的价值性由用户主导——用户觉得有价值，才有价值。但<b>用户主导的价值，未必能得到所有人的认可</b>：使用者认可、管理者未必；业务认可、IT 未必。多方视角不同，价值共识难达成，量化的价值指标也难以获得一致背书。</div>
+        </div>
+      </div>
+      <div class="ch-row">
+        <div class="ch-no">2</div>
+        <div class="ch-body">
+          <div class="ch-t">准确性导向的落点：基于用户提出的问题，回归测试得到一个值</div>
+          <div class="ch-d">准确性的标准可以落地为可操作的动作：<b>基于用户提出的问题进行回归性测试，得到一个客观数值</b>。这个值可复现、可对比、可验收，不依赖任何人的主观认可——测试输入来自用户真实问题，结果由机器判定。</div>
+        </div>
+      </div>
+      <!-- 结论 -->
+      <div class="conclusion">
+        <div class="t">价值定方向 · 准确性定量尺</div>
+        <div class="d">场景价值由用户主导（方向），准确性用回归测试量化（量尺）——<b>以用户真实问题为测试输入，把价值变成可验收的数</b>。项目标准因此：</div>
+        <div class="tags">
+          <span class="tag4">可定义</span>
+          <span class="tag4">可执行</span>
+          <span class="tag4">可争论</span>
+          <span class="tag4">可服众</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 两大阶段总览 ================= -->
+  <section>
+    <div class="sec-head"><span class="sec-no">03</span><h2>项目落地的两大阶段</h2><span class="tag">交付解决验收，运营解决价值持续性</span></div>
+    <div class="stages">
+      <div class="stage deliver">
+        <span class="ph">阶段一</span>
+        <h3>交付阶段</h3>
+        <div class="prob"><b>解决的命题：验收问题</b>——做得对不对</div>
+        <div class="desc">
+          以数据化标准为验收依据，通过四支柱（沟通标准化、自动化构建场景、自动化测案例、标准化排错）把项目做到"经得起验收"。
+          交付阶段的终点是：<b>数据化标准逐条达成，双方确认验收。</b>
+        </div>
+        <div class="items">
+          <div class="lbl">核心内容（见第 05 章）</div>
+          <ul>
+            <li>标准定义：数据化、可验收、双方签字</li>
+            <li>四支柱执行：沟通标准化 → 自动构建场景 → 自动测案例 → 标准化排错</li>
+            <li>用户参与：共同定义标准、确认口径、参与验收</li>
+          </ul>
+        </div>
+      </div>
+      <div class="stage operate">
+        <span class="ph">阶段二</span>
+        <h3>运营阶段</h3>
+        <div class="prob"><b>解决的命题：价值持续性问题</b>——价值能不能持续</div>
+        <div class="desc">
+          验收通过不是终点，价值持续才是终点。运营阶段让数据化标准持续被监测、知识持续生长、场景持续扩展。
+          运营阶段的终点是：<b>价值持续增长，客户拥有创造场景的能力，以点扩面。</b>
+        </div>
+        <div class="items">
+          <div class="lbl">核心内容（见第 06 章）</div>
+          <ul>
+            <li>价值监测：后台数据可视化看板，活跃度与问题持续追踪</li>
+            <li>用户赋能：让客户有能力，场景变化与创造由客户发起</li>
+            <li>以点扩面：小部门 → 多部门 → 多分公司扩散，大赛收集场景</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 用户参与横幅 -->
+    <div class="join">
+      <div class="ic">🤝</div>
+      <div class="txt">
+        <div class="t1">贯穿两阶段：用户参与原则</div>
+        <div class="t2">
+          无论交付阶段还是运营阶段，用户都必须参与进来——不是被服务的对象，而是共建者。
+          交付阶段用户参与标准与验收；运营阶段用户参与使用与创造。
+        </div>
+      </div>
+      <div class="points">
+        <div class="pt"><div class="n">交付阶段 · 参与验收</div><div class="v">共同定义标准 · 确认口径 · 逐条验收</div></div>
+        <div class="pt"><div class="n">运营阶段 · 参与创造</div><div class="v">使用中反馈 · 创造新场景 · 拥有能力</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 04 核心策略：以点扩面 ================= -->
+  <section>
+    <div class="sec-head"><span class="sec-no">04</span><h2>核心策略：以场景切入，以点扩面</h2><span class="tag">场景是价值的载体，扩面是价值的放大</span></div>
+    <div class="expand">
+      <div class="steps">
+        <div class="step st1">
+          <div class="n">点</div>
+          <div class="t">场景切入</div>
+          <div class="d">选一个验证过的核心场景做出价值——AI 时代，用户通过场景感知价值，"好用"来自具体场景里的真实体验</div>
+        </div>
+        <div class="step st2">
+          <div class="n">线</div>
+          <div class="t">场景复制</div>
+          <div class="d">把验证过的方法、标准、知识资产复制到相关场景，成本远低于从零开始</div>
+        </div>
+        <div class="step st3">
+          <div class="n">面</div>
+          <div class="t">场景扩展</div>
+          <div class="d">用户参与新场景的提出与创造——客户有能力，才能持续扩展</div>
+        </div>
+        <div class="step st4">
+          <div class="n">全</div>
+          <div class="t">业务覆盖</div>
+          <div class="d">从点到面覆盖核心业务，价值持续放大，客户拥有自主创造场景的能力</div>
+        </div>
+      </div>
+      <div class="note">
+        关键认知：<b>场景会变化，未来场景需要客户有能力创造</b>——所以项目落地不只是交付一个可用系统，而是让客户拥有持续创造价值的能力。
+        以点扩面，点是我们的切入点，面是客户自己的生长。
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 交付阶段：四支柱 ================= -->
+  <section>
+    <div class="sec-head"><span class="sec-no">05</span><h2>交付阶段：四支柱</h2><span class="tag">解决验收问题 · 数据化标准逐条达成</span></div>
+    <div class="chain">
+      四支柱是<span class="arrow">接力</span>不是并列：<b>沟通标准化</b>把验收标准定下来 <span class="arrow">→</span> <b>自动化构建场景</b>把标准变成问题集 <span class="arrow">→</span> <b>自动化测案例</b>把问题集跑成数值 <span class="arrow">→</span> <b>标准化排错</b>守住数值的稳定。
+    </div>
+    <div class="pillars">
+      <div class="pillar p1">
+        <div class="idx">PILLAR 01</div>
+        <div class="ic">🗣️</div>
+        <h3>沟通标准化</h3>
+        <div class="why">项目事故一半以上发生在"没对齐"——需求、口径、承诺、验收。把"和人打交道"变成有模板、有清单、有留痕的标准动作，三个标准化：</div>
+        <div class="acts">
+          <div class="sub"><i>①</i> 标准话术挖掘场景</div>
+          <ul>
+            <li>场景价值挖掘标准化：价值问卷调研、访谈话术模板</li>
+            <li>同一套问题挖出客户真实场景与价值点，不靠临场发挥</li>
+          </ul>
+          <div class="sub"><i>②</i> 标准问题列表 → 验收标准</div>
+          <ul>
+            <li>场景核心问题列表定数量（如 20+ 条）</li>
+            <li>准确性目标定数值（如命中率 ≥ 90%）</li>
+            <li>验收标准 = 问题列表 + 数值目标，启动即写死</li>
+          </ul>
+          <div class="sub"><i>③</i> 标准流程推进项目</div>
+          <ul>
+            <li>推进模式启动即定：站会怎么开、过什么内容、节奏如何</li>
+            <li>口径对齐、验收确认延续同一套模板与留痕</li>
+          </ul>
+        </div>
+        <div class="chk"><b>验收：</b>对接记录可追溯；换人对接，问出的信息一致。</div>
+      </div>
+
+      <div class="pillar p2">
+        <div class="idx">PILLAR 02</div>
+        <div class="ic">🧩</div>
+        <h3>自动化构建场景</h3>
+        <div class="why">自动化只投在"规模化、重复、高成本"的动作上——场景构建的自动化 = 基于问题列表快速技术选型 + 开放产品接口批量构建，其余不折腾。</div>
+        <div class="acts">
+          <div class="sub"><i>①</i> 问题列表 → 快速技术选型</div>
+          <ul>
+            <li>问数产品两大技术路线：宽表问数（NL2SQL）/ 指标问数（指标语义）</li>
+            <li>基于问题列表自动判断选型：问题模式 → 技术路线</li>
+            <li>现状判断：大型企业指标问数仍是主流</li>
+          </ul>
+          <div class="sub"><i>②</i> 产品开放核心接口，AI 批量创建</div>
+          <ul>
+            <li>产品提供 CLI 能力：核心工作接口可编程调用</li>
+            <li>如：AI 快速批量创建指标，替代人工逐条配置</li>
+            <li>规模化动作自动化，人效提升显著</li>
+          </ul>
+          <div class="sub"><i>③</i> 自动化的边界</div>
+          <ul>
+            <li>只有大规模指标构建类场景值得自动化</li>
+            <li>其余初始化成本不高，不做过度自动化</li>
+          </ul>
+          <div class="sub"><i>④</i> 业务助手发布规范</div>
+          <ul>
+            <li>准备多个业务助手：测试 / 基线 / 生产，分层管理</li>
+            <li>依次审核后上线：测试通过 → 基线确认 → 生产发布</li>
+            <li>保障生产业务助手的稳定性</li>
+          </ul>
+        </div>
+        <div class="chk"><b>验收：</b>技术选型由问题列表驱动、有据可查；批量创建类动作由 AI 完成；生产业务助手经测试/基线审核后发布。</div>
+      </div>
+
+      <div class="pillar p3">
+        <div class="idx">PILLAR 03</div>
+        <div class="ic">🤖</div>
+        <h3>自动化测案例</h3>
+        <div class="why">测试是 Data Agent 项目极为耗时的环节——100 条问题跑批，第 98 条出问题，改一条提示词，全部问题重跑一遍。循环测试的耗时是隐性黑洞，自动化是唯一的解。</div>
+        <div class="acts">
+          <div class="sub"><i>①</i> 问题列表录入 + 校对规则</div>
+          <ul>
+            <li>问题列表全量录入测试集（来自沟通标准化的核心问题列表）</li>
+            <li>首次设置校对规则：核心 = 比对 SQL 生成规则 + 思维链判断准确性</li>
+          </ul>
+          <div class="sub"><i>②</i> 循环跑批，产出三个关键值</div>
+          <ul>
+            <li>准确性值：全量问题的对错比率</li>
+            <li>稳定性值：多次跑批结果的一致程度</li>
+            <li>收敛值：多轮迭代后问题逐步收敛的趋势</li>
+          </ul>
+          <div class="sub"><i>③</i> 自动化回归，消除循环耗时</div>
+          <ul>
+            <li>任何变更（提示词 / 知识 / 语义）→ 自动全量重跑</li>
+            <li>知数类 agent 产品已提供自动化测试能力，直接启用</li>
+          </ul>
+        </div>
+        <div class="chk"><b>验收：</b>准确性 / 稳定性 / 收敛值持续记录；问题列表即验收报告——用数据说服甲方，比任何表述都有力。</div>
+      </div>
+
+      <div class="pillar p4">
+        <div class="idx">PILLAR 04</div>
+        <div class="ic">🧯</div>
+        <h3>标准化排错</h3>
+        <div class="why">Data Agent 属于市场新品，产品自身问题与数据问题排查都极度耗时——排错效率决定交付人效的天花板。解法 = 排错 Skill 化：机器先排，人只处理机器排不了的。</div>
+        <div class="acts">
+          <div class="sub"><i>①</i> 问题分类 + 固定排查路径</div>
+          <ul>
+            <li>问题分类：检索 / 口径 / 规则 / 幻觉，分类定路径</li>
+            <li>每类问题固定排查 SOP，不临场发挥</li>
+          </ul>
+          <div class="sub"><i>②</i> 排错 Skill 化：售后业务助手承载</div>
+          <ul>
+            <li>在售后业务助手上配置一系列排查问题的 Skill</li>
+            <li>提问 → 澄清 → 规则检索 → 兜底 → 沉淀的排错工作流</li>
+            <li>降低排错难度，提升排错效率</li>
+            <li><a href="https://p.pages-hub.netease.im/p/c13b44fcb62546af92b9f7" target="_blank" style="color:var(--blue-deep);font-weight:700;">售后业务助手解决方案 →</a></li>
+          </ul>
+          <div class="sub"><i>③</i> 留痕沉淀 + 根因提报</div>
+          <ul>
+            <li>排错留痕：现象 → 根因 → 解法 → 防复发，回流知识库</li>
+            <li>根因提报：同类问题聚类后一次提报，解决一类</li>
+          </ul>
+        </div>
+        <div class="chk"><b>验收：</b>同类问题重复出现率下降；排错记录全部可查；售后业务助手承担标准排错入口。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 06 运营阶段：三支柱 ================= -->
+  <section>
+    <div class="sec-head"><span class="sec-no">06</span><h2>运营阶段：三支柱</h2><span class="tag">解决价值持续性 · 三支柱保障价值生长</span></div>
+    <div class="ops">
+      <div class="op">
+        <div class="idx">OP 01</div>
+        <div class="ic">📊</div>
+        <h3>价值监测</h3>
+        <div class="why">验收通过后，标准不能丢。交付阶段的量化指标继续在运营阶段被监测——价值是否持续，由数据说话，不靠感觉。</div>
+        <div class="acts">
+          <div class="sub"><i>①</i> 后台数据 → 可视化看板</div>
+          <ul>
+            <li>运营看板：活跃度、使用率、命中率、反馈数可视化呈现</li>
+            <li>了解用户行为：谁在用、怎么用、用得多不多</li>
+          </ul>
+          <div class="sub"><i>②</i> 看活跃度，定位具体问题</div>
+          <ul>
+            <li>活跃度追踪：活跃变化即价值信号，下滑即预警</li>
+            <li>下钻到具体问题：未命中、低置信度、反馈集中的问题逐条定位</li>
+          </ul>
+          <div class="sub"><i>③</i> 持续优化业务助手性能</div>
+          <ul>
+            <li>问题驱动优化：看板发现的问题反哺知识、语义、规则</li>
+            <li>优化闭环：看板发现问题 → 定位 → 优化 → 回归验证 → 看板确认</li>
+          </ul>
+        </div>
+        <div class="chk"><b>验收：</b>价值指标有持续记录；下滑有归因、有处置、有闭环；看板问题反哺助手性能提升。</div>
+      </div>
+
+      <div class="op">
+        <div class="idx">OP 02</div>
+        <div class="ic">🎓</div>
+        <h3>用户赋能</h3>
+        <div class="why">场景会变化，未来场景需要客户有能力创造。用户赋能 = 方法论全程参与 + 使用者培训与调研 + 工作经验 SOP 化——让客户从使用者变成创造者。</div>
+        <div class="acts">
+          <div class="sub"><i>①</i> 方法论全程参与</div>
+          <ul>
+            <li>交付方法论客户全程参与：让用户学会场景交付方法论</li>
+            <li>理解运营持续的重要性：价值持续性靠运营，不是上线即结束</li>
+          </ul>
+          <div class="sub"><i>②</i> 使用者赋能：培训 + 满意度调研</div>
+          <ul>
+            <li>组织 AI 培训：让业务助手使用者会用、用好、有兴趣</li>
+            <li>使用满意度调研：体验数据化，驱动持续改进</li>
+          </ul>
+          <div class="sub"><i>③</i> Skill 培训：工作经验 SOP 化</div>
+          <ul>
+            <li>让每个业务人员把自己的工作经验 SOP 化</li>
+            <li>业务人员从使用者变成沉淀者与创造者</li>
+          </ul>
+        </div>
+        <div class="chk"><b>验收：</b>客户能独立维护知识与提出新场景；满意度有持续调研记录；业务人员 SOP 沉淀量持续上升。</div>
+      </div>
+
+      <div class="op">
+        <div class="idx">OP 03</div>
+        <div class="ic">🌱</div>
+        <h3>以点扩面</h3>
+        <div class="why">一个场景的价值是点，业务面的价值是面。以点扩面 = 组织扩散 + 场景收集机制 + 产品能力反哺——让企业的业务助手场景矩阵越来越丰富，也让我们的角色从交付一个场景变成可持续陪跑。</div>
+        <div class="acts">
+          <div class="sub"><i>①</i> 扩散路径：小部门 → 多部门 → 多分公司</div>
+          <ul>
+            <li>从小部门起步，验证后向多部门、多分公司持续扩散</li>
+            <li>每扩一层，复用已验证的标准、知识资产与用例库，成本递减</li>
+          </ul>
+          <div class="sub"><i>②</i> 场景收集机制：大赛 + 培训分享</div>
+          <ul>
+            <li>以大赛方式收集场景：鼓励全员参与，挖掘新场景、推动立项</li>
+            <li>通过培训分享等方式持续发现场景机会，鼓励大家落地</li>
+          </ul>
+          <div class="sub"><i>③</i> 产品能力反哺，场景矩阵丰富化</div>
+          <ul>
+            <li>新场景持续反哺产品能力，产品随使用不断进化</li>
+            <li>企业的业务助手场景矩阵越来越丰富</li>
+          </ul>
+          <div class="sub"><i>④</i> 角色定位：从立项场景到可持续陪跑</div>
+          <ul>
+            <li>不只是一个立项场景的一次性交付</li>
+            <li>从一个场景变成可持续陪跑：持续参与、持续运营、持续扩展</li>
+          </ul>
+        </div>
+        <div class="chk"><b>验收：</b>扩散路径清晰（小部门 → 多部门 → 多分公司）；大赛 / 培训持续产出新场景立项；场景矩阵数量持续增长；客户关系走向可持续陪跑。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 07 闭环 ================= -->
+  <section>
+    <div class="sec-head"><span class="sec-no">07</span><h2>数据回流：校准标准，闭环自进化</h2><span class="tag">跨越两阶段的持续回路</span></div>
+    <div class="thesis" style="border-left-color:var(--blue);">
+      <div class="q">标准不是一次定死的。<span style="color:var(--blue)">交付阶段用数据验证标准，运营阶段用数据校准标准。</span></div>
+      <div class="a">
+        每个场景的运行数据都在回答"这个标准定得对不对、价值是否持续"——回流校准，越用越准。
+        交付阶段以数据化标准验收；运营阶段以数据证明价值、发现新场景；数据回流让标准更新，驱动下一轮扩展。
+        这正是"以点扩面"能够持续的原因：<b>每一次扩展，都带着已验证的标准和数据。</b>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 08 执行检查清单 ================= -->
+  <section>
+    <div class="sec-head"><span class="sec-no">08</span><h2>执行检查清单</h2><span class="tag">七支柱最小动作 · 项目启动即对照</span></div>
+    <div class="checklist">
+      <div class="check-item"><div class="box"></div><div><b>项目标准</b>：与客户共同定义验收标准（核心问题列表 + 数值目标），双方签字确认<div class="who">启动时 · 客户 + 交付</div></div></div>
+      <div class="check-item"><div class="box"></div><div><b>沟通标准化</b>：标准话术 / 问卷完成场景挖掘；推进模式（站会 / 周报内容）启动即定<div class="who">启动时 · 交付</div></div></div>
+      <div class="check-item"><div class="box"></div><div><b>自动化构建场景</b>：问题列表完成技术选型（宽表 / 指标）；指标批量创建走 CLI；测试 / 基线 / 生产业务助手分级发布<div class="who">交付期 · 交付 + 产品</div></div></div>
+      <div class="check-item"><div class="box"></div><div><b>自动化测案例</b>：问题列表录入测试集；校对规则设置（SQL 比对 + 思维链）；跑批拿到准确性 / 稳定性 / 收敛值<div class="who">交付期 · 交付</div></div></div>
+      <div class="check-item"><div class="box"></div><div><b>标准化排错</b>：问题分类 + 排错 SOP 就位；售后业务助手承载排错；留痕回流知识库<div class="who">交付期 · 交付 + 售后</div></div></div>
+      <div class="check-item"><div class="box"></div><div><b>价值监测</b>：可视化看板上线（活跃度 / 命中率 / 反馈数）；问题定位 → 优化 → 回归闭环在跑<div class="who">运营期 · 交付 + 客户</div></div></div>
+      <div class="check-item"><div class="box"></div><div><b>用户赋能</b>：AI 培训 + 满意度调研启动；业务人员工作经验 SOP 化开启<div class="who">运营期 · 交付 + 客户</div></div></div>
+      <div class="check-item"><div class="box"></div><div><b>以点扩面</b>：扩散路径明确（小部门 → 多部门 → 多分公司）；场景收集机制（大赛 / 培训）建立<div class="who">运营期 · 客户主导</div></div></div>
+    </div>
+  </section>
+
+  <!-- ================= 09 底部架构图 ================= -->
+  <div class="arch">
+    <div class="title"><span class="bar"></span>Data Agent 项目落地总架构</div>
+    <div class="sub">标准为核 · 用户参与 · 两阶段承接 · 以点扩面 · 数据回流自进化</div>
+    <svg viewBox="0 0 1060 640" xmlns="http://www.w3.org/2000/svg" font-family="'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif">
+      <defs>
+        <marker id="arr" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+          <path d="M0,0 L10,4 L0,8 Z" fill="#0e5fd8"></path>
+        </marker>
+        <marker id="arrR" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+          <path d="M0,0 L10,4 L0,8 Z" fill="#c20c0c"></path>
+        </marker>
+      </defs>
+
+      <!-- 阶段标签 -->
+      <rect x="60" y="20" width="180" height="34" rx="17" fill="#e8f0fc" stroke="#0e5fd8" stroke-width="1.5"></rect>
+      <text x="150" y="42" text-anchor="middle" font-size="14" font-weight="800" fill="#0a459e">交付阶段 · 解决验收问题</text>
+
+      <rect x="60" y="380" width="180" height="34" rx="17" fill="#fdecec" stroke="#c20c0c" stroke-width="1.5"></rect>
+      <text x="150" y="402" text-anchor="middle" font-size="14" font-weight="800" fill="#8f0a0a">运营阶段 · 解决价值持续性</text>
+
+      <!-- 交付阶段四支柱 -->
+      <rect x="60" y="76" width="220" height="80" rx="14" fill="#e8f0fc" stroke="#0e5fd8" stroke-width="2"></rect>
+      <text x="170" y="106" text-anchor="middle" font-size="15" font-weight="800" fill="#0a459e">① 沟通标准化</text>
+      <text x="170" y="128" text-anchor="middle" font-size="11.5" fill="#4a6ea8">准入 · 需求 · 口径 · 标准确认</text>
+
+      <rect x="300" y="76" width="220" height="80" rx="14" fill="#e8f0fc" stroke="#0e5fd8" stroke-width="2"></rect>
+      <text x="410" y="106" text-anchor="middle" font-size="15" font-weight="800" fill="#0a459e">② 自动化构建场景</text>
+      <text x="410" y="128" text-anchor="middle" font-size="11.5" fill="#4a6ea8">技术选型 · CLI 批量构建 · 分级发布</text>
+
+      <rect x="540" y="76" width="220" height="80" rx="14" fill="#e8f0fc" stroke="#0e5fd8" stroke-width="2"></rect>
+      <text x="650" y="106" text-anchor="middle" font-size="15" font-weight="800" fill="#0a459e">③ 自动化测案例</text>
+      <text x="650" y="128" text-anchor="middle" font-size="11.5" fill="#4a6ea8">校对规则 · 准确性/稳定性/收敛</text>
+
+      <rect x="780" y="76" width="220" height="80" rx="14" fill="#e8f0fc" stroke="#0e5fd8" stroke-width="2"></rect>
+      <text x="890" y="106" text-anchor="middle" font-size="15" font-weight="800" fill="#0a459e">④ 标准化排错</text>
+      <text x="890" y="128" text-anchor="middle" font-size="11.5" fill="#4a6ea8">排错 Skill · 业务助手承载 · 留痕沉淀</text>
+
+      <!-- 运营阶段三支柱 -->
+      <rect x="120" y="440" width="240" height="80" rx="14" fill="#fdecec" stroke="#c20c0c" stroke-width="2"></rect>
+      <text x="240" y="470" text-anchor="middle" font-size="15" font-weight="800" fill="#8f0a0a">⑤ 价值监测</text>
+      <text x="240" y="492" text-anchor="middle" font-size="11.5" fill="#a04545">可视化看板 · 活跃度 · 性能优化</text>
+
+      <rect x="400" y="440" width="240" height="80" rx="14" fill="#fdecec" stroke="#c20c0c" stroke-width="2"></rect>
+      <text x="520" y="470" text-anchor="middle" font-size="15" font-weight="800" fill="#8f0a0a">⑥ 用户赋能</text>
+      <text x="520" y="492" text-anchor="middle" font-size="11.5" fill="#a04545">方法论参与 · AI 培训 · SOP 化</text>
+
+      <rect x="680" y="440" width="240" height="80" rx="14" fill="#fdecec" stroke="#c20c0c" stroke-width="2"></rect>
+      <text x="800" y="470" text-anchor="middle" font-size="15" font-weight="800" fill="#8f0a0a">⑦ 以点扩面</text>
+      <text x="800" y="492" text-anchor="middle" font-size="11.5" fill="#a04545">部门/分公司扩散 · 大赛收集 · 陪跑</text>
+
+      <!-- 中心：项目标准 -->
+      <ellipse cx="530" cy="270" rx="190" ry="64" fill="#ffffff" stroke="#c20c0c" stroke-width="2.5"></ellipse>
+      <text x="530" y="256" text-anchor="middle" font-size="23" font-weight="800" fill="#8f0a0a">项目标准（数据量化）</text>
+      <text x="530" y="282" text-anchor="middle" font-size="12.5" fill="#a04545">价值由用户主导 · 准确性以回归测试量化</text>
+      <text x="530" y="303" text-anchor="middle" font-size="12.5" fill="#a04545">启动定义 · 交付验证 · 运营修正</text>
+
+      <!-- 箭头：标准 → 交付支柱 -->
+      <line x1="360" y1="220" x2="240" y2="160" stroke="#0e5fd8" stroke-width="2" marker-end="url(#arr)"></line>
+      <line x1="460" y1="214" x2="430" y2="158" stroke="#0e5fd8" stroke-width="2" marker-end="url(#arr)"></line>
+      <line x1="610" y1="214" x2="640" y2="158" stroke="#0e5fd8" stroke-width="2" marker-end="url(#arr)"></line>
+      <line x1="710" y1="220" x2="830" y2="160" stroke="#0e5fd8" stroke-width="2" marker-end="url(#arr)"></line>
+
+      <!-- 箭头：交付 → 运营（左） -->
+      <path d="M170,156 C170,340 240,380 240,438" fill="none" stroke="#0e5fd8" stroke-width="2.5" marker-end="url(#arr)"></path>
+
+      <!-- 箭头：运营 → 标准（回流，右） -->
+      <path d="M800,438 C800,380 700,340 640,330" fill="none" stroke="#c20c0c" stroke-width="2.5" stroke-dasharray="7,5" marker-end="url(#arrR)"></path>
+
+      <!-- 用户参与贯穿标注 -->
+      <rect x="390" y="560" width="280" height="48" rx="24" fill="#e8f0fc" stroke="#0e5fd8" stroke-width="1.5"></rect>
+      <text x="530" y="582" text-anchor="middle" font-size="14" font-weight="800" fill="#0a459e">🤝 用户参与贯穿两阶段</text>
+      <text x="530" y="600" text-anchor="middle" font-size="11" fill="#4a6ea8">交付参与验收 · 运营参与创造</text>
+
+      <!-- 回流标注 -->
+      <text x="860" y="368" text-anchor="middle" font-size="12" font-weight="700" fill="#c20c0c">数据回流 · 校准标准</text>
+    </svg>
+    <div class="legend">
+      <span><i style="background:#c20c0c"></i>核心：项目标准（数据量化，启动定义 / 交付验证 / 运营修正）</span>
+      <span><i style="background:#0e5fd8"></i>交付阶段：四支柱，解决验收问题</span>
+      <span><i style="background:#c20c0c"></i>运营阶段：三支柱，解决价值持续性问题</span>
+      <span><i style="background:#0e5fd8"></i>用户参与贯穿两阶段 · 以点扩面持续生长</span>
+    </div>
+  </div>
+
+  <!-- ================= footer ================= -->
+  <footer>
+    <b>说明：</b>本方法论以"项目标准"为第一性问题，以"数据量化"为贯穿铁律。项目落地分两大阶段——交付阶段以四支柱解决验收问题，运营阶段以三支柱解决价值持续性问题；用户参与贯穿始终；以场景切入、以点扩面是核心策略；数据回流校准标准，形成自进化闭环。
+  </footer>
+
+</div>
+
+
+<div class="time-converter-tooltip" role="tooltip" aria-live="polite" style="display: none;"></div></body></html>

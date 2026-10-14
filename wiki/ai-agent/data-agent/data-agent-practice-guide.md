@@ -5,7 +5,7 @@ aliases: [Data Agent Practice Guide, 数据智能体, 火山引擎Data Agent]
 tags: [big-data, ai-agent, practice, concept]
 sources: [2026/05/10/2025数据智能体实践指南-火山引擎-2025.pdf]
 created: 2026-05-10
-updated: 2026-05-10
+updated: 2026-10-14
 ---
 
 # 数据智能体实践指南
@@ -146,3 +146,4 @@ updated: 2026-05-10
 - [[code-agent-vs-data-agent]] — Code Agent 与 Data Agent 的根本差异
 - [[databricks-genie]] — Databricks Genie
 - [[infinisynapse]] — InfiniSynapse Data Agent 基础设施方案
+- [[data-agent-delivery-methodology]] — Data Agent 项目落地方法论：交付/运营两阶段（可与本文实施路径四阶段对照）

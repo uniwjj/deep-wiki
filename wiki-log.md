@@ -1158,3 +1158,14 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `claude-md-best-practices`、`agent-hook-governance`、`agent-skills-system`、`ai-agent-security` — 相关页面互链（官方 CLAUDE.md 工程实践/skill 工程实践/hook 确定性层/sandbox 精细化控制）
 - 复核记录：文中两处"小节标题无正文"实为 HtmlEmbed 组件块（Legacy systems 侧栏、Managed settings worked example、Resources 链接列表），已按完整原文内容撰写进 wiki，未遗漏
 - run `llm-wiki sync`
+
+## [2026-10-14] ingest | Data Agent 项目落地方法论（网易内部 PagesHub，作者余聪勇，2026-08-31）
+- 来源：https://p.pages-hub.netease.im/p/34b8d5f69f9f44878a1178（页面标注"内部方法论"，交付/运营全流程方法论，含底部 SVG 总架构图）
+- saved `sources/2026/10/14/`：原始 HTML（自包含，双击可读）+ 同名 .md sidecar
+- created `data-agent-delivery-methodology` — 方法论总纲：核心命题「项目标准」（验收标准 = 核心问题列表 + 数值目标 + 双方签字）、两种导向论（价值导向 vs 准确性导向；本方法论倾向准确性导向，"价值定方向，准确性定量尺"）、交付/运营两阶段与用户全程参与原则、以点扩面（点→线→面→全）、数据回流闭环、七支柱执行检查清单（8 项）
+- created `data-agent-delivery-pillars` — 交付四支柱详解（接力关系）：沟通标准化（三个标准化）、自动化构建场景（宽表/指标技术选型 + CLI 批量创建 + 测试/基线/生产分级发布 + 自动化边界）、自动化测案例（校对规则 SQL 比对+思维链 + 准确性/稳定性/收敛三值 + 自动化回归）、标准化排错（问题分类检索/口径/规则/幻觉 + 排错 Skill 化售后业务助手承载 + 留痕根因提报）；每支柱含验收标准
+- created `data-agent-ops-pillars` — 运营三支柱详解：价值监测（看板 + 活跃度下钻 + 优化闭环）、用户赋能（方法论参与 + 培训调研 + 经验 SOP 化）、以点扩面（小部门→多部门→多分公司 + 大赛收集 + 产品反哺 + 可持续陪跑）；每支柱含验收标准
+- updated `ai-agent/data-agent/index` — 新增「交付与运营方法论」分区收录 3 页
+- updated `ai-agent/index` — data-agent 44→47，描述补「交付与运营方法论」
+- updated `data-agent-practice-guide` — 相关页面互链（火山实施路径与本文两阶段对照）
+- run `llm-wiki sync`

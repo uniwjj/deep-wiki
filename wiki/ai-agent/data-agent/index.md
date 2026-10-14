@@ -5,7 +5,7 @@ aliases: [data-agent, Data Agent, AI 数据平台]
 tags: [ai-agent, big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-07-01
-updated: 2026-10-10
+updated: 2026-10-14
 ---
 
 # Data Agent 与 AI 数据平台
@@ -74,6 +74,12 @@ AI Agent 在数据领域的应用——Data Agent 产品、AI 原生数据平台
 - [[cainiao-data-warehouse-architecture]] — 菜鸟数仓未来架构
 - [[data-agent-practice-guide]] — 火山引擎数据智能体实践指南
 - [[dataworks-stock-case]] — 个人量化：用 Data Agent 搭建行情系统
+
+## 交付与运营方法论
+
+- [[data-agent-delivery-methodology]] — 项目落地方法论总纲：项目标准（价值定方向·准确性定量尺）、交付/运营两阶段、以点扩面、数据回流
+- [[data-agent-delivery-pillars]] — 交付阶段四支柱：沟通标准化 → 自动化构建场景 → 自动化测案例 → 标准化排错
+- [[data-agent-ops-pillars]] — 运营阶段三支柱：价值监测、用户赋能、以点扩面
 
 ## 相关页面
 
