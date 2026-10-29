@@ -68,8 +68,8 @@
     },
     "wiki/ai-ml/lmcache.md": {
       "path": "wiki/ai-ml/lmcache.md",
-      "mtime": 1793240142872.5913,
-      "contentHash": "69f747a49c7cc740",
+      "mtime": 1793241543272.8115,
+      "contentHash": "c2274846dc86833e",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-ml/ontology.md": {
@@ -470,8 +470,8 @@
     },
     "wiki/ai-agent/agent-core/data-ontology-agent-coevolution.md": {
       "path": "wiki/ai-agent/agent-core/data-ontology-agent-coevolution.md",
-      "mtime": 1793240976169.5896,
-      "contentHash": "6a70600ea59ba817",
+      "mtime": 1793241811313.585,
+      "contentHash": "02bc118b13413906",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/agent-core/document-ai-benchmark.md": {
@@ -842,8 +842,8 @@
     },
     "wiki/ai-agent/context-eng/agent-three-constraints.md": {
       "path": "wiki/ai-agent/context-eng/agent-three-constraints.md",
-      "mtime": 1793241167481.1943,
-      "contentHash": "e2e6fdf6bb479783",
+      "mtime": 1793241808226.9185,
+      "contentHash": "2f1500be12f5f7b9",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/context-eng/claude-md-best-practices.md": {
@@ -896,8 +896,8 @@
     },
     "wiki/ai-agent/data-agent/360-data-agent-semantic-layer.md": {
       "path": "wiki/ai-agent/data-agent/360-data-agent-semantic-layer.md",
-      "mtime": 1793241434502.0635,
-      "contentHash": "3a822b462c2e163a",
+      "mtime": 1793242025161.765,
+      "contentHash": "16e143c36b1e3733",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/data-agent/action-loop-agentcore.md": {
@@ -1004,8 +1004,8 @@
     },
     "wiki/ai-agent/data-agent/data-agent-onboarding.md": {
       "path": "wiki/ai-agent/data-agent/data-agent-onboarding.md",
-      "mtime": 1793241416048.9434,
-      "contentHash": "e6bf67d808d7a49d",
+      "mtime": 1793241594305.7502,
+      "contentHash": "af66a5ab144e44ae",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/data-agent/data-agent-ops-pillars.md": {
@@ -1166,8 +1166,8 @@
     },
     "wiki/ai-agent/data-agent/oceanbase-ontology-dataagent.md": {
       "path": "wiki/ai-agent/data-agent/oceanbase-ontology-dataagent.md",
-      "mtime": 1793241090812.4927,
-      "contentHash": "4527bdfd8863e8de",
+      "mtime": 1793241767765.2842,
+      "contentHash": "a138f2352ad7f0a8",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/data-agent/ontological-semantic-layer.md": {
@@ -1250,8 +1250,8 @@
     },
     "wiki/ai-agent/data-agent/xiaomi-dimi-data-agent.md": {
       "path": "wiki/ai-agent/data-agent/xiaomi-dimi-data-agent.md",
-      "mtime": 1793240964892.0857,
-      "contentHash": "62d11f0661b0f91a",
+      "mtime": 1793241711204.271,
+      "contentHash": "aee1945823da2dce",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/data-agent/xifei-data-agent-multicountry.md": {
@@ -1538,8 +1538,8 @@
     },
     "wiki/ai-agent/harness/gui-test-agent-posttraining.md": {
       "path": "wiki/ai-agent/harness/gui-test-agent-posttraining.md",
-      "mtime": 1793240674677.7002,
-      "contentHash": "5af46fb461023132",
+      "mtime": 1793241543031.3552,
+      "contentHash": "a726daf73d7904a7",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/harness/harness-as-backend.md": {
