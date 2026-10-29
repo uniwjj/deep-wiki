@@ -3,9 +3,9 @@ title: 数字员工
 description: AI Agent 作为数字员工的概念、生态与演进趋势
 aliases: [digital-employee, Digital Employee, 数字员工]
 tags: [ai-agent, concept]
-sources: [2026/05/10/lint-stub.md, "2026/09/07/重构协同：关于AI Native团队的思考.html", "2026/10/10/Multica 是什么——从源码看一个把 Agent 变成同事的系统.md"]
+sources: [2026/05/10/lint-stub.md, "2026/09/07/重构协同：关于AI Native团队的思考.html", "2026/10/10/Multica 是什么——从源码看一个把 Agent 变成同事的系统.md", "2026/10/29/2026DACon北京站/Agentic Workflow：数字员工与企业流程重构/董晓庆-2000多个数字员工在阿里上岗：Agent+Loop框架、MCP双模式与多Agent协同的落地经验.pdf", "2026/10/29/2026DACon北京站/Agentic Workflow：数字员工与企业流程重构/何碧宏-从工作流到智能体集群：企业级多租户数字员工的工程化落地与协同实践.pdf"]
 created: 2026-05-14
-updated: 2026-10-10
+updated: 2026-10-29
 status: draft
 ---
 
@@ -33,6 +33,12 @@ status: draft
 
 Multica（约 52.3k stars、驱动 26 种 Agent CLI、source-available）把数字员工理念落成了一套系统（官方 slogan「智能体，也在看板上」）：Agent 在系统里有**身份**（看板上可被指派的成员）、执行有**常驻 runtime**（daemon 让注册的机器随时领活，不需要一台开着的终端）、状态在**共享 issue** 上（跨人、跨会话可回溯）。其对比"终端里跑 CLI"的核心论点：前者是工具，后者是"可被派活的成员"——"能调用工单系统"和"能被工单系统调用"是两件事。同时它保持"Agent 不会自己开工"的原则（指派 / @ / 聊天 / Autopilot 才触发），run 完成 ≠ issue 完成。详见 [[multica]]。
 
+## 组织化落地：阿里 2000+ 数字员工（2026-10 补充）
+
+阿里（演讲嘉宾董晓庆，DACon 2026 北京站）把数字员工定义为被纳入企业组织架构的 AI 劳动力，并用六个维度与传统 Agent 区分：身份体系（组织身份 vs 独立会话）、权限管控（企业级细粒度 vs 会话级基础权限）、知识管理（长期记忆 vs 上下文管理）、业务接入（深度集成 vs 标准 API）、交互方式（多渠道主动触达 vs 单渠道被动响应）、安全合规（全链路审计 vs 基础措施）。其体系由身份与组织管控、知识及记忆管理、安全和权限管理、Agent 实现及接入、渠道与业务能力接入五个模块构成；为数字员工分配正式工号与独立身份类型，生命周期按“入职 → 开通 → 初始化 → 运行”管理，并对其 token 消耗、任务执行和产出做采集与评测。演讲称已有“近 2000 多个数字员工上岗”，并给出四条经验（价值优先、提效赋能、安全为纲、身份重塑）与三个判断（组织身份是 AI 落地最佳切入点、数字员工将从工具变为劳动力、toB 企业必选项）。详见 [[alibaba-digital-employees]]。
+
+同场群核科技则从工程底座侧给出另一种形态：以 Hermes + K8s 多 Profile 构建多租户数字员工集群，用 450+ 人、100+ 实例、700+/天高峰期对话说明规模化使用后的治理需求（Skill 边界与互斥、CoT 治理、六层性能治理、流程 + 状态机多智能体协同），详见 [[multi-tenant-digital-employee-cluster]]。
+
 ## 相关页面
 
 - [[openclaw]] — 自托管 AI Agent 网关，从个人助手到数字员工原型
@@ -40,3 +46,5 @@ Multica（约 52.3k stars、驱动 26 种 Agent CLI、source-available）把数�
 - [[multica]] — 数字员工的系统化产品实例：Agent 有身份、执行有常驻 runtime、状态在共享 issue
 - [[ai-native-team-refactor]] — "数字员工方案应跳出本身、聚焦 Agent 与人的协同形态"的出处文章
 - [[ai-plus-software-press-conference]] — 政策语境：智能体软件作为软件新形态的官方定义与培育路径
+- [[alibaba-digital-employees]] — 阿里约 2000 个数字员工：组织身份、五模块架构、MCP 双模式与四条实践经验
+- [[multi-tenant-digital-employee-cluster]] — 群核科技多租户数字员工集群：Hermes + K8s 多 Profile、CoT/Skill 治理与流程 + 状态机协同

@@ -5,12 +5,12 @@ aliases: [knowledge-base, 知识库索引]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-09-07
+updated: 2026-10-29
 ---
 
 # 知识库与 RAG
 
-AI 驱动的知识库方案与 RAG 技术，共 22 篇。
+AI 驱动的知识库方案与 RAG 技术，共 25 篇。
 
 ## 范式总览
 
@@ -23,6 +23,12 @@ AI 驱动的知识库方案与 RAG 技术，共 22 篇。
 
 - [[open-semantic-interchange]] — OSI 开放指标标准：语义层作为 Agent 契约语言（2026-08 论坛）
 - [[ontology-driven-knowledge-engineering]] — 本体驱动知识工程：企业智能办公 Agent 的地基（2026-08 论坛）
+- [[finance-testing-ontology]] — 金融测试本体工程：测试工艺 × 分层本体与 Test IR 编译式案例生成（杨冬瑞，DACon 2026）
+
+## 文档解析与知识供给
+
+- [[unstructured-document-parsing]] — 非结构化文档解析与样式还原：从 RAG 知识供给到 PDF→Docx（360 常鸿宇，DACon 2026）
+- [[qcc-document-parsing]] — 企查查智能文档解析：表格识别、VLM 幻觉修正与解析加速（陈汝龙，DACon 2026）
 
 ## LLM Wiki 体系
 

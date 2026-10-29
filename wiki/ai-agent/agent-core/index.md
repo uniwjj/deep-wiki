@@ -5,12 +5,12 @@ aliases: [agent-core, Agent 理论]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-08-11
+updated: 2026-10-29
 ---
 
 # Agent 基础理论
 
-Agent 核心理论与机制，共 33 篇。
+Agent 核心理论与机制，共 36 篇。
 
 ## 设计范式
 
@@ -36,6 +36,8 @@ Agent 核心理论与机制，共 33 篇。
 - [[document-ai-benchmark]] — 智能文档 Benchmark（CC-OCR V2 / MMM-Bench / UniKIE-Bench / DocScope）
 - [[expert-in-the-loop-evaluation]] — 专家在环评测（超越 Benchmark 的交互式评估）
 - [[agent-auto-evaluation-practice]] — 1688 Agent 自动化评测（双轨评测 + Judge 可信度治理）
+- [[agent-eval-trust-dual-loop]] — Agent 评测如何落地：可信标准与双 Loop 演进（美团 高诗梦，DACon 2026）
+- [[edd-evaluation-driven-development]] — 从 TDD 到 EDD：评测驱动的 Data Agent 开发范式（高德 荣柯柯，DACon 2026）
 
 ## 多 Agent 协作
 
@@ -65,6 +67,7 @@ Agent 核心理论与机制，共 33 篇。
 - [[zhen-ai-unified-runtime]] — C2AI2X 协议与真机生态统一技术架构（2026-08 论坛）
 - [[openjiuwen-agent-os]] — JiuwenSwarm：从 Model Scale up 走向 Agent Scale（金雪锋 Keynote，2026-08）
 - [[ai-agent-builder-workflow]] — 从写代码到构建产品：AI Agent 正在改变 Builder 的工作流（2026-08 论坛）
+- [[data-ontology-agent-coevolution]] — Data-Ontology-Agent 协同进化：自进化数据智能体（人大 张绍磊，DACon 2026）
 
 ## 战略框架
 

@@ -5,7 +5,7 @@ aliases: [Deep Study, 知识库首页]
 tags: [meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-09
-updated: 2026-07-01
+updated: 2026-10-29
 ---
 
 # Deep Study
@@ -33,6 +33,7 @@ updated: 2026-07-01
 
 ## 最近更新
 
+- [[dacon-2026-beijing]] — DACon 2026 北京站：17 个分论坛、42 场演讲总索引（Data Agent / 评测 / 数字员工 / 语义层与本体 / 上下文工程 / 模型组合 / 生成式推荐）
 - [[databricks-2026-summit]] — Databricks 2026 Data+AI Summit 变革综述：四层架构、LTAP、Genie Ontology
 - [[enterprise-agi-framework]] — 企业级 AGI 框架：SoI 四层堆栈、本体成熟度模型
 - [[oceanbase-ai-database]] — OceanBase 湖库一体 AI 数据库

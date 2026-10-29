@@ -5,12 +5,12 @@ aliases: [ecosystem, Agent 生态]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-10-10
+updated: 2026-10-29
 ---
 
 # 工具生态与趋势
 
-AI Agent 工具生态与趋势分析，共 32 篇。
+AI Agent 工具生态与趋势分析，共 37 篇。
 
 ## 编程工具
 
@@ -39,6 +39,9 @@ AI Agent 工具生态与趋势分析，共 32 篇。
 
 - [[ai-agent-ecommerce-content]] — AI Agent 电商内容应用
 - [[digital-employee]] — 数字员工概念
+- [[alibaba-digital-employees]] — 阿里约 2000 个数字员工：组织身份、五模块架构、MCP 双模式与四条经验（DACon 2026）
+- [[multi-tenant-digital-employee-cluster]] — 群核科技多租户数字员工集群：Hermes + K8s 多 Profile、CoT/Skill 治理（DACon 2026）
+- [[agentic-voice-agent]] — 小赢科技对话机器人五代演进：有边界自主、分层记忆与语音全链路流式（DACon 2026）
 - [[agentic-analytics-anthropic]] — Anthropic 自服务数据分析：四层架构实现 95% 查询自动化
 - [[honor-yoyo-agent]] — 荣耀 YOYO 智能体：AgenticOS 跨端协同与主动服务（2026-08 论坛）
 - [[ai-native-robot-development]] — 地瓜机器人 AI-Native 机器人开发新范式：Moss AgentEngine 云-PC-板端闭环（2026-08 论坛）
@@ -61,6 +64,8 @@ AI Agent 工具生态与趋势分析，共 32 篇。
 - [[architect-in-agent-era]] — Agent 时代架构师
 - [[ai-career-trends]] — AI 职业趋势
 - [[ai-native-team-refactor]] — 重构协同——AI Native 团队的思考：串联者从人换成 Agent，「知识底座+Agent+人」三层闭环（2026-09 天猫技术团队观点文章）
+- [[weibo-ai-rd-transformation]] — 微博：从个人提效到组织跃迁，AI 时代研发体系重构（李庆丰，DACon 2026）
+- [[baidu-ai-rd-platform]] — 百度 Flower：研发角色融合下的一站式产研平台实践（孟小萱，DACon 2026）
 
 ## 相关页面
 

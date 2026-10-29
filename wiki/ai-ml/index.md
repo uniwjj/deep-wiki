@@ -5,7 +5,7 @@ aliases: [ai-ml, AI, ML, LLM]
 tags: [ai-ml, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-08-11
+updated: 2026-10-29
 ---
 
 # AI/ML/LLM
@@ -24,6 +24,17 @@ updated: 2026-08-11
 
 - [[prompt-engineering]] — Prompt 工程：结构化 Prompt、Few-shot、Chain-of-Thought
 - [[llm-cost-optimization]] — LLM 成本优化：分层路由、上下文优化、架构解耦、Harness 工程与研发流程重构
+
+## 模型组合与推理基础设施
+
+- [[dunhuang-model-routing]] — 敦煌网企业模型路由：任务能力画像、单轮次不换模、单位有效任务成本 ROI（DACon 2026）
+- [[xiaohongshu-inference-selection]] — 小红书 GR-Inference：搜索生成式召回的推理选型与优化（DACon 2026）
+- [[lmcache]] — LMCache：面向多引擎、多硬件协作的开放统一 KV Cache 管理层（DACon 2026）
+
+## 推荐系统
+
+- [[amap-route-recommendation-agent]] — 高德路线推荐三次范式跃迁：RouteMind 工业引擎、路线 Agent、TransitLM（DACon 2026）
+- [[tme-interactive-recommendation]] — 腾讯音乐从隐式推荐到交互式陪伴：MTP 生成式召回、世界知识与 Agent 驱动（DACon 2026）
 
 ## RAG 与检索
 

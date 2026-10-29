@@ -5,12 +5,12 @@ aliases: [harness, Harness 编排]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-06-30
+updated: 2026-10-29
 ---
 
 # Harness 编排体系
 
-Agent 编排系统的设计模式与工程实践，共 16 篇。
+Agent 编排系统的设计模式与工程实践，共 19 篇。
 
 ## 核心概念
 
@@ -35,6 +35,9 @@ Agent 编排系统的设计模式与工程实践，共 16 篇。
 - [[glm5-harness-practice]] — GLM5 Harness 实战
 - [[dw-harness-practice]] — 得物数仓 Harness 落地：五层防御 + 8 步 SKILL 工作流
 - [[omnigent-meta-harness]] — Databricks Omnigent 元编排层（meta-harness），开源跨框架 Agent 调度
+- [[model-fullstack-moat]] — 模型 + 全栈工程才是护城河：医疗 Agent 的四层技术栈与医学评测（京东健康 胡浩源，DACon 2026）
+- [[zte-harness-engineering]] — ZTE 基于 Harness Engineering 的一站式全栈智能体交付（DACon 2026）
+- [[gui-test-agent-posttraining]] — 从 Harness 到后训练：GUI 测试执行 Agent 的领域优化（詹伶俐，DACon 2026）
 
 ## 相关页面
 

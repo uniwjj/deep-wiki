@@ -2,14 +2,20 @@
   "entries": {
     "wiki/homepage.md": {
       "path": "wiki/homepage.md",
-      "mtime": 1782873571044.0198,
-      "contentHash": "4356a1c1bc36bb1b",
+      "mtime": 1793241445127.5005,
+      "contentHash": "15e51975e63f80e2",
+      "lastSynced": "2026-10-29"
+    },
+    "wiki/ai-agent/dacon-2026-beijing.md": {
+      "path": "wiki/ai-agent/dacon-2026-beijing.md",
+      "mtime": 1793241404088.7256,
+      "contentHash": "d2dc9949106ff106",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/index.md": {
       "path": "wiki/ai-agent/index.md",
-      "mtime": 1791959467095.1047,
-      "contentHash": "da0de25618999b75",
+      "mtime": 1793241444090.5605,
+      "contentHash": "b430c2a3a0114f0f",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-ml/amap-route-recommendation-agent.md": {
@@ -50,8 +56,8 @@
     },
     "wiki/ai-ml/index.md": {
       "path": "wiki/ai-ml/index.md",
-      "mtime": 1786453174690.792,
-      "contentHash": "6bb51c44c355064e",
+      "mtime": 1793241440754.6602,
+      "contentHash": "961b4222aabc5887",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-ml/llm-cost-optimization.md": {
@@ -140,8 +146,8 @@
     },
     "wiki/big-data/apache-ossie-ant-practice.md": {
       "path": "wiki/big-data/apache-ossie-ant-practice.md",
-      "mtime": 1793239481200.0117,
-      "contentHash": "6d78e8a2b42dd743",
+      "mtime": 1793240984516.1035,
+      "contentHash": "346de520fd361fca",
       "lastSynced": "2026-10-29"
     },
     "wiki/big-data/apache-ossie.md": {
@@ -212,8 +218,8 @@
     },
     "wiki/big-data/index.md": {
       "path": "wiki/big-data/index.md",
-      "mtime": 1786453178574.4263,
-      "contentHash": "36ad32d2ea6aead1",
+      "mtime": 1793241429373.3245,
+      "contentHash": "c32fd3e94ac4ad39",
       "lastSynced": "2026-10-29"
     },
     "wiki/big-data/lakehouse.md": {
@@ -348,6 +354,12 @@
       "contentHash": "36406699e4fad518",
       "lastSynced": "2026-10-29"
     },
+    "wiki/ai-agent/agent-core/agent-eval-trust-dual-loop.md": {
+      "path": "wiki/ai-agent/agent-core/agent-eval-trust-dual-loop.md",
+      "mtime": 1793241170037.1248,
+      "contentHash": "f273f2969135d374",
+      "lastSynced": "2026-10-29"
+    },
     "wiki/ai-agent/agent-core/agent-evaluation-framework.md": {
       "path": "wiki/ai-agent/agent-core/agent-evaluation-framework.md",
       "mtime": 1781605224838.568,
@@ -456,6 +468,12 @@
       "contentHash": "41ea111cc8097983",
       "lastSynced": "2026-10-29"
     },
+    "wiki/ai-agent/agent-core/data-ontology-agent-coevolution.md": {
+      "path": "wiki/ai-agent/agent-core/data-ontology-agent-coevolution.md",
+      "mtime": 1793240976169.5896,
+      "contentHash": "6a70600ea59ba817",
+      "lastSynced": "2026-10-29"
+    },
     "wiki/ai-agent/agent-core/document-ai-benchmark.md": {
       "path": "wiki/ai-agent/agent-core/document-ai-benchmark.md",
       "mtime": 1786449804746.8281,
@@ -466,6 +484,12 @@
       "path": "wiki/ai-agent/agent-core/dynamic-workflow-agent-paradigm.md",
       "mtime": 1786449989900.6926,
       "contentHash": "9a529763178a2463",
+      "lastSynced": "2026-10-29"
+    },
+    "wiki/ai-agent/agent-core/edd-evaluation-driven-development.md": {
+      "path": "wiki/ai-agent/agent-core/edd-evaluation-driven-development.md",
+      "mtime": 1793241087355.6606,
+      "contentHash": "c399ae4e14090882",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/agent-core/elastic-mcp-agentic-search.md": {
@@ -500,8 +524,8 @@
     },
     "wiki/ai-agent/agent-core/index.md": {
       "path": "wiki/ai-agent/agent-core/index.md",
-      "mtime": 1786453154187.4824,
-      "contentHash": "c8ad6b64755f13ad",
+      "mtime": 1793241420830.8481,
+      "contentHash": "0d60a9c91b9a8fbf",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/agent-core/kimi-long-horizon-agentic.md": {
@@ -812,8 +836,14 @@
     },
     "wiki/ai-agent/context-eng/agent-context-three-pillars.md": {
       "path": "wiki/ai-agent/context-eng/agent-context-three-pillars.md",
-      "mtime": 1793239807820.0762,
-      "contentHash": "c19e37f8f23212aa",
+      "mtime": 1793240468821.0408,
+      "contentHash": "88d575943e3f260c",
+      "lastSynced": "2026-10-29"
+    },
+    "wiki/ai-agent/context-eng/agent-three-constraints.md": {
+      "path": "wiki/ai-agent/context-eng/agent-three-constraints.md",
+      "mtime": 1793241167481.1943,
+      "contentHash": "e2e6fdf6bb479783",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/context-eng/claude-md-best-practices.md": {
@@ -824,8 +854,8 @@
     },
     "wiki/ai-agent/context-eng/decidex-context-engineering.md": {
       "path": "wiki/ai-agent/context-eng/decidex-context-engineering.md",
-      "mtime": 1793239982581.6409,
-      "contentHash": "9437da39013d37b9",
+      "mtime": 1793241311080.765,
+      "contentHash": "2d32c837c4aaed1b",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/context-eng/google-context-engineering.md": {
@@ -836,14 +866,14 @@
     },
     "wiki/ai-agent/context-eng/index.md": {
       "path": "wiki/ai-agent/context-eng/index.md",
-      "mtime": 1791800734493.8394,
-      "contentHash": "68415de5e626b88e",
+      "mtime": 1793241420071.87,
+      "contentHash": "ae72467b6272086f",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/context-eng/lixiang-semantic-context.md": {
       "path": "wiki/ai-agent/context-eng/lixiang-semantic-context.md",
-      "mtime": 1793239861299.346,
-      "contentHash": "d30a70731394c8c8",
+      "mtime": 1793241082053.455,
+      "contentHash": "6ce3557dbce8b3d2",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/context-eng/manus-context-engineering.md": {
@@ -852,10 +882,22 @@
       "contentHash": "b4a0707e0f19b24a",
       "lastSynced": "2026-10-29"
     },
+    "wiki/ai-agent/context-eng/mashang-knowledge-engineering.md": {
+      "path": "wiki/ai-agent/context-eng/mashang-knowledge-engineering.md",
+      "mtime": 1793241082868.4062,
+      "contentHash": "d7bf262d6537a480",
+      "lastSynced": "2026-10-29"
+    },
     "wiki/ai-agent/context-eng/workbuddy-context-engineering.md": {
       "path": "wiki/ai-agent/context-eng/workbuddy-context-engineering.md",
       "mtime": 1783665223064.2498,
       "contentHash": "1b1e2f918b38d201",
+      "lastSynced": "2026-10-29"
+    },
+    "wiki/ai-agent/data-agent/360-data-agent-semantic-layer.md": {
+      "path": "wiki/ai-agent/data-agent/360-data-agent-semantic-layer.md",
+      "mtime": 1793241434502.0635,
+      "contentHash": "3a822b462c2e163a",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/data-agent/action-loop-agentcore.md": {
@@ -958,6 +1000,12 @@
       "path": "wiki/ai-agent/data-agent/data-agent-next-stage.md",
       "mtime": 1787716481378.936,
       "contentHash": "b3d8d38c506c2745",
+      "lastSynced": "2026-10-29"
+    },
+    "wiki/ai-agent/data-agent/data-agent-onboarding.md": {
+      "path": "wiki/ai-agent/data-agent/data-agent-onboarding.md",
+      "mtime": 1793241416048.9434,
+      "contentHash": "e6bf67d808d7a49d",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/data-agent/data-agent-ops-pillars.md": {
@@ -1070,8 +1118,8 @@
     },
     "wiki/ai-agent/data-agent/index.md": {
       "path": "wiki/ai-agent/data-agent/index.md",
-      "mtime": 1791959466365.0994,
-      "contentHash": "7c26d1c00f87110e",
+      "mtime": 1793241439373.864,
+      "contentHash": "2ca52aabd0d2b188",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/data-agent/infinisynapse.md": {
@@ -1116,6 +1164,12 @@
       "contentHash": "e7192785a8cdac7e",
       "lastSynced": "2026-10-29"
     },
+    "wiki/ai-agent/data-agent/oceanbase-ontology-dataagent.md": {
+      "path": "wiki/ai-agent/data-agent/oceanbase-ontology-dataagent.md",
+      "mtime": 1793241090812.4927,
+      "contentHash": "4527bdfd8863e8de",
+      "lastSynced": "2026-10-29"
+    },
     "wiki/ai-agent/data-agent/ontological-semantic-layer.md": {
       "path": "wiki/ai-agent/data-agent/ontological-semantic-layer.md",
       "mtime": 1785808673967.9148,
@@ -1126,6 +1180,24 @@
       "path": "wiki/ai-agent/data-agent/openai-data-agent.md",
       "mtime": 1781503422309.7144,
       "contentHash": "d4040af0075c1d31",
+      "lastSynced": "2026-10-29"
+    },
+    "wiki/ai-agent/data-agent/qunar-ota-data-agent.md": {
+      "path": "wiki/ai-agent/data-agent/qunar-ota-data-agent.md",
+      "mtime": 1793240709752.1702,
+      "contentHash": "0a14708dbb5a455c",
+      "lastSynced": "2026-10-29"
+    },
+    "wiki/ai-agent/data-agent/semantic-layer-to-ontology.md": {
+      "path": "wiki/ai-agent/data-agent/semantic-layer-to-ontology.md",
+      "mtime": 1793241368538.525,
+      "contentHash": "af2f82b6a68a1a91",
+      "lastSynced": "2026-10-29"
+    },
+    "wiki/ai-agent/data-agent/skill-agent-boundary.md": {
+      "path": "wiki/ai-agent/data-agent/skill-agent-boundary.md",
+      "mtime": 1793241087912.611,
+      "contentHash": "8c15a30035bf96df",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/data-agent/streaming-interactive-data-agent.md": {
@@ -1152,6 +1224,12 @@
       "contentHash": "87eba0e89f2a2bac",
       "lastSynced": "2026-10-29"
     },
+    "wiki/ai-agent/data-agent/trusted-data-qa.md": {
+      "path": "wiki/ai-agent/data-agent/trusted-data-qa.md",
+      "mtime": 1793240795981.616,
+      "contentHash": "89fc028f35b75330",
+      "lastSynced": "2026-10-29"
+    },
     "wiki/ai-agent/data-agent/vivo-dataagent-practice.md": {
       "path": "wiki/ai-agent/data-agent/vivo-dataagent-practice.md",
       "mtime": 1786449968780.5754,
@@ -1172,14 +1250,20 @@
     },
     "wiki/ai-agent/data-agent/xiaomi-dimi-data-agent.md": {
       "path": "wiki/ai-agent/data-agent/xiaomi-dimi-data-agent.md",
-      "mtime": 1786449799545.087,
-      "contentHash": "09acbcdeb19c1e78",
+      "mtime": 1793240964892.0857,
+      "contentHash": "62d11f0661b0f91a",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/data-agent/xifei-data-agent-multicountry.md": {
       "path": "wiki/ai-agent/data-agent/xifei-data-agent-multicountry.md",
       "mtime": 1786449767828.6516,
       "contentHash": "e6eb5d1af4acc03c",
+      "lastSynced": "2026-10-29"
+    },
+    "wiki/ai-agent/data-agent/zhihu-dataclaw.md": {
+      "path": "wiki/ai-agent/data-agent/zhihu-dataclaw.md",
+      "mtime": 1793241277451.1746,
+      "contentHash": "de157a04ac79652c",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/data-agent/zhupu-agentic-analytics-api.md": {
@@ -1258,6 +1342,12 @@
       "path": "wiki/ai-agent/ecosystem/architect-in-agent-era.md",
       "mtime": 1789352012226.1953,
       "contentHash": "cb7b18c03048c2a9",
+      "lastSynced": "2026-10-29"
+    },
+    "wiki/ai-agent/ecosystem/baidu-ai-rd-platform.md": {
+      "path": "wiki/ai-agent/ecosystem/baidu-ai-rd-platform.md",
+      "mtime": 1793240995659.2827,
+      "contentHash": "c727a3b576c6332a",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/ecosystem/claude-managed-agents.md": {
@@ -1340,8 +1430,8 @@
     },
     "wiki/ai-agent/ecosystem/index.md": {
       "path": "wiki/ai-agent/ecosystem/index.md",
-      "mtime": 1791621669335.3086,
-      "contentHash": "89c486b10447a37c",
+      "mtime": 1793241426153.4204,
+      "contentHash": "e550e162a6903fb8",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/ecosystem/log-diagnosis-skill.md": {
@@ -1398,6 +1488,12 @@
       "contentHash": "a983fffef1e6d49e",
       "lastSynced": "2026-10-29"
     },
+    "wiki/ai-agent/ecosystem/weibo-ai-rd-transformation.md": {
+      "path": "wiki/ai-agent/ecosystem/weibo-ai-rd-transformation.md",
+      "mtime": 1793240860267.3357,
+      "contentHash": "249bdbd76e907b9b",
+      "lastSynced": "2026-10-29"
+    },
     "wiki/ai-agent/ecosystem/zhiniao-ai-financial-talent.md": {
       "path": "wiki/ai-agent/ecosystem/zhiniao-ai-financial-talent.md",
       "mtime": 1786451960195.4585,
@@ -1440,6 +1536,12 @@
       "contentHash": "87f071c983e7f7a4",
       "lastSynced": "2026-10-29"
     },
+    "wiki/ai-agent/harness/gui-test-agent-posttraining.md": {
+      "path": "wiki/ai-agent/harness/gui-test-agent-posttraining.md",
+      "mtime": 1793240674677.7002,
+      "contentHash": "5af46fb461023132",
+      "lastSynced": "2026-10-29"
+    },
     "wiki/ai-agent/harness/harness-as-backend.md": {
       "path": "wiki/ai-agent/harness/harness-as-backend.md",
       "mtime": 1781503422302.994,
@@ -1478,8 +1580,8 @@
     },
     "wiki/ai-agent/harness/index.md": {
       "path": "wiki/ai-agent/harness/index.md",
-      "mtime": 1788243567035.871,
-      "contentHash": "9a89502cf3ada585",
+      "mtime": 1793241420139.2197,
+      "contentHash": "99bffee10040aad4",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/harness/loop-engineering.md": {
@@ -1496,8 +1598,8 @@
     },
     "wiki/ai-agent/harness/model-fullstack-moat.md": {
       "path": "wiki/ai-agent/harness/model-fullstack-moat.md",
-      "mtime": 1793240024904.3335,
-      "contentHash": "26f483d37f4741c8",
+      "mtime": 1793240666836.975,
+      "contentHash": "3f24c7f2f5806da5",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/harness/omnigent-meta-harness.md": {
@@ -1512,10 +1614,22 @@
       "contentHash": "cf811a0d0d1846ca",
       "lastSynced": "2026-10-29"
     },
+    "wiki/ai-agent/harness/zte-harness-engineering.md": {
+      "path": "wiki/ai-agent/harness/zte-harness-engineering.md",
+      "mtime": 1793240862094.1394,
+      "contentHash": "e63b6150a73c9f34",
+      "lastSynced": "2026-10-29"
+    },
     "wiki/ai-agent/knowledge-base/ai-knowledge-base.md": {
       "path": "wiki/ai-agent/knowledge-base/ai-knowledge-base.md",
       "mtime": 1781503422303.5737,
       "contentHash": "d7eb38dfac007b9f",
+      "lastSynced": "2026-10-29"
+    },
+    "wiki/ai-agent/knowledge-base/finance-testing-ontology.md": {
+      "path": "wiki/ai-agent/knowledge-base/finance-testing-ontology.md",
+      "mtime": 1793240762444.2378,
+      "contentHash": "dadfd7e66e7194b3",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/knowledge-base/graphrag.md": {
@@ -1526,8 +1640,8 @@
     },
     "wiki/ai-agent/knowledge-base/index.md": {
       "path": "wiki/ai-agent/knowledge-base/index.md",
-      "mtime": 1788776730934.2585,
-      "contentHash": "9cc49a295fada4ba",
+      "mtime": 1793241427560.4365,
+      "contentHash": "d3ea251e73628628",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/knowledge-base/karpathy-agent-obsidian-os.md": {
@@ -1632,6 +1746,12 @@
       "contentHash": "08efbc7fabc3c397",
       "lastSynced": "2026-10-29"
     },
+    "wiki/ai-agent/knowledge-base/qcc-document-parsing.md": {
+      "path": "wiki/ai-agent/knowledge-base/qcc-document-parsing.md",
+      "mtime": 1793241338833.036,
+      "contentHash": "111b4c49ce4878aa",
+      "lastSynced": "2026-10-29"
+    },
     "wiki/ai-agent/knowledge-base/rag-vs-llm-wiki.md": {
       "path": "wiki/ai-agent/knowledge-base/rag-vs-llm-wiki.md",
       "mtime": 1783063977553.628,
@@ -1648,6 +1768,12 @@
       "path": "wiki/ai-agent/knowledge-base/storm.md",
       "mtime": 1783063924170.9697,
       "contentHash": "da26f7a01744255a",
+      "lastSynced": "2026-10-29"
+    },
+    "wiki/ai-agent/knowledge-base/unstructured-document-parsing.md": {
+      "path": "wiki/ai-agent/knowledge-base/unstructured-document-parsing.md",
+      "mtime": 1793241187237.9766,
+      "contentHash": "38586fb4a79c9ef7",
       "lastSynced": "2026-10-29"
     },
     "wiki/ai-agent/sdd/ai-native-sdlc-governance.md": {
@@ -3960,6 +4086,24 @@
       "contentHash": "fd06c3ce7cc50a05",
       "lastSynced": "2026-10-29"
     },
+    "sources/2026/10/29/2026DACon北京站/AI 时代的研发范式与组织进化/孟小萱-百度：研发角色融合下的一站式产研平台实践.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/AI 时代的研发范式与组织进化/孟小萱-百度：研发角色融合下的一站式产研平台实践.md",
+      "mtime": 1793241051342.4827,
+      "contentHash": "7fa6c9b492d468cb",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/AI 时代的研发范式与组织进化/李庆丰-从个人提效到组织跃迁：AI时代的研发管理实践.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/AI 时代的研发范式与组织进化/李庆丰-从个人提效到组织跃迁：AI时代的研发管理实践.md",
+      "mtime": 1793241050069.284,
+      "contentHash": "5894a69028f1c8ca",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/AI 时代的研发范式与组织进化/路芳芳-ZTE：基于Harness+Engineering驱动的全栈智能体交付实践.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/AI 时代的研发范式与组织进化/路芳芳-ZTE：基于Harness+Engineering驱动的全栈智能体交付实践.md",
+      "mtime": 1793241050713.3586,
+      "contentHash": "8dcb6b165260bbd5",
+      "lastSynced": "2026-10-29"
+    },
     "sources/2026/10/29/2026DACon北京站/AI 驱动的客户全旅程：从营销获客到客服服务/吴旭晶-从对话式问数到组织级数据工作空间：京东广告数据分析+Agent+的工程化实践.md": {
       "path": "sources/2026/10/29/2026DACon北京站/AI 驱动的客户全旅程：从营销获客到客服服务/吴旭晶-从对话式问数到组织级数据工作空间：京东广告数据分析+Agent+的工程化实践.md",
       "mtime": 1793239557786.6826,
@@ -3970,6 +4114,18 @@
       "path": "sources/2026/10/29/2026DACon北京站/AI 驱动的客户全旅程：从营销获客到客服服务/武文斌-从外购到自研，从向量RAG到Agentic语音智能体——企业对话机器人的完整演进之路.md",
       "mtime": 1793239558435.1501,
       "contentHash": "4c84c088bbaa0a3e",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/Agent 评测工程：从度量到改进的闭环/荣柯柯-从TDD到EDD：评测驱动的Data+Agent开发范式.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/Agent 评测工程：从度量到改进的闭环/荣柯柯-从TDD到EDD：评测驱动的Data+Agent开发范式.md",
+      "mtime": 1793241019294.342,
+      "contentHash": "de56042f655a2497",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/Agent 评测工程：从度量到改进的闭环/高诗梦-Agent+评测如何落地：可信标准与双+Loop+演进实践.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/Agent 评测工程：从度量到改进的闭环/高诗梦-Agent+评测如何落地：可信标准与双+Loop+演进实践.md",
+      "mtime": 1793241018588.651,
+      "contentHash": "8c33dae7aac72a87",
       "lastSynced": "2026-10-29"
     },
     "sources/2026/10/29/2026DACon北京站/Agentic Workflow：数字员工与企业流程重构/何碧宏-从工作流到智能体集群：企业级多租户数字员工的工程化落地与协同实践.md": {
@@ -3984,6 +4140,30 @@
       "contentHash": "5f9d7cb2096c2461",
       "lastSynced": "2026-10-29"
     },
+    "sources/2026/10/29/2026DACon北京站/Data Engineering Agent：数据工程智能/郭志浩-Skill+与+Agent+的边界：数据平台的分层架构实践.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/Data Engineering Agent：数据工程智能/郭志浩-Skill+与+Agent+的边界：数据平台的分层架构实践.md",
+      "mtime": 1793241020073.6787,
+      "contentHash": "68d66ed474f08121",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/上下文工程：让 AI 真正懂企业/石凯-从+BI+到决策智能：Decidex的上下文工程、证据链与评估闭环.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/上下文工程：让 AI 真正懂企业/石凯-从+BI+到决策智能：Decidex的上下文工程、证据链与评估闭环.md",
+      "mtime": 1793240467670.604,
+      "contentHash": "7a63334acda4a076",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/上下文工程：让 AI 真正懂企业/赵雪波-构建知识工程，推进高质量+Agent+分析决策.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/上下文工程：让 AI 真正懂企业/赵雪波-构建知识工程，推进高质量+Agent+分析决策.md",
+      "mtime": 1793241436343.3152,
+      "contentHash": "3f433cc9a5afb97f",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/上下文工程：让 AI 真正懂企业/钱瀚-语义层即上下文：理想汽车生产级+Agent+的语义工程实践.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/上下文工程：让 AI 真正懂企业/钱瀚-语义层即上下文：理想汽车生产级+Agent+的语义工程实践.md",
+      "mtime": 1793240467454.633,
+      "contentHash": "44ababcef993c113",
+      "lastSynced": "2026-10-29"
+    },
     "sources/2026/10/29/2026DACon北京站/主论坛/堵俊平-开放语义、Ontology 与元数据：Agent Context 的三重支柱.md": {
       "path": "sources/2026/10/29/2026DACon北京站/主论坛/堵俊平-开放语义、Ontology 与元数据：Agent Context 的三重支柱.md",
       "mtime": 1793238408739.7583,
@@ -3996,10 +4176,22 @@
       "contentHash": "f0c7057e286066e6",
       "lastSynced": "2026-10-29"
     },
+    "sources/2026/10/29/2026DACon北京站/从分析闭环到行动闭环：Data Agent 的边界突破/汤晋瑄-知乎+DataClaw：从+MetricFlow+到+AI+原生语义层的演进实践.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/从分析闭环到行动闭环：Data Agent 的边界突破/汤晋瑄-知乎+DataClaw：从+MetricFlow+到+AI+原生语义层的演进实践.md",
+      "mtime": 1793240953762.9026,
+      "contentHash": "df6e53d1081e16ff",
+      "lastSynced": "2026-10-29"
+    },
     "sources/2026/10/29/2026DACon北京站/从分析闭环到行动闭环：Data Agent 的边界突破/王浩强-从洞察到行动：Agentic+Engine的闭环架构与工程实践.md": {
       "path": "sources/2026/10/29/2026DACon北京站/从分析闭环到行动闭环：Data Agent 的边界突破/王浩强-从洞察到行动：Agentic+Engine的闭环架构与工程实践.md",
       "mtime": 1793239827110.2231,
       "contentHash": "da5696dcc1b0e4e4",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/从分析闭环到行动闭环：Data Agent 的边界突破/郑吉敏-OTA+业务+DataAgent+的边界突破与规模化落地.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/从分析闭环到行动闭环：Data Agent 的边界突破/郑吉敏-OTA+业务+DataAgent+的边界突破与规模化落地.md",
+      "mtime": 1793240954242.2473,
+      "contentHash": "e3bbf164025219c1",
       "lastSynced": "2026-10-29"
     },
     "sources/2026/10/29/2026DACon北京站/从分析闭环到行动闭环：Data Agent 的边界突破/黄达-行动闭环的两端AgentCore+i+Agent敢行动，AagnticEngine让结果看得见.md": {
@@ -4014,6 +4206,24 @@
       "contentHash": "8673653548d92e31",
       "lastSynced": "2026-10-29"
     },
+    "sources/2026/10/29/2026DACon北京站/企业本体与知识工程/张绍磊-自进化数据智能体迈向+Data-Ontolo-gy-Agent+协同进化.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/企业本体与知识工程/张绍磊-自进化数据智能体迈向+Data-Ontolo-gy-Agent+协同进化.md",
+      "mtime": 1793241045900.5952,
+      "contentHash": "fbd57527a65f8dbe",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/企业本体与知识工程/杨冬瑞-基于本体的领域知识工程实践：以金融测试为例.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/企业本体与知识工程/杨冬瑞-基于本体的领域知识工程实践：以金融测试为例.md",
+      "mtime": 1793241045345.7358,
+      "contentHash": "8dbbc7bbae5476e3",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/企业模型组合：选型、路由、成本与治理/毛宝龙郑春晓-为所有人构建开放的统-KVCache+管理层：LMCache+的开源之路.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/企业模型组合：选型、路由、成本与治理/毛宝龙郑春晓-为所有人构建开放的统-KVCache+管理层：LMCache+的开源之路.md",
+      "mtime": 1793240557945.8936,
+      "contentHash": "db8cb4fd9b605484",
+      "lastSynced": "2026-10-29"
+    },
     "sources/2026/10/29/2026DACon北京站/企业模型组合：选型、路由、成本与治理/窦东员-敦煌网：从选最强模型到做最优组合——企业模型路由与.md": {
       "path": "sources/2026/10/29/2026DACon北京站/企业模型组合：选型、路由、成本与治理/窦东员-敦煌网：从选最强模型到做最优组合——企业模型路由与.md",
       "mtime": 1793239405841.576,
@@ -4024,6 +4234,60 @@
       "path": "sources/2026/10/29/2026DACon北京站/企业模型组合：选型、路由、成本与治理/骆兆楷-从通用到专用，小红书面向搜索生成式召回的推理选型与优化.md",
       "mtime": 1793239405864.506,
       "contentHash": "bb7d8aca63973476",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/企业语义层建设/任鑫琦-语义层的下一站是业务本体：十二年+近百家企业语义建设的得与失.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/企业语义层建设/任鑫琦-语义层的下一站是业务本体：十二年+近百家企业语义建设的得与失.md",
+      "mtime": 1793240557946.6167,
+      "contentHash": "5f7b329b881ee0d1",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/企业语义层建设/王小军-Apache+Ossie+语义层在蚂蚁的落地实践.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/企业语义层建设/王小军-Apache+Ossie+语义层在蚂蚁的落地实践.md",
+      "mtime": 1793240466618.2952,
+      "contentHash": "7d14b9e459b28ad4",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/企业语义层建设/郭朝阳-从会查数到懂业务——奇虎360+企业级+Data+Agent+的语义层演进与量化评测实践.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/企业语义层建设/郭朝阳-从会查数到懂业务——奇虎360+企业级+Data+Agent+的语义层演进与量化评测实践.md",
+      "mtime": 1793240557946.2776,
+      "contentHash": "151fc1e9e1a8d57b",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/决策智能 Agent：从数据洞察到经营动作/周卫林-30+分钟上岗：企业“招聘”+Data+Agent+的新标准.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/决策智能 Agent：从数据洞察到经营动作/周卫林-30+分钟上岗：企业“招聘”+Data+Agent+的新标准.md",
+      "mtime": 1793240955319.9275,
+      "contentHash": "6d1e3b9d72ec7d6e",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/决策智能 Agent：从数据洞察到经营动作/方彪-从+BIRD+第三到生产可用：小米+Data+Agent+落地实践.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/决策智能 Agent：从数据洞察到经营动作/方彪-从+BIRD+第三到生产可用：小米+Data+Agent+落地实践.md",
+      "mtime": 1793241250708.6665,
+      "contentHash": "5208d4d09888001c",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/决策智能 Agent：从数据洞察到经营动作/李明皇-让+Data+Agent+的每个回答都有据可查：企业级可信问数的工程闭环.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/决策智能 Agent：从数据洞察到经营动作/李明皇-让+Data+Agent+的每个回答都有据可查：企业级可信问数的工程闭环.md",
+      "mtime": 1793240954795.9963,
+      "contentHash": "a8441e55e2410f52",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/模型适配与效果优化：从语义上下文、Harness到后训练/吉剑南-本体驱动：企业级 DataAgent 的效果优化之路.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/模型适配与效果优化：从语义上下文、Harness到后训练/吉剑南-本体驱动：企业级 DataAgent 的效果优化之路.md",
+      "mtime": 1793241303307.6965,
+      "contentHash": "f2d0eeba4505e5d4",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/模型适配与效果优化：从语义上下文、Harness到后训练/孟垂实-给模型立规矩：业务Agent 的三重约束一-角色・知识・动.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/模型适配与效果优化：从语义上下文、Harness到后训练/孟垂实-给模型立规矩：业务Agent 的三重约束一-角色・知识・动.md",
+      "mtime": 1793241303932.4023,
+      "contentHash": "3dbfccf123100764",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/模型适配与效果优化：从语义上下文、Harness到后训练/詹伶俐-从 Harness 到后训练：以 GUI 测试执行 Agent 为例的领域agent优化实践.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/模型适配与效果优化：从语义上下文、Harness到后训练/詹伶俐-从 Harness 到后训练：以 GUI 测试执行 Agent 为例的领域agent优化实践.md",
+      "mtime": 1793241044827.762,
+      "contentHash": "fb3633e44dbf5c66",
       "lastSynced": "2026-10-29"
     },
     "sources/2026/10/29/2026DACon北京站/生成式推荐系统新范式/吴喆-从隐式推荐到交互式陪伴+--+推荐系统的智能跃迁.md": {
@@ -4042,6 +4306,18 @@
       "path": "sources/2026/10/29/2026DACon北京站/金融可信 AI 实践/徐德华-翼支付：本体落地对金融可信AI的挑战——语义映射与对象存储的取舍.md",
       "mtime": 1793238409754.7456,
       "contentHash": "e1c3521ba3ac61b7",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/非结构化数据处理与知识获取/常鸿宇-非结构化文档的内容理解与样式还原——从RAG知识供给到PDF转Docx的工程实践.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/非结构化数据处理与知识获取/常鸿宇-非结构化文档的内容理解与样式还原——从RAG知识供给到PDF转Docx的工程实践.md",
+      "mtime": 1793241436933.9846,
+      "contentHash": "b96e399198499ea4",
+      "lastSynced": "2026-10-29"
+    },
+    "sources/2026/10/29/2026DACon北京站/非结构化数据处理与知识获取/陈汝龙-企查查：表格识别、VLM幻觉修正与文档解析加速的工程实践.md": {
+      "path": "sources/2026/10/29/2026DACon北京站/非结构化数据处理与知识获取/陈汝龙-企查查：表格识别、VLM幻觉修正与文档解析加速的工程实践.md",
+      "mtime": 1793241437473.4868,
+      "contentHash": "df2af5f8bdc7fac6",
       "lastSynced": "2026-10-29"
     }
   },

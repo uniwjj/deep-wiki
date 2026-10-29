@@ -5,7 +5,7 @@ aliases: [big-data, 大数据]
 tags: [big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md, 2026/07/26/从 Arrow 到 Iceberg 到 Polaris 到 Ossie：语义标准化的最后一块拼图.html]
 created: 2026-05-10
-updated: 2026-07-27
+updated: 2026-10-29
 ---
 
 # 大数据技术
@@ -18,6 +18,7 @@ updated: 2026-07-27
 - [[ltap-architecture]] — Databricks LTAP 架构：存储层统一 OLTP/OLAP 的"第三条路"
 - [[lakehouse]] — 湖仓一体：数仓→数据湖→湖仓一体演进、存储层统一、批流一体（计算层统一）、CIDR 理论源头、大厂落地
 - [[realtime-data-warehouse]] — 实时数仓：离线→Lambda→Kappa 演进、ODS/DWD/DWM/DWS/ADS 分层、Lambda vs Kappa 选型、实时数仓分层实践、实时计算平台化
+- [[curvine-agent-data-base]] — Curvine：对象存储之上的缓存文件系统，多级缓存 + 统一命名空间支撑 Agent 数据底座（DACon 2026）
 
 ## 流计算引擎
 
@@ -41,6 +42,7 @@ updated: 2026-07-27
 ## 语义层
 
 - [[apache-ossie]] — Apache Ossie 语义层：YAML 字段映射、指标口径、同义词标注，让 AI Agent 和 BI 工具理解数据含义
+- [[apache-ossie-ant-practice]] — Apache Ossie 语义层在蚂蚁的落地：1+3+N 可信语义层、30+ 业务域与 SQL 正确率 60%→88%（DACon 2026）
 
 ## 选型对比
 

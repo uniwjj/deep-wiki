@@ -5,7 +5,7 @@ aliases: [data-agent, Data Agent, AI 数据平台]
 tags: [ai-agent, big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-07-01
-updated: 2026-10-14
+updated: 2026-10-29
 ---
 
 # Data Agent 与 AI 数据平台
@@ -32,6 +32,25 @@ AI Agent 在数据领域的应用——Data Agent 产品、AI 原生数据平台
 - [[agentscope-financial-data-agent]] — 瓴岳科技 AgentScope 金融数据平台：六层架构与三支柱（2026-08 论坛）
 - [[workbuddy-data-practice]] — 腾讯 WorkBuddy 数据实践（2026-08 论坛）
 - [[daishu-cloud-data-agent]] — 袋鼠云 Data Agent：IDC 2026 主要厂商、Data+AI 智能飞轮、一体两翼、灵瞳 Data Agent（2026-08）
+
+## DACon 2026 北京站
+
+- [[amap-intelligent-query]] — 高德智能问数：从 BI 底座到 Agent 底座，L2→L3 与三类质量护栏
+- [[agent-ready-multi-cloud-luxury]] — 从多云底座到 Agent-Ready：四条判据、CyberOS/Harness 与高端零售落地
+- [[jd-ad-data-workspace]] — 京东广告数据分析 Agent：场景契约 + 知识分层 + 三层 Graph + 组织级 Workspace
+- [[skill-agent-boundary]] — Skill 与 Agent 的边界：数据平台分层、Skill Market 与工具白名单
+- [[action-loop-agentcore]] — 行动闭环的两端：AgentCore 治理底座 + Agentic 工作台
+- [[agentic-engine-loop]] — 从洞察到行动：分析运营一体化 × Agent 友好 × AgentOS
+- [[zhihu-dataclaw]] — 知乎 DataClaw：MetricFlow → AI 原生语义层 → 轻量本体图谱
+- [[qunar-ota-data-agent]] — 去哪儿 OTA Data Agent：ReAct 双系统、四层解耦与幻觉治理
+- [[trusted-data-qa]] — 企业级可信问数：口径、授权、证据链与 Semantic Generator
+- [[data-agent-onboarding]] — Data Agent 上岗标准：30 分钟上岗与四个上岗能力
+- [[oceanbase-ontology-dataagent]] — OceanBase 本体驱动 DataAgent：对象/关联/属性/口径与本体自生长
+- [[wing-pay-ontology-trusted-ai]] — 翼支付本体落地：语义映射 vs 对象存储的取舍
+- [[jd-ugo-growth-ontology]] — 京东零售 UGO 用户增长本体论：对象/受控动作/决策证据
+- [[360-data-agent-semantic-layer]] — 奇虎 360 Data Agent 语义层演进与量化评测
+- [[semantic-layer-to-ontology]] — 语义层的下一站是业务本体：十二年、近百家企业经验
+- [[xiaomi-dimi-data-agent]] — 小米 Data Agent（已合并 DACon 2026 版：成本问题、Trace 评测、AI FDE 等七块新增）
 
 ## 语义层与本体
 

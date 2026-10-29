@@ -3,9 +3,9 @@ title: Apache Ossie
 description: Apache Ossie 语义层——用 YAML 将数据字段映射到业务概念，定义指标口径与同义词，让 AI Agent 和 BI 工具理解"数据是什么意思"
 aliases: [Ossie, Apache Ossie, 语义层, Semantic Layer, 数据语义层]
 tags: [big-data, tool, concept]
-sources: [2026/07/26/从 Arrow 到 Iceberg 到 Polaris 到 Ossie：语义标准化的最后一块拼图.html]
+sources: [2026/07/26/从 Arrow 到 Iceberg 到 Polaris 到 Ossie：语义标准化的最后一块拼图.html, 2026/10/29/2026DACon北京站/企业语义层建设/王小军-Apache+Ossie+语义层在蚂蚁的落地实践.pdf]
 created: 2026-07-27
-updated: 2026-07-27
+updated: 2026-10-29
 ---
 
 # Apache Ossie
@@ -59,6 +59,20 @@ Ossie 目前已有 50+ 家公司签署支持，但**尚未进入大规模生产�
 - 可以先**把本体模型转成 Ossie 格式**，放到仓库里跟着表结构一起维护。相当于先写好"语义源码"，等生态成熟后编译即可使用。
 - 当前管理数据含义的手段（dbt docs 注释、Excel 记口径）都是过渡方案，语义层标准化是大势所趋。
 
+## 蚂蚁落地实践
+
+2026-10-29 DACon 北京站，蚂蚁语义层平台负责人王小军分享了 Apache Ossie 在蚂蚁的落地实践。要点：
+
+- **定位**：语义层不是“字段说明”，而是人、AI 与系统共同遵循的语义契约；协议标准回答“能表达什么”，质量标准回答“什么叫可信”，再通过供给、治理、消费三大能力让契约持续生效。
+- **规模**：250+ 语义模型、15000+ 业务指标、1500+ 数据集，覆盖 30+ 业务域；语义层上下文服务周调用量 2500。
+- **架构**：1+3+N——1 个契约核心（Apache Ossie + Ant-OSI 企业扩展）、3 层能力（语义供给、语义治理、语义消费）、N 个消费场景（DataAgent、BI、自助分析、数据研发、数据治理等）。
+- **协议扩展**：Ant-OSI 在 Ossie 上补关联路径（`multiplicity` / `join_path`）、粒度声明（FIXED / ROLLUP）、窗口与可加性、AI 上下文（`instructions` / `synonyms` / `pitfalls`）、模块复用（`imports` / `Metric Refs`）、证据溯源（`explainability`）；并向 Ossie 社区提交 Shared Filters、Shared Dimensions、Metric References 三项提案（`github.com/apache/ossie/discussions/342`）。
+- **质量与保鲜**：六维质量标准 Q1–Q6（结构正确性、建模语义正确性、业务语义正确性、业务语义完整性、业务语义确定性、治理与追溯性）+ G1–G4 发布门禁 + 场景验收；持续保鲜依靠变更感知、自动巡检、Owner 审核、回归测试与受控下线。
+- **效果**：内部评测生成 SQL 正确率从 60%（仅元数据）→ 81%（+语义模型）→ 88%（+业务知识），距 95% 业务目标差 7pp；“退卡率”研发周期从约 1 个工作日缩短到约 1 小时。
+- **边界**：符合协议 ≠ 业务可信；模型质量决定 NL2SQL 的可达上限；没有质量保障体系的语义模型“上线即负债”。
+
+完整拆解见 [[apache-ossie-ant-practice]]。
+
 ## 相关页面
 
 - [[open-data-stack-evolution]] — 五层开放数据标准栈的十年演进全景
@@ -67,3 +81,4 @@ Ossie 目前已有 50+ 家公司签署支持，但**尚未进入大规模生产�
 - [[open-semantic-interchange]] — OSI 开放指标标准（2026-08 论坛演讲），Ossie 0.2.0 Ontology Preview 与 OSI 规范的 Agent 视角
 - [[agentic-data-cloud]] — Google 跨云 Lakehouse 中语义层的角色
 - [[databricks-2026-summit]] — Databricks 2026 峰会对语义层的布局
+- [[apache-ossie-ant-practice]] — 蚂蚁基于 Ossie + Ant-OSI 的 1+3+N 可信语义层落地实践（2026-10-29 DACon）
