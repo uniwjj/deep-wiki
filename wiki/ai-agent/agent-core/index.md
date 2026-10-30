@@ -72,6 +72,7 @@ Agent 核心理论与机制，共 36 篇。
 ## 战略框架
 
 - [[enterprise-agi-framework]] — 企业级 AGI 框架：SoI 四层堆栈 + 本体成熟度 1-9 级 + 数据层冰面化
+- [[agent-capability-moore-law]] — 智能体能力新摩尔定律：METR 观测到 50% 成功率任务时长约每 7 个月翻倍
 
 ## 业务认知与企业实践
 

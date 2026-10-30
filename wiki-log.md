@@ -1330,3 +1330,19 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 复核记录：4 个 PDF 均逐页 `pdftotext -layout` + Read 视觉复核（30/20/24/33 页）；李明皇 PDF 为全图片页，24 页全部渲染后视觉读取并用 tesseract 交叉核对；其余 3 个 PDF 全页视觉复核。无法辨认或原文自相矛盾处（知乎「70%→92% 标注提升 11pp」；周卫林截图看板数值口径）已在页内标为不确定，未作推断补全
 - 未改任何 `index.md`（按任务要求）；四页 wikilink 目标已逐一核验存在
 - run `llm-wiki sync`
+
+## [2026-10-30] ingest | Ben Horowitz《Databricks & the Future of the Firm》（孤独大脑 译本）
+- 来源：`sources/2026/10/30/《创业维艰》作者最新万字长文：AI让懂业务的人重新说了算.html`（微信公众号原文 HTML，含全部 6 幅配图；另新增同名 `.md` sidecar，`source_type: article-html`）；可双击阅读的下载副本存 `article-downloads/`
+- 抓取方式：Chrome headless `--dump-dom`（静态抓取会丢正文动态样式），正文取 `#js_content` 子树（164KB）；6 张图 `data-src`→`src` 全部回填并逐张 HTTP 验证 200；注入基础可读性 CSS + 微信 `code-snippet__*` 配色；已截图核验首屏与中段（图 1 四条 S 曲线）渲染正常
+- created `sora-system-of-record-for-agents` — SORA（智能体的记录系统）：四问闭环（状态/本体/护栏/评估）、第四次记录系统战争、每天 1,700 万数据库由智能体启动、本体锚定把准确率 50%→84.5%
+- created `databricks-evolution` — 四条技术 S 曲线（Spark → Lakehouse → Lakebase → Agents）、财务（70 亿美元 run rate / 1,900 亿估值 / Lakehouse 15 亿 / Lakebase 1 亿）、a16z 年拒掉约 6 倍估值收购的故事
+- created `sovereign-firm` — 主权企业：两家银行思想实验、纳德拉 human capital × token capital 闭环、黄仁勋数据飞轮（3 万人撑 3 万亿美元）、"护城河是闭环而非静态数据"
+- created `managerial-revolution-ai` — 第二次经理人革命：伯纳姆《经理人革命》、企业权力三幕、马斯克/安德森/多西/Ghodsi 四种立场、"每个人都变成管理者"、执行与判断互补品、怀特海"一次一个闭环"
+- created `theory-of-the-firm` — 科斯交易成本 + 西蒙"集中记忆、去中心决策"（航空公司售票例）、金字塔=科层即信息系统、客服投诉例、诺和诺德与 Rivian 案例
+- created `agent-capability-moore-law` — METR：50% 成功率任务时长约每 7 个月翻倍（2022 年 30 秒 → 2026 年 1 个工作日 → 2030 年代初数年），以及与企业采纳水平之间的落差
+- updated `ltap-architecture` — 新增「2026-10 进展：数据库像代码一样秒级分身」（PB 级秒级复制、分支实验即弃、1 亿美元年化收入、智能体是最高产用户）
+- updated `databricks-2026-summit` — 新增「事后回看：a16z 给出的统一叙事」，把四问映射到峰会四层架构，并补峰会之后的财务与用量数据
+- updated `genie-ontology`、`databricks-genie`、`enterprise-agi-framework` — 补 SORA / METR 交叉引用
+- updated `product/index`、`ai-agent/data-agent/index`、`ai-agent/agent-core/index`、`homepage`
+- 口径说明：日调度数据库数 1,200 万（2026-06 峰会口径）与 1,700 万（2026-10 文章口径）时点不同，两页并列保留未合并；图 4 中 Claude Opus 4.6 / Claude Mythos Preview 的 12～17 小时明细出自译文图注，页内已标明出处
+- run `llm-wiki sync`

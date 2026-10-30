@@ -3,9 +3,9 @@ title: LTAP 架构
 description: Databricks 推出的 Lake Transactional/Analytical Processing 架构——在存储层统一 OLTP/OLAP/流处理，单一数据副本、零 ETL 管道、统一治理，走 HTAP 与零 ETL 之外的"第三条路"
 aliases: [LTAP, Lake Transactional/Analytical Processing, 湖事务与分析处理, LTAP 架构]
 tags: [big-data, architecture, concept]
-sources: [2026/06/30/Databricks 发布 LTAP：首个统一事务与分析处理的湖上架构.html, 2026/06/30/从Databricks产品发布会看数据平台的演进方向.html, 2026/06/30/Databricks-DAIS2026-第二批四篇-图片识别.md]
+sources: [2026/06/30/Databricks 发布 LTAP：首个统一事务与分析处理的湖上架构.html, 2026/06/30/从Databricks产品发布会看数据平台的演进方向.html, 2026/06/30/Databricks-DAIS2026-第二批四篇-图片识别.md, 2026/10/30/《创业维艰》作者最新万字长文：AI让懂业务的人重新说了算.html]
 created: 2026-06-30
-updated: 2026-06-30
+updated: 2026-10-30
 ---
 
 # LTAP 架构
@@ -92,6 +92,16 @@ LTAP 发布同时，Lakebase 推出三项重大增强：
 - **Git 风格分支与快照** — 基于生产数据安全实验，Git 化工作流
 - **自治数据库运维** — AI Agent 自动监控、检测瓶颈、建议索引、辅助恢复
 
+## 2026-10 进展：数据库像代码一样"秒级分身"
+
+到 2026 年 10 月，Lakebase 的进展进一步说明了这条路线为何为智能体而设计：
+
+- **复制只传变更部分**：即便是 PB 级规模的数据库，也能在几秒钟内完成复制；智能体可以创建一个隔离分支在上面做实验，完成后直接丢弃，不伤及主库。文章的注释是，Databricks 自己也是直到最近才充分意识到这一特性的价值。
+- **商业验证**：Lakebase 于 2025 年推出（基于收购的 Neon），年化收入已突破 **1 亿美元**，而**智能体是其最高产的用户**。
+- **市场判断**：Ali Ghodsi ——"我们认为，从长远来看，这可能会是一个比现有数据库市场还要庞大的市场。"
+
+这背后是使用量级的变化：不再是成千上万名员工读写中央团队管理的寥寥几个数据库，而是公司拥有成千上万个数据库，由数以百万计的智能体读写。
+
 ## 边界与展望
 
 LTAP 并非万能替代方案。企业仍将拥有 SaaS 应用、主机系统、第三方平台、遗留系统等无法迁移的数据源。LTAP 消除的是"一类仅仅因为运营和分析环境分离而存在的管道"。对于新建的 AI 应用和数据密集型企业，它提供了摆脱传统 `CDC → ETL → 反向 ETL` 复杂性的路径，为下一代 AI Agent 架构提供真正统一的数据基座。
@@ -99,6 +109,8 @@ LTAP 并非万能替代方案。企业仍将拥有 SaaS 应用、主机系统、
 ## 相关页面
 
 - [[databricks-2026-summit]] — Databricks 2026 四层架构变革，LTAP 是数据底座层的核心范式
+- [[databricks-evolution]] — Databricks 四条 S 曲线：Lakebase 是第三条曲线
+- [[sora-system-of-record-for-agents]] — SORA：LTAP 之上的"智能体记录系统"叙事
 - [[oceanbase-ai-database]] — OceanBase 湖库一体 AI 数据库，国内"事务+分析统一"同类演进
 - [[iceberg]] — Iceberg 开放表格式，LTAP 存储层统一的对象之一
 - [[agentic-data-cloud]] — Google Agentic Data Cloud，同类"数据平台→Agent 基础设施"演进

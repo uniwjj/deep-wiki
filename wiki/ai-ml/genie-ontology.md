@@ -3,9 +3,9 @@ title: Genie Ontology
 description: Databricks 推出的企业知识图谱构建机制——"人工定义＋自动生长"双轨制，借鉴 Google PageRank 思路通过权威性加权识别企业内最具权威的业务定义，将复杂业务首问命中率提升至 84.5%
 aliases: [Genie Ontology, Databricks Ontology, 企业知识图谱, PageRank 语义排名]
 tags: [ai-ml, big-data, ai-agent, concept]
-sources: [2026/06/30/从Databricks产品发布会看数据平台的演进方向.html, 2026/06/30/Databricks Data + AI Summit 2026 深度回顾：Genie One、Lakebase 与 Agent 全家桶.html, 2026/06/30/Genie 之后，Databricks 真正想抢的是企业 Agent 入口.html, 2026/06/30/318| 企业级AGI：AI的真正战场.html, 2026/06/30/Databricks官方博客-Introducing Genie One Genie Ontology Genie Agents.md]
+sources: [2026/06/30/从Databricks产品发布会看数据平台的演进方向.html, 2026/06/30/Databricks Data + AI Summit 2026 深度回顾：Genie One、Lakebase 与 Agent 全家桶.html, 2026/06/30/Genie 之后，Databricks 真正想抢的是企业 Agent 入口.html, 2026/06/30/318| 企业级AGI：AI的真正战场.html, 2026/06/30/Databricks官方博客-Introducing Genie One Genie Ontology Genie Agents.md, 2026/10/30/《创业维艰》作者最新万字长文：AI让懂业务的人重新说了算.html]
 created: 2026-06-30
-updated: 2026-06-30
+updated: 2026-10-30
 ---
 
 # Genie Ontology
@@ -111,3 +111,4 @@ Genie Ontology 是"**语义资产正在取代数据资产成为核心**"这一�
 - [[enterprise-agi-framework]] — 企业级 AGI 框架，用本体成熟度模型评估 Genie Ontology 处于 5-6 级
 - [[ai-governance]] — AI 治理，Unity Catalog 强制权限继承的治理框架
 - [[dataagent-semantic-layer]] — DataWorks DataAgent 语义层的实物实现，同类产品对照
+- [[sora-system-of-record-for-agents]] — SORA 四问中的"它意味着什么"，Genie Ontology 是这一问的答案

@@ -80,3 +80,4 @@ Genie 系列采用**按用量计费（Pay-as-you-go）**模式，标志着 AI �
 - [[dataworks-data-agent]] — DataWorks Data Agent
 - [[infinisynapse]] — InfiniSynapse 对三个挑战的回应
 - [[data-agent-practice-guide]] — 火山引擎数据智能体实践指南
+- [[sora-system-of-record-for-agents]] — SORA：Genie 作为面向业务的智能体入口，被定位为记录系统的交互层

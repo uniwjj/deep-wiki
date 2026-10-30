@@ -3,9 +3,9 @@ title: Databricks 2026 Data+AI Summit 变革综述
 description: 2026年Data+AI Summit上Databricks一次性发布18项新产品，将全量能力重构为"数据底座—治理语义—Agent平台—应用"四层架构，完成从"模型性能竞赛"到"AI Agent规模化受管控落地"的战略切换
 aliases: [Databricks 2026, Databricks 四层架构, Data+AI Summit 2026, Databricks 范式重塑]
 tags: [big-data, ai-agent, architecture, tool]
-sources: [2026/06/30/从Databricks产品发布会看数据平台的演进方向.html, 2026/06/30/从Databricks产品发布会看-图片识别.md, 2026/06/30/Databricks 发布 LTAP：首个统一事务与分析处理的湖上架构.html, 2026/06/30/Databricks Data + AI Summit 2026 深度回顾：Genie One、Lakebase 与 Agent 全家桶.html, 2026/06/30/Genie 之后，Databricks 真正想抢的是企业 Agent 入口.html, 2026/06/30/Databricks Data + AI Summit 2026 重磅复盘：Databricks 正式迈入「AI 智能体湖仓」时代.html, 2026/06/30/Databricks 一次发了 18 件事：Lakehouse 下沉为底座，Agent Runtime 升到顶层.html, 2026/06/30/318| 企业级AGI：AI的真正战场.html]
+sources: [2026/06/30/从Databricks产品发布会看数据平台的演进方向.html, 2026/06/30/从Databricks产品发布会看-图片识别.md, 2026/06/30/Databricks 发布 LTAP：首个统一事务与分析处理的湖上架构.html, 2026/06/30/Databricks Data + AI Summit 2026 深度回顾：Genie One、Lakebase 与 Agent 全家桶.html, 2026/06/30/Genie 之后，Databricks 真正想抢的是企业 Agent 入口.html, 2026/06/30/Databricks Data + AI Summit 2026 重磅复盘：Databricks 正式迈入「AI 智能体湖仓」时代.html, 2026/06/30/Databricks 一次发了 18 件事：Lakehouse 下沉为底座，Agent Runtime 升到顶层.html, 2026/06/30/318| 企业级AGI：AI的真正战场.html, 2026/10/30/《创业维艰》作者最新万字长文：AI让懂业务的人重新说了算.html]
 created: 2026-06-30
-updated: 2026-06-30
+updated: 2026-10-30
 ---
 
 # Databricks 2026 Data+AI Summit 变革综述
@@ -175,8 +175,24 @@ Databricks 2026 的变革路径可从四个维度梳理，详见 [[ai-native-dat
 
 Databricks 的变革集中呈现了上述演进主线：**数据平台正在超越传统分析工具的定位，真正成为 AI Agent 规模化运行的基础设施**。文章建议我国数据平台产业在借鉴海外经验的同时，立足本土业务刚需与信创适配要求，走出一条自主可控的 AI 原生数据平台建设之路。
 
+## 事后回看：a16z 给出的统一叙事（2026-10）
+
+峰会四个月后，a16z 联创 Ben Horowitz 与 Mike McGuiness 在长文《Databricks & the Future of the Firm》（2026-10-27）中，把这次发布的四层架构收进一个更高的框架——**"智能体的记录系统"（[[sora-system-of-record-for-agents|SORA]]）**：记录系统必须持续回答四个问题，对应本次发布的产品分别是状态（Lakehouse + Lakebase）、本体（[[genie-ontology|Genie Ontology]]）、护栏（Unity Gateway）、评估（Genie / Agent Bricks 的自建考卷）。
+
+该文同时给出了峰会之后的更新数据：
+
+| 指标 | 数据（2026-10） |
+|------|----------------|
+| 年化收入 | 突破 70 亿美元，同比 +80% |
+| 估值 | 1900 亿美元 |
+| 智能体启动的数据库 | 每天超过 1,700 万个（对比：峰会口径为日调度 1,200 万次） |
+| Lakehouse 年化收入 | 超 15 亿美元，同比 >100% |
+| Lakebase 年化收入 | 突破 1 亿美元，智能体是最高产用户 |
+
 ## 相关页面
 
+- [[databricks-evolution]] — Databricks 的四条技术 S 曲线与 a16z 投资故事
+- [[sora-system-of-record-for-agents]] — 智能体的记录系统：本次四层架构的上层叙事
 - [[databricks-genie]] — Databricks Genie 企业级 Data Agent（本次 Genie One/Code GA、Agent Bricks 规模数据的产品基础）
 - [[databricks-agent-control-plane]] — Databricks Agent 控制面战略：六层控制点拼图与战略判断
 - [[enterprise-agi-framework]] — 企业级 AGI 框架：SoI 四层堆栈 + 本体成熟度 1-9 级 + 数据层冰面化（理论制高点）

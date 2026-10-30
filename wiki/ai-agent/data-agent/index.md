@@ -5,7 +5,7 @@ aliases: [data-agent, Data Agent, AI 数据平台]
 tags: [ai-agent, big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-07-01
-updated: 2026-10-29
+updated: 2026-10-30
 ---
 
 # Data Agent 与 AI 数据平台
@@ -75,6 +75,8 @@ AI Agent 在数据领域的应用——Data Agent 产品、AI 原生数据平台
 - [[agentic-data-cloud]] — Google Agentic Data Cloud（System of Action）
 - [[oceanbase-ai-database]] — OceanBase 湖库一体 AI 数据库
 - [[databricks-2026-summit]] — Databricks 2026 Data+AI Summit 四层架构变革综述
+- [[databricks-evolution]] — Databricks 四条技术 S 曲线（Spark → Lakehouse → Lakebase → Agents）与 a16z 投资故事
+- [[sora-system-of-record-for-agents]] — SORA：智能体的记录系统（状态/本体/护栏/评估四问闭环）
 - [[databricks-agent-control-plane]] — Databricks Agent 控制面战略：六层控制点拼图
 - [[customerlake]] — Databricks CustomerLake：Agentic CDP
 - [[lakewatch-agent-siem]] — Lakewatch + Panther 收购：Agent 驱动安全湖仓

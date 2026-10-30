@@ -5,7 +5,7 @@ aliases: [Deep Study, 知识库首页]
 tags: [meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-09
-updated: 2026-10-29
+updated: 2026-10-30
 ---
 
 # Deep Study
@@ -33,6 +33,12 @@ updated: 2026-10-29
 
 ## 最近更新
 
+- [[sora-system-of-record-for-agents]] — SORA：Ben Horowitz 万字长文《Databricks & the Future of the Firm》——智能体的记录系统（状态/本体/护栏/评估四问闭环）
+- [[databricks-evolution]] — Databricks 四条技术 S 曲线：Spark → Lakehouse → Lakebase → Agents，1900 亿美元估值与 a16z 投资故事
+- [[managerial-revolution-ai]] — 第二次经理人革命：AI 接管信息路由，"每个人都变成管理者"
+- [[sovereign-firm]] — 主权企业：模型随时可换，记忆永不归零
+- [[theory-of-the-firm]] — 企业的性质：科斯 + 西蒙，AI 改变的是企业形态而非大小
+- [[agent-capability-moore-law]] — 智能体能力新摩尔定律：METR 任务时长约每 7 个月翻倍
 - [[dacon-2026-beijing]] — DACon 2026 北京站：17 个分论坛、42 场演讲总索引（Data Agent / 评测 / 数字员工 / 语义层与本体 / 上下文工程 / 模型组合 / 生成式推荐）
 - [[databricks-2026-summit]] — Databricks 2026 Data+AI Summit 变革综述：四层架构、LTAP、Genie Ontology
 - [[enterprise-agi-framework]] — 企业级 AGI 框架：SoI 四层堆栈、本体成熟度模型

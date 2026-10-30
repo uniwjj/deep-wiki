@@ -173,3 +173,5 @@ SiliconANGLE 评估 [[genie-ontology|Databricks Genie Ontology]] 大致处于 **
 - [[agent-infra-vendor-strategies]] — Agent 基础设施厂商战略对照，通往企业级AGI竞赛的具体化
 - [[ai-governance]] — AI 治理，受治理智能资产的理论框架
 - [[ontology]] — 本体论五要素框架，知识图谱的理论基础
+- [[sora-system-of-record-for-agents]] — SORA：与 SoI 四层堆栈高度同构的厂商侧叙事
+- [[agent-capability-moore-law]] — METR 观测的智能体任务时长翻倍曲线
