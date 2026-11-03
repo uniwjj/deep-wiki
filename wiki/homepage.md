@@ -33,6 +33,8 @@ updated: 2026-11-03
 
 ## 最近更新
 
+- [[databuddy]] — 腾讯云 DataBuddy（2026-10-20）：Agent Native 大数据智能体工作台，四类 Agent + 统一语义层 + OneOps + Agent Runtime 三层安全
+- [[databuddy-ecs-demo]] — DataBuddy 电商端到端演示：18 节点 Pipeline、字段改名故障自愈、指标语义模型、零售看板、协同过滤推荐上线
 - [[super-agent]] — Super-agent 设计探索：DeepSeek Harness 团队提出的持续在线自主 Agent 架构（双层架构 / 事件驱动 / 全双工 / 存算分离 / Watchdog）
 - [[super-agent-classic-cs-mapping]] — Super-agent 的经典计算机系统映射：Fast/Slow Path、Cache、投机执行、存算分离、Control Loop
 - [[agent-event-driven-triggering]] — 事件驱动：Trigger 两级过滤与 Thread 订阅直通

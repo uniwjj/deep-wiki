@@ -1369,3 +1369,15 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `super-agent` — 新增「定位归纳：注意力解耦与数字员工运行时底座」一节（标注为归纳、非原文结论）：①注意力与任务数解耦，人只在决策或验收时出现；②数字员工运行时底座（常驻/并发/自愈）+ 三条触发通道（被动接收 / 定时自主，原文中 Watchdog 即此形态 / 主动识别），三条齐备才像在岗员工；附验证边界（团队规模、合成负载）与组织接口（身份/权限/考核）不在范围内的说明
 - updated `super-agent` 相关页面 — 新增 [[digital-employee]] 交叉引用
 - run `llm-wiki sync`
+
+## [2026-11-03] ingest | 腾讯云DataBuddy让Agent接手数仓开发（DataFunTalk）
+- 来源：`sources/2026/11/03/腾讯云DataBuddy让Agent接手数仓开发.html`（微信公众号原文 HTML，13 幅正文配图；同名 `.md` sidecar，`source_type: article-html`）
+- 抓取方式：`curl` 带浏览器 UA 直接拿到完整 HTML（3.6MB）；正文取 `#js_content` 子树（38KB）并闭合标签截断；`data-src`→`src` 回填 13 张图，逐一 HTTP 200 验证；注入基础可读性 CSS（800px 宽）。正文在 HTML 中以 `\x3c` 转义块另存一份，按反转义交叉核对一遍，文字与顺序一致
+- 图片复核：13 张逐张视觉读取（4 张实机演示截图、Data+AI Catalog 截图、语义层三层架构图、Agent Runtime 三层安全图、两种接入模式图、WorkBuddy 接入图；末幅为 11674px 高的 DataFun 峰会宣传长图，分 5 段读取确认与正文无关）。架构图里的小字按图直录（DLC/OLAP/Setats/TCLake、OBO、双向 Guardrails 等），实机截图中不可辨识的小字未作推断
+- 剔除：原页面末尾「往期推荐」列表配图、装饰图、DataFun 峰会宣传长图与官网二维码（页面推荐/广告）；离线副本与 wiki 均不使用
+- created `databuddy` — 产品层：Agent Native 大数据智能体工作台定位、统一语义层三层（统一 Catalog / 语义模型 / 本体模型）、OneOps（DataOps+MLOps+AIOps，回应"数据在数仓、模型在 ML 平台"的烟囱）、四类 Agent 与场景、Agent Runtime 三层安全（Agent 安全 / 数据安全 / 运行时兜底）与人审门控、两种接入路径（直连已有 OLAP vs 迁入统一存算）、WorkBuddy 接入、厂商口径数据（95.9% vs 83.5%、5–10 倍、30 天→7 天）及原文未说明项
+- created `databuddy-ecs-demo` — 演示层：按数据流向重排为 6 步（目标 → 四层数仓与 18 节点 Pipeline → 字段改名故障定位与经审批自愈 → 8 条质量规则 → 3 个指标到语义模型 YAML → 45 字段 9 图表看板 → 协同过滤模型注册上线 API），并归纳三类贯穿动作（人工审批门控 / 专业工具保留 / 结论可追溯）
+- updated `ai-agent/data-agent/index`（数据 Agent 产品与生态加 2 条）、`tencent-data-agent-practice`、`data-agent-next-stage`、`semantic-layer-to-ontology`、`ontological-semantic-layer`、`ai-agent/context-eng/workbuddy-context-engineering`、`homepage`（最近更新加 2 条）
+- 口径说明：原文对第四类能力的措辞是"数据科学平台能力"，与"数据工程/数据治理/数据分析三类 Agent"并列，页内已按原文措辞标注；截图里 WorkBuddy 之上的 ChatGPT/Claude/Gemini 标"即将接入"，正文只写"面向其他主流平台的标准连接器属于后续规划"，已在页内区分截图信息与正文
+- 未改动 `sources/` 下任何既有文件；复核一律回到 HTML 原文
+- run `llm-wiki sync`

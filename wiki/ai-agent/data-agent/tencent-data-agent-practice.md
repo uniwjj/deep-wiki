@@ -193,3 +193,4 @@ updated: 2026-08-11
 - [[agent-design-paradigms]] — Agent 设计范式（ReAct/Plan-and-Execute）
 - [[agent-hook-governance]] — Agent Hook 治理（门控思想对照）
 - [[maxcompute-skills]] — MaxCompute 官方 Skills 体系
+- [[databuddy]] — 腾讯云 DataBuddy：本页方法论的 Agent Native 产品化载体（四类 Agent + 统一语义层 + Agent Runtime）

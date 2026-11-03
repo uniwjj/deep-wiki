@@ -58,3 +58,4 @@ IDC、Databricks、CCSA TC601、火山引擎、安克创新等独立来源在 20
 - [[agent-infra-vendor-strategies]] — 厂商战略对照：Snowflake 从应用倒推 vs Databricks 从底座上推
 - [[agentic-skills]] — Skills 作为数据能力封装的核心抽象单元
 - [[dataworks-data-agent]] — 阿里云"碳硅协同"：平台面向 Agent 的转型实例
+- [[databuddy]] — 腾讯云 DataBuddy：语义层 + Agent Runtime 三层安全 + 人审门控，是把「受控行动」做成产品形态的实例（2026-10-20 发布）

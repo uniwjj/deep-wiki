@@ -114,3 +114,4 @@ WorkBuddy 在每次请求前组织以下信息，这是 Agent 给出贴合当前
 - [[claude-md-best-practices]] — CLAUDE.md 最佳实践
 - [[agent-memory-system]] — Agent 长短期记忆系统
 - [[agent-harness-overview]] — Agent Harness 综述
+- [[databuddy]] — 腾讯云 DataBuddy：以专家能力与连接器形式接入 WorkBuddy 的数据分析能力（2026-10 发布）

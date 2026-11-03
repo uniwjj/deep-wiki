@@ -342,3 +342,4 @@ DATA → AIGO Ontology
 - [[dataagent-semantic-layer]] — 平台侧语义层的实物内容，可用于对照"语义层能表达什么、本体需要补什么"
 - [[data-agent-semantic-stack]] — 8 层语义栈中本体语义层的位置
 - [[agent-evaluation-framework]] — 本页"独立评测 → 版本发布 → 经验继承"闭环与 Agent 评测框架的对应关系
+- [[databuddy]] — 腾讯云 DataBuddy 把「语义模型（指标口径）→ 本体模型（对象/关系/规则/动作）」做成同一底座的两层，是本页演进方向的一个厂商实物

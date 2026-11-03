@@ -2,8 +2,8 @@
   "entries": {
     "wiki/homepage.md": {
       "path": "wiki/homepage.md",
-      "mtime": 1793670239865.9202,
-      "contentHash": "6d651ae7409d2344",
+      "mtime": 1793688506111.3418,
+      "contentHash": "180b7d3e9c9563ed",
       "lastSynced": "2026-11-03"
     },
     "wiki/ai-agent/dacon-2026-beijing.md": {
@@ -932,8 +932,8 @@
     },
     "wiki/ai-agent/context-eng/workbuddy-context-engineering.md": {
       "path": "wiki/ai-agent/context-eng/workbuddy-context-engineering.md",
-      "mtime": 1783665223064.2498,
-      "contentHash": "1b1e2f918b38d201",
+      "mtime": 1793688497358.4822,
+      "contentHash": "fa6fb47b7da6a413",
       "lastSynced": "2026-11-03"
     },
     "wiki/ai-agent/data-agent/360-data-agent-semantic-layer.md": {
@@ -1040,8 +1040,8 @@
     },
     "wiki/ai-agent/data-agent/data-agent-next-stage.md": {
       "path": "wiki/ai-agent/data-agent/data-agent-next-stage.md",
-      "mtime": 1787716481378.936,
-      "contentHash": "b3d8d38c506c2745",
+      "mtime": 1793688497357.527,
+      "contentHash": "fb2c1b0f24eacd64",
       "lastSynced": "2026-11-03"
     },
     "wiki/ai-agent/data-agent/data-agent-onboarding.md": {
@@ -1110,6 +1110,18 @@
       "contentHash": "6cab8afb7e4076b1",
       "lastSynced": "2026-11-03"
     },
+    "wiki/ai-agent/data-agent/databuddy-ecs-demo.md": {
+      "path": "wiki/ai-agent/data-agent/databuddy-ecs-demo.md",
+      "mtime": 1793688483943.0361,
+      "contentHash": "7a9bb1edb7433304",
+      "lastSynced": "2026-11-03"
+    },
+    "wiki/ai-agent/data-agent/databuddy.md": {
+      "path": "wiki/ai-agent/data-agent/databuddy.md",
+      "mtime": 1793688441075.665,
+      "contentHash": "05f20d96fbb779ed",
+      "lastSynced": "2026-11-03"
+    },
     "wiki/ai-agent/data-agent/dataworks-2026-0528-xialiaori.md": {
       "path": "wiki/ai-agent/data-agent/dataworks-2026-0528-xialiaori.md",
       "mtime": 1782881728959.9517,
@@ -1166,8 +1178,8 @@
     },
     "wiki/ai-agent/data-agent/index.md": {
       "path": "wiki/ai-agent/data-agent/index.md",
-      "mtime": 1793344540034.0007,
-      "contentHash": "128171f6d7ce1272",
+      "mtime": 1793688488803.6318,
+      "contentHash": "ab600eb772d9624b",
       "lastSynced": "2026-11-03"
     },
     "wiki/ai-agent/data-agent/infinisynapse.md": {
@@ -1220,8 +1232,8 @@
     },
     "wiki/ai-agent/data-agent/ontological-semantic-layer.md": {
       "path": "wiki/ai-agent/data-agent/ontological-semantic-layer.md",
-      "mtime": 1785808673967.9148,
-      "contentHash": "7187da045badc493",
+      "mtime": 1793688497360.6116,
+      "contentHash": "67d4b1fcfbc1da25",
       "lastSynced": "2026-11-03"
     },
     "wiki/ai-agent/data-agent/openai-data-agent.md": {
@@ -1238,8 +1250,8 @@
     },
     "wiki/ai-agent/data-agent/semantic-layer-to-ontology.md": {
       "path": "wiki/ai-agent/data-agent/semantic-layer-to-ontology.md",
-      "mtime": 1793241368538.525,
-      "contentHash": "af2f82b6a68a1a91",
+      "mtime": 1793688497359.7063,
+      "contentHash": "96f5721efc01f498",
       "lastSynced": "2026-11-03"
     },
     "wiki/ai-agent/data-agent/skill-agent-boundary.md": {
@@ -1274,8 +1286,8 @@
     },
     "wiki/ai-agent/data-agent/tencent-data-agent-practice.md": {
       "path": "wiki/ai-agent/data-agent/tencent-data-agent-practice.md",
-      "mtime": 1786450846967.9585,
-      "contentHash": "87eba0e89f2a2bac",
+      "mtime": 1793688497356.322,
+      "contentHash": "dced56a1b3244992",
       "lastSynced": "2026-11-03"
     },
     "wiki/ai-agent/data-agent/trusted-data-qa.md": {
@@ -3820,6 +3832,12 @@
       "path": "sources/2026/11/03/Super-agent 设计探索：迈向更自主的 Agent 系统.md",
       "mtime": 1793670060066.1733,
       "contentHash": "a8c6043724e5f091",
+      "lastSynced": "2026-11-03"
+    },
+    "sources/2026/11/03/腾讯云DataBuddy让Agent接手数仓开发.md": {
+      "path": "sources/2026/11/03/腾讯云DataBuddy让Agent接手数仓开发.md",
+      "mtime": 1793688404782.5378,
+      "contentHash": "ed2b300c8100429e",
       "lastSynced": "2026-11-03"
     },
     "sources/2026/08/11/AI Native数据湖让企业Agent拥有统一的智能数据底座（腾讯云专场）/1. AI 时代的数据基础设施展望.md": {

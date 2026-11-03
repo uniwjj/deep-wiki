@@ -181,3 +181,4 @@ AI 给出的答案必须可追溯到：数据事实、语义版本、解释路�
 - [[data-agent-practice-guide]] — 数据 Agent 实践指南
 - [[data-agent-vs-ontology-agent]] — Data Agent 与 Ontology Agent 推理范式对比，本体化语义层是 Ontology Agent 的推理空间
 - [[taobao-live-data-dev-paradigm]] — R2C 架构中本体论作为 Neuro-Symbolic 的符号锚点
+- [[databuddy]] — 腾讯云 DataBuddy 的统一语义层：统一 Catalog → 语义模型 → 本体模型三层，作为 Agent 的语义底座实例

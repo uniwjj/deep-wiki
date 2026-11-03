@@ -5,7 +5,7 @@ aliases: [data-agent, Data Agent, AI 数据平台]
 tags: [ai-agent, big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-07-01
-updated: 2026-10-30
+updated: 2026-11-03
 ---
 
 # Data Agent 与 AI 数据平台
@@ -32,6 +32,8 @@ AI Agent 在数据领域的应用——Data Agent 产品、AI 原生数据平台
 - [[agentscope-financial-data-agent]] — 瓴岳科技 AgentScope 金融数据平台：六层架构与三支柱（2026-08 论坛）
 - [[workbuddy-data-practice]] — 腾讯 WorkBuddy 数据实践（2026-08 论坛）
 - [[daishu-cloud-data-agent]] — 袋鼠云 Data Agent：IDC 2026 主要厂商、Data+AI 智能飞轮、一体两翼、灵瞳 Data Agent（2026-08）
+- [[databuddy]] — 腾讯云 DataBuddy（2026-10-20 发布）：四类 Agent 的 Agent Native 工作台、统一语义层（Catalog/语义模型/本体模型）、OneOps、Agent Runtime 三层安全、两条接入路径
+- [[databuddy-ecs-demo]] — DataBuddy 电商端到端演示拆解：18 节点 Pipeline、字段改名故障自愈、指标语义模型、零售看板、协同过滤推荐上线
 
 ## DACon 2026 北京站
 
