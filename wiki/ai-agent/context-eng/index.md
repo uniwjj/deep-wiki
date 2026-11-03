@@ -5,12 +5,12 @@ aliases: [context-eng, 上下文工程索引]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-10-29
+updated: 2026-11-03
 ---
 
 # 上下文工程
 
-上下文工程的理论与实践，共 9 篇。
+上下文工程的理论与实践，共 10 篇。
 
 ## 核心内容
 
@@ -18,6 +18,7 @@ updated: 2026-10-29
 - [[manus-context-engineering]] — Manus 上下文工程实践
 - [[claude-md-best-practices]] — CLAUDE.md 最佳实践
 - [[workbuddy-context-engineering]] — WorkBuddy 上下文工程实践
+- [[inline-and-spill]] — Super-agent 的 Inline & Spill：上下文窗口当 Cache、局部性展开与链式召回
 
 ## DACon 2026 北京站
 

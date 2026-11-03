@@ -5,24 +5,29 @@ aliases: [harness, Harness 编排]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-10-29
+updated: 2026-11-03
 ---
 
 # Harness 编排体系
 
-Agent 编排系统的设计模式与工程实践，共 19 篇。
+Agent 编排系统的设计模式与工程实践，共 25 篇。
 
 ## 核心概念
 
 - [[agent-harness-overview]] — Harness 综述
 - [[agent-harness]] — Agent Harness 设计
 - [[agent-vs-framework-vs-harness]] — 三层抽象辨析
+- [[super-agent]] — DeepSeek Harness 团队的 Super-agent 架构：四个特征与五个模块，持续在线的自主 Agent 形态
+- [[super-agent-classic-cs-mapping]] — Super-agent 的经典计算机系统映射：Fast/Slow Path、Cache、投机执行、存算分离、Control Loop 的逐项还原
 
 ## 设计模式
 
 - [[harness-design-long-running]] — GAN 启发三 Agent 架构
 - [[harness-build-to-delete]] — Build-to-Delete 理念
 - [[loop-engineering]] — Loop Engineering：把反馈循环放进工程现场
+- [[super-agent-dual-layer-architecture]] — 双层架构：Router/Worker 职责划分，消融实验 P50 12.4 / P95 15.7 分钟
+- [[agent-event-driven-triggering]] — 事件驱动：Trigger、两级过滤与订阅直通
+- [[agent-watchdog]] — Watchdog：主系统之外的外部控制回路
 
 ## 工程实践
 
@@ -31,6 +36,7 @@ Agent 编排系统的设计模式与工程实践，共 19 篇。
 - [[harness-evolution-practice]] — 从单 Agent 翻车到多 Agent 协作：一次真实重构的 Harness 七阶段演进（2026-08 论坛）
 - [[harness-as-backend]] — Harness 作为新后端
 - [[distributed-agent-hosting]] — 腾讯云 Agent Runtime：从单体自管到分布式托管
+- [[agent-compute-state-separation]] — 计算、状态与环境的分离：云端无状态计算 + 端侧 daemon 的 BYOM 接入
 - [[mobile-gui-agent-harness]] — OPPO 移动端 GUI Agent Harness：受控运行时与数据飞轮
 - [[glm5-harness-practice]] — GLM5 Harness 实战
 - [[dw-harness-practice]] — 得物数仓 Harness 落地：五层防御 + 8 步 SKILL 工作流

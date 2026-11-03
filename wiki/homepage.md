@@ -5,7 +5,7 @@ aliases: [Deep Study, 知识库首页]
 tags: [meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-09
-updated: 2026-10-30
+updated: 2026-11-03
 ---
 
 # Deep Study
@@ -33,6 +33,9 @@ updated: 2026-10-30
 
 ## 最近更新
 
+- [[super-agent]] — Super-agent 设计探索：DeepSeek Harness 团队提出的持续在线自主 Agent 架构（双层架构 / 事件驱动 / 全双工 / 存算分离 / Watchdog）
+- [[super-agent-classic-cs-mapping]] — Super-agent 的经典计算机系统映射：Fast/Slow Path、Cache、投机执行、存算分离、Control Loop
+- [[agent-event-driven-triggering]] — 事件驱动：Trigger 两级过滤与 Thread 订阅直通
 - [[sora-system-of-record-for-agents]] — SORA：Ben Horowitz 万字长文《Databricks & the Future of the Firm》——智能体的记录系统（状态/本体/护栏/评估四问闭环）
 - [[databricks-evolution]] — Databricks 四条技术 S 曲线：Spark → Lakehouse → Lakebase → Agents，1900 亿美元估值与 a16z 投资故事
 - [[managerial-revolution-ai]] — 第二次经理人革命：AI 接管信息路由，"每个人都变成管理者"

@@ -5,12 +5,12 @@ aliases: [agent-core, Agent 理论]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-10-29
+updated: 2026-11-03
 ---
 
 # Agent 基础理论
 
-Agent 核心理论与机制，共 36 篇。
+Agent 核心理论与机制，共 48 篇。
 
 ## 设计范式
 
@@ -58,6 +58,8 @@ Agent 核心理论与机制，共 36 篇。
 
 - [[dynamic-workflow-agent-paradigm]] — 能力契约驱动的企业级 Agent 执行范式：DynamicWorkflow（2026-08 论坛）
 - [[elastic-mcp-agentic-search]] — Elastic MCP 与 Agentic AI 搜索：可信、上下文感知（2026-08 论坛）
+- [[async-react-loop]] — 异步 ReAct Loop：start()/stop() 让前台对话不被后台任务阻塞（Super-agent 全双工交互）
+- [[speculative-execution-agent]] — 投机执行：不确定结果是否被采用时提前在后台尝试（Super-agent）
 
 ## 自进化与前沿探索
 

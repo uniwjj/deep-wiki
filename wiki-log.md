@@ -1346,3 +1346,21 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `product/index`、`ai-agent/data-agent/index`、`ai-agent/agent-core/index`、`homepage`
 - 口径说明：日调度数据库数 1,200 万（2026-06 峰会口径）与 1,700 万（2026-10 文章口径）时点不同，两页并列保留未合并；图 4 中 Claude Opus 4.6 / Claude Mythos Preview 的 12～17 小时明细出自译文图注，页内已标明出处
 - run `llm-wiki sync`
+
+## [2026-11-03] ingest | Super-agent 设计探索：迈向更自主的 Agent 系统（DeepSeek Harness 团队）
+- 来源：`sources/2026/11/03/Super-agent 设计探索：迈向更自主的 Agent 系统.html`（微信公众号原文 HTML，14 幅正文配图；另新增同名 `.md` sidecar，`source_type: article-html`）；可双击阅读的下载副本存 `article-downloads/`
+- 抓取方式：`web_fetch` 命中微信验证页（「环境异常」），改用 Chrome headless `--dump-dom`（首次因无法创建 user data 目录失败，加 `--user-data-dir` 与 `--virtual-time-budget=15000` 后成功）取渲染后 DOM；正文取 `#js_content` 子树（96KB），`data-src`→`src` 回填 14 张图并逐张 HTTP 验证 200（无 Referer 亦返回 200）；注入基础可读性 CSS（677px 宽），全页截图核验首屏/中段/尾部渲染正常；原页面末尾 DeepSeek 招聘海报（第 15 幅图）按页面广告剔除
+- created `super-agent` — 形态与架构总览：定义（打破与单次会话的绑定）、问题起点（单任务上限=模型能力、多任务上限=人的注意力，一个人通常只能跟进 3–5 个活跃 Session）、四个基础特征（连续/高效/主动/持久）、五个模块、两个贯穿判断、落地状态（内部实例 + dsh-superagent-prototype 原型，非正式产品）、四类开放问题
+- created `super-agent-dual-layer-architecture` — 连续性与吞吐量的根本权衡；Router 层（全局序点、不执行具体任务甚至不配 Bash、轻量模型、批处理、水平切分代价、与 Agent Team 的区别）；Worker 层（上下文隔离、最强模型、不直接对外交互、多对多订阅同一 Thread 以消解冲突、可内嵌 Subagent/Agent Team）；实验 7.1 四方案消融（P50/P95：12.4/15.7、12.6/15.5、20.4/29.5、13.8/29.0 分钟；读缓存 token 2323/3177/605/1082 万；去掉直通 Router 决定数 +30%、token +37%）与 7.2 批处理压测（batch 1.0→2.8、单次请求 2.5→3.9s、单决定 6.4→1.6s）
+- created `agent-event-driven-triggering` — Trigger 作为主输入；高噪音低触发率；Fast/Slow Path 两级过滤（程序层确定性准入 + 语义层 LLM 判断，含三条 Trigger 的走向示例）；Thread 定义与两个实例（IM 话题 #08、PR #128）；订阅直通两条路径与多对多订阅、输出侧仍经 Router
+- created `inline-and-spill` — 上下文窗口当 Cache；Inline/Spill 两个基本操作；局部性三步（最少信息→逐步 Inline 相邻内容→超限截断留续读入口）；链式召回（对象唯一 ID 构成引用图，逐跳展开 Trigger #42 → Thread #08 → Worker #03 → Thread #15）
+- created `speculative-execution-agent` — 投机执行：不确定结果是否被采用时后台提前尝试、有价值即交付无价值丢弃；个人助手（核对日程/搜集背景/备好草稿）与「静默复现并修复」策略（确认问题+简单修复才交付，否则全程安静）；波浪号误渲染案例
+- created `async-react-loop` — 经典 ReAct 同步 `run()` 阻塞 vs 异步 `start()`/`stop()`（立即返回 Started、完成后作为新事件消息投递、可主动终止长命令）；全双工交互；多信道输出规范（IM 低打扰，硬性规定单次回复不超过 100 词；GitHub/邮件/文档结构化异步交付）；原文注明异步任务机制已在 DSH 实现但尚未默认开启
+- created `agent-compute-state-separation` — 本地 Agent 把计算/会话状态/执行环境绑在同一设备；第一层计算与状态分离（无状态弹性容器 + Session 数据库）；第二层计算与执行环境分离（云端 Agent Loop + 端侧无状态轻量 daemon），两种常见替代思路（云端重建环境、迁云）为何不够；与 Anthropic「脑手分离」的同与异；BYOM 与间歇在线设备；安全前提（云端被攻破/凭据进入上下文）
+- created `agent-watchdog` — 主系统之外的独立 Control Loop；进程存活探测不足（无效循环、目标偏离）；Watchdog Session 由定时消息驱动，兼管基础设施故障与任务进展/方向；自身是具备完整工具能力的 Agent Session，可用自然语言问因、在线改提示词与触发规则
+- created `super-agent-classic-cs-mapping` — 把五个模块逐项还原为经典思想（Fast/Slow Path、Batching、Sequence Point、Sharding、Cache 与 Locality、引用图多跳检索、投机执行、半双工→全双工、存算分离、外部 Control Loop），并标注原文「没有提出新理论」的自我定位；三条归纳已明确标注为本页分析而非原文结论
+- 未改 `agent-harness-overview` 等既有内容页；updated `ai-agent/harness/index`（19→25 篇并加入 6 条）、`ai-agent/context-eng/index`（9→10）、`ai-agent/agent-core/index`（36→48，页内原计数已过期）、`ai-agent/index`（页数表：data-agent 62→64、agent-core 45→48、harness 19→25、context-eng 9→10，并加入 super-agent 快速入口）、`homepage`（最近更新 3 条）
+- 复核记录：15 张配图逐张视觉读取（整体架构图 [2]–[6] 标号与连线、双层架构、两级过滤示例、Thread 示例、订阅直通、链式召回 ID 链路、异步 ReAct 时序图、存算分离图、累计完成曲线、消融结果表、批处理三指标图）；消融数值以图中表格（图 12）为准，与正文叙述交叉核对一致
+- 不确定/边界：实验为合成负载与简化环境，原文自述「结果仅作为初步参考」，页内已注明；Watchdog 的检查频率、Watchdog 自身失效如何发现、「实质进展/方向偏离」的具体判据，原文均未给出，已在页内单列；`dsh-superagent-prototype` 仅为技术路线原型、非正式产品
+- 未改动 `sources/` 下任何既有文件；来源文件保存原始 HTML + `.md` sidecar，正文复核一律回到 HTML
+- run `llm-wiki sync`
