@@ -1364,3 +1364,8 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 不确定/边界：实验为合成负载与简化环境，原文自述「结果仅作为初步参考」，页内已注明；Watchdog 的检查频率、Watchdog 自身失效如何发现、「实质进展/方向偏离」的具体判据，原文均未给出，已在页内单列；`dsh-superagent-prototype` 仅为技术路线原型、非正式产品
 - 未改动 `sources/` 下任何既有文件；来源文件保存原始 HTML + `.md` sidecar，正文复核一律回到 HTML
 - run `llm-wiki sync`
+
+## [2026-11-03] update | Super-agent 页补“定位归纳”
+- updated `super-agent` — 新增「定位归纳：注意力解耦与数字员工运行时底座」一节（标注为归纳、非原文结论）：①注意力与任务数解耦，人只在决策或验收时出现；②数字员工运行时底座（常驻/并发/自愈）+ 三条触发通道（被动接收 / 定时自主，原文中 Watchdog 即此形态 / 主动识别），三条齐备才像在岗员工；附验证边界（团队规模、合成负载）与组织接口（身份/权限/考核）不在范围内的说明
+- updated `super-agent` 相关页面 — 新增 [[digital-employee]] 交叉引用
+- run `llm-wiki sync`
