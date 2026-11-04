@@ -5,7 +5,7 @@ aliases: [Data Agent语义栈, 8层语义栈, 语义栈技术方案, Data Agent 
 tags: [big-data, ai-agent, architecture, concept]
 sources: [2026/08/04/Data Agent的8层语义栈技术构建解决方案详解.html]
 created: 2026-08-04
-updated: 2026-08-04
+updated: 2026-11-04
 ---
 
 # Data Agent 8 层语义栈
@@ -155,3 +155,4 @@ Data Agent 的"记忆皮层"。没有它 Agent 永远是新手——每次对话
 - [[xiaomi-dimi-data-agent]] — 小米 DiMi NL2Semantic2SQL，语义层在 Harness 工程化中的位置
 - [[genie-ontology]] — Databricks Genie Ontology 实现
 - [[ontology]] — 本体论五要素框架，本体层的理论源头
+- [[databuddy-semql-metarag]] — 厂商对"第一层指标语义层"的完整实现：SemQL JDBC 接口、MetaRAG 双路召回、覆盖度降级路由；注意该文中 MetaRAG 指"结构化元数据双路召回"，与本页第四层"锚定语义层"的 MetaRAG 不是同一所指

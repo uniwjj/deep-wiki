@@ -1439,3 +1439,15 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `ai-agent/data-agent/index` — 两条索引条目加「知数（原文 DataAgent）」标注
 - 未改动 `sources/` 下任何既有文件
 - run `llm-wiki sync`
+
+## [2026-11-04] ingest | 拆解腾讯 DataBuddy 的 Text-to-Semantic-to-SQL 与 MetaRAG（噪声之下）
+- 来源：`sources/2026/09/21/`（原文 HTML 离线副本 + 同名 `.md` sidecar，`source_type: article-html`）；`article-downloads/` 同步副本
+- 抓取方式：`curl` 带浏览器 UA 取得完整 HTML（3.8MB），取 `#js_content` 子树并做 `<div>` 深度配平；剥除 `leaf`/`style`/`data-*` 属性后重排为可读版式（720px，含 5 张表格与 1 段 SemQL 代码块），CSS 补齐 h2/h3/table/li/pre；headless Chrome 截图核验全文渲染正常；原文唯一的图片是文末微信群二维码，按页面推广剔除
+- created `databuddy-semql-metarag` — 语义链路拆解：三类翻车现场（指标歧义 / JOIN 一对多膨胀 / 条件错配）；Unity Semantics 四要素（Entity/Relation/Metric/Dimension）与三层架构（物理/业务/协议）、DataBuddy 自身也是消费方（JDBC/MCP）；冷启动两路抽取 + Owner 审核（"降的是人工录入成本，不是人工治理本身"）；SemQL 唯一约束与示例、与 Text-to-SQL 六维对比、腾讯视频 DAU 案例的完整链路；MetaRAG：F-RAG（枚举亿级离线问答库，覆盖高频）vs S-RAG（先召回指标再过滤维度，覆盖长尾），千级→100→6 漏斗；覆盖度三级路由（完整命中 SemQL + NL2SQL 兜底比对 / 部分命中受约束 NL2SQL / 未命中加严防护）+ 静态检查·语义对齐·权限收敛三重校验 + 缺失回流治理；分层记忆 Session→Personal→Team→Enterprise；指标 MCP 三工具（SearchMetric / QueryMetricData / QueryMetricDataBySemQL）
+- updated `ai-agent/data-agent/index`（DataBuddy 条目组 +1）、`homepage`（最近更新 +1）
+- updated `databuddy`、`data-agent-semantic-stack`、`360-data-agent-semantic-layer`、`vivo-dataagent-practice`、`tencent-data-agent-practice`、`trusted-data-qa`、`shufan-ai-native-data-platform` — 各加一条交叉引用
+- 更正：回看上一来源（数帆）配图，`dataagent-ontology-harness` 中"语义飞轮"引文原句为「语义飞轮：不必等语义建全再上线——…」，此前转录漏了标题词并改写为"先挑一个高价值场景跑起来"的语序，已按配图原文修正
+- 口径说明：本文为**第三方拆解**（公众号「噪声之下」，非腾讯云官方），文中"官方材料 / 官方文档"系作者转述；MetaRAG 在此文指"结构化元数据双路召回"，与 `data-agent-semantic-stack` 第四层"锚定语义层"的 MetaRAG 不是同一所指，已在两页互注
+- 不确定/边界：原文未给出 60%~70% 准确率的统计口径、Billion-level 索引的实际规模、召回漏斗各级耗时；参考资料 6 条未逐条核验
+- 未改动 `sources/` 下任何既有文件
+- run `llm-wiki sync`

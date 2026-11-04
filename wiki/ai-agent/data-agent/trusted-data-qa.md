@@ -5,7 +5,7 @@ aliases: [Trusted Data QA, 可信问数, 有据可查, Gravitino Semantic Model,
 tags: [ai-agent, big-data, practice, architecture]
 sources: [2026/10/29/2026DACon北京站/决策智能 Agent：从数据洞察到经营动作/李明皇-让+Data+Agent+的每个回答都有据可查：企业级可信问数的工程闭环.pdf]
 created: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-04
 ---
 
 # 企业级可信问数：让 Data Agent 的每个回答都有据可查
@@ -348,3 +348,4 @@ BIRD #1493 的最终答案：2012 年 2 月，在当月有月度记录的客户�
 - [[data-agent-onboarding]] — Data Agent 上岗标准：Context 与"干得对"的过程可信
 - [[data-agent-semantic-stack]] — Data Agent 8 层语义栈：语义定义与消费的分层视角
 - [[xiaomi-dimi-data-agent]] — 小米 Data Agent：数字溯源与语义回退的同类工程
+- [[databuddy-semql-metarag]] — 可信问数的一种工程实现：确定性编译 + 覆盖度降级 + 三重校验（静态检查/语义对齐/权限收敛）

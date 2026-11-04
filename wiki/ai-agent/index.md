@@ -19,7 +19,7 @@ Agent 开发领域的技术积累索引，按子领域分目录管理。
 | 目录 | 页数 | 说明 |
 |------|------|------|
 | [[ai-agent/claude-code/index]] | 37 | Claude Code 源码级架构、内部机制、多 Agent 协作 |
-| [[ai-agent/data-agent/index]] | 91 | Data Agent 产品、AI 原生数据平台、厂商战略与实践、交付与运营方法论 |
+| [[ai-agent/data-agent/index]] | 92 | Data Agent 产品、AI 原生数据平台、厂商战略与实践、交付与运营方法论 |
 | [[ai-agent/agent-core/index]] | 48 | Agent 设计范式、记忆、规划、安全、治理 |
 | [[ai-agent/sdd/index]] | 28 | OpenSpec、Superpowers、Spec-Kit 三剑客，Raven SDD 数据开发实践，Anthropic AI-native SDLC playbook |
 | [[ai-agent/knowledge-base/index]] | 25 | LLM Wiki 概念、实现、Karpathy 实践 |

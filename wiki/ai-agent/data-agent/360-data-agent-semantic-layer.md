@@ -5,7 +5,7 @@ aliases: [360 Data Agent, 奇麟 Agent, 奇麟 Data Agent, 360 语义层, 双路
 tags: [ai-agent, big-data, practice]
 sources: [2026/10/29/2026DACon北京站/企业语义层建设/郭朝阳-从会查数到懂业务——奇虎360+企业级+Data+Agent+的语义层演进与量化评测实践.pdf]
 created: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-04
 ---
 
 # 奇虎 360 企业级 Data Agent 语义层演进与量化评测
@@ -453,3 +453,4 @@ pred_sql → pred_rows  vs  gold_sql → gold_rows  → compare() → L1 多集�
 - [[data-agent-semantic-stack]] — Data Agent 8 层语义栈，可用于定位 BlockPlan、OSI、编译器各自的位置
 - [[data-agent-vs-ontology-agent]] — 指标驱动与本体驱动的推理差异，对应本页 L2 结构化层与 L3 本体级的边界
 - [[dunhuang-model-routing]] — 企业模型路由与成本治理；语义层路由（结构化 vs 模糊）与模型路由是两类不同层次的路由
+- [[databuddy-semql-metarag]] — 腾讯 DataBuddy 的同构方案：SemQL 确定性编译 + 召回漏斗 + 覆盖度三级路由（对照本页 NL2MQL2SQL 与 L0–L4 分层命中）

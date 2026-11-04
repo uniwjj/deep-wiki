@@ -5,7 +5,7 @@ aliases: [Data Agent设计实战, 腾讯TEG Data Agent, 知识准备库表检索
 tags: [big-data, ai-agent, practice]
 sources: [2026/08/11/从Data Agent到Data Engineer Agent论坛/01-冯浩哲-Data Agent设计实战：知识准备、库表检索与SQLPy.pdf]
 created: 2026-08-11
-updated: 2026-08-11
+updated: 2026-11-04
 ---
 
 # 腾讯 Data Agent 设计实战
@@ -194,3 +194,4 @@ updated: 2026-08-11
 - [[agent-hook-governance]] — Agent Hook 治理（门控思想对照）
 - [[maxcompute-skills]] — MaxCompute 官方 Skills 体系
 - [[databuddy]] — 腾讯云 DataBuddy：本页方法论的 Agent Native 产品化载体（四类 Agent + 统一语义层 + Agent Runtime）
+- [[databuddy-semql-metarag]] — 腾讯云 WeData/DataBuddy 的语义层实现拆解（SemQL + MetaRAG + MCP）

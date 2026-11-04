@@ -5,7 +5,7 @@ aliases: [DataBuddy, 腾讯云 DataBuddy, Hi Buddy, 数据Buddy, Agent Native �
 tags: [ai-agent, big-data, tool, practice]
 sources: [2026/11/03/腾讯云DataBuddy让Agent接手数仓开发.html]
 created: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-04
 ---
 
 # 腾讯云 DataBuddy
@@ -120,3 +120,4 @@ Agent 的操作面从"生成报表"扩大到"读日志、改 SQL、发布任务�
 - [[databricks-genie]] — Databricks Genie + Genie Ontology 的企业级 Data Agent 对照
 - [[data-agent-next-stage]] — Data Agent 演进判断：语义层成为基础设施、从问数走向受控行动（本页演示是「受控行动」的一个实物样本）
 - [[data-agent-delivery-methodology]] — Data Agent 项目交付与运营方法论
+- [[databuddy-semql-metarag]] — 语义链路实现细节：SemQL 确定性编译、MetaRAG 双路召回、覆盖度三级路由与指标 MCP 三工具

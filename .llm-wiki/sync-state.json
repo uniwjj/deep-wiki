@@ -2,8 +2,8 @@
   "entries": {
     "wiki/homepage.md": {
       "path": "wiki/homepage.md",
-      "mtime": 1793757432465.7104,
-      "contentHash": "1ef2b5c78def9bbf",
+      "mtime": 1793762374443.696,
+      "contentHash": "a3773513a108b4a9",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/dacon-2026-beijing.md": {
@@ -14,8 +14,8 @@
     },
     "wiki/ai-agent/index.md": {
       "path": "wiki/ai-agent/index.md",
-      "mtime": 1793757432467.1816,
-      "contentHash": "1fae83dfa029e957",
+      "mtime": 1793762412288.253,
+      "contentHash": "39fa4a74b941f672",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-ml/amap-route-recommendation-agent.md": {
@@ -950,8 +950,8 @@
     },
     "wiki/ai-agent/data-agent/360-data-agent-semantic-layer.md": {
       "path": "wiki/ai-agent/data-agent/360-data-agent-semantic-layer.md",
-      "mtime": 1793242025161.765,
-      "contentHash": "16e143c36b1e3733",
+      "mtime": 1793762374395.7722,
+      "contentHash": "60b3064f3f284b4a",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/action-loop-agentcore.md": {
@@ -1082,8 +1082,8 @@
     },
     "wiki/ai-agent/data-agent/data-agent-semantic-stack.md": {
       "path": "wiki/ai-agent/data-agent/data-agent-semantic-stack.md",
-      "mtime": 1785808650798.647,
-      "contentHash": "5386adb14063754b",
+      "mtime": 1793762374394.602,
+      "contentHash": "193e32e12a86993a",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/data-agent-vs-ontology-agent.md": {
@@ -1106,8 +1106,8 @@
     },
     "wiki/ai-agent/data-agent/dataagent-ontology-harness.md": {
       "path": "wiki/ai-agent/data-agent/dataagent-ontology-harness.md",
-      "mtime": 1793758704465.251,
-      "contentHash": "c3d2c43af83b0589",
+      "mtime": 1793762163313.1787,
+      "contentHash": "2a598f7845dc6718",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/dataagent-semantic-layer.md": {
@@ -1146,10 +1146,16 @@
       "contentHash": "7a9bb1edb7433304",
       "lastSynced": "2026-11-04"
     },
+    "wiki/ai-agent/data-agent/databuddy-semql-metarag.md": {
+      "path": "wiki/ai-agent/data-agent/databuddy-semql-metarag.md",
+      "mtime": 1793762360449.0713,
+      "contentHash": "1469b46f1a7a6a44",
+      "lastSynced": "2026-11-04"
+    },
     "wiki/ai-agent/data-agent/databuddy.md": {
       "path": "wiki/ai-agent/data-agent/databuddy.md",
-      "mtime": 1793688441075.665,
-      "contentHash": "05f20d96fbb779ed",
+      "mtime": 1793762374393.1865,
+      "contentHash": "63f7bb68275fbaca",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/dataworks-2026-0528-xialiaori.md": {
@@ -1238,8 +1244,8 @@
     },
     "wiki/ai-agent/data-agent/index.md": {
       "path": "wiki/ai-agent/data-agent/index.md",
-      "mtime": 1793758704465.93,
-      "contentHash": "daf45dffd41cb585",
+      "mtime": 1793762374392.114,
+      "contentHash": "b03ac12139112042",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/infinisynapse.md": {
@@ -1382,8 +1388,8 @@
     },
     "wiki/ai-agent/data-agent/shufan-ai-native-data-platform.md": {
       "path": "wiki/ai-agent/data-agent/shufan-ai-native-data-platform.md",
-      "mtime": 1793758704464.5276,
-      "contentHash": "71c3ed8bad1d86ad",
+      "mtime": 1793762374400.5527,
+      "contentHash": "690c121c68c989b1",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/skill-agent-boundary.md": {
@@ -1430,8 +1436,8 @@
     },
     "wiki/ai-agent/data-agent/tencent-data-agent-practice.md": {
       "path": "wiki/ai-agent/data-agent/tencent-data-agent-practice.md",
-      "mtime": 1793688497356.322,
-      "contentHash": "dced56a1b3244992",
+      "mtime": 1793762374398.2847,
+      "contentHash": "b88233c0b9812d62",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/trusted-ai-infrastructure.md": {
@@ -1442,8 +1448,8 @@
     },
     "wiki/ai-agent/data-agent/trusted-data-qa.md": {
       "path": "wiki/ai-agent/data-agent/trusted-data-qa.md",
-      "mtime": 1793240795981.616,
-      "contentHash": "89fc028f35b75330",
+      "mtime": 1793762374399.4512,
+      "contentHash": "1c7fe256ccf19f59",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/unified-storage-unified-compute.md": {
@@ -1454,8 +1460,8 @@
     },
     "wiki/ai-agent/data-agent/vivo-dataagent-practice.md": {
       "path": "wiki/ai-agent/data-agent/vivo-dataagent-practice.md",
-      "mtime": 1786449968780.5754,
-      "contentHash": "be70cca5fa70e51d",
+      "mtime": 1793762374397.1145,
+      "contentHash": "22069d61a5ebe12f",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/wing-pay-ontology-trusted-ai.md": {
@@ -3940,6 +3946,12 @@
       "path": "sources/2026/09/14/工信部印发《“人工智能+软件”专项行动实施方案》.md",
       "mtime": 1789351915946.2847,
       "contentHash": "5e240dc2b49733f9",
+      "lastSynced": "2026-11-04"
+    },
+    "sources/2026/09/21/拆解腾讯 DataBuddy 的 Text-to-Semantic-to-SQL 与 MetaRAG 技术实现.md": {
+      "path": "sources/2026/09/21/拆解腾讯 DataBuddy 的 Text-to-Semantic-to-SQL 与 MetaRAG 技术实现.md",
+      "mtime": 1793762391184.5823,
+      "contentHash": "ac9111ae97f5a999",
       "lastSynced": "2026-11-04"
     },
     "sources/2026/10/10/Multica 是什么——从源码看一个把 Agent 变成同事的系统.md": {

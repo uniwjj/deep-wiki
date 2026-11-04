@@ -176,3 +176,4 @@ updated: 2026-11-04
 - [[tencent-data-agent-practice]] — 腾讯 Data Agent 的同类议题（知识体系、混合计算、评测）
 - [[data-agent-next-stage]] — "语义层基础设施化 + 能力 Skills 化"的演进判断
 - [[agent-ready-multi-cloud-luxury]] — DACon 2026 上"Agent-Ready 四条判据"的同场讨论
+- [[databuddy-semql-metarag]] — 对照案例：腾讯用 F-RAG/S-RAG 双路召回解决"指标 × 维度"召回难，数帆用 LightRAG Local/Global

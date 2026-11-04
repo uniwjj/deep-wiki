@@ -5,7 +5,7 @@ aliases: [vivo DataAgent, BDSP, vivo 数据研发治理平台, AnyData, BaseAgen
 tags: [big-data, ai-agent, practice]
 sources: [2026/08/11/面向Agent的数据架构论坛/01-王同欢-vivo数据研发治理平台DataAgent实践.pdf]
 created: 2026-08-11
-updated: 2026-08-11
+updated: 2026-11-04
 ---
 
 # vivo 数据研发治理平台 DataAgent 实践
@@ -180,3 +180,4 @@ Harness 能力将逐步趋同：推理与规划（Loop/ReAct/规划，通用 Age
 - [[streaming-interactive-data-agent]] — 同论坛许鹏分享：流式交互与实时洞察（数据 Agent 产品化的五层价值模型）
 - [[data-agent-semantic-stack]] — Data Agent 8 层语义栈（知识体系与语义层的架构思想）
 - [[maxcompute-skills]] — MaxCompute 的 Skills 体系（技能挂载思路对照）
+- [[databuddy-semql-metarag]] — 反例对照：腾讯选择 SemQL 中转与确定性编译，本页选择不引入 SemQL、直接约束 SQL 生成
