@@ -5,7 +5,7 @@ aliases: [Deep Study, 知识库首页]
 tags: [meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-09
-updated: 2026-11-03
+updated: 2026-11-04
 ---
 
 # Deep Study
@@ -33,6 +33,17 @@ updated: 2026-11-03
 
 ## 最近更新
 
+- [[goalsong-ontology-thesis]] — 《GOALSONG 本体论纲》（高颂数科，2026-10，327 页）：面向智能体时代的企业本体方法论总纲——六篇十五章，从语义鸿沟到可信 AI 基础设施
+- [[ontology-semantic-infrastructure]] — 第 3 章：本体作为智能体语义基础设施，破解身份/语义/行动三重瓶颈与能力边界
+- [[minimal-world-model]] — 第 5 章：最小世界模型（SmallWorld-小世界）——先跑通一个闭环，再扩展世界
+- [[ontology-six-step-method]] — 第 6 章：GB/T 48000.3—2026 落到工程的六步构建法与六条核心原则
+- [[semi-auto-ontology-and-lightning-action]] — 第 7 章：半自动构建（机器提议→人工定夺）与八周闪电行动五步法
+- [[small-world-network]] — 第 9 章：小世界网络——本体定义世界、合约定义规则、OBAC 定义边界，智能体自主结伴协同
+- [[data-asset-operation-2]] — 第 10 章：数据资产运营 2.0——本体泛在连接、四条变现路径、四个运营机制
+- [[effective-token-economy]] — 第 12 章：词元与有效词元——本体作为词元的四层语义锚点，有效词元=总词元×等级系数×使用系数
+- [[ontology-governance]] — 第 14 章：本体治理——四层治理架构、RFC 五步变更、四维健康度评估、五类消费方生态
+- [[trusted-ai-infrastructure]] — 第 15 章：可信 AI 基础设施四层架构——身份（AIC）/验证（TAV）/计量（词元运营中心）/连接（ioC），本体是"根"
+- [[goalsong-methodology-system]] — 附录 B：高颂数科十套本体工程方法论、组合矩阵与选择决策树
 - [[databuddy]] — 腾讯云 DataBuddy（2026-10-20）：Agent Native 大数据智能体工作台，四类 Agent + 统一语义层 + OneOps + Agent Runtime 三层安全
 - [[databuddy-ecs-demo]] — DataBuddy 电商端到端演示：18 节点 Pipeline、字段改名故障自愈、指标语义模型、零售看板、协同过滤推荐上线
 - [[super-agent]] — Super-agent 设计探索：DeepSeek Harness 团队提出的持续在线自主 Agent 架构（双层架构 / 事件驱动 / 全双工 / 存算分离 / Watchdog）

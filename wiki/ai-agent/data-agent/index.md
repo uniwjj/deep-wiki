@@ -5,7 +5,7 @@ aliases: [data-agent, Data Agent, AI 数据平台]
 tags: [ai-agent, big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-07-01
-updated: 2026-11-03
+updated: 2026-11-04
 ---
 
 # Data Agent 与 AI 数据平台
@@ -55,6 +55,29 @@ AI Agent 在数据领域的应用——Data Agent 产品、AI 原生数据平台
 - [[xiaomi-dimi-data-agent]] — 小米 Data Agent（已合并 DACon 2026 版：成本问题、Trace 评测、AI FDE 等七块新增）
 
 ## 语义层与本体
+
+### 《GOALSONG 本体论纲》专辑（高颂数科，2026-10）
+
+> 327 页企业本体方法论（六篇十五章 + 三个附录），由「总纲 → 识别 → 构建 → 行动 → 计量 → 治理 → 基础设施」串成一条完整链条。
+
+- [[goalsong-ontology-thesis]] — 总纲：书名/编写背景、六条核心判断、四阶段实施路径、GOALSONG 体系七个组成部分、全书逐章导航
+- [[semantic-gap]] — 第 1 章：语义鸿沟是智能体时代的第一道坎——可理解性衰减的三种表现
+- [[ontology-semantic-infrastructure]] — 第 3 章：本体作为智能体语义基础设施，三重瓶颈与能力边界（四种错误认知）
+- [[ontology-identification]] — 第 4 章：本体识别七要素框架、六步识别法、术语歧义决策树
+- [[minimal-world-model]] — 第 5 章：最小世界模型 MWM——大而全的三个陷阱，最小单元是闭环
+- [[ontology-six-step-method]] — 第 6 章：本体构建六步法与六条核心原则
+- [[semi-auto-ontology-and-lightning-action]] — 第 7 章：半自动构建三阶段与闪电行动五步法（八周跑通闭环）
+- [[ontology-driven-action-loop]] — 第 8 章：本体驱动的八环节行动闭环、三种形态对比（关系数据库 vs 知识图谱 vs 工业本体）
+- [[small-world-network]] — 第 9 章：小世界网络——三个前提、三个机制、四步运行
+- [[data-asset-operation-2]] — 第 10 章：数据资产运营 2.0 与本体泛在连接
+- [[ontology-rights-and-data-asset-capitalization]] — 第 11 章：本体确权、智能体身份码与数据资产入表（成本法 → 词元法）
+- [[effective-token-economy]] — 第 12 章：词元与有效词元——本体作为语义锚点
+- [[ontology-data-circulation-obac]] — 第 13 章：语义互操作四层、数字合约、使用控制与 OBAC
+- [[ontology-governance]] — 第 14 章：四层治理架构、RFC 变更、健康度四维模型、消费方生态
+- [[trusted-ai-infrastructure]] — 第 15 章：可信 AI 基础设施四层架构与 GOALSONG 八边形/双螺旋模型
+- [[goalsong-methodology-system]] — 附录 B：十套工程方法论与方法论组合矩阵
+- [[ontology-standards-index]] — 附录 C：全书引用的国家标准与政策文件索引
+- 附录 A 术语表见 [[ontology-terms]]（位于 ai-ml/）；哲学到工程的演进见 [[ontology-engineering-evolution]]（位于 ai-ml/）
 
 - [[ontological-semantic-layer]] — 本体化语义层：数仓到 Agent 架构补位
 - [[dataagent-semantic-layer]] — DataAgent 语义层的实物层面内容

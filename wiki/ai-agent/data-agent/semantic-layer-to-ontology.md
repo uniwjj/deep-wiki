@@ -5,7 +5,7 @@ aliases: [semantic-layer-to-ontology, 业务本体, 语义层到本体, 悦点�
 tags: [ai-agent, architecture, practice]
 sources: [2026/10/29/2026DACon北京站/企业语义层建设/任鑫琦-语义层的下一站是业务本体：十二年+近百家企业语义建设的得与失.pdf]
 created: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-03
 ---
 
 # 语义层的下一站是业务本体
@@ -343,3 +343,4 @@ DATA → AIGO Ontology
 - [[data-agent-semantic-stack]] — 8 层语义栈中本体语义层的位置
 - [[agent-evaluation-framework]] — 本页"独立评测 → 版本发布 → 经验继承"闭环与 Agent 评测框架的对应关系
 - [[databuddy]] — 腾讯云 DataBuddy 把「语义模型（指标口径）→ 本体模型（对象/关系/规则/动作）」做成同一底座的两层，是本页演进方向的一个厂商实物
+- [[goalsong-ontology-thesis]] — 高颂数科《GOALSONG本体论纲》：把"场景优先、按业务闭环推进"同一主张展开成六篇十五章的完整方法论，本页的"业务侧实践"与其识别/构建/治理链条可互相印证

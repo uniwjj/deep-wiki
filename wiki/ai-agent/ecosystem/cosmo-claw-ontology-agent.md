@@ -5,7 +5,7 @@ aliases: [COSMO-Claw, 天启COSMO-Claw, 语义罗盘, 卡奥斯, COSMO-Sphere, �
 tags: [ai-agent, practice, concept]
 sources: [2026/08/11/工业场景Agent实践论坛/02-余锦泽-顺丰供应链Agent落地实践供应链AI从工具走向全域智能操作系统.pdf]
 created: 2026-08-11
-updated: 2026-08-11
+updated: 2026-11-03
 ---
 
 # 本体作为工业 Agent 的「语义罗盘」——COSMO-Claw 多智能体协同的可信落地实践
@@ -278,3 +278,5 @@ PoC 示意场景（离散制造 · 实验室验证，尚未上线）。答案不
 - [[fz-agent-os-supply-chain]] — 同论坛：FZ Agent OS 供应链 Agent 操作系统
 - [[high-certainty-agent-practices]] — 高确定性商业场景 Agent 落地实践（确定性执行与人审治理思路呼应）
 - [[digital-employee]] — 数字员工
+- [[goalsong-ontology-thesis]] — 《GOALSONG 本体论纲》：把"本体是工业 Agent 的语义罗盘"做成六篇十五章方法论体系，与本页的多智能体协同实践互为理论/实践对照
+- [[ontology-driven-action-loop]] — 同书第 8 章：本体驱动 Agent 的八环节行动闭环与三种形态对比

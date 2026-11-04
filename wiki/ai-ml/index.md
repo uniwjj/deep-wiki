@@ -5,7 +5,7 @@ aliases: [ai-ml, AI, ML, LLM]
 tags: [ai-ml, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-10
-updated: 2026-10-29
+updated: 2026-11-04
 ---
 
 # AI/ML/LLM
@@ -14,6 +14,8 @@ updated: 2026-10-29
 
 - [[ontology]] — 本体论：从哲学到 AI 基石，五要素框架与 AI 幻觉解决方案
 - [[genie-ontology]] — Databricks Genie Ontology：PageRank 式企业语义资产，首问命中率 84.5%
+- [[ontology-engineering-evolution]] — 本体论从哲学到工程的四代演进（术语表 → 帧与语义网络 → 描述逻辑与 OWL → 知识图谱与工业本体），本体与知识图谱的本质区别，GB/T 48000.3—2026 的建模要求
+- [[ontology-terms]] — 《GOALSONG 本体论纲》附录 A 术语表：十组核心术语的原文定义
 - [[embodied-world-model-3d-perception]] — 具身智能多模态数据合成与世界模型闭环仿真（2026-08 论坛）
 
 ## 大模型

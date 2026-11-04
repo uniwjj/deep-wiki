@@ -1381,3 +1381,35 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 口径说明：原文对第四类能力的措辞是"数据科学平台能力"，与"数据工程/数据治理/数据分析三类 Agent"并列，页内已按原文措辞标注；截图里 WorkBuddy 之上的 ChatGPT/Claude/Gemini 标"即将接入"，正文只写"面向其他主流平台的标准连接器属于后续规划"，已在页内区分截图信息与正文
 - 未改动 `sources/` 下任何既有文件；复核一律回到 HTML 原文
 - run `llm-wiki sync`
+
+## [2026-11-04] ingest | 《GOALSONG本体论纲》（高颂数科，2026-10，327 页 PDF）
+- 来源：`sources/2026/11/03/《GOALSONG本体论纲》.pdf`（18.3 MB，A4，327 页，WPS 导出，PDF 元数据作者 林建兴；同名 `.md` sidecar，`source_type: pdf`）
+- 处理方式：`pdftotext -layout` 取全文（约 66 万字节，文字层完好）→ 按章节切分并带 `<!-- PDF page N -->` 页标记 → PyMuPDF 把 100 个含图页面全部转 PNG（关键图表页 200dpi / 单图裁切 1800px 宽）逐张 `read_image` 视觉复核；图表页比文字层多出的信息（如第 9 章 p151 三种组织模式图、p152 六步条带、p162 OBAC 五层图、p183 五环分配四方、p260 四层同心圆、p263 TAV 架构、p268 ioC 架构、p269「本体是根」、p271/272 八边形与双螺旋、p274 五环、p276 四阶段演进图、p317 方法论总览十边形）均已录入正文；装饰性配图（印章、电路地球、拼图、照片）明确剔除
+- created `goalsong-ontology-thesis` — 总纲：编写背景与致谢、六条核心判断、四阶段实施路径、一句话总结、GOALSONG 体系七个组成部分（SmallWorld、元策本体 MetaOnto、闪电行动、ioC、词元运营中心、TAV、AIC/OID 1.2.156.3088.1.0）、六篇十五章逐章导航
+- created `semantic-gap` — 第 1 章：三智能体"黑户"场景、数据规模爆发数据、可理解性衰减三表现（术语不通/语境丢失/知识陈旧）、传统建模四种无力、数据供给→语义供给
+- created `ontology-engineering-evolution`（ai-ml）— 第 2 章：亚里士多德十范畴到康德十二范畴、四代演进、本体 vs 知识图谱（Schema vs Instance、怎么连 vs 怎么懂、证据链）、GB/T 48000.3—2026
+- created `ontology-semantic-infrastructure` — 第 3 章：三重瓶颈（身份/语义/行动）与共同根源、语义供给三能力、本体四种错误认知与能力边界
+- created `ontology-identification` — 第 4 章：七要素框架、识别六步法、四类术语歧义与决策树、边界确认、交付物与验证标准
+- created `minimal-world-model` — 第 5 章：大而全三陷阱、MWM 三要素、最小单元是闭环、三层闭环（感知/认知/行动）、SmallWorld-小世界方法论
+- created `ontology-six-step-method` — 第 6 章：六步法总览、六条核心原则、六步的工作内容/关键要点/交付物/常见问题
+- created `semi-auto-ontology-and-lightning-action` — 第 7 章：半自动构建三阶段与工具链、人工四级闸门（机器提议→数据裁决→标准把关→人工定夺）、闪电行动五步法 + 五维场景评估矩阵 + 八周甘特
+- created `ontology-driven-action-loop` — 第 8 章：语义罗盘三样东西、本体三形态八维对比、八环节行动闭环、协同架构三层、四个应用场景
+- created `small-world-network` — 第 9 章：WS 理论、形式定义与拓扑特征（局部高聚类+全局短路径）、三组区别、三个前提、三机制（语义宪法/内置合约/OBAC）、四步运行、三场景与四阶段实施
+- created `data-asset-operation-2` — 第 10 章：数据飞轮四环、1.0→2.0 三个断点、本体泛在连接第三条路径、四条变现路径、四个运营机制、五环价值闭环与组织保障
+- created `ontology-rights-and-data-asset-capitalization` — 第 11 章：三个语义问题、数据产权登记、智能体身份码、本体确权三层面、成本法→词元法（公式与两法对比表）、词元资产与审计、四阶段路径与案例
+- created `effective-token-economy` — 第 12 章：词元作为价值单元、四层语义锚点、有效词元定义/判定/公式、词元经济四环节的本体基础、运营五环节
+- created `ontology-data-circulation-obac` — 第 13 章：三种语义断裂、TC609 语义互操作四层与四条要求、数字合约、使用控制、OBAC（五层+两库+两接口、六关键技术、三场景）、元策本体 iOnto 架构图
+- created `ontology-governance` — 第 14 章：本体库腐化五表现、四层治理架构、语义化版本+Git、RFC 五步与影响分析五问（含 SPARQL 示例）、七指标仪表盘、健康度四维模型、五类消费方与贡献激励闭环、六种失败模式
+- created `trusted-ai-infrastructure` — 第 15 章：四层架构与三原则、AIC 身份层（政策→GB/Z 185→OID 授权节点、五类语义信息、五条规则）、TAV 三级验证与安全否决项、词元运营中心、ioC 连接器六功能、本体是"根"四体现、GOALSONG 八边形与双螺旋、四条演进路径与三个终极目标
+- created `goalsong-methodology-system` — 附录 B：八套方法论逐项（识别/最小世界模型/闪电/OBAC/有效词元/Xsensus/治理/消费方生态）+ 各表、GOALSONG 机制对应表、组合矩阵、选择决策树、方法论总览图十节点、三阶段检查清单
+- created `ontology-standards-index` — 附录 C：C.2–C.9 全部标准条目、书中反复引用的核心标准与出现章节、GB/T 47969—2026 查证结论
+- created `ontology-terms`（ai-ml）— 附录 A：A.1–A.10 十组术语表与 A.11 索引说明
+- updated `ontology`、`ontological-semantic-layer`、`semantic-layer-to-ontology`、`cosmo-claw-ontology-agent` — 加《论纲》交叉引用
+- updated `ai-agent/data-agent/index`（新增「《GOALSONG 本体论纲》专辑」17 条）、`ai-ml/index`（2 条）、`homepage`（最近更新 11 条）
+- 口径与缺陷（已逐条回到 PDF 核对，页内均标注、不改原文）：
+  - 第 11 章案例算术不自洽：425 万次 × 1 元/千词元 × 0.9 原文写 3825 万元（按"次/千词元"字面为 382.5 万元，按"每次 1 词元"为 3825 元，两解均不等），原文未给量纲说明，页内保留原值并标注
+  - 版式与编号缺陷：PDF 第 4–8 页目录渲染溢出只显示到 4.3；序言出现两个"四、"；15.11 目录页码印作"2702"；附录 B 的构建/运营检查清单编号写成 B.15.2/B.15.3（跳过 B.14）；第 11 章 11.3.1→11.3.3→11.3.2 顺序错乱
+  - 结构口径：PDF 第 273–280 页实为第 15 章 15.8–15.11（书内 265–272），附录 A 实体在 PDF 第 281–299；sidecar 与术语页已按此修正；第 10 章正文止于 PDF 186（187 为第五篇篇封页）
+  - 原文自相矛盾（页内均保留两种表述）：第 9 章 9.3.3 重号、正文四步 vs p152 图六步、OBAC 两种解释（Ontology-Based vs 主体/客体/动作/条件）、关系链粒度不一；第 12 章"实际使用系数"正文为 0/1 二值、示例与图为 0–1 比例；第 13 章 13.2.2 实为四条要求、p222 四层图编号自下而上与正文相反；第 15 章五环图环号与篇号差一、八边形 G/O 字母各重复出现且与双螺旋缩写不对应；附录 B 自称"八类"而总览图为十套；附录 C 同一 OID 1.2.156.3088.1.0 被同时归到 GB/Z 185.2—2026 与 GB/T 26231—2017
+  - 未做：不校验标准编号的真实性与现行状态（按原文照录）；不补原文未给出的实证数据、阈值、公式细节
+- run `llm-wiki sync`
