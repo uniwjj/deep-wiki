@@ -33,6 +33,11 @@ updated: 2026-11-04
 
 ## 最近更新
 
+- [[shufan-ai-native-data-platform]] — 网易数帆 AI Native 数据平台（蒋鸿翔，2026-11-03）：为 Agent 重建数据层，统一存储计算 + EasyData 五层受控开放 + DataAgent 本体与 Harness
+- [[easydata-cold-table-governance]] — 冷表治理：以"表"为锚反向定位"任务"，36,996 → 177 条精准动作
+- [[bigdata-duty-agent]] — 大数据值班 Agent：规则库 + 大模型兜底 + 候选沉淀，多环境实测命中与归因
+- [[dataagent-ontology-harness]] — DataAgent 业务本体与 Harness：准确率 <50% → 95%+ 与五道关
+- [[table-knowledge-graph]] — 表知识图谱：物理/业务实体图谱 + LightRAG Local/Global 检索
 - [[goalsong-ontology-thesis]] — 《GOALSONG 本体论纲》（高颂数科，2026-10，327 页）：面向智能体时代的企业本体方法论总纲——六篇十五章，从语义鸿沟到可信 AI 基础设施
 - [[ontology-semantic-infrastructure]] — 第 3 章：本体作为智能体语义基础设施，破解身份/语义/行动三重瓶颈与能力边界
 - [[minimal-world-model]] — 第 5 章：最小世界模型（SmallWorld-小世界）——先跑通一个闭环，再扩展世界

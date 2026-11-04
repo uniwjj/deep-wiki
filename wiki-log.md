@@ -1413,3 +1413,22 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
   - 原文自相矛盾（页内均保留两种表述）：第 9 章 9.3.3 重号、正文四步 vs p152 图六步、OBAC 两种解释（Ontology-Based vs 主体/客体/动作/条件）、关系链粒度不一；第 12 章"实际使用系数"正文为 0/1 二值、示例与图为 0–1 比例；第 13 章 13.2.2 实为四条要求、p222 四层图编号自下而上与正文相反；第 15 章五环图环号与篇号差一、八边形 G/O 字母各重复出现且与双螺旋缩写不对应；附录 B 自称"八类"而总览图为十套；附录 C 同一 OID 1.2.156.3088.1.0 被同时归到 GB/Z 185.2—2026 与 GB/T 26231—2017
   - 未做：不校验标准编号的真实性与现行状态（按原文照录）；不补原文未给出的实证数据、阈值、公式细节
 - run `llm-wiki sync`
+
+## [2026-11-04] ingest | 为 Agent 重建数据层：网易智企产品 AI Native 演进路径（DataFunSummit / 蒋鸿翔）
+- 来源：`sources/2026/11/04/为 Agent 重建数据层：网易智企产品 AI Native 演进路径/`（`index.html` + `imgs/` 30 张图，另同名 `.md` sidecar，`source_type: article-html`）；可双击阅读的副本同步存入 `article-downloads/`
+- 抓取方式：`curl` 带浏览器 UA 拿到完整 HTML（3.7MB）；正文取 `#js_content` 子树并做 `<div>` 深度配平截断；`data-src`→本地 `imgs/` 回填 32 张图（去重后 30 个不同文件）；剥掉微信的 `leaf`/`data-*`/`style` 属性后重排可读性 CSS（677px）；headless Chrome 全页截图核验首屏与正文渲染正常
+- 图片复核：15 张 PPT 页逐张视觉读取，对小字区域（冷表治理的过滤规则/洞察段、值班 Agent 的三闸与状态机、表知识图谱的 Local/Global 对照、DataAgent 的 <50%→95% 区域）另做裁剪放大二次读取；不可辨识的小字未做推断，页内已标注
+- 剔除：页首「三步星标」引导图、文末分享嘉宾简介与照片、「往期推荐」列表、DataFun 峰会宣传长图（页面广告）
+- created `shufan-ai-native-data-platform` — 总览：三个业务变化/判断、三条主线、第 5 节人的分工结论与原文边界
+- created `unified-storage-unified-compute` — 底座：Unified Storage = LakeHouse(Iceberg/Paimon + Lance) + Unified Catalog；Unified Compute = Spark/Flink/OLAP + Ray/Daft + RAG
+- created `easydata-agent-gateway` — 接口与技能层：1 网关（命令级读/写/删除分级、审计同步安全中心）· 2 协议（OpenAPI 系统集成 / MCP Agent 原生）· 3 形态（CLI/Skill/OpenAPI 共用权限无旁路）；1+4+N 技能体系与 `easydata-recommend-task-offline` 交付物形态
+- created `table-knowledge-graph` — 语义层：输入四类信息自动蒸馏、Catalog→DB→Table→Col 与 Concept/Metric 双向 6 类节点、矛盾/歧义检测后人工仲裁入图并保留来源；LightRAG Local+Global 解决「活跃用户数」的寻表与上下文装配；传媒场景 600 张表
+- created `easydata-cold-table-governance` — 冷表治理：困境四项 + 「先回收权限」警示；三步（EasyParser 28/28 对照的 8 类写入 / 6 类误判 → 三重复滤 → 四类动作）；漏斗 36,996 → 17,045 → 7,320 → 177（226 表；禁用 98 / 暂停 59 / 下线 18 / 调整 2）；19,951 任务组无法解析；跨业务 60 / 3 条；强推荐 419→0 的假象洞察；每月自动化仍属规划
+- created `bigdata-duty-agent` — 值班 Agent：痛点四项、五层架构（cron+Skill+Agent+EasyData CLI+单文件库与 llm-wiki）、每轮五步、诊断四层兜底与三条铁律（KILLED/143、999 阈值）、规则状态机（candidate 永不命中、无 features 禁转正、approved_by/at、auto_fix 恒 diagnose_only）、三闸+只读；实测三环境（开发 40/10/30；线上 A 134 实例 100% 命中、130 条明细；线上 B 36h 111 实例 12 命中 → 99 归 9 类；规则库 27 条 26+1；600 行并发零丢失）；Phase 0–3 路线
+- created `dataagent-ontology-harness` — 业务问数：四类语义歧义、语义平台四层 + 三类资产（数据集/业务本体语义/看板）与语义飞轮、五道 Harness 关（选数/计算/权限/验证/评测）、从问数到资产沉淀五环节、制造业订单全链路案例（90% / 10%+ / 15%）、与开发治理平台的建设范围与方式差异
+- updated `ai-agent/data-agent/index`（新增"网易数帆 AI Native 数据平台"分组 7 条）、`ai-agent/index`（data-agent 页数 64→91）、`homepage`（最近更新 +5）
+- updated `cloud-village-data-agent-platform`、`ontological-semantic-layer`、`semantic-layer-to-ontology`、`easydata-ops-diagnosis`、`agent-core/bigdata-ops-agent-practice`、`harness/agent-harness-overview`、`big-data/bosch-lance-ray-data-production`、`data-agent-next-stage` — 各加一条交叉引用
+- 口径说明：正文「三个变化」与配图「三个判断」是同一组内容的两种措辞，页内按配图的完整表述记录；准确率数字（<50% / >95% / 66%→95%+ / 接近 100%）原文明确限定为具体场景，"不能视作模型的通用准确率"，页内保留该限定
+- 不确定/边界：冷表治理「Step 2 三重过滤」第 3 栏"淘汰节点"的具体规则、值班 Agent 幂等闸/权限闸的部分细则、表知识图谱第 03 环节右侧"知识生命周期闭环"的版位归属，均在放大后仍无法逐字确认，页内按可辨识部分记录并标注未确认，未做推断
+- 未改动 `sources/` 下任何既有文件
+- run `llm-wiki sync`

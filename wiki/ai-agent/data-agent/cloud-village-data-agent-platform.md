@@ -5,7 +5,7 @@ aliases: [云村DataAgent, DAS Agent Platform, 云村 DAS, Cloud Village Data Ag
 tags: [ai-agent, big-data, architecture, platform]
 sources: [2026/06/23/云村DataAgent.svg]
 created: 2026-06-23
-updated: 2026-06-23
+updated: 2026-11-04
 ---
 
 # 云村数据 Agent 平台（DAS Agent Platform）
@@ -127,3 +127,4 @@ OmniSQL 是统一数据查询服务，屏蔽底层引擎差异。
 - [[superetl]] — 菜鸟 SuperETL（Skill 编排 + Hooks 模式）
 - [[data-agent-practice-guide]] — 数据智能体实践指南
 - [[agent-mcp-protocol]] — MCP 协议（das-mcp-cli 的概念参照）
+- [[shufan-ai-native-data-platform]] — 同为网易系数据平台 AI Native 改造（数帆）：统一存储计算 + EasyData 五层 + DataAgent Harness

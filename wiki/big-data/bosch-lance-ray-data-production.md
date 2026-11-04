@@ -5,7 +5,7 @@ aliases: [Bosch AD Data Production with Lance/Ray, Lance + Ray, 数据中心+任
 tags: [big-data, ai-ml, practice]
 sources: [2026/08/11/AI Native数据湖让企业Agent拥有统一的智能数据底座（腾讯云专场）/5. Bosch_AD_Data_Production_with_Lance_Ray.pdf]
 created: 2026-08-11
-updated: 2026-08-11
+updated: 2026-11-04
 ---
 
 # 博世智驾训练数据 Lance/Ray 生产实践
@@ -109,3 +109,4 @@ updated: 2026-08-11
 - [[lakehouse]] — 湖仓一体（Lance 场景中「湖仓交接」的对照对象）
 - [[apache-ossie]] — 开放数据标准栈（Lance 在五层标准栈中的定位）
 - [[ai-native-data-platform-vision]] — AI 时代数据基础设施展望（数据即「认知燃料」）
+- [[unified-storage-unified-compute]] — 数帆把 Lance（非结构化）+ Ray/Daft（AI 特征计算）纳入统一存储与统一计算

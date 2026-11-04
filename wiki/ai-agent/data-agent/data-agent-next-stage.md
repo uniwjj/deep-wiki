@@ -6,7 +6,7 @@ tags: [ai-agent, big-data, synthesis]
 sources: [ai-agent/data-agent/daishu-cloud-data-agent.md, ai-agent/data-agent/databricks-2026-summit.md, ai-agent/data-agent/data-agent-practice-guide.md, ai-agent/data-agent/data-agent-semantic-stack.md, ai-agent/data-agent/agentic-bi-third-gen-platform.md, ai-agent/data-agent/agent-infra-vendor-strategies.md, ai-agent/ecosystem/agentic-skills.md, ai-agent/data-agent/dataworks-data-agent.md, ai-agent/agent-core/business-cognition-system.md, ai-agent/data-agent/ai-native-data-platform-report.md]
 source_type: query-synthesis
 created: 2026-08-26
-updated: 2026-08-26
+updated: 2026-11-04
 ---
 
 # Data Agent 下一步：从问数到受控行动的进化
@@ -59,3 +59,4 @@ IDC、Databricks、CCSA TC601、火山引擎、安克创新等独立来源在 20
 - [[agentic-skills]] — Skills 作为数据能力封装的核心抽象单元
 - [[dataworks-data-agent]] — 阿里云"碳硅协同"：平台面向 Agent 的转型实例
 - [[databuddy]] — 腾讯云 DataBuddy：语义层 + Agent Runtime 三层安全 + 人审门控，是把「受控行动」做成产品形态的实例（2026-10-20 发布）
+- [[shufan-ai-native-data-platform]] — 新证据：语义层基础设施化 + 能力 Skills 化 + 只读受控执行的完整案例

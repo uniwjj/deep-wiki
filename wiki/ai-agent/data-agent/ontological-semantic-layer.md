@@ -5,7 +5,7 @@ aliases: [Ontological Semantic Layer, 业务语义层, 本体语义层, AI 语�
 tags: [big-data, ai-agent, architecture, concept]
 sources: [2026/06/15/大数据基建如何迈向 AI Infra？（上）.html, 2026/06/15/大数据基建如何迈向 AI Infra？（下）.html, 2026/08/04/Data Agent的8层语义栈技术构建解决方案详解.html]
 created: 2026-06-15
-updated: 2026-11-03
+updated: 2026-11-04
 ---
 
 # 本体化语义层
@@ -183,3 +183,6 @@ AI 给出的答案必须可追溯到：数据事实、语义版本、解释路�
 - [[taobao-live-data-dev-paradigm]] — R2C 架构中本体论作为 Neuro-Symbolic 的符号锚点
 - [[databuddy]] — 腾讯云 DataBuddy 的统一语义层：统一 Catalog → 语义模型 → 本体模型三层，作为 Agent 的语义底座实例
 - [[goalsong-ontology-thesis]] — 《GOALSONG 本体论纲》：本体作为"智能体语义基础设施"的完整方法论（识别→构建→行动→计量→治理），是本页"架构补位"主张的工程化展开
+- [[shufan-ai-native-data-platform]] — 数帆落地：EasyData 表知识图谱（物理/业务实体 + 质检入图）与 DataAgent 业务本体
+- [[table-knowledge-graph]] — 表知识图谱：本体化语义层在数据平台侧的一种具体实现
+- [[dataagent-ontology-harness]] — 语义层之上的 Harness 五道关（选数/计算/权限/验证/评测）

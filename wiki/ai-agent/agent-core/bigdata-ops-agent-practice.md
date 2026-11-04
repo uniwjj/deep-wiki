@@ -5,7 +5,7 @@ aliases: [大数据运维Agent, 运维智能体, Ops Agent, OpsAgent, 从自动�
 tags: [ai-agent, big-data, practice]
 sources: [2026/08/11/自进化Agent论坛/01-熊伟-从自动化到自进化：大数据运维Agent实践与思考.pdf]
 created: 2026-08-11
-updated: 2026-10-10
+updated: 2026-11-04
 ---
 
 # 大数据运维 Agent 实践——从自动化到自进化
@@ -132,3 +132,4 @@ updated: 2026-10-10
 - [[agent-hook-governance]] — Hook 护栏治理（另一条企业 Agent 治理路径）
 - [[enterprise-agi-framework]] — 企业级 AGI 框架（运维知识图谱与本体成熟度）
 - [[ai-governance]] — AI 治理（受控执行、可审计、安全网关）
+- [[bigdata-duty-agent]] — 数帆值班 Agent：规则库状态机（candidate→active→disabled）与三闸只读的落地形态

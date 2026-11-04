@@ -5,7 +5,7 @@ aliases: [猛犸智能运维诊断, mammut-task-analysis, mammut-baseline-analys
 tags: [ai-agent, big-data, practice, tool]
 sources: ["2026/10/10/Raven Cloude Skill 猛犸(EasyData)智能运维诊断工具.md"]
 created: 2026-10-10
-updated: 2026-10-10
+updated: 2026-11-04
 ---
 
 # 猛犸（EasyData）智能运维诊断工具
@@ -149,3 +149,5 @@ HTML 报告生成 + HTTP Server
 - [[data-dev-skills-automation]] — 数仓开发 Skills 自动化：同为平台操作 Skills 封装的同类实践
 - [[log-diagnosis-skill]] — 日志诊断 Skill：同为"日志模式匹配 + 诊断"的 Skill 思路
 - [[agent-skills-system]] — Skills 体系机制
+- [[bigdata-duty-agent]] — 同平台演进版：规则库 + 大模型兜底 + 候选沉淀的可成长值班 Agent
+- [[shufan-ai-native-data-platform]] — 数帆官方口径的 EasyData AI Native 改造全貌

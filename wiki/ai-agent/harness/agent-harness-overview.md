@@ -5,7 +5,7 @@ aliases: [Harness综述, Agent Harness, The Anatomy of an Agent Harness]
 tags: [ai-agent, concept, architecture]
 sources: [2026/05/09/Agent-Harness综述同一模型体感差异在哪.md, 2026/07/10/从模型到Harness：WorkBuddy如何把Agent做成可用产品.html]
 created: 2026-05-09
-updated: 2026-07-10
+updated: 2026-11-04
 ---
 
 # Agent Harness 综述
@@ -120,3 +120,4 @@ WorkBuddy 团队自身的实践可以归入四类：
 - [[workbuddy-agent-product-design]] — WorkBuddy 五层 Harness 完整实现（含驾驭/约束/整合三能力）
 - [[workbuddy-context-engineering]] — WorkBuddy 上下文工程实践
 - [[harness-engineering-practice]] — Harness Engineering 实践（Human-first → Agent-aware）
+- [[dataagent-ontology-harness]] — 数据领域的 Harness 实例：模型负责推理、工程负责兜底的五道关

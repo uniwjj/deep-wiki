@@ -2,8 +2,8 @@
   "entries": {
     "wiki/homepage.md": {
       "path": "wiki/homepage.md",
-      "mtime": 1793756881620.0518,
-      "contentHash": "fedc199ff20cd880",
+      "mtime": 1793757432465.7104,
+      "contentHash": "1ef2b5c78def9bbf",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/dacon-2026-beijing.md": {
@@ -14,8 +14,8 @@
     },
     "wiki/ai-agent/index.md": {
       "path": "wiki/ai-agent/index.md",
-      "mtime": 1793670239864.1953,
-      "contentHash": "165916b74e402b40",
+      "mtime": 1793757432467.1816,
+      "contentHash": "1fae83dfa029e957",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-ml/amap-route-recommendation-agent.md": {
@@ -182,8 +182,8 @@
     },
     "wiki/big-data/bosch-lance-ray-data-production.md": {
       "path": "wiki/big-data/bosch-lance-ray-data-production.md",
-      "mtime": 1786450349491.733,
-      "contentHash": "815a67fe5ccb7ee8",
+      "mtime": 1793757442915.3872,
+      "contentHash": "ad44d73a1b1e0bc9",
       "lastSynced": "2026-11-04"
     },
     "wiki/big-data/bosch-ray-hybrid-computing.md": {
@@ -488,8 +488,8 @@
     },
     "wiki/ai-agent/agent-core/bigdata-ops-agent-practice.md": {
       "path": "wiki/ai-agent/agent-core/bigdata-ops-agent-practice.md",
-      "mtime": 1791622295888.0166,
-      "contentHash": "7165e54f9257bc3f",
+      "mtime": 1793757442912.944,
+      "contentHash": "8fccef670dd76071",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/agent-core/business-cognition-system.md": {
@@ -1008,6 +1008,12 @@
       "contentHash": "5b1840eb70b7739c",
       "lastSynced": "2026-11-04"
     },
+    "wiki/ai-agent/data-agent/bigdata-duty-agent.md": {
+      "path": "wiki/ai-agent/data-agent/bigdata-duty-agent.md",
+      "mtime": 1793757348485.505,
+      "contentHash": "fc2f5a8456d4f460",
+      "lastSynced": "2026-11-04"
+    },
     "wiki/ai-agent/data-agent/cainiao-data-warehouse-architecture.md": {
       "path": "wiki/ai-agent/data-agent/cainiao-data-warehouse-architecture.md",
       "mtime": 1782201597610.4,
@@ -1016,8 +1022,8 @@
     },
     "wiki/ai-agent/data-agent/cloud-village-data-agent-platform.md": {
       "path": "wiki/ai-agent/data-agent/cloud-village-data-agent-platform.md",
-      "mtime": 1782201622399.8452,
-      "contentHash": "5872c58fd84038a8",
+      "mtime": 1793757442907.8047,
+      "contentHash": "31ab5439504a9761",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/code-agent-vs-data-agent.md": {
@@ -1052,8 +1058,8 @@
     },
     "wiki/ai-agent/data-agent/data-agent-next-stage.md": {
       "path": "wiki/ai-agent/data-agent/data-agent-next-stage.md",
-      "mtime": 1793688497357.527,
-      "contentHash": "fb2c1b0f24eacd64",
+      "mtime": 1793757442916.6133,
+      "contentHash": "dcbd6fa6dbef01dc",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/data-agent-onboarding.md": {
@@ -1096,6 +1102,12 @@
       "path": "wiki/ai-agent/data-agent/data-dev-skills-automation.md",
       "mtime": 1791622286988.7744,
       "contentHash": "f709540a1f28d4fd",
+      "lastSynced": "2026-11-04"
+    },
+    "wiki/ai-agent/data-agent/dataagent-ontology-harness.md": {
+      "path": "wiki/ai-agent/data-agent/dataagent-ontology-harness.md",
+      "mtime": 1793757369368.956,
+      "contentHash": "7283f70bd43a74b8",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/dataagent-semantic-layer.md": {
@@ -1158,10 +1170,22 @@
       "contentHash": "66391c3ac3c86d25",
       "lastSynced": "2026-11-04"
     },
+    "wiki/ai-agent/data-agent/easydata-agent-gateway.md": {
+      "path": "wiki/ai-agent/data-agent/easydata-agent-gateway.md",
+      "mtime": 1793757077391.0747,
+      "contentHash": "c37def7d3b5f7107",
+      "lastSynced": "2026-11-04"
+    },
+    "wiki/ai-agent/data-agent/easydata-cold-table-governance.md": {
+      "path": "wiki/ai-agent/data-agent/easydata-cold-table-governance.md",
+      "mtime": 1793757247999.0232,
+      "contentHash": "33d38618a5ffa440",
+      "lastSynced": "2026-11-04"
+    },
     "wiki/ai-agent/data-agent/easydata-ops-diagnosis.md": {
       "path": "wiki/ai-agent/data-agent/easydata-ops-diagnosis.md",
-      "mtime": 1791622258354.8623,
-      "contentHash": "b2020ce889723548",
+      "mtime": 1793757442911.687,
+      "contentHash": "7546c57765018d97",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/effective-token-economy.md": {
@@ -1214,8 +1238,8 @@
     },
     "wiki/ai-agent/data-agent/index.md": {
       "path": "wiki/ai-agent/data-agent/index.md",
-      "mtime": 1793756898550.3818,
-      "contentHash": "e0ed7d6f4e6af54e",
+      "mtime": 1793757432468.4387,
+      "contentHash": "0a743ef17a519e25",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/infinisynapse.md": {
@@ -1274,8 +1298,8 @@
     },
     "wiki/ai-agent/data-agent/ontological-semantic-layer.md": {
       "path": "wiki/ai-agent/data-agent/ontological-semantic-layer.md",
-      "mtime": 1793698641284.3398,
-      "contentHash": "e1de5596a191859c",
+      "mtime": 1793757442909.1147,
+      "contentHash": "75ca926f7fae423d",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/ontology-data-circulation-obac.md": {
@@ -1346,14 +1370,20 @@
     },
     "wiki/ai-agent/data-agent/semantic-layer-to-ontology.md": {
       "path": "wiki/ai-agent/data-agent/semantic-layer-to-ontology.md",
-      "mtime": 1793698613149.9045,
-      "contentHash": "cdee081c3faecb7f",
+      "mtime": 1793757442910.382,
+      "contentHash": "0bce7038e5a518c8",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/semi-auto-ontology-and-lightning-action.md": {
       "path": "wiki/ai-agent/data-agent/semi-auto-ontology-and-lightning-action.md",
       "mtime": 1793697955135.9084,
       "contentHash": "d658a55300a9c4e7",
+      "lastSynced": "2026-11-04"
+    },
+    "wiki/ai-agent/data-agent/shufan-ai-native-data-platform.md": {
+      "path": "wiki/ai-agent/data-agent/shufan-ai-native-data-platform.md",
+      "mtime": 1793757043744.3035,
+      "contentHash": "ca5eed9542d8bb2e",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/skill-agent-boundary.md": {
@@ -1386,6 +1416,12 @@
       "contentHash": "45c95db66c03ac85",
       "lastSynced": "2026-11-04"
     },
+    "wiki/ai-agent/data-agent/table-knowledge-graph.md": {
+      "path": "wiki/ai-agent/data-agent/table-knowledge-graph.md",
+      "mtime": 1793757401065.9934,
+      "contentHash": "b8ead878a5396322",
+      "lastSynced": "2026-11-04"
+    },
     "wiki/ai-agent/data-agent/taobao-live-data-dev-paradigm.md": {
       "path": "wiki/ai-agent/data-agent/taobao-live-data-dev-paradigm.md",
       "mtime": 1782201645460.2063,
@@ -1408,6 +1444,12 @@
       "path": "wiki/ai-agent/data-agent/trusted-data-qa.md",
       "mtime": 1793240795981.616,
       "contentHash": "89fc028f35b75330",
+      "lastSynced": "2026-11-04"
+    },
+    "wiki/ai-agent/data-agent/unified-storage-unified-compute.md": {
+      "path": "wiki/ai-agent/data-agent/unified-storage-unified-compute.md",
+      "mtime": 1793757065985.8794,
+      "contentHash": "6dccc5e187978a09",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/data-agent/vivo-dataagent-practice.md": {
@@ -1694,8 +1736,8 @@
     },
     "wiki/ai-agent/harness/agent-harness-overview.md": {
       "path": "wiki/ai-agent/harness/agent-harness-overview.md",
-      "mtime": 1783665297471.273,
-      "contentHash": "714c6bb7ad6865e9",
+      "mtime": 1793757442914.1638,
+      "contentHash": "57b4fc08007dca02",
       "lastSynced": "2026-11-04"
     },
     "wiki/ai-agent/harness/agent-harness.md": {
@@ -3958,6 +4000,12 @@
       "path": "sources/2026/11/03/腾讯云DataBuddy让Agent接手数仓开发.md",
       "mtime": 1793688404782.5378,
       "contentHash": "ed2b300c8100429e",
+      "lastSynced": "2026-11-04"
+    },
+    "sources/2026/11/04/为 Agent 重建数据层：网易智企产品 AI Native 演进路径.md": {
+      "path": "sources/2026/11/04/为 Agent 重建数据层：网易智企产品 AI Native 演进路径.md",
+      "mtime": 1793757466047.6953,
+      "contentHash": "9a9b3af4acd58505",
       "lastSynced": "2026-11-04"
     },
     "sources/2026/08/11/AI Native数据湖让企业Agent拥有统一的智能数据底座（腾讯云专场）/1. AI 时代的数据基础设施展望.md": {

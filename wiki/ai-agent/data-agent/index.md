@@ -35,6 +35,16 @@ AI Agent 在数据领域的应用——Data Agent 产品、AI 原生数据平台
 - [[databuddy]] — 腾讯云 DataBuddy（2026-10-20 发布）：四类 Agent 的 Agent Native 工作台、统一语义层（Catalog/语义模型/本体模型）、OneOps、Agent Runtime 三层安全、两条接入路径
 - [[databuddy-ecs-demo]] — DataBuddy 电商端到端演示拆解：18 节点 Pipeline、字段改名故障自愈、指标语义模型、零售看板、协同过滤推荐上线
 
+## 网易数帆 AI Native 数据平台（2026-11-03）
+
+- [[shufan-ai-native-data-platform]] — 总览：为 Agent 重建数据层——统一存储计算、EasyData 五层受控开放、DataAgent 本体 + Harness，及人的分工结论
+- [[unified-storage-unified-compute]] — 底座：Unified Storage = LakeHouse + Unified Catalog，Unified Compute = Spark/Flink/OLAP + Ray/Daft + RAG
+- [[easydata-agent-gateway]] — 接口与技能层：1 网关 / 2 协议 / 3 形态，命令级权限与 1+4+N 技能体系
+- [[table-knowledge-graph]] — 语义层：表知识图谱与 LightRAG Local/Global 检索，质检入图与来源溯源
+- [[easydata-cold-table-governance]] — 数据治理：冷表下线反向定位，36,996 → 177 条建议
+- [[bigdata-duty-agent]] — 任务运维：值班 Agent 五步流水线与规则状态机
+- [[dataagent-ontology-harness]] — 业务问数：业务本体、语义平台四层与五道 Harness 关
+
 ## DACon 2026 北京站
 
 - [[amap-intelligent-query]] — 高德智能问数：从 BI 底座到 Agent 底座，L2→L3 与三类质量护栏
