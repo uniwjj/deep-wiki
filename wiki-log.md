@@ -1432,3 +1432,10 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 不确定/边界：冷表治理「Step 2 三重过滤」第 3 栏"淘汰节点"的具体规则、值班 Agent 幂等闸/权限闸的部分细则、表知识图谱第 03 环节右侧"知识生命周期闭环"的版位归属，均在放大后仍无法逐字确认，页内按可辨识部分记录并标注未确认，未做推断
 - 未改动 `sources/` 下任何既有文件
 - run `llm-wiki sync`
+
+## [2026-11-04] update | 为 Agent 重建数据层——补充阅读口径备注
+- updated `shufan-ai-native-data-platform` — 页首加所有者补充备注：本文重点是 EasyData 的 AI / Agent Native 能力（第 3 节）与「知数」（原文写作 DataAgent）的业务问数能力（第 4 节），第 5 节为两条路线的分工对照；注明原文正文与配图均未出现「知数」二字，页内沿用原文写法、不对两名称做等同断言
+- updated `dataagent-ontology-harness` — 页首加同口径备注（原文 DataAgent 即所有者口径的「知数」）
+- updated `ai-agent/data-agent/index` — 两条索引条目加「知数（原文 DataAgent）」标注
+- 未改动 `sources/` 下任何既有文件
+- run `llm-wiki sync`

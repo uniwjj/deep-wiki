@@ -37,13 +37,13 @@ AI Agent 在数据领域的应用——Data Agent 产品、AI 原生数据平台
 
 ## 网易数帆 AI Native 数据平台（2026-11-03）
 
-- [[shufan-ai-native-data-platform]] — 总览：为 Agent 重建数据层——统一存储计算、EasyData 五层受控开放、DataAgent 本体 + Harness，及人的分工结论
+- [[shufan-ai-native-data-platform]] — 总览：为 Agent 重建数据层——统一存储计算、EasyData 五层受控开放、知数（原文 DataAgent）本体 + Harness，及人的分工结论
 - [[unified-storage-unified-compute]] — 底座：Unified Storage = LakeHouse + Unified Catalog，Unified Compute = Spark/Flink/OLAP + Ray/Daft + RAG
 - [[easydata-agent-gateway]] — 接口与技能层：1 网关 / 2 协议 / 3 形态，命令级权限与 1+4+N 技能体系
 - [[table-knowledge-graph]] — 语义层：表知识图谱与 LightRAG Local/Global 检索，质检入图与来源溯源
 - [[easydata-cold-table-governance]] — 数据治理：冷表下线反向定位，36,996 → 177 条建议
 - [[bigdata-duty-agent]] — 任务运维：值班 Agent 五步流水线与规则状态机
-- [[dataagent-ontology-harness]] — 业务问数：业务本体、语义平台四层与五道 Harness 关
+- [[dataagent-ontology-harness]] — 业务问数（知数，原文写作 DataAgent）：业务本体、语义平台四层与五道 Harness 关
 
 ## DACon 2026 北京站
 
