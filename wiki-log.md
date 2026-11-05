@@ -1466,3 +1466,12 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 口径与边界：PDF 页脚有 DACon 标识、第 2 页有"DACon 北京站"角标，但正文未写分论坛与演讲日期，页面只写"DACon 2026 北京站"并注明场次未标注；案例二为内部评估（V2_REPORT、repeats=3、保守下限、客户脱敏），案例一数据来自公开基准；七维对比表原文标注来源为 Singdata Research 白皮书（二手归纳），已注明需回官方文档复核
 - 未改动 `sources/` 下任何既有文件
 - run `llm-wiki sync`
+
+## [2026-11-05] update | 关涛《从数据工程到知识工程》新增白话导读页 + 桌面导出
+- created `data-to-knowledge-guide` — 同一演讲的白话读法：读感诊断（四种文体拼贴、术语无铺垫、结论在末页）、一条因果链、五个公理的人话版与术语对照、知识三层供给、五条路线"选起点"表、两个案例各证明什么、四条工程共识的人话版、可快进的第四章、只记五句话、四件可落地的事、15 分钟重看路线（页码）
+- updated `data-to-knowledge-engineering` — 页首加"先读白话版"指引（详细页与本页分工：详细页存记录、导读页讲读法）
+- updated `ai-agent/knowledge-base/index`（28→29 篇）、`ai-agent/index`（数量同步）、`dacon-2026-beijing`（补充收录加导读链接）
+- 桌面导出：`~/Desktop/从数据工程到知识工程-通俗解读.md`——与 wiki 导读页同源，去掉 frontmatter 与 wikilink 以便直接阅读
+- 说明：导读页中的"食材/菜谱"类比与"四件可落地的事"是本页的说明性整理，非原文表述，页内已标注
+- 未改动 `sources/` 下任何既有文件
+- run `llm-wiki sync`

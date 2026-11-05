@@ -8,14 +8,14 @@
     },
     "wiki/ai-agent/dacon-2026-beijing.md": {
       "path": "wiki/ai-agent/dacon-2026-beijing.md",
-      "mtime": 1793861291590.9275,
-      "contentHash": "587b91e35101f3a3",
+      "mtime": 1793881020053.3242,
+      "contentHash": "2ed88f890667d9bc",
       "lastSynced": "2026-11-05"
     },
     "wiki/ai-agent/index.md": {
       "path": "wiki/ai-agent/index.md",
-      "mtime": 1793861307548.0864,
-      "contentHash": "15a82d3a41d15368",
+      "mtime": 1793881003965.3418,
+      "contentHash": "a27aabce479c5d14",
       "lastSynced": "2026-11-05"
     },
     "wiki/ai-ml/amap-route-recommendation-agent.md": {
@@ -1892,8 +1892,14 @@
     },
     "wiki/ai-agent/knowledge-base/data-to-knowledge-engineering.md": {
       "path": "wiki/ai-agent/knowledge-base/data-to-knowledge-engineering.md",
-      "mtime": 1793861503923.9617,
-      "contentHash": "ac04a0bce3ac194f",
+      "mtime": 1793881003955.8174,
+      "contentHash": "4075a2ed4da429db",
+      "lastSynced": "2026-11-05"
+    },
+    "wiki/ai-agent/knowledge-base/data-to-knowledge-guide.md": {
+      "path": "wiki/ai-agent/knowledge-base/data-to-knowledge-guide.md",
+      "mtime": 1793880984084.4197,
+      "contentHash": "ff2a6819570d2125",
       "lastSynced": "2026-11-05"
     },
     "wiki/ai-agent/knowledge-base/finance-testing-ontology.md": {
@@ -1910,8 +1916,8 @@
     },
     "wiki/ai-agent/knowledge-base/index.md": {
       "path": "wiki/ai-agent/knowledge-base/index.md",
-      "mtime": 1793861307545.033,
-      "contentHash": "841baec89a9a4bed",
+      "mtime": 1793881003963.5632,
+      "contentHash": "c8bf5e2917507c7a",
       "lastSynced": "2026-11-05"
     },
     "wiki/ai-agent/knowledge-base/karpathy-agent-obsidian-os.md": {

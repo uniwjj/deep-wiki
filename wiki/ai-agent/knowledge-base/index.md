@@ -10,7 +10,7 @@ updated: 2026-11-05
 
 # 知识库与 RAG
 
-AI 驱动的知识库方案与 RAG 技术，共 28 篇。
+AI 驱动的知识库方案与 RAG 技术，共 29 篇。
 
 ## 范式总览
 
@@ -26,6 +26,7 @@ AI 驱动的知识库方案与 RAG 技术，共 28 篇。
 - [[finance-testing-ontology]] — 金融测试本体工程：测试工艺 × 分层本体与 Test IR 编译式案例生成（杨冬瑞，DACon 2026）
 - [[ontology-five-routes]] — 知识建模的五条路线：Palantir / Semantic View / Ossie / Genie / Agent Memory 的七维对比与"保证换自由"轴（关涛，DACon 2026）
 - [[data-to-knowledge-engineering]] — 从数据工程到知识工程：概念地图与五条公理、五种表达形态、两个蒸馏案例与四条架构共识（关涛，云器科技，DACon 2026）
+- [[data-to-knowledge-guide]] — 同一演讲的白话导读：为什么读不进去、因果链、术语对照、五条路线怎么选起点、15 分钟重看路线
 - [[knowledge-eco-loop]] — Eco-loop：知识在使用中被持续生产（Trace → 蒸馏 → 评估 → 认证 → 服务）
 
 ## 文档解析与知识供给

@@ -107,7 +107,7 @@ updated: 2026-11-05
 
 ## 补充收录
 
-- [[data-to-knowledge-engineering|从数据工程到知识工程]] — 关涛（云器科技联合创始人 & CTO）的演讲：知识是第三次数据革命，五条本体建模路线、两个蒸馏案例与 Eco-loop。PDF 于 2026-11-05 补入，页面未标注分论坛场次；配套拆解见 [[ontology-five-routes]] 与 [[knowledge-eco-loop]]
+- [[data-to-knowledge-engineering|从数据工程到知识工程]] — 关涛（云器科技联合创始人 & CTO）的演讲：知识是第三次数据革命，五条本体建模路线、两个蒸馏案例与 Eco-loop。PDF 于 2026-11-05 补入，页面未标注分论坛场次；白话导读见 [[data-to-knowledge-guide]]，配套拆解见 [[ontology-five-routes]] 与 [[knowledge-eco-loop]]
 
 ## 横向主题
 
