@@ -228,3 +228,4 @@ Project 级先交付 → 被反复查询验证 → PR 收敛统一 → Enterpris
 - [[data-agent-vs-ontology-agent]] — Data Agent 与 Ontology Agent 推理范式对比
 - [[xiaomi-dimi-data-agent]] — 小米 Data Agent 语义层 Harness 实践（同论坛演讲）
 - [[databricks-genie]] — Databricks Genie 企业级 Data Agent
+- [[ontology-five-routes]] — 知识建模的五条路线：OSI / Ossie 所处的"开放接口"位置

@@ -3,9 +3,9 @@ title: Genie Ontology
 description: Databricks 推出的企业知识图谱构建机制——"人工定义＋自动生长"双轨制，借鉴 Google PageRank 思路通过权威性加权识别企业内最具权威的业务定义，将复杂业务首问命中率提升至 84.5%
 aliases: [Genie Ontology, Databricks Ontology, 企业知识图谱, PageRank 语义排名]
 tags: [ai-ml, big-data, ai-agent, concept]
-sources: [2026/06/30/从Databricks产品发布会看数据平台的演进方向.html, 2026/06/30/Databricks Data + AI Summit 2026 深度回顾：Genie One、Lakebase 与 Agent 全家桶.html, 2026/06/30/Genie 之后，Databricks 真正想抢的是企业 Agent 入口.html, 2026/06/30/318| 企业级AGI：AI的真正战场.html, 2026/06/30/Databricks官方博客-Introducing Genie One Genie Ontology Genie Agents.md, 2026/10/30/《创业维艰》作者最新万字长文：AI让懂业务的人重新说了算.html]
+sources: [2026/06/30/从Databricks产品发布会看数据平台的演进方向.html, 2026/06/30/Databricks Data + AI Summit 2026 深度回顾：Genie One、Lakebase 与 Agent 全家桶.html, 2026/06/30/Genie 之后，Databricks 真正想抢的是企业 Agent 入口.html, 2026/06/30/318| 企业级AGI：AI的真正战场.html, 2026/06/30/Databricks官方博客-Introducing Genie One Genie Ontology Genie Agents.md, 2026/10/30/《创业维艰》作者最新万字长文：AI让懂业务的人重新说了算.html, 2026/10/29/2026DACon北京站/关涛-从数据工程到知识工程：AI时代知识与本体的演进与思考.pdf]
 created: 2026-06-30
-updated: 2026-10-30
+updated: 2026-11-05
 ---
 
 # Genie Ontology
@@ -97,6 +97,24 @@ Genie Ontology 位于 Databricks 四层架构的**治理/语义层**，与 [[dat
 
 三者共同构成"统一数据与 AI 资产目录与运行时控制"平面。
 
+## 五层架构栈（DACon 2026 引用的官方分层）
+
+关涛在 DACon 2026 北京站引用了一张 Genie Ontology 的架构栈图——"从原始数据到对话式答案，五个协作的层"：
+
+| 层 | 内容 | 一句话 |
+|----|------|--------|
+| L5 Compound AI | Routing · SQL generation · Visualization · Clarification · Summarization | 每个子任务挑合适的模型，而不是一次巨型 LLM 调用 |
+| L4 Genie Space | Topic scope · Instructions · Trusted assets · Benchmarks · Feedback loop | 一个有焦点、被评估的对话式产品 |
+| L3 Business Semantics | Metric Views · Named entities · Relationships · Certified assets | 指标定义一次，BI 与 AI 复用 |
+| L2 Unity Catalog | Schemas · Columns · Tags · AI descriptions · Lineage · Permissions | 面向所有下游消费者的统一治理 |
+| L1 Data Platform（Lakehouse） | Delta tables · Storage · Lineage · Query history | 单一物理真相，无需搬迁数据 |
+
+注脚是 "Each layer is independently useful — together they form the Genie Ontology"：**每层可单独用，合起来才是 Genie Ontology。**
+
+## 在五条路线中的位置
+
+关涛的横向对比把 Genie 归为**混合模型**（结构化 Semantic + 企业知识片段），并给出两条判断：**排序不等于验证**——难以表达非可加、基数等需要强契约的约束；**适合补齐长尾上下文，认证真值仍需语义内核**。它处在"强保证 ↔ 高灵活"轴上偏"高灵活"的一端。详见 [[ontology-five-routes]]。
+
 ## 行业意义
 
 Genie Ontology 是"**语义资产正在取代数据资产成为核心**"这一趋势的典型实例——从"黄金记录"到"黄金上下文"的转变。高质量、可被自动理解与持续生长的语义资产，正在取代原始数据成为企业的差异化竞争壁垒。
@@ -112,3 +130,4 @@ Genie Ontology 是"**语义资产正在取代数据资产成为核心**"这一�
 - [[ai-governance]] — AI 治理，Unity Catalog 强制权限继承的治理框架
 - [[dataagent-semantic-layer]] — DataWorks DataAgent 语义层的实物实现，同类产品对照
 - [[sora-system-of-record-for-agents]] — SORA 四问中的"它意味着什么"，Genie Ontology 是这一问的答案
+- [[ontology-five-routes]] — 知识建模的五条路线，Genie 在"保证 ↔ 自由"轴上的位置

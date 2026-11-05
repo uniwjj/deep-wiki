@@ -1451,3 +1451,18 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 不确定/边界：原文未给出 60%~70% 准确率的统计口径、Billion-level 索引的实际规模、召回漏斗各级耗时；参考资料 6 条未逐条核验
 - 未改动 `sources/` 下任何既有文件
 - run `llm-wiki sync`
+
+## [2026-11-05] ingest | DACon 2026 北京站·关涛《从数据工程到知识工程：AI 时代知识与本体的演进与思考》（30 页）
+- 来源：`sources/2026/10/29/2026DACon北京站/关涛-从数据工程到知识工程：AI时代知识与本体的演进与思考.pdf`（原文件在桌面，按会议归档补入既有 DACon 2026 北京站目录；原始 PDF 未改动，新增同名 `.md` sidecar，`source_type: pdf`）
+- 处理方式：30 页全部 `pdftoppm` 110dpi 渲染后逐页视觉复核（概念地图、五张路线页、七维对比表、案例数字页、V2 架构图均按图核对），并以 `pdftotext -layout` 文本层交叉校验；PDF 无文字层缺失问题
+- created `data-to-knowledge-engineering` — 演讲主页：DIKW 与讲者背景、数据/信息/知识/本体/语义概念地图与五条公理（表=信息、语义视图=绑定到关系表的本体、知识图谱=含实例的本体、表+语义=知识、数据形态互斥完备）、知识五种表达形态九维对比表、五条路线速览与"保证换自由"轴、知识与 Trace 三层供给、五步加工管线（抽取/转换/索引/评估/服务）、两个蒸馏案例（验证查询：F1 1.0 / 精确率 97–100% / 覆盖 ×2.3 / 理论上限 50.8%；文档蒸馏：口径正确率 38.1→73.4、token −52%、p90 −21%）、四条架构共识、云器 V2 六模块与三种知识服务模式、五个观点
+- created `ontology-five-routes` — 五条知识建模路线的展开：标准不统一的三个证据、TBox/ABox/Action 判据、Palantir / Semantic View / Ossie / Genie / Agent Memory 逐条拆解（含 Ossie 本体层+核心语义层+映射层+三类 MCP 接口、Genie 五层架构栈）、七维对比表、"保证 ↔ 自由"轴与选型结论
+- created `knowledge-eco-loop` — Eco-loop 闭环：六节点、三个要点（入口是 Trace、验证是门禁、增量非全量）、与数据管道同构的四步、开发期/生产期分界、三模块产品映射（SingSight / AI-ETL / 知识工程）与两个案例在环上的位置
+- updated `apache-ossie` — 新增「本体层与核心语义层（2026-10 DACon 视角）」一节：两层结构、映射层、维度式/关系式/本体三类 MCP 接口、无运行时边界、五条路线中的位置（原有内容未删改）
+- updated `genie-ontology` — 新增「五层架构栈」（L1 数据平台 → L5 Compound AI）与「在五条路线中的位置」（混合模型、排序不等于验证、补长尾）两节
+- updated `dacon-2026-beijing` — frontmatter 增补来源；新增「补充收录」一节（该 PDF 未标注分论坛场次，未归入任何分论坛）；横向主题「语义层 / 本体」补两页链接；描述与开场句注明"另有 1 场 2026-11 补入"
+- updated `ai-agent/knowledge-base/index`（25→28 篇，新增三条）、`ai-agent/index`（数量更新）、`homepage`（最近更新 +1）
+- updated `semantic-layer-to-ontology`、`open-semantic-interchange`、`mashang-knowledge-engineering` — 各加交叉引用
+- 口径与边界：PDF 页脚有 DACon 标识、第 2 页有"DACon 北京站"角标，但正文未写分论坛与演讲日期，页面只写"DACon 2026 北京站"并注明场次未标注；案例二为内部评估（V2_REPORT、repeats=3、保守下限、客户脱敏），案例一数据来自公开基准；七维对比表原文标注来源为 Singdata Research 白皮书（二手归纳），已注明需回官方文档复核
+- 未改动 `sources/` 下任何既有文件
+- run `llm-wiki sync`

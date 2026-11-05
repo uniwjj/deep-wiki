@@ -297,3 +297,5 @@ Agent skill
 - [[data-agent-semantic-stack]] — 数据 Agent 语义栈：指标/本体/事件/锚定/意图/规则/权限/会话分层
 - [[business-cognition-system]] — 业务认知系统：知识可构建、可加载、可演进
 - [[ai-native-data-platform-report]] — AI 原生数据平台：数据资产封装为业务技能、从数据到结果自动编排
+- [[knowledge-eco-loop]] — Eco-loop：Trace → 蒸馏 → 评估 → 认证 → 服务，与本页「知识工程支撑 Agent、评测反哺知识」同一闭环的不同表述
+- [[data-to-knowledge-engineering]] — 云器科技关涛的同一命题：知识的三层供给与知识生产管线（DACon 2026 同场）

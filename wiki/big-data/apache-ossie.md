@@ -3,9 +3,9 @@ title: Apache Ossie
 description: Apache Ossie 语义层——用 YAML 将数据字段映射到业务概念，定义指标口径与同义词，让 AI Agent 和 BI 工具理解"数据是什么意思"
 aliases: [Ossie, Apache Ossie, 语义层, Semantic Layer, 数据语义层]
 tags: [big-data, tool, concept]
-sources: [2026/07/26/从 Arrow 到 Iceberg 到 Polaris 到 Ossie：语义标准化的最后一块拼图.html, 2026/10/29/2026DACon北京站/企业语义层建设/王小军-Apache+Ossie+语义层在蚂蚁的落地实践.pdf]
+sources: [2026/07/26/从 Arrow 到 Iceberg 到 Polaris 到 Ossie：语义标准化的最后一块拼图.html, 2026/10/29/2026DACon北京站/企业语义层建设/王小军-Apache+Ossie+语义层在蚂蚁的落地实践.pdf, 2026/10/29/2026DACon北京站/关涛-从数据工程到知识工程：AI时代知识与本体的演进与思考.pdf]
 created: 2026-07-27
-updated: 2026-10-29
+updated: 2026-11-05
 ---
 
 # Apache Ossie
@@ -73,6 +73,16 @@ Ossie 目前已有 50+ 家公司签署支持，但**尚未进入大规模生产�
 
 完整拆解见 [[apache-ossie-ant-practice]]。
 
+## 本体层与核心语义层（2026-10 DACon 视角）
+
+2026-10 DACon 北京站，云器科技关涛把 Ossie 的最新规范概括为**把本体层与核心语义层分开**——"目前看得到的、从结构化语义向本体延伸的一条路径"。要点：
+
+- **两层结构**：本体层偏业务定义（EntityType / ValueType · 关系 + 角色 · 规则 requires / derived_by / identify_by / extends），以**事实（关系陈述）**建模、没有"属性"；核心语义层偏数据定义（Dataset / Field · Relationship · Metric / Dimension），仍是属性式，与 Semantic View 同构。
+- **映射层**是两层之间的桥：`ontology_ref` + `semantic_model_ref`；Object mapping → 字段 SQL 表达式，Link mapping → 连接树。
+- **查询接口（MCP）**分三类，两层都向 Agent 和 BI 暴露：维度式接口（结构化查询对象，Agent 无法自造 join）、关系式接口（SQL + `MEASURE()`，治理过的指标）、本体（业务概念与含义，在指标之上）；Agent 通过 MCP 调用，带类型化错误。
+- **定位判断**：同样是 Schema / SQL 编译，口径确定、结果准确，且是厂商中立的开放标准，一次编写、各处查询、不绑定引擎；但**仍限结构化范畴，本体层刚起步，没有运行时**——它不是查询引擎，也不是语义运行时。
+- **在五条路线中的位置**：处在"强保证 ↔ 高灵活"轴的中间——开放接口、跨工具交换、不绑定引擎，是企业的"另一个起点"（对照 Palantir 的强保证与 Agent Memory 的高灵活）。详见 [[ontology-five-routes]]。
+
 ## 相关页面
 
 - [[open-data-stack-evolution]] — 五层开放数据标准栈的十年演进全景
@@ -82,3 +92,4 @@ Ossie 目前已有 50+ 家公司签署支持，但**尚未进入大规模生产�
 - [[agentic-data-cloud]] — Google 跨云 Lakehouse 中语义层的角色
 - [[databricks-2026-summit]] — Databricks 2026 峰会对语义层的布局
 - [[apache-ossie-ant-practice]] — 蚂蚁基于 Ossie + Ant-OSI 的 1+3+N 可信语义层落地实践（2026-10-29 DACon）
+- [[ontology-five-routes]] — 知识建模的五条路线：Ossie 在"强保证 ↔ 高灵活"轴上的位置
