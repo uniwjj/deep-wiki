@@ -5,7 +5,7 @@ aliases: [Agent Paradigms, Agent范式, ReAct, Plan-and-Execute, Reflection, 设
 tags: [ai-agent, concept, comparison]
 sources: [2026/05/10/Agent范式.md]
 created: 2026-05-10
-updated: 2026-05-18
+updated: 2026-11-12
 ---
 
 # Agent 设计范式
@@ -84,6 +84,7 @@ updated: 2026-05-18
 
 ## 相关页面
 
+- [[agent-pattern-ladder]] — 五种 Agent 设计模式的能力阶梯与选型（含 RAG / 单 Agent / Multi-Agent RAG）
 - [[claude-code-agent-loop]] — Claude Code 的 ReAct 实现（async generator）
 - [[claude-code-coordinator-mode]] — Plan-and-Execute 在 Claude Code 中的应用
 - [[claude-code-internal-mechanisms]] — Verification Agent（Reflection 的工程实践）

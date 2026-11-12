@@ -5,7 +5,7 @@ aliases: [Deep Study, 知识库首页]
 tags: [meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-09
-updated: 2026-11-05
+updated: 2026-11-12
 ---
 
 # Deep Study
@@ -33,6 +33,9 @@ updated: 2026-11-05
 
 ## 最近更新
 
+- [[flock-collaboration-space]] — 协同空间 Flock（阿里云 郑天，2026-11-11）：控制面/执行面分离、Channel 网与跨空间建任务、Sessionless 会话、Quest 责任状与「待验收」、任务链自然长出 DAG、互相唤醒的坑与记忆从推到拉；含与 DSH SuperAgent 的两处分歧
+- [[superagent-prototype-internals]] — SuperAgent 原型（dsh-superagent-prototype，1.6 万行）源码级拆解：Ticket/Mandate/Policy、一条消息的五步链路、五条设计判断（模型提议程序裁决 / 先记账再动手 / 外部文本只是数据 / 主动性灰度 / 人的优先级最高）与原型边界校正
+- [[agent-pattern-ladder]] — Agent 设计模式阶梯：RAG → 单 Agent → Multi-Agent RAG → Plan-and-Execute → ReAct 五种模式各自解决的问题、边界与代价、选型与组合
 - [[data-to-knowledge-engineering]] — 从数据工程到知识工程（关涛，云器科技，DACon 2026）：知识是第三次数据革命，概念地图与五条公理、知识五种表达形态、本体五条路线（Palantir / Semantic View / Ossie / Genie / Agent Memory）、Trace 获取与四步加工、验证查询与文档蒸馏两个案例、四条架构共识与 Eco-loop
 - [[databuddy-semql-metarag]] — 拆解腾讯 DataBuddy 的 Text-to-Semantic-to-SQL 与 MetaRAG：语义层四要素、SemQL 确定性编译、F-RAG/S-RAG 双路召回、覆盖度三级路由与指标 MCP
 - [[shufan-ai-native-data-platform]] — 网易数帆 AI Native 数据平台（蒋鸿翔，2026-11-03）：为 Agent 重建数据层，统一存储计算 + EasyData 五层受控开放 + DataAgent 本体与 Harness

@@ -5,15 +5,16 @@ aliases: [agent-core, Agent 理论]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-11-03
+updated: 2026-11-12
 ---
 
 # Agent 基础理论
 
-Agent 核心理论与机制，共 48 篇。
+Agent 核心理论与机制，共 49 篇。
 
 ## 设计范式
 
+- [[agent-pattern-ladder]] — Agent 设计模式阶梯：RAG → 单 Agent → Multi-Agent RAG → Plan-and-Execute → ReAct 的选型地图
 - [[agent-design-paradigms]] — Agent 设计范式对比
 - [[agent-architecture-patterns]] — 架构模式
 - [[agent-autonomous-planning]] — 自主规划机制

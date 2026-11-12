@@ -3,9 +3,9 @@ title: Super-agent：持续在线的自主 Agent 形态
 description: DeepSeek Harness 团队提出的 Super-agent 架构——打破 Agent 与单次会话的绑定，用双层架构、事件驱动、面向人的交互、计算/状态/环境分离与 Watchdog 五个模块，支撑"连续、高效、主动、持久"四个特征
 aliases: [Super-agent, Super Agent, 超级智能体, 超级 Agent, 持续在线 Agent, 自主协作者]
 tags: [ai-agent, architecture, concept]
-sources: [2026/11/03/Super-agent 设计探索：迈向更自主的 Agent 系统.html]
+sources: [2026/11/03/Super-agent 设计探索：迈向更自主的 Agent 系统.html, 2026/11/12/关于 DeepSeek 的 SuperAgent，以及我们的实践.html]
 created: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-12
 ---
 
 # Super-agent：持续在线的自主 Agent 形态
@@ -117,6 +117,8 @@ updated: 2026-11-03
 - [[agent-watchdog]] — 外部 Watchdog：监控任务进展而非仅进程存活
 - [[super-agent-classic-cs-mapping]] — 五个模块与经典计算机系统思想的逐项映射
 - [[agent-harness-overview]] — Harness 六承重层：Super-agent 是 Harness 在"持续在线多任务"方向上的系统化
+- [[superagent-prototype-internals]] — 原型的源码级拆解：Ticket/Mandate、五条设计判断与边界校正
+- [[flock-collaboration-space]] — 协同空间 Flock：把 Ticket 做成 Quest 的企业实践与两处分歧
 - [[sub-agent-vs-team]] — Sub-Agent vs Agent Team：Router/Worker 与 Agent Team 的边界
 - [[distributed-agent-hosting]] — 腾讯云 Agent Runtime：同样以存算分离走向分布式托管
 - [[claude-managed-agents]] — Anthropic 托管 Agent 的"脑手分离"，与本文第二层解耦同源

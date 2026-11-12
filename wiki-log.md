@@ -1475,3 +1475,24 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 说明：导读页中的"食材/菜谱"类比与"四件可落地的事"是本页的说明性整理，非原文表述，页内已标注
 - 未改动 `sources/` 下任何既有文件
 - run `llm-wiki sync`
+
+## [2026-11-12] ingest | AI Agent 五种经典设计模式（智能体AI，2026-11-12）
+- created `agent-pattern-ladder` — 五层能力阶梯：RAG → 单 Agent → Multi-Agent RAG → Plan-and-Execute → ReAct；各模式的结构组件、边界与代价表（RAG 只能检索生成、单 Agent 工具变多即难调度、多 Agent 多一份调度/通信/上下文/校验成本、P&E 拆解可能不合理、ReAct 需设轮数/预算/超时/校验）、按业务需求选型表与三种组合方式、模式之上的 Runtime/Harness 六层工程配套
+- updated `agent-multi-agent-collaboration` — 新增「Multi-Agent RAG：按数据域拆检索」四组件小节；「选型铁律」补一条「多 Agent 不一定比单 Agent 好」及成本条件；frontmatter 增补来源
+- updated `agent-design-paradigms` — 相关页面加阶梯页链接
+- updated `ai-agent/agent-core/index`（48→49 篇，新增一条）、`homepage`（最近更新 +1）
+- 口径：该文为科普写法，ReAct / Plan-and-Execute 的机制细节已由 `agent-design-paradigms` 覆盖，阶梯页只写能力边界与选型，不重复机制
+- 配图已逐张复核（1 张 PNG 总览 + 5 张 GIF 动图取帧），RAG 八步流水线、Router 并行检索、P&E 执行循环（Observer·Reflection 回环）、ReAct 三环节均已核对
+- 未改动 `sources/` 下任何既有文件
+- run `llm-wiki sync`
+
+## [2026-11-12] ingest | 关于 DeepSeek 的 SuperAgent，以及我们的实践（郑天/阿里云，2026-11-11）
+- created `superagent-prototype-internals` — 原型（约 1.6 万行）源码级拆解：Trigger/Thread、Ticket、Policy、Mandate 四个对象及 Ticket-Mandate 分离理由；一条消息进系统的五步链路（只有 Router 研判一步调模型）；五条设计判断（模型提议程序裁决、先记账再动手 Outbox、外部文本只是数据 + 备注 ≤30 词、主动性灰度、人的优先级最高）；原型边界校正（单机 DB、单仓单账号、命令包装不是安全边界、原文的 Watchdog 与投机执行在原型中搜不到、完成判定依赖外部事实）
+- created `flock-collaboration-space` — 协同空间 Flock：四层架构与七步运行、控制面/执行面分离、Channel 网与跨空间建任务（往返 >6 轮建议合并）、Sessionless 三种会话规则与血缘表、Quest 责任状与「待验收」、任务链自然长出 DAG 的三条机制、互相唤醒大坑与「@ 是沟通、Quest 才是委派」、记忆从推到拉与 MDC、与 DSH 的两处分歧（Router 三份工作可拆、中心化四瓶颈应对对照）
+- updated `digital-employee` — 新增「判定标准：四个问题与四级划分」；frontmatter 增补来源
+- updated `agent-multi-agent-collaboration` — 选型铁律补「切分判据是能否被独立验收」（Anthropic 多 Agent Research vs Cognition《Don't Build Multi-Agents》）
+- updated `super-agent` — frontmatter 增补来源，相关页面加两个新页
+- updated `ai-agent/harness/index`（25→27 篇，新增两条）、`homepage`（最近更新 +2）
+- 配图抽检 13 张（人的四瓶颈、简化架构、核心对象、消息五步、提议/裁决、Outbox、优先级金字塔、数字员工四级、Router 三份工作、Flock 四层、Quest 生命周期、记忆从推到拉等），均为文字化架构图，无与正文冲突处
+- 未改动 `sources/` 下任何既有文件
+- run `llm-wiki sync`

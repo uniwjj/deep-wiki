@@ -5,12 +5,12 @@ aliases: [harness, Harness 编排]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-11-03
+updated: 2026-11-12
 ---
 
 # Harness 编排体系
 
-Agent 编排系统的设计模式与工程实践，共 25 篇。
+Agent 编排系统的设计模式与工程实践，共 27 篇。
 
 ## 核心概念
 
@@ -19,6 +19,8 @@ Agent 编排系统的设计模式与工程实践，共 25 篇。
 - [[agent-vs-framework-vs-harness]] — 三层抽象辨析
 - [[super-agent]] — DeepSeek Harness 团队的 Super-agent 架构：四个特征与五个模块，持续在线的自主 Agent 形态
 - [[super-agent-classic-cs-mapping]] — Super-agent 的经典计算机系统映射：Fast/Slow Path、Cache、投机执行、存算分离、Control Loop 的逐项还原
+- [[superagent-prototype-internals]] — 原型的源码级拆解：Ticket/Mandate/Policy、一条消息的五步链路与五条设计判断
+- [[flock-collaboration-space]] — 协同空间 Flock：Channel / Quest / Sessionless 与任务链自然长出
 
 ## 设计模式
 
