@@ -5,7 +5,7 @@ aliases: [Deep Study, 知识库首页]
 tags: [meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-09
-updated: 2026-11-12
+updated: 2026-11-16
 ---
 
 # Deep Study
@@ -33,6 +33,11 @@ updated: 2026-11-12
 
 ## 最近更新
 
+- [[taobao-live-data-llm-wiki]] — 直播数据 LLM Wiki 实践（大淘宝技术，2026-11-16）：把 LLM Wiki 当知识编译器——四性质、编译六步、3 层架构 + 7 个 Skill、Phase 0/1/2 流水线、8 节点 8 边关系图、三步检索栈、增量编译与持续 Lint；实测血缘查询 15×、下游遗漏率 20%→0%
+- [[data-qa-interview-framework]] — 智能问数面试框架（2026-11-13）：语义层当类型系统、Trust 三层与「成功率 = 覆盖 × 路由 × 对账」、幻觉四类分治、十道高频题与五道开放题
+- [[lobehub-agentic-org]] — LobeHub 的 Agentic 组织实验（2026-11-13）：协作卡在交接与三类时间黑洞、Personal/主管/执行三层汇报、Acceptance 自动验收、Agent Vent 自迭代、L1–L5 组织分级
+- [[qoderwake-digital-employee]] — QoderWake（2026-11-13）：企业群聊数字员工的 Router/Coordinator/Waker 分工、Context 六组、三层主动响应与五维评测（多轮连续性 86.56 vs 0.00）
+- [[ai-output-format-ladder]] — AI 输出格式阶梯（2026-11-13，Karpathy）：文字 → 图 → HTML → 视频，终点是「可丢弃的软件制品」，判断标准从「值不值得做」变成「能不能帮我想明白」
 - [[flock-collaboration-space]] — 协同空间 Flock（阿里云 郑天，2026-11-11）：控制面/执行面分离、Channel 网与跨空间建任务、Sessionless 会话、Quest 责任状与「待验收」、任务链自然长出 DAG、互相唤醒的坑与记忆从推到拉；含与 DSH SuperAgent 的两处分歧
 - [[superagent-prototype-internals]] — SuperAgent 原型（dsh-superagent-prototype，1.6 万行）源码级拆解：Ticket/Mandate/Policy、一条消息的五步链路、五条设计判断（模型提议程序裁决 / 先记账再动手 / 外部文本只是数据 / 主动性灰度 / 人的优先级最高）与原型边界校正
 - [[agent-pattern-ladder]] — Agent 设计模式阶梯：RAG → 单 Agent → Multi-Agent RAG → Plan-and-Execute → ReAct 五种模式各自解决的问题、边界与代价、选型与组合

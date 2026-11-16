@@ -5,7 +5,7 @@ aliases: [digital-employee, Digital Employee, 数字员工]
 tags: [ai-agent, concept]
 sources: [2026/05/10/lint-stub.md, "2026/09/07/重构协同：关于AI Native团队的思考.html", "2026/10/10/Multica 是什么——从源码看一个把 Agent 变成同事的系统.md", "2026/10/29/2026DACon北京站/Agentic Workflow：数字员工与企业流程重构/董晓庆-2000多个数字员工在阿里上岗：Agent+Loop框架、MCP双模式与多Agent协同的落地经验.pdf", "2026/10/29/2026DACon北京站/Agentic Workflow：数字员工与企业流程重构/何碧宏-从工作流到智能体集群：企业级多租户数字员工的工程化落地与协同实践.pdf", "2026/11/12/关于 DeepSeek 的 SuperAgent，以及我们的实践.html"]
 created: 2026-05-14
-updated: 2026-11-12
+updated: 2026-11-13
 status: draft
 ---
 
@@ -59,3 +59,5 @@ Multica（约 52.3k stars、驱动 26 种 Agent CLI、source-available）把数�
 - [[ai-plus-software-press-conference]] — 政策语境：智能体软件作为软件新形态的官方定义与培育路径
 - [[alibaba-digital-employees]] — 阿里约 2000 个数字员工：组织身份、五模块架构、MCP 双模式与四条实践经验
 - [[multi-tenant-digital-employee-cluster]] — 群核科技多租户数字员工集群：Hermes + K8s 多 Profile、CoT/Skill 治理与流程 + 状态机协同
+- [[qoderwake-digital-employee]] — QoderWake：企业群聊里的数字员工——Router/Coordinator/Waker 分工与多轮连续性评测
+- [[lobehub-agentic-org]] — LobeHub：把 Agent 当同事的组织实验与 L1–L5 组织自主分级

@@ -6,7 +6,7 @@ tags: [ai-agent, concept]
 sources: [2026/05/10/lint-stub.md]
 status: draft
 created: 2026-05-10
-updated: 2026-05-18
+updated: 2026-11-16
 ---
 
 # LLM Wiki
@@ -24,6 +24,7 @@ updated: 2026-05-18
 ## 相关页面
 
 - [[llm-wiki-concept]] — 核心概念入口
+- [[taobao-live-data-llm-wiki]] — 数仓知识底座的编译式落地：Schema 契约、显式关系图、三阶段流水线
 - [[obsidian-claudian]] — Obsidian + Claude Code 整合方案
 - [[karpathy-agent-obsidian-os]] — Karpathy 的知识库 OS 实践
 - [[ai-knowledge-base]] — AI 知识库技术全景

@@ -5,12 +5,12 @@ aliases: [knowledge-base, 知识库索引]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-11-05
+updated: 2026-11-16
 ---
 
 # 知识库与 RAG
 
-AI 驱动的知识库方案与 RAG 技术，共 29 篇。
+AI 驱动的知识库方案与 RAG 技术，共 30 篇。
 
 ## 范式总览
 
@@ -39,6 +39,7 @@ AI 驱动的知识库方案与 RAG 技术，共 29 篇。
 - [[llm-wiki-concept]] — LLM Wiki 核心概念
 - [[llm-wiki-six-layer]] — 六层架构设计
 - [[llm-wiki-implementations]] — 开源实现对比
+- [[taobao-live-data-llm-wiki]] — 直播数据 LLM Wiki 实践：数仓知识的编译流水线、8 节点关系图与三步检索栈（大淘宝技术，2026-11）
 - [[openviking]] — OpenViking 工程级知识操作系统
 - [[llm-wiki-applications]] — 应用场景
 - [[llm-wiki]] — LLM Wiki 总览

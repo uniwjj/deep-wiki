@@ -5,7 +5,7 @@ aliases: [data-agent, Data Agent, AI 数据平台]
 tags: [ai-agent, big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-07-01
-updated: 2026-11-04
+updated: 2026-11-13
 ---
 
 # Data Agent 与 AI 数据平台
@@ -94,6 +94,7 @@ AI Agent 在数据领域的应用——Data Agent 产品、AI 原生数据平台
 - [[dataagent-semantic-layer]] — DataAgent 语义层的实物层面内容
 - [[code-agent-vs-data-agent]] — Code Agent 与 Data Agent 的根本差异
 - [[data-agent-vs-ontology-agent]] — Data Agent 与 Ontology Agent 推理范式对比
+- [[data-qa-interview-framework]] — 智能问数面试框架：语义层当类型系统、Trust 三层与成功率公式、幻觉四类分治、十道高频题与开放题
 
 ## 厂商 Skills 体系
 

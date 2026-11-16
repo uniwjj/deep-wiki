@@ -5,7 +5,7 @@ aliases: [语义层, semantic layer, 数据语义层]
 tags: [big-data, ai-agent, concept]
 sources: [2026/05/12/DataWorks DataAgent分享录音.md, 2026/05/14/DataAgent语义层分析.md, 2026/06/26/小米 Data Agent 获 Text2SQL 全球榜单第三名.html, 2026/08/04/Data Agent的8层语义栈技术构建解决方案详解.html]
 created: 2026-05-14
-updated: 2026-08-04
+updated: 2026-11-13
 ---
 
 # DataAgent 语义层
@@ -136,3 +136,4 @@ SKILL 示例 SQL 中使用但未显式定义的写法：
 - [[ontological-semantic-layer]] — 本体化语义层，DataAgent 语义层的上层概念框架与战略视角
 - [[specialized-knowledge-search]] — 语义层作为 Data Agent 搜索基础设施
 - [[xiaomi-dimi-data-agent]] — 小米 DiMi NL2Semantic2SQL，语义层在 Harness 工程化中的位置
+- [[data-qa-interview-framework]] — 智能问数面试框架：语义层作为类型系统的答辩版

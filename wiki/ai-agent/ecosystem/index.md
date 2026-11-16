@@ -5,12 +5,12 @@ aliases: [ecosystem, Agent 生态]
 tags: [ai-agent, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-18
-updated: 2026-10-29
+updated: 2026-11-13
 ---
 
 # 工具生态与趋势
 
-AI Agent 工具生态与趋势分析，共 37 篇。
+AI Agent 工具生态与趋势分析，共 39 篇。
 
 ## 编程工具
 
@@ -34,6 +34,7 @@ AI Agent 工具生态与趋势分析，共 37 篇。
 - [[anthropic-cookbook]] — Anthropic Cookbook
 - [[log-diagnosis-skill]] — 日志诊断 Skill
 - [[agentic-skills]] — Agentic Skills：封装标准化数据任务的可复用能力包
+- [[ai-output-format-ladder]] — AI 输出格式阶梯：文字 → 图 → HTML → 视频，以及「可丢弃的软件制品」这条判断
 
 ## 应用场景
 
@@ -53,6 +54,7 @@ AI Agent 工具生态与趋势分析，共 37 篇。
 - [[fz-agent-os-supply-chain]] — 顺丰系 FZ Agent OS：供应链 Agent 操作系统（2026-08 论坛）
 - [[cosmo-claw-ontology-agent]] — 卡奥斯 COSMO-Claw：工业本体×大模型×多智能体可信落地（2026-08 论坛）
 - [[shokz-ai-first-step]] — 韶音科技 AI 建设第一步：五层技术栈与 AI Gateway 治理（2026-08 论坛）
+- [[lobehub-agentic-org]] — LobeHub 的 Agentic 组织实验：交接瓶颈与三类时间黑洞、Personal/主管/执行三层汇报、Acceptance 自动验收、L1–L5 组织分级
 
 ## 产业政策
 

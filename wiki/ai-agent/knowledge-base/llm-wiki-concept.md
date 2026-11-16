@@ -5,7 +5,7 @@ aliases: [LLM Wiki, Karpathy LLM Wiki, 编译式知识库]
 tags: [ai-agent, concept, architecture]
 sources: [2026/04/06/Karpathy LLM Wiki颠覆RAG.md, 2026/07/03/三代知识检索范式-RAG-GraphRAG-LLM-Wiki.html]
 created: 2026-05-09
-updated: 2026-07-03
+updated: 2026-11-16
 ---
 
 # LLM Wiki 概念
@@ -70,6 +70,7 @@ AGENTS.md、MEMORY.md、memory/ 目录本质上就是 LLM Wiki 模式的雏形�
 
 ## 相关页面
 
+- [[taobao-live-data-llm-wiki]] — 工程化分支：把 Schema/编译/Lint 落成数仓知识底座（大淘宝直播数据）
 - [[knowledge-base-karpathy-practice]] — Karpathy 知识库实操指南
 - [[knowledge-base-karpathy-guide]] — 四步法教程
 - [[knowledge-retrieval-paradigms]] — 三代范式对比（RAG/GraphRAG/LLM Wiki）

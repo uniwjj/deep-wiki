@@ -5,7 +5,7 @@ aliases: [存量业务知识底座, 知识底座, 知识分类, 知识五分类,
 tags: [ai-agent, knowledge-management, concept, practice]
 sources: ["2026/09/07/重构协同：关于AI Native团队的思考.html"]
 created: 2026-09-07
-updated: 2026-09-07
+updated: 2026-11-16
 ---
 
 # 存量业务的知识底座
@@ -59,3 +59,4 @@ updated: 2026-09-07
 - [[ontological-semantic-layer]] — 本体化语义层：描述规则/流程/数据关系的工程载体
 - [[data-agent-next-stage]] — 语义层/知识底座作为竞争焦点的行业侧印证
 - [[karpathy-agent-obsidian-os]] — Agent + Obsidian 知识库：知识外化的个人侧实践
+- [[taobao-live-data-llm-wiki]] — 数仓侧答卷：代码即真相 + 增量编译 + 持续 Lint，回应"底座必须自己活下去"

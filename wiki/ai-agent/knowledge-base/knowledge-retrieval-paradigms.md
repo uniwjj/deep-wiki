@@ -5,7 +5,7 @@ aliases: [三代范式, RAG GraphRAG LLM Wiki 对比, 知识检索范式, retrie
 tags: [ai-agent, comparison, concept]
 sources: [2026/07/03/三代知识检索范式-RAG-GraphRAG-LLM-Wiki.html]
 created: 2026-07-03
-updated: 2026-07-03
+updated: 2026-11-16
 ---
 
 # 知识检索三代范式
@@ -106,4 +106,5 @@ LLM Wiki 支持根据查询类型动态决定回答方式：
 - [[llm-wiki-concept]] — 第三代 LLM Wiki 概念
 - [[graphrag]] — 第二代 GraphRAG / LightRAG
 - [[storm]] — STORM：让 AI 主动做研究
+- [[taobao-live-data-llm-wiki]] — 第三代范式的数仓落地：编译流水线、树+图索引与三步检索栈
 - [[mem0]] — 记忆层维度

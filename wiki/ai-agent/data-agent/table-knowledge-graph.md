@@ -5,7 +5,7 @@ aliases: [表知识图谱, Table Knowledge Graph, 语义转换中枢, EasyData �
 tags: [ai-agent, big-data, architecture, practice]
 sources: ["2026/11/04/为 Agent 重建数据层：网易智企产品 AI Native 演进路径/index.html"]
 created: 2026-11-04
-updated: 2026-11-04
+updated: 2026-11-16
 ---
 
 # 表知识图谱
@@ -97,5 +97,6 @@ updated: 2026-11-04
 - [[semantic-layer-to-ontology]] — 语义层向本体演进的行业共识
 - [[graphrag]] — GraphRAG 方法族（LightRAG 属于其中的轻量图检索路线）
 - [[knowledge-retrieval-paradigms]] — 检索范式的对照：RAG / GraphRAG / LLM Wiki 各自解决什么问题
+- [[taobao-live-data-llm-wiki]] — 大淘宝直播数据：同一问题的另一种解法（Wiki 页面 + 显式关系图，而非图谱 + LightRAG）
 - [[zhihu-dataclaw]] — 知乎 DataClaw：MetricFlow → AI 原生语义层 → 轻量本体图谱的同类路线
 - [[ontology-driven-knowledge-engineering]] — 本体驱动的知识工程方法论

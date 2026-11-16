@@ -5,7 +5,7 @@ aliases: [Super-agent, Super Agent, 超级智能体, 超级 Agent, 持续在线 
 tags: [ai-agent, architecture, concept]
 sources: [2026/11/03/Super-agent 设计探索：迈向更自主的 Agent 系统.html, 2026/11/12/关于 DeepSeek 的 SuperAgent，以及我们的实践.html]
 created: 2026-11-03
-updated: 2026-11-12
+updated: 2026-11-13
 ---
 
 # Super-agent：持续在线的自主 Agent 形态
@@ -123,4 +123,6 @@ updated: 2026-11-12
 - [[distributed-agent-hosting]] — 腾讯云 Agent Runtime：同样以存算分离走向分布式托管
 - [[claude-managed-agents]] — Anthropic 托管 Agent 的"脑手分离"，与本文第二层解耦同源
 - [[digital-employee]] — 数字员工：身份、权限、绩效与组织化落地，与本页"运行时底座"定位互补
+- [[qoderwake-digital-employee]] — QoderWake：同一个问题（要求变化中工作怎么推进）的企业侧解法与逐项对照
+- [[lobehub-agentic-org]] — LobeHub 的组织侧实验：不采用订阅直通，改用 Personal/主管/执行三层汇报
 - [[ai-agent/harness/index]]

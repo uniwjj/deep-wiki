@@ -1496,3 +1496,31 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 配图抽检 13 张（人的四瓶颈、简化架构、核心对象、消息五步、提议/裁决、Outbox、优先级金字塔、数字员工四级、Router 三份工作、Flock 四层、Quest 生命周期、记忆从推到拉等），均为文字化架构图，无与正文冲突处
 - 未改动 `sources/` 下任何既有文件
 - run `llm-wiki sync`
+
+## [2026-11-13] ingest | 四篇公众号文章（Karpathy 输出格式 / QoderWake 数字员工 / LobeHub 组织实验 / 智能问数面试）
+- created `ai-output-format-ladder` — Karpathy 推文的中文转述拆解：输出介质四级阶梯（文字→图→HTML→视频）、ASD-STE100 的六条约束与「80% 版本」、三个可复制后缀（并标明后两条是文章补全非推文原话）、「可丢弃的软件制品」与判断标准的迁移、收藏>点赞的工具帖特征
+- created `qoderwake-digital-employee` — QoderWake 企业数字员工：三个断点、Task Router / Task Coordinator（程序实现）/ Waker 三方分工、Context 六组与关联/分层/按需/隔离、三层主动响应（初筛≠授权）、权限四层、Waker/Group/Flow 三形态、2026-08 内部评测五维（多轮连续性 86.56 vs 0.00，及时性低近 7 点）与「不能全归因 Router」的限定、与 Super-agent 的五项对照
+- created `lobehub-agentic-org` — LobeHub 组织实验：交接瓶颈与三类时间黑洞、规则过滤+模型判断的主动边界与每小时巡频道、循环/会话状态/执行环境拆开（Vercel 300s → 每步一次调用 + 队列 Redis，工具调 AWS 沙箱）、岗位化 Agent 与三层汇报（不做订阅直通）、Agent 间接手案例、Acceptance 三功能、Agent Vent 84→49、FrontierHarness 70%/1.68 美元、L1–L5 组织分级与 L3 自评
+- created `data-qa-interview-framework` — 智能问数面试骨架：六条考察线、七步作答与万能开场、术语标准说法 vs 误区、三条路由、Schema Linking 五步 + 四类约束、Trust 三层与「成功率 = 覆盖 × 路由 × 对账」、幻觉四类与各自拦截、Q1–Q10 与五道开放题、按层评测
+- updated `super-agent`、`digital-employee`、`dataagent-semantic-layer` — 各加指向新页的交叉引用（super-agent 补「同一问题的组织侧与企业侧解法」两条）
+- updated `harness/index`（27→28 篇）、`ecosystem/index`（37→39 篇）、`data-agent/index`（语义层节 +1 条）、`ai-agent/index`（harness 25→28 / ecosystem 37→39 / data-agent 92→93）、`homepage`（最近更新 +4）
+- 来源归档：`sources/2026/11/13/<标题>/{index.html, imgs/, index.md}` —— 4 篇自包含离线 HTML（图片本地化，无残留远程引用）+ 同名 sidecar；Karpathy 一篇原文无正文配图
+- 配图复核：A4 全 12 张图逐张看（六条考察线、术语表、意图路由两图、Schema Linking 两图、Trust 三层两图、幻觉四类两图、分层评测表），表格数值与正文一致；部分表格位图有小字发糊，只取可辨认内容；A2 抽检 4 张（封面、三种工作形态、PART 分节），与正文一致，图 6 的五维数值以正文为准
+- 口径：四篇均为二手材料（推文转述 / 厂商自述 / 对谈记录 / 面试整理），页面内已分别标注；评测数字均为各厂自述，未独立复核
+- 未改动 `sources/` 下任何既有文件
+- 桌面导出：`~/Desktop/四篇文章通俗导读.md`——四篇合成一条主线（AI 从回答问题到接手工作，人从操作变审核；可信靠架构不靠模型），去掉 frontmatter 与 wikilink 便于直接阅读
+- run `llm-wiki sync`
+
+## [2026-11-16] ingest | 构建 AI 时代的知识底座：直播数据 LLM Wiki 实践（大淘宝技术，2026-11-16）
+- 来源：`sources/2026/11/16/构建 AI 时代的知识底座：直播数据 LLM Wiki 实践/`（`index.html` 自包含离线副本 + `imgs/` 10 张配图 + 同名 `.md` sidecar，`source_type: article-html`）
+- 抓取方式：`curl` 带浏览器 UA 取完整 HTML（5.5MB），取 `#js_content` 子树并做 `<div>` 深度配平；剥离微信 `section` 包裹、`data-*`/`style` 属性与嵌套标题后重排为 760px 可读版式；图片下载本地化（20 张原始图里 9 张是 01/–09/ 章节序号图、1 张 gif 装饰，正文配图 10 张全部入库）；headless Chrome 打 30 页 PDF 逐页复核版式，无残图/断表
+- created `taobao-live-data-llm-wiki` — 全链路拆解：起点（模型/知识/架构三分、知识散落两层后果、RAG 不改变材料状态）→ 三个案例（指标召回 / SQL 生成 / 模型迭代 6 步编排，场景一 12 张下游 + 3 张准入判定）→ 四性质（结构可解析/层级可下钻/关系可遍历/正确性可度量）→ 编译六步与编译器阶段对应 → 编译时 vs 运行时 → 来源广度深度（5 类载体 + 运行时知识不进 Wiki）→ 四条准确性纪律（噪音过滤/代码即真相/生成与判断分离/证据链）→ 8 节点 8 边关系图（只存正向边 + 反填 downstream）→ 为检索而组织三支点 → 三层架构（目录即状态、Schema 即契约、7 个 Skill 编排与干活分离、基础/高阶五维分界）→ 流水线（Phase 0 全脚本化/Phase 1 批间串行批内并行/Phase 2 六项对账）→ 检索栈（意图三路由 + 域推断、两阶段召回、粗排脚本 + 精排 LLM 三维与硬门槛）→ 增量编译三场景 + Lint → 效果表（15× / 20%→0% / 72× / 质变）→ 未来规划 → 原文未说明
+- updated `rag-vs-llm-wiki` — 新增「补充口径：编译时产物 vs 运行时手段」一节（Karpathy 叙事偏"替代"，工程落地是分工）；frontmatter 增补来源
+- updated `llm-wiki`、`llm-wiki-concept` — 相关页面加实践页入口
+- updated `knowledge-retrieval-paradigms` — 相关页面加"第三代范式的数仓落地"一条
+- updated `table-knowledge-graph`、`legacy-business-knowledge-foundation` — 各加一条交叉引用（同一问题的两种解法 / 对"底座必须自己活下去"的数仓侧答卷）
+- updated `ai-agent/knowledge-base/index`（29→30 篇）、`ai-agent/index`（数量与说明同步）、`homepage`（最近更新 +1）
+- 配图复核：10 张正文配图逐张看过并用于正文（img00 编译前后对比、img01/02/03 检索与生码截图、img04 三问总览、img05 编译六步对照、img06 关系图、img07 三层架构、img08 流水线、img09 检索栈）；检索截图里表名/字段名被公众号打成灰块遮盖，只取可见的结构信息与 generality 数值
+- 口径：一手实践自述（公众号「大淘宝技术」，非第三方评测），15×/72×/20%→0% 均为团队自述，页内已标注；"三道确认"的具体三道、`--impact` 所属工具、`generality>15` 与截图 2/12/30 的关系原文均未交代，已列入"原文未说明"
+- 未改动 `sources/` 下任何既有文件
+- run `llm-wiki sync`
