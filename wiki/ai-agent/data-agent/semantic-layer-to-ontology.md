@@ -5,7 +5,7 @@ aliases: [semantic-layer-to-ontology, 业务本体, 语义层到本体, 悦点�
 tags: [ai-agent, architecture, practice]
 sources: [2026/10/29/2026DACon北京站/企业语义层建设/任鑫琦-语义层的下一站是业务本体：十二年+近百家企业语义建设的得与失.pdf]
 created: 2026-10-29
-updated: 2026-11-04
+updated: 2026-11-16
 ---
 
 # 语义层的下一站是业务本体
@@ -348,3 +348,4 @@ DATA → AIGO Ontology
 - [[dataagent-ontology-harness]] — 数帆 DataAgent 的准确率数字（<50% → 95%+）与本体/语义建设的关系
 - [[ontology-five-routes]] — 把 Palantir / Semantic View / Ossie / Genie / Agent Memory 放在同一条"保证 ↔ 自由"轴上对比：本页的 Palantir 路径是"强保证"一端
 - [[data-to-knowledge-engineering]] — 云器科技关涛的同一命题：本体没有统一标准，五条路线各有设计目标（DACon 2026）
+- [[nvidia-auto-ontology]] — 开源侧的反向印证：机器自动生成本体后，人工认证环节成为最难被替代的部分

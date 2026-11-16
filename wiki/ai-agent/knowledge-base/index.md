@@ -10,7 +10,7 @@ updated: 2026-11-16
 
 # 知识库与 RAG
 
-AI 驱动的知识库方案与 RAG 技术，共 30 篇。
+AI 驱动的知识库方案与 RAG 技术，共 31 篇。
 
 ## 范式总览
 
@@ -22,6 +22,7 @@ AI 驱动的知识库方案与 RAG 技术，共 30 篇。
 ## 本体与语义层
 
 - [[open-semantic-interchange]] — OSI 开放指标标准：语义层作为 Agent 契约语言（2026-08 论坛）
+- [[nvidia-auto-ontology]] — NVIDIA Auto-Ontology：开源语义层框架，Generate/Certify/Answer 三段式与三条路线对位（2026-11 内部竞品调研）
 - [[ontology-driven-knowledge-engineering]] — 本体驱动知识工程：企业智能办公 Agent 的地基（2026-08 论坛）
 - [[finance-testing-ontology]] — 金融测试本体工程：测试工艺 × 分层本体与 Test IR 编译式案例生成（杨冬瑞，DACon 2026）
 - [[ontology-five-routes]] — 知识建模的五条路线：Palantir / Semantic View / Ossie / Genie / Agent Memory 的七维对比与"保证换自由"轴（关涛，DACon 2026）

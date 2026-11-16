@@ -5,7 +5,7 @@ aliases: [五条路线, 本体五条路线, 知识建模路线, Ontology Five Ro
 tags: [ai-agent, concept, comparison]
 sources: [2026/10/29/2026DACon北京站/关涛-从数据工程到知识工程：AI时代知识与本体的演进与思考.pdf]
 created: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-16
 ---
 
 # 知识建模的五条路线
@@ -216,3 +216,4 @@ Semantic View 贴近"强保证"一侧（确定、准确、可编译，但只覆�
 - [[ontology-semantic-infrastructure]] — 本体作为智能体语义基础设施
 - [[mem0]] — 记忆层的工程实现
 - [[knowledge-eco-loop]] — 五条路线最终都要接入的知识生产闭环
+- [[nvidia-auto-ontology]] — 「自动生成 + 人工认证」这条形态的开源工程实现与路线对位表

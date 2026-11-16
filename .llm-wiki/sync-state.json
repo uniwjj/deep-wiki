@@ -2,8 +2,8 @@
   "entries": {
     "wiki/homepage.md": {
       "path": "wiki/homepage.md",
-      "mtime": 1794815462341.2139,
-      "contentHash": "bb32a2c9f640f3e2",
+      "mtime": 1794817167952.8303,
+      "contentHash": "ba3312e9641d1778",
       "lastSynced": "2026-11-16"
     },
     "wiki/ai-agent/dacon-2026-beijing.md": {
@@ -14,8 +14,8 @@
     },
     "wiki/ai-agent/index.md": {
       "path": "wiki/ai-agent/index.md",
-      "mtime": 1794815462340.0288,
-      "contentHash": "088201095ae6b016",
+      "mtime": 1794817167951.7893,
+      "contentHash": "37577a9d5b1ae732",
       "lastSynced": "2026-11-16"
     },
     "wiki/ai-ml/amap-route-recommendation-agent.md": {
@@ -164,8 +164,8 @@
     },
     "wiki/big-data/apache-ossie.md": {
       "path": "wiki/big-data/apache-ossie.md",
-      "mtime": 1793861242443.9438,
-      "contentHash": "23926419c8d6cd57",
+      "mtime": 1794817139304.7192,
+      "contentHash": "ded5c972d0e4e16a",
       "lastSynced": "2026-11-16"
     },
     "wiki/big-data/apache-parquet.md": {
@@ -1388,8 +1388,8 @@
     },
     "wiki/ai-agent/data-agent/semantic-layer-to-ontology.md": {
       "path": "wiki/ai-agent/data-agent/semantic-layer-to-ontology.md",
-      "mtime": 1793861336332.9717,
-      "contentHash": "e7418d0e965ab0b0",
+      "mtime": 1794817158483.159,
+      "contentHash": "360ea9d561df79b7",
       "lastSynced": "2026-11-16"
     },
     "wiki/ai-agent/data-agent/semi-auto-ontology-and-lightning-action.md": {
@@ -1958,8 +1958,8 @@
     },
     "wiki/ai-agent/knowledge-base/index.md": {
       "path": "wiki/ai-agent/knowledge-base/index.md",
-      "mtime": 1794815462338.871,
-      "contentHash": "075a8bdc4c75d119",
+      "mtime": 1794817167950.4692,
+      "contentHash": "d7293437849c2abe",
       "lastSynced": "2026-11-16"
     },
     "wiki/ai-agent/knowledge-base/karpathy-agent-obsidian-os.md": {
@@ -2034,6 +2034,12 @@
       "contentHash": "8cbecaeef9d5ea4e",
       "lastSynced": "2026-11-16"
     },
+    "wiki/ai-agent/knowledge-base/nvidia-auto-ontology.md": {
+      "path": "wiki/ai-agent/knowledge-base/nvidia-auto-ontology.md",
+      "mtime": 1794817121107.8057,
+      "contentHash": "b48ac5b2faa247cf",
+      "lastSynced": "2026-11-16"
+    },
     "wiki/ai-agent/knowledge-base/obsidian-claudian.md": {
       "path": "wiki/ai-agent/knowledge-base/obsidian-claudian.md",
       "mtime": 1781503422304.477,
@@ -2054,14 +2060,14 @@
     },
     "wiki/ai-agent/knowledge-base/ontology-five-routes.md": {
       "path": "wiki/ai-agent/knowledge-base/ontology-five-routes.md",
-      "mtime": 1793861097958.39,
-      "contentHash": "d607a76a1daebf8c",
+      "mtime": 1794817158482.0427,
+      "contentHash": "d88cf3a8bae1e31e",
       "lastSynced": "2026-11-16"
     },
     "wiki/ai-agent/knowledge-base/open-semantic-interchange.md": {
       "path": "wiki/ai-agent/knowledge-base/open-semantic-interchange.md",
-      "mtime": 1793861365636.976,
-      "contentHash": "df696c08b609b440",
+      "mtime": 1794817139304.0225,
+      "contentHash": "9f8ea7e00d204bc7",
       "lastSynced": "2026-11-16"
     },
     "wiki/ai-agent/knowledge-base/openviking.md": {
@@ -4480,6 +4486,12 @@
       "path": "sources/2026/11/13/如何让 Super-agent 成为同事：LobeHub 的组织实验/index.md",
       "mtime": 1794534855597.0325,
       "contentHash": "347251a7ab8cdbf1",
+      "lastSynced": "2026-11-16"
+    },
+    "sources/2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/index.md": {
+      "path": "sources/2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/index.md",
+      "mtime": 1794817095390.4585,
+      "contentHash": "0d6faa274202a6f3",
       "lastSynced": "2026-11-16"
     },
     "sources/2026/11/16/构建 AI 时代的知识底座：直播数据 LLM Wiki 实践/index.md": {

@@ -1524,3 +1524,13 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 口径：一手实践自述（公众号「大淘宝技术」，非第三方评测），15×/72×/20%→0% 均为团队自述，页内已标注；"三道确认"的具体三道、`--impact` 所属工具、`generality>15` 与截图 2/12/30 的关系原文均未交代，已列入"原文未说明"
 - 未改动 `sources/` 下任何既有文件
 - run `llm-wiki sync`
+
+## [2026-11-16] ingest | NVIDIA Auto-Ontology 技术调研（2026-11-14，内部竞品情报）
+- 来源关系：用户给的两处链接是**同一份报告的两个载体**——POPO 云文档（`docId=5d958d55fdab4ec1985ebe130d441ef3`，岱玹(蒋鸿翔) 2026-11-14 09:34 创建）与桌面导出的自包含 HTML。逐段比对：POPO 正文的全部段落均含于 HTML 版（0 缺失），故按一份报告摄取，未建重复页
+- 归档：`sources/2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/`——`index.html`（桌面完整版，字节未改，md5 与原件一致）、`popo-doc.raw.html`（POPO 接口返回的 `<doc>` 内容片段，仅作溯源）、`index.md` sidecar（记录两个 URL 与载体关系）
+- created `nvidia-auto-ontology` — 事实 + 推断分层：项目基本事实（Apache 2.0、无不接受外部贡献、无正式 Release、Next.js/FastAPI/PG17+pgvector/FastMCP）；六问上下文层；三段式 Generate（schema 抽取 + profiling + 术语映射列 + 键/分布推断 join 与桥表 + 查询历史建议 SQL 属性；WWI 示例 31 个术语）→ Certify（逐项认证，只有认证过的名称/描述/SQL 属性才被当作可信依据，答案带 provenance）→ Answer（意图+实体抽取、向量检索、用受审 SQL 属性组装查询、校验修复、不可回答显式返回）；三类定义与「SQL attributes = 口径统一的工程化落点」推断；工程实现（组件端口表、10 连接器、四类模型角色、9 个 MCP 工具、Ossie 导入导出、KumoRFM 20 表上限）；三条语义层路线对位（纯自动生成 / 自动+人工沉淀 / 自动+认证）与「护城河转向认证治理」判断；对我方 L1–L4 的含义；五个风险与触发信号；三处安全硬伤；五项可执行建议；待验证与报告局限
+- updated `open-semantic-interchange`、`apache-ossie`、`ontology-five-routes`、`semantic-layer-to-ontology` — 各加一条交叉引用（Ossie 交换标准 / 联合路线形态 / 开源侧印证）
+- updated `ai-agent/knowledge-base/index`（30→31 篇）、`ai-agent/index`（数量同步）、`homepage`（最近更新 +1）
+- 口径说明：本报告是**内部竞品调研**（观策·行业与竞品情报，编制者岱玹/蒋鸿翔），基于 NVIDIA/auto-ontology 公开 README、Tags、Commits 整理，**未部署运行**、官方**未公布准确率**；文中「【推断】」为报告作者推断，wiki 页保留该标记；「我方 L1–L4」原文未写明公司归属，页面按原文措辞，不擅自等同为某一产品线
+- 未改动 `sources/` 下任何既有文件
+- run `llm-wiki sync`

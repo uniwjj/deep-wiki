@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NVIDIA Auto-Ontology 技术调研（2026-11-14）</title><style>
+:root{--ink:#14181d;--ink2:#2c333c;--sub:#5f6b7a;--line:#e3e7ec;--line2:#eef1f5;
+--brand:#1557c0;--brand2:#2f7de1;--bg:#f5f7fa;--warnbg:#fffaf0;--badbg:#fdf3f2;--okbg:#f0faf4;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.78;font-size:15px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:36px 16px 90px}
+.cover{background:linear-gradient(135deg,#0b1f3a 0%,#123a6b 45%,#1f5fa8 100%);border-radius:16px;padding:42px 46px 36px;color:#fff;position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(18,58,107,.22)}
+.cover:after{content:"";position:absolute;right:-80px;top:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.06)}
+.cover .kicker{font-size:12.5px;letter-spacing:2.4px;text-transform:uppercase;opacity:.82}
+.cover h1{font-size:28px;line-height:1.42;margin:12px 0 10px;letter-spacing:-.3px}
+.cover .lead{font-size:14.5px;opacity:.92;max-width:780px;margin:0}
+.cover .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;position:relative;z-index:2}
+.cover .chips span{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:4px 12px;font-size:12px}
+.cover .byline{margin-top:16px;font-size:12.5px;opacity:.8;position:relative;z-index:2}
+.paper{background:#fff;border:1px solid var(--line);border-radius:14px;padding:44px 50px 56px;margin-top:18px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 8px 26px rgba(16,24,40,.045)}
+h2{font-size:21px;margin:46px 0 14px;padding-bottom:10px;border-bottom:2px solid var(--brand)}
+h2:first-child{margin-top:4px}
+h3{font-size:16.5px;margin:28px 0 10px;color:#0f1419}
+p{margin:11px 0}ul,ol{margin:11px 0;padding-left:23px}li{margin:6px 0}
+b,strong{color:#0b1015}
+code{background:#f1f4f8;border:1px solid #e3e9f1;border-radius:4px;padding:1px 5px;font-size:12.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.2px}
+th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+th{background:#f2f6fb;font-weight:600;white-space:nowrap}
+tbody tr:nth-child(even) td{background:#fbfcfe}
+callout{display:block;background:var(--warnbg);border-left:4px solid #f0b429;border-radius:8px;padding:15px 18px;margin:18px 0}
+callout p{margin:0}
+.risk{border:1px solid #f0d5d0;background:var(--badbg);border-radius:10px;padding:14px 18px;margin:12px 0}
+.risk p{margin:6px 0}.risk p:first-child{color:#8a2b1f}
+.action{border:1px solid #cfe0f5;background:#f4f9ff;border-radius:10px;padding:14px 18px;margin:12px 0}
+.action p{margin:6px 0}.action p:first-child{color:#12457f;font-weight:600}
+hr{border:0;border-top:1px solid var(--line);margin:26px 0}
+@media (max-width:640px){.wrap{padding:18px 10px 60px}.cover{padding:28px 22px 24px}.cover h1{font-size:21px}.paper{padding:24px 16px 32px}h2{font-size:18px}table{font-size:12.3px;display:block;overflow-x:auto;white-space:nowrap}}
+</style></head>
+<body><div class="wrap">
+<div class="cover">
+  <div class="kicker">Technology Research · 技术调研</div>
+  <h1>NVIDIA Auto-Ontology：开源语义层对我方 L3/L4 的冲击评估</h1>
+  <p class="lead">NVIDIA 以 Apache 2.0 开源「自动生成本体 + 人工认证 + MCP 供给 Agent」的语义层框架。本报告拆解其机制、与三条技术路线的对位、对我方四层能力的影响、五个风险与五项可执行建议。</p>
+  <div class="chips"><span>调研日期 2026-11-14</span><span>Apache 2.0 开源</span><span>三段式：Generate·Certify·Answer</span><span>10 种连接器</span><span>MCP 9 个工具</span><span>官方未公布准确率</span></div>
+  <div class="byline">编制：观策·行业与竞品情报　|　本报告为公开信息整理与分析，仅供研究参考，不构成投资建议</div>
+</div>
+<div class="paper">
+<h1>NVIDIA Auto-Ontology 技术调研</h1>
+<p><b>调研对象</b>：https://github.com/NVIDIA/auto-ontology　<b>调研日期</b>：2026-11-14　<b>编制</b>：观策·行业与竞品情报</p>
+
+<h2>0. 一句话结论</h2>
+<callout>
+<p><b>NVIDIA 用 Apache 2.0 开源了一个「从企业元数据自动生成本体、经人工认证后供 Agent 消费」的语义层框架。</b>它把行业正在争论的三条语义层路线中的<b>第三条——「自动生成 + 人工认证」——做成了可复现的开源实现</b>。对我方 L3 指标语义平台的直接含义是：<b>语义层的「生成能力」正在商品化，真正剩下的护城河是「认证与治理流程」，而这恰好是我们过去最不当卖点讲的部分。</b></p>
+</callout>
+
+<h2>1. 项目基本事实</h2>
+<table>
+<colgroup><col style="width: 130px;" /><col style="width: 420px;" /></colgroup>
+<tbody>
+<tr><th>仓库</th><td>NVIDIA/auto-ontology（配套评测仓 NVIDIA/auto-ontology-eval）</td></tr>
+<tr><th>官方描述</th><td>「一个用于在数据之上构建语义、图结构推理层的 Python 框架，支持确定性查询生成、更好的上下文检索，以及更可解释的 LLM 与 Agent 工作流」</td></tr>
+<tr><th>许可</th><td><b>Apache License 2.0</b>（可商用、可修改、可再分发）</td></tr>
+<tr><th>活跃度</th><td>最近提交 <b>2026-11-14</b>，持续高频更新；<b>Issues 66 条、PR 54 条</b>，社区关注度上升很快</td></tr>
+<tr><th>版本状态</th><td><b>尚无正式 Release</b>（Tags 仅有一个 pre-main-merge-backup），属早期项目</td></tr>
+<tr><th>贡献政策</th><td><b>明确不接受外部贡献</b>（not accepting external contributions）——这不是社区共建项目，是厂商主导的标准卡位</td></tr>
+<tr><th>技术栈</th><td>Next.js 前端 + FastAPI 后端 + PostgreSQL 17 / pgvector + FastMCP + 可选 Vault；Docker Compose 一键起</td></tr>
+<tr><th>定位表述</th><td>「<b>补充</b>客户已有的语义模型」（complements the semantic models customers already own）——不主张替换既有语义层</td></tr>
+</tbody>
+</table>
+
+<h2>2. 它解决什么问题</h2>
+<p>官方开篇的判断很直接：<b>Agent 能检索文档、能查数据库，但可靠性卡住了 Agentic Analytics——一个算得更快的营收指标，如果数字是错的，毫无价值。</b></p>
+<p>所以它要提供一个「上下文层」，回答 Agent 必须知道的六个问题：</p>
+<table>
+<colgroup><col style="width: 150px;" /><col style="width: 380px;" /></colgroup>
+<tbody>
+<tr><th>数据在哪</th><td>定位到具体表与列</td></tr>
+<tr><th>是什么意思</th><td>业务术语、同义词、口径说明</td></tr>
+<tr><th>该不该用</th><td>是否经过认证、是否适用当前问题</td></tr>
+<tr><th>怎么用</th><td>受审的 SQL 表达式、join 关系、桥表</td></tr>
+<tr><th>从哪来</th><td>血缘与来源（provenance）</td></tr>
+<tr><th>什么相似</th><td>向量检索出的候选术语与字段</td></tr>
+</tbody>
+</table>
+<p>这套问题的表述方式，与我们讲「指标语义层是智能问数可信前提」几乎是同一套逻辑——<b>区别在于它用开源项目把它工程化了</b>。</p>
+
+<h2>3. 核心机制：三段式工作流</h2>
+
+<h3>3.1 Generate（自动生成）</h3>
+<ul>
+<li><b>读取源库</b>：抽取 schema、对字段做数据画像（profiling）、采样值写入 catalog。</li>
+<li><b>命名实体</b>：逐表抽取术语（terms），并把每个术语映射到具体列。</li>
+<li><b>解析关系</b>：从主外键与数据分布推断表间 join 与桥表，并从查询历史中<b>建议 SQL 属性</b>。</li>
+<li><b>写入本体</b>：术语、关系、SQL 属性存入 Postgres，向量写入 pgvector 供检索。</li>
+<li>官方示例：对 Wide World Importers 数据库执行<b>一次编译，产出 31 个术语</b>。</li>
+</ul>
+
+<h3>3.2 Certify（人工认证）——这是全项目最关键的一步</h3>
+<ul>
+<li>用真实问题在 Chat 里测试，或通过 MCP 的 <code>check_answerable</code> / <code>ask_question</code> 验证。</li>
+<li>在 UI 或 API 里<b>修订术语、描述、SQL 属性</b>。</li>
+<li>确认无误后<b>逐项认证（certify）</b>——只有认证过的名称、描述、SQL 属性才会被 Agent 当作可信依据。</li>
+<li>官方明确：<b>答案必须携带 provenance（来源）</b>。</li>
+</ul>
+
+<h3>3.3 Answer（回答）</h3>
+<ol>
+<li>意图分类 + 抽取问题中提到的实体。</li>
+<li>按向量检索候选术语、列、SQL 属性。</li>
+<li>用受审的 SQL 属性组装查询，而不是让模型自由发挥。</li>
+<li>对生成的 SQL 做校验与修复；无法从现有数据回答时，明确返回「不可回答」。</li>
+</ol>
+
+<h3>3.4 三类定义（本体的最小构成）</h3>
+<table>
+<colgroup><col style="width: 140px;" /><col style="width: 400px;" /></colgroup>
+<tbody>
+<tr><th>Terms（术语）</th><td>业务概念（如 Customer、Invoice Line），含描述与同义词，映射到承载它的列</td></tr>
+<tr><th>SQL attributes</th><td>术语下<b>经审阅的 SQL 表达式</b>（如毛利率、滚动合计）。Agent 复用同一表达式，保证同一度量每次算法一致</td></tr>
+<tr><th>Relationships</th><td>表如何 join，含桥表；从键与数据推断而来</td></tr>
+</tbody>
+</table>
+<p><b>【推断】</b>SQL attributes 这一设计是「口径统一」的工程化落点——它不是靠文档约束，而是靠<b>可复用的受审表达式</b>强制一致。这比我方常见的「指标定义 + 口径文档」更硬。</p>
+
+<h2>4. 工程实现细节</h2>
+
+<h3>4.1 组件与端口</h3>
+<table>
+<colgroup><col style="width: 140px;" /><col style="width: 180px;" /><col style="width: 240px;" /><col style="width: 60px;" /></colgroup>
+<tbody>
+<tr><th>组件</th><th>技术</th><th>职责</th><th>端口</th></tr>
+<tr><td>前端</td><td>Next.js、Better Auth、Prisma</td><td>Web UI、认证、公共 API 网关</td><td>3000</td></tr>
+<tr><td>后端</td><td>FastAPI（Python 3.12+）、LangChain</td><td>Text-to-SQL Agent、catalog、本体 API</td><td>3001</td></tr>
+<tr><td>摄入服务</td><td>FastAPI</td><td>数据摄入与语义编译</td><td>3002</td></tr>
+<tr><td>MCP 服务</td><td>FastMCP</td><td>对公共 API 暴露<b>只读</b> Agent 工具</td><td>3003</td></tr>
+<tr><td>存储</td><td>PostgreSQL 17 + pgvector</td><td>Catalog、本体、应用数据、向量库</td><td>5432</td></tr>
+<tr><td>凭据</td><td>HashiCorp Vault（可选）</td><td>连接凭据托管</td><td>—</td></tr>
+</tbody>
+</table>
+
+<h3>4.2 连接器：10 种引擎</h3>
+<p>PostgreSQL、MySQL、Databricks、Snowflake、ClickHouse、Trino、Apache Kyuubi、HeavyDB、DuckDB、SQLite。</p>
+<p><b>【推断】</b>这个清单值得注意——<b>既覆盖国际主流（Snowflake/Databricks），也覆盖了 Trino、Kyuubi 这类国内大数据栈常见引擎</b>。说明它并非只面向欧美生态，具备进入国内混合数仓环境的现实基础。</p>
+
+<h3>4.3 模型角色：四类可替换</h3>
+<table>
+<colgroup><col style="width: 150px;" /><col style="width: 240px;" /><col style="width: 240px;" /></colgroup>
+<tbody>
+<tr><th>角色</th><th>默认模型</th><th>用途</th></tr>
+<tr><td>REASONING</td><td>nemotron-3.5-lightning-30b-a3b</td><td>构建本体、写答案 SQL 与解释、判定可回答性</td></tr>
+<tr><td>NON_REASONING</td><td>同上</td><td>意图识别、实体抽取、候选筛选、SQL 校验修复</td></tr>
+<tr><td>EMBED</td><td>nemotron-3.5-embed-1b</td><td>索引表/列/术语/SQL 属性并匹配问题</td></tr>
+<tr><td>RERANK</td><td>nemotron-3.5-rerank-8b</td><td>编译桥表 SQL 属性时对候选表排序</td></tr>
+</tbody>
+</table>
+<p>支持替换为自托管 NIM 或<b>任意 OpenAI 兼容端点</b>——这意味着国内客户可以换成国产模型，不受限于 NVIDIA 云。<b>这是它比闭源产品更容易进入国内政企的一点。</b></p>
+
+<h3>4.4 MCP 能力（9 个工具）</h3>
+<table>
+<colgroup><col style="width: 130px;" /><col style="width: 400px;" /></colgroup>
+<tbody>
+<tr><th>就绪检查</th><td>check_readiness：这个部署到底能不能回答任何问题</td></tr>
+<tr><th>术语检索</th><td>search_terms、get_term、get_term_columns、get_term_sql_attributes、get_sql_attribute、describe_table</td></tr>
+<tr><th>可答性判断</th><td>check_answerable：本体是否覆盖这个问题</td></tr>
+<tr><th>提问</th><td>ask_question：返回答案、SQL 与数据行</td></tr>
+</tbody>
+</table>
+<p>MCP 为<b>只读</b>工具，每次调用按登录用户的权限执行。<b>「按用户权限执行」这一点与腾讯 DataBuddy、阿里 DataWorks 的做法一致，是 Agent 上下文服务的事实标配。</b></p>
+
+<h3>4.5 互操作：Apache Ossie</h3>
+<p>支持 Apache Ossie（语义模型交换开放标准），可经 Settings → Import/Export 或 API 导入导出 Ossie YAML。<b>这直接指向「语义模型可跨工具迁移」。</b></p>
+
+<h3>4.6 可选预测：KumoRFM</h3>
+<p>配置 KUMO_RFM_API_KEY 后，预测类问题路由到 NVIDIA 托管的 KumoRFM；需把连接的表<b>上传到该服务</b>，默认上限 20 张表。<b>【推断】这一点在数据不出域场景是硬约束，国内政企基本不可用。</b></p>
+
+<h2>5. 与三条语义层路线的对位（本节最重要）</h2>
+<table>
+<colgroup><col style="width: 130px;" /><col style="width: 210px;" /><col style="width: 190px;" /><col style="width: 110px;" /></colgroup>
+<tbody>
+<tr><th>路线</th><th>代表</th><th>核心机制</th><th>人工介入</th></tr>
+<tr><td><b>纯自动生成</b></td><td>阿里云 DataWorks Context Graph</td><td>从数据资产自动扫描推理生成六层语义</td><td>低（事后修正）</td></tr>
+<tr><td><b>自动 + 人工沉淀</b></td><td>数势、Aloudata、我方</td><td>人工建指标本体与语义层</td><td>高（事前建设）</td></tr>
+<tr><td><b>自动 + 认证</b></td><td><b>腾讯云</b>（语义模型→本体模型，自动生成后需人工确认）、<b>NVIDIA Auto-Ontology</b>（Generate → Certify）</td><td>机器生成初稿，人逐项认证后才可信</td><td>中（生成后认证）</td></tr>
+</tbody>
+</table>
+<callout>
+<p><b>【推断，置信度中高】「自动生成 + 人工认证」已经由两家（一家国内头部云厂商、一家国际芯片与 AI 巨头）独立收敛到同一形态，这基本可以判定为该赛道的主流工程范式。</b>我方如果继续把「人工沉淀」作为核心卖点，会在 POC 里被直接对比下去——因为对手既有人工环节（认证），又省掉了从零建设的时间成本。</p>
+</callout>
+<p><b>可保留的差异化不在「生成」，而在「认证之后」</b>：谁来做认证、认证如何留痕、如何版本化、如何与权限血缘联动、如何跨系统生效。这些是开源项目最薄弱、也最难被抄的部分。</p>
+
+<h2>6. 对我方四层能力的含义</h2>
+<table>
+<colgroup><col style="width: 60px;" /><col style="width: 140px;" /><col style="width: 380px;" /></colgroup>
+<tbody>
+<tr><th>层级</th><th>能力</th><th>判断</th></tr>
+<tr><td>L1</td><td>数据存储计算</td><td><b>中性偏利好</b>。它需要对接 10 种引擎，反向证明「多引擎兼容」是语义层落地的前置条件——我方若能给出更完整的国产库/信创引擎兼容清单，是加分项。</td></tr>
+<tr><td>L2</td><td>数据开发治理</td><td><b>压力上升</b>。Certify 环节本质是治理流程（审批、留痕、版本），开源项目把这一环留给了使用方自己补。这恰好是我方治理平台的机会——但要把它做成「语义认证工作流」，而不是通用数据治理。</td></tr>
+<tr><td>L3</td><td>指标语义</td><td><b>最大冲击</b>。语义层的「生成能力」被开源商品化，客户技术团队可自建；定价逻辑必须从「卖生成」转向「卖认证、治理、行业资产与交付」。</td></tr>
+<tr><td>L4</td><td>智能问数</td><td><b>间接冲击</b>。MCP 让语义层成为「Agent 上下文服务」，任何 Agent 都能接。我方问数产品的价值要往「可信闭环 + 业务动作」上移，而不是停留在「能问」。</td></tr>
+</tbody>
+</table>
+
+<h2>7. 必须警惕的五个风险</h2>
+<div class="risk">
+<p><b>风险 1：语义层被开源替代，独立语义层模块的定价空间被压缩。</b></p>
+<p>Apache 2.0 许可允许商用与再分发，云厂商可直接包装成托管服务。对技术能力强的客户（互联网、金融科技），“自建替代采购”会成为现实选项。<b>触发信号</b>：客户技术团队在 POC 中提出「先用开源方案跑一版」；竞品宣传中出现「兼容 Auto-Ontology / Ossie」。</p>
+</div>
+<div class="risk">
+<p><b>风险 2：Apache Ossie 若成为事实标准，语义层的锁定效应消失。</b></p>
+<p>语义模型可导入导出，意味着客户迁移成本大幅下降。<b>过去靠「语义资产沉淀在我们这里所以换不掉」的逻辑会被削弱。</b><b>触发信号</b>：Ossie 被更多厂商采纳；招标文件要求「支持语义模型标准格式导入导出」。</p>
+</div>
+<div class="risk">
+<p><b>风险 3：「生成 + 认证」成为主流，我方人工沉淀叙事受压。</b></p>
+<p>腾讯云与 NVIDIA 各自独立走到同一形态，说明这不是个别选择。<b>触发信号</b>：客户问「你们能不能自动生成语义层」；竞品演示「导入数据资产当天可用」。</p>
+</div>
+<div class="risk">
+<p><b>风险 4：NVIDIA 以开源做生态卡位，后续可能被云厂商集成进托管服务。</b></p>
+<p>「不接受外部贡献」+ 无正式 Release + 高频更新，是典型的厂商主导标准打法。<b>触发信号</b>：主流云厂商推出「一键部署 Auto-Ontology」；NVIDIA 与某云签订联合方案。</p>
+</div>
+<div class="risk">
+<p><b>风险 5：我方至今没有可对外披露的语义层量化口径。</b></p>
+<p>阿里云 93.24% / 99%，腾讯云 95.9% / 83.5%，NVIDIA 提供了<b>可复现的双盲评测框架</b>（schema-only 对照组 vs 本体组），但<b>官方未公布具体提升数字</b>。<b>如果对手用这个框架自测并公布结果，我方将第三次被迫应战且仍无数字。</b></p>
+</div>
+
+<h2>8. 一个容易被忽略的加分项：它的安全设计有硬伤</h2>
+<p>官方 README 自己写明了三条：</p>
+<ul>
+<li>摄入服务的 <code>ingest / delete / reset / compile</code> 端点<b>自身没有任何认证</b>。</li>
+<li>后端 FastAPI <b>信任前端转发的 <code>x-auto-ontology-user-id</code> 头</b>来判断用户身份。</li>
+<li>必须把 3001 / 3002 端口放在私网，否则等同于裸奔。</li>
+</ul>
+<p><b>【推断，置信度中高】这说明它是「开发者可用、企业生产未就绪」的早期项目。</b>对政企、金融客户而言，<b>身份认证、端点鉴权、审计留痕、私有化交付</b>恰恰是我方可以正面拉开差距的地方——而且这不是话术，是可以逐条验证的技术要求。</p>
+
+<h2>9. 可执行建议</h2>
+<div class="action">
+<p><b>① 用官方评测框架做一次双盲自测（最高优先级，2 周内）</b></p>
+<p>Auto-Ontology Eval 的设计很干净：同一批问题、同一个模型、两组对照（仅 schema vs 带本体）、确定性验证器判分。我方可以照搬这套方法，用客户脱敏库或 WWI 样例库跑出<b>自己的「口径增强前后准确率差」</b>。这比自造指标更有说服力，也能直接与对手对话。</p>
+</div>
+<div class="action">
+<p><b>② 支持 Ossie 语义模型的导入导出（低成本、高回报）</b></p>
+<p>工程量小，但能在招标中直接应答「语义模型可迁移」类条款，同时把「我们不怕客户迁移」变成信任信号。</p>
+</div>
+<div class="action">
+<p><b>③ 提供我方语义层的 MCP Server（对齐三家）</b></p>
+<p>腾讯 DataBuddy、阿里 DataWorks、NVIDIA 都已把语义层通过 MCP 暴露。我方若缺这一层，会在「Agent 能不能直接接你的语义层」这个问题上失分。</p>
+</div>
+<div class="action">
+<p><b>④ 把「Certify（语义认证）」做成独立产品能力</b></p>
+<p>这是开源最难补齐、云厂商也最不愿细做的部分：认证人是谁、认证版本、变更留痛、与权限血缘联动、认证失效回收。<b>建议把它从「治理平台的一个子功能」提升为独立卖点。</b></p>
+</div>
+<div class="action">
+<p><b>⑤ 把安全与私有化做成对比清单</b></p>
+<p>针对 NVIDIA 当前的三处短板（端点无认证、信任转发头、预测需上传数据），整理一页「生产就绪度对照表」，用于技术型客户的答疑。</p>
+</div>
+
+<h2>10. 待验证事项</h2>
+<ol>
+<li><b>官方评测数字</b>：README 与 eval 仓均<b>未公布</b>具体的 BIRD / BEAVER 提升幅度，需持续关注其后续发布或论文。</li>
+<li><b>首次公开发布时间</b>：本文只确认最近提交为 2026-11-14、无正式 Release；<b>仓库首个公开版本的具体日期未核实</b>。</li>
+<li><b>Ossie 标准的归属与成熟度</b>：是否已进入 Apache 基金会正式项目、有哪些厂商支持，需单独核实。</li>
+<li><b>是否支持国产数据库</b>：连接器清单中<b>未见达梦、人大金仓、OceanBase、GaussDB</b>，对信创场景是明确缺口，需确认是否有社区适配计划。</li>
+<li><b>中文与中文语义支持</b>：默认模型为 Nemotron 系列，中文业务术语（如「复购率」「动销」）的抽取质量未经验证。</li>
+<li><b>规模上限</b>：单次编译产出的术语量（示例 31 个）在万级表规模下的表现未知。</li>
+</ol>
+
+<h2>11. 来源清单</h2>
+<ul>
+<li>NVIDIA/auto-ontology 仓库主页与 README，https://github.com/NVIDIA/auto-ontology （最近提交 2026-11-14）</li>
+<li>NVIDIA/auto-ontology-eval 评测仓 README，https://github.com/NVIDIA/auto-ontology-eval</li>
+<li>仓库 Tags 页（仅 pre-main-merge-backup，无正式 Release），https://github.com/NVIDIA/auto-ontology/tags</li>
+<li>仓库 Commits 页（提交日期序列），https://github.com/NVIDIA/auto-ontology/commits/main</li>
+</ul>
+
+<h2>12. 方法与局限</h2>
+<ul>
+<li><b>方法</b>：直接抓取 GitHub 仓库 README、Tags、Commits 页面并逐段核对；以官方 README 为唯一事实来源，第三方解读仅用于交叉验证线索，未采信其结论。</li>
+<li><b>局限一</b>：<b>未实际部署运行</b>，所有能力判断基于 README 与代码结构，不代表实测效果。</li>
+<li><b>局限二</b>：官方<b>未公布任何准确率数字</b>，本报告中的「效果」描述均来自官方定性表述，无法量化。</li>
+<li><b>局限三</b>：仓库仍处早期（无正式 Release、Issues/PR 积压较多），能力可能快速变化，建议 2—4 周后复核。</li>
+<li><b>局限四</b>：本报告为公开信息整理与分析，仅供研究参考，不构成投资建议。</li>
+</ul>
+<p><i>本报告由观策·行业与竞品情报编制。所有事实性陈述均标注来源；推断内容已明确标识，与事实区分。</i></p>
+
+</div></div></body></html>

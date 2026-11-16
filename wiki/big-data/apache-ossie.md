@@ -5,7 +5,7 @@ aliases: [Ossie, Apache Ossie, 语义层, Semantic Layer, 数据语义层]
 tags: [big-data, tool, concept]
 sources: [2026/07/26/从 Arrow 到 Iceberg 到 Polaris 到 Ossie：语义标准化的最后一块拼图.html, 2026/10/29/2026DACon北京站/企业语义层建设/王小军-Apache+Ossie+语义层在蚂蚁的落地实践.pdf, 2026/10/29/2026DACon北京站/关涛-从数据工程到知识工程：AI时代知识与本体的演进与思考.pdf]
 created: 2026-07-27
-updated: 2026-11-05
+updated: 2026-11-16
 ---
 
 # Apache Ossie
@@ -93,3 +93,4 @@ Ossie 目前已有 50+ 家公司签署支持，但**尚未进入大规模生产�
 - [[databricks-2026-summit]] — Databricks 2026 峰会对语义层的布局
 - [[apache-ossie-ant-practice]] — 蚂蚁基于 Ossie + Ant-OSI 的 1+3+N 可信语义层落地实践（2026-10-29 DACon）
 - [[ontology-five-routes]] — 知识建模的五条路线：Ossie 在"强保证 ↔ 高灵活"轴上的位置
+- [[nvidia-auto-ontology]] — 支持 Ossie YAML 导入导出的开源语义层框架（NVIDIA，2026-11）

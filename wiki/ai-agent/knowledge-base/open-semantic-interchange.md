@@ -5,7 +5,7 @@ aliases: [OSI, Open Semantic Interchange, 开放语义交换, Datus, 指标开�
 tags: [ai-agent, big-data, concept]
 sources: [2026/08/11/面向Agent的知识工程与本体语义构建论坛/02-赵恒-Open Semantic Interchange：为什么本体需要一个开放标准的指标.pdf]
 created: 2026-08-11
-updated: 2026-08-11
+updated: 2026-11-16
 ---
 
 # Open Semantic Interchange（OSI）
@@ -229,3 +229,4 @@ Project 级先交付 → 被反复查询验证 → PR 收敛统一 → Enterpris
 - [[xiaomi-dimi-data-agent]] — 小米 Data Agent 语义层 Harness 实践（同论坛演讲）
 - [[databricks-genie]] — Databricks Genie 企业级 Data Agent
 - [[ontology-five-routes]] — 知识建模的五条路线：OSI / Ossie 所处的"开放接口"位置
+- [[nvidia-auto-ontology]] — 走 Ossie 交换标准的开源实现：Generate → Certify → Answer 与三条语义层路线对位
