@@ -3,14 +3,18 @@ title: NVIDIA Auto-Ontology
 description: NVIDIA 以 Apache 2.0 开源的语义层框架——Generate（从元数据自动生成本体）→ Certify（人工逐项认证）→ Answer（用受审 SQL 属性组装查询），配 10 种连接器、9 个 MCP 工具与 Ossie 导入导出；含三条语义层路线对位、对我方 L1–L4 的影响、五个风险与五项建议（内部竞品调研，2026-11-14）
 aliases: [Auto-Ontology, NVIDIA Auto-Ontology, auto-ontology, NVIDIA 语义层, Generate Certify Answer]
 tags: [ai-agent, big-data, tool, comparison]
-sources: ["2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/index.html"]
+sources: ["2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/index.html",
+          "2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/upstream/README.md",
+          "2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/upstream/docs-architecture.md",
+          "2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/upstream/connector-base.py",
+          "2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/upstream/skill-management.md"]
 created: 2026-11-16
 updated: 2026-11-16
 ---
 
 # NVIDIA Auto-Ontology
 
-> 来源：内部竞品调研《NVIDIA Auto-Ontology 技术调研（2026-11-14）》（观策·行业与竞品情报，编制者岱玹/蒋鸿翔；POPO 云文档 + 桌面 HTML 导出版，两份为同一报告）。方法为直接抓取 GitHub README/Tags/Commits 逐段核对，**未实际部署运行**，官方也未公布准确率。页内保留报告的【推断】标记，把「官方事实」「报告推断」「报告判断」分开写。
+> 来源：内部竞品调研《NVIDIA Auto-Ontology 技术调研（2026-11-14）》（观策·行业与竞品情报，编制者岱玹/蒋鸿翔；POPO 云文档 + 桌面 HTML 导出版，两份为同一报告）。方法为直接抓取 GitHub README/Tags/Commits 逐段核对，**未实际部署运行**，官方也未公布准确率。页内保留报告的【推断】标记，把「官方事实」「报告推断」「报告判断」分开写。**2026-11-16 对照上游仓库（README、docs/architecture.md、connectors/base.py、管理 skill）做了一次核实**，结论与修正见「抽取边界」一节；上游原始文档已归档在同目录 `upstream/`。
 
 ## 一句话定位
 
@@ -52,7 +56,9 @@ NVIDIA 用 Apache 2.0 开源了一个「从企业元数据自动生成本体、�
 
 ### Certify（人工认证）
 
-用真实问题在 Chat 里试，或经 MCP 的 `check_answerable` / `ask_question` 验证；在 UI 或 API 修订术语、描述、SQL 属性；确认无误后**逐项认证**——只有认证过的名称、描述、SQL 属性才会被 Agent 当作可信依据；答案必须携带 provenance。报告判断这是全项目最关键的一步：它把「生成」与「可信」之间的那道闸门显式产品化了。
+用真实问题在 Chat 里试，或经 MCP 的 `check_answerable` / `ask_question` 验证；在 UI 或 API 修订术语、描述、SQL 属性；确认无误后逐项认证，答案必须携带 provenance。
+
+**一处需要按官方文档修正的口径**：报告写「只有认证过的名称、描述、SQL 属性才会被 Agent 当作可信依据」，但 `docs/architecture.md` 明确说认证只是把该条目标记为「已审核」（在 UI 和搜索结果里体现），**不改变 Agent 的检索行为**；管理 skill 也写明认证 API 不保证原子发布，系统没有认证历史与版本血缘。所以它是「认证工作流 + 人工修订」的骨架，而不是硬门禁——报告把「应当如此」写成了「已经如此」。
 
 ### Answer（回答）
 
@@ -95,6 +101,42 @@ NVIDIA 用 Apache 2.0 开源了一个「从企业元数据自动生成本体、�
 **MCP 9 个只读工具**：就绪检查 `check_readiness`；术语检索 `search_terms`、`get_term`、`get_term_columns`、`get_term_sql_attributes`、`get_sql_attribute`、`describe_table`；可答性判断 `check_answerable`；提问 `ask_question`（返回答案、SQL 与数据行）。每次调用按登录用户权限执行——与腾讯 DataBuddy、阿里 DataWorks 一致，报告称这是 Agent 上下文服务的「事实标配」。
 
 **互操作**：支持 Apache Ossie（语义模型交换标准），可经 Settings → Import/Export 或 API 导入导出 Ossie YAML，指向「语义模型可跨工具迁移」。**可选预测**：配置 `KUMO_RFM_API_KEY` 后，预测类问题路由到 NVIDIA 托管的 KumoRFM，需把连接的表上传到该服务，默认上限 20 张表；【推断】数据不出域场景下这是硬约束，国内政企基本不可用。
+
+## 抽取边界：只有数据库侧证据（2026-11-16 核实）
+
+用户追问「是不是纯数据库抽取、有没有吃数仓代码与业务文档」，逐项对照上游仓库后确认：**是纯数据库侧抽取**。
+
+**唯一的抽取面就是 connector 接口**（`connectors/base.py` 的六个抽象方法）：`get_tables`、`get_columns`、
+`get_views`、`get_pks`、`get_fks`、`get_queries`（近 N 小时查询历史，引擎不支持则返回空表）。
+
+官方 `docs/architecture.md` 列出全部四类输入：
+
+| 输入 | 来源 | 必需 |
+|------|------|------|
+| 表、列、视图、主键、声明外键 | 每个连接 | 是 |
+| 查询历史 | connector（如 Snowflake `QUERY_HISTORY`），引擎暴露才有 | 否 |
+| 自定义分析（保存的 SQL） | UI/API 手写，或导入 | 否 |
+| 既有本体与语义模型 | Settings → Import/Export（Ossie YAML 或自有 YAML） | 否 |
+
+**明确没有的**：ETL/调度任务代码的解析（dbt 工程、SQL 脚本仓、任务编排配置都没有入口）；看板与 BI 定义；
+业务文档（钉钉/Confluence/PDF/Markdown）；跨系统的任务级血缘。语义来源只有四样：库内 schema 与采样值、
+查询历史里的 SQL、人工手写的 glossary 与 custom prompt（Settings → Semantic Input）、以及认证阶段的人工修订。
+视图定义（`view_definition`）会抓，但那是库内视图 SQL，不是数仓任务的加工逻辑。
+
+**它和大淘宝直播数据那篇正好是互补的两极**（[[taobao-live-data-llm-wiki]]）：
+
+| 知识载体 | Auto-Ontology | 直播数据 LLM Wiki |
+|---------|---------------|-------------------|
+| 表结构（DDL） | 抓 | 抓 |
+| 任务代码（怎么算、过滤、聚合、上游依赖） | **不抓** | 抓（"只有 DDL 的 Wiki 仅是骨架"） |
+| 业务文档（业务背景、口径说明） | 不抓（只能人工填 glossary） | 抓 |
+| 看板（谁在用、消费场景） | 不抓 | 抓 |
+| 查询历史（SQL 工作量） | 抓（SQL attributes 的唯一依据） | 未作为主输入 |
+| 血缘 | 无任务级血缘，只有 join 关系与答案溯源 | 显式图（8 类边） |
+
+据此判断它的适用面：关系型数仓、口径主要体现在 SQL 与既有语义模型里的场景，它能给出可用的骨架；
+「口径写在 ETL 代码里、业务含义在文档里、资产消费在看板里」的企业，只能靠 certify 的人工补与 Ossie 导入既有模型来填，
+这也解释了它为什么强调「补充客户已有的语义模型」而不是替换。
 
 ## 三条语义层路线的对位（报告最重要的一节）
 
@@ -151,3 +193,4 @@ NVIDIA 用 Apache 2.0 开源了一个「从企业元数据自动生成本体、�
 - [[table-knowledge-graph]] — 数帆 EasyData 的表知识图谱：自动从 DDL/血缘/文档蒸馏 + 人工审核入图，与本页同构但更重图谱
 - [[shufan-ai-native-data-platform]] — 同一编制者（蒋鸿翔）的数帆 AI Native 数据平台分享；本报告的「我方 L1–L4」未写明公司归属，页内按原文
 - [[data-agent-semantic-stack]] — 语义栈八层视角，可对照它的「六问」定位
+- [[taobao-live-data-llm-wiki]] — 互补的另一极：五类载体（DDL+任务代码+文档+看板+接口）全抓，恰是本页缺的深度

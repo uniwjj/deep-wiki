@@ -359,4 +359,5 @@ ${KB_ROOT}/
 - [[table-knowledge-graph]] — 数帆 EasyData 的表知识图谱：GraphRAG（LightRAG）路线，与本文"Wiki 页面 + 显式图"是同类问题的两种解法
 - [[legacy-business-knowledge-foundation]] — 天猫技术对存量业务知识底座的判断（自治与保鲜是最难一关），本文给出增量编译 + Lint 的一种答案
 - [[dataagent-semantic-layer]] — 数仓语义层的另一种供给方式（语义层产物直接给 Agent），与本文"编译成 Wiki 页面"互补
+- [[nvidia-auto-ontology]] — 对照：NVIDIA 开源语义层只抽库内证据（DDL/采样/查询历史），缺的正是本文强调的任务代码与业务文档深度
 - [[ai-knowledge-base]] — AI 知识库技术全景

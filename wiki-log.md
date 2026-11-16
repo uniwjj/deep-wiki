@@ -1534,3 +1534,12 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 口径说明：本报告是**内部竞品调研**（观策·行业与竞品情报，编制者岱玹/蒋鸿翔），基于 NVIDIA/auto-ontology 公开 README、Tags、Commits 整理，**未部署运行**、官方**未公布准确率**；文中「【推断】」为报告作者推断，wiki 页保留该标记；「我方 L1–L4」原文未写明公司归属，页面按原文措辞，不擅自等同为某一产品线
 - 未改动 `sources/` 下任何既有文件
 - run `llm-wiki sync`
+
+## [2026-11-16] update | 核实 NVIDIA Auto-Ontology 的抽取边界（用户追问：是否只抽数据库、没吃数仓代码与业务文档）
+- 核实方式：对照上游仓库原文——`README.md`、`docs/architecture.md`（输入清单与 Generate 全步骤）、`auto_ontology/connectors/base.py`（connector 抽象接口）、`skills/nvidia-ontology-management/SKILL.md`；四份原始文档已归档到 `sources/2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/upstream/`
+- 结论：**是纯数据库侧抽取**。connector 只有 `get_tables` / `get_columns` / `get_views` / `get_pks` / `get_fks` / `get_queries` 六个接口；官方输入清单只有四类（库内 schema 与键 / 查询历史（引擎暴露才有）/ UI 或 API 手写的 custom analyses / Ossie 或自有 YAML 导入的既有模型）。**没有** ETL 任务代码、dbt 工程、看板定义、业务文档、任务级血缘的入口；视图定义 `view_definition` 是库内视图 SQL，不等于数仓加工逻辑
+- 修正报告一处口径：报告称「只有认证过的名称/描述/SQL 属性才会被 Agent 当作可信依据」，而 `docs/architecture.md` 明确说 certify 只是标记「已审核」（UI 与搜索结果可见）、**不改变 Agent 检索行为**；管理 skill 亦写明认证 API 不保证原子发布、无认证历史与版本血缘
+- updated `nvidia-auto-ontology` — 新增「抽取边界：只有数据库侧证据（2026-11-16 核实）」一节（含四类输入表、缺失项清单、与大淘宝五类载体的对照表、适用面判断）；改写 Certify 小节并标注与报告口径的差异；frontmatter 增补 4 份上游文档来源；相关页面加 taobao 页对照
+- updated `taobao-live-data-llm-wiki` — 相关页面加一条反向对照
+- 追加 `sources/2026/11/14/…/index.md` 的「2026-11-16 补充（摄取后核实）」说明（sidecar 仅追加，未改原有内容）
+- run `llm-wiki sync`

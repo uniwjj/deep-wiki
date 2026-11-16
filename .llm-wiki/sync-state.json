@@ -2036,8 +2036,8 @@
     },
     "wiki/ai-agent/knowledge-base/nvidia-auto-ontology.md": {
       "path": "wiki/ai-agent/knowledge-base/nvidia-auto-ontology.md",
-      "mtime": 1794817121107.8057,
-      "contentHash": "b48ac5b2faa247cf",
+      "mtime": 1794817422538.312,
+      "contentHash": "27b62c94497d0200",
       "lastSynced": "2026-11-16"
     },
     "wiki/ai-agent/knowledge-base/obsidian-claudian.md": {
@@ -2108,8 +2108,8 @@
     },
     "wiki/ai-agent/knowledge-base/taobao-live-data-llm-wiki.md": {
       "path": "wiki/ai-agent/knowledge-base/taobao-live-data-llm-wiki.md",
-      "mtime": 1794815729436.6208,
-      "contentHash": "dc38ca07394bb212",
+      "mtime": 1794817433216.6138,
+      "contentHash": "d744905e5913211d",
       "lastSynced": "2026-11-16"
     },
     "wiki/ai-agent/knowledge-base/unstructured-document-parsing.md": {
@@ -4490,8 +4490,8 @@
     },
     "sources/2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/index.md": {
       "path": "sources/2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/index.md",
-      "mtime": 1794817095390.4585,
-      "contentHash": "0d6faa274202a6f3",
+      "mtime": 1794817433165.7073,
+      "contentHash": "7da65b58cd866db0",
       "lastSynced": "2026-11-16"
     },
     "sources/2026/11/16/构建 AI 时代的知识底座：直播数据 LLM Wiki 实践/index.md": {
@@ -4750,6 +4750,24 @@
       "path": "sources/2026/10/29/2026DACon北京站/非结构化数据处理与知识获取/陈汝龙-企查查：表格识别、VLM幻觉修正与文档解析加速的工程实践.md",
       "mtime": 1793241437473.4868,
       "contentHash": "df2af5f8bdc7fac6",
+      "lastSynced": "2026-11-16"
+    },
+    "sources/2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/upstream/README.md": {
+      "path": "sources/2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/upstream/README.md",
+      "mtime": 1794817397913.9412,
+      "contentHash": "c282ed5fcde179f7",
+      "lastSynced": "2026-11-16"
+    },
+    "sources/2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/upstream/docs-architecture.md": {
+      "path": "sources/2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/upstream/docs-architecture.md",
+      "mtime": 1794817398328.5845,
+      "contentHash": "601f275dce3bde9c",
+      "lastSynced": "2026-11-16"
+    },
+    "sources/2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/upstream/skill-management.md": {
+      "path": "sources/2026/11/14/NVIDIA Auto-Ontology 技术调研（2026-11-14）/upstream/skill-management.md",
+      "mtime": 1794817399128.9744,
+      "contentHash": "0af23dcb25e935f2",
       "lastSynced": "2026-11-16"
     }
   },
