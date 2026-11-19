@@ -1558,3 +1558,11 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `databricks-genie` — 「调度」一节新增「执行环境」段（托管 Agent 服务 vs 执行层、三个推论：无镜像/常驻/持久本地盘、锁不住版本、确定性环境只能走 classic compute）
 - 新增来源 `sources/2026/11/19/Databricks Agent 代码执行环境（官方文档摘录）.md`（四份官方文档节选）
 - run `llm-wiki sync`
+
+## [2026-11-19] ingest | DataWorks 的 Agent 调度：AI 定时任务
+- 触发：用户追问「DataWorks 是不是也有 Agent 的调度」
+- 核实：阿里云帮助中心《AI定时任务》——自然语言 prompt 交给 DataWorks Data Agent，按每小时/每天触发；执行环境选工作空间（不可改）+ 通用型 Serverless 资源组；每次执行留一条执行记录（可看日志、重跑、终止）；能力上限对齐 Data Agent，不支持需要交互输入的操作
+- 关键边界（官方原文）：**不属于 DataStudio 周期任务、不参与基线保障**；频率仅每小时/每天；22:00–24:00 的变更第三日生效；编辑/删除须先停止；每次执行消耗 Token + CU
+- updated `dataworks-data-agent` — 新增「调度：AI 定时任务」一节（能力表、与 AI 巡检的分工、与 Databricks Genie Code 的四点差异）
+- 新增来源 `sources/2026/11/19/DataWorks AI 定时任务（官方文档摘录）.md`
+- run `llm-wiki sync`

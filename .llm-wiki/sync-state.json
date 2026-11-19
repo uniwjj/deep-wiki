@@ -1178,8 +1178,8 @@
     },
     "wiki/ai-agent/data-agent/dataworks-data-agent.md": {
       "path": "wiki/ai-agent/data-agent/dataworks-data-agent.md",
-      "mtime": 1786449791070.9094,
-      "contentHash": "a158d35d21ea7dde",
+      "mtime": 1795086850123.1611,
+      "contentHash": "97a52d4cf8b7c314",
       "lastSynced": "2026-11-19"
     },
     "wiki/ai-agent/data-agent/dataworks-stock-case.md": {
@@ -4108,6 +4108,12 @@
       "path": "sources/2026/11/12/关于 DeepSeek 的 SuperAgent，以及我们的实践.md",
       "mtime": 1794448297423.8547,
       "contentHash": "69ba03363625c654",
+      "lastSynced": "2026-11-19"
+    },
+    "sources/2026/11/19/DataWorks AI 定时任务（官方文档摘录）.md": {
+      "path": "sources/2026/11/19/DataWorks AI 定时任务（官方文档摘录）.md",
+      "mtime": 1795086838195.02,
+      "contentHash": "7ab3bede8282c594",
       "lastSynced": "2026-11-19"
     },
     "sources/2026/11/19/Databricks Agent 代码执行环境（官方文档摘录）.md": {

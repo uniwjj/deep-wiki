@@ -3,9 +3,9 @@ title: DataWorks Data Agent
 description: 阿里云 DataWorks 双引擎驱动的全托管数据智能体——代码 Agent + 运维 Agent 共享统一数据语义与上下文，MCP 协议开放 Skill 生态，覆盖数据开发、治理、分析与引擎管控运维；2026-08 定位升级：从「人机交互」到「碳硅协同」，六层语义资产 + 安全四准则 + 云端全托管三模式
 aliases: [DataWorks Data Agent, 数据智能体, DataAgent]
 tags: [big-data, ai-agent, platform, tool]
-sources: [2026/05/12/01. DataWorks Data Agent.pdf, 2026/05/12/DataWorks DataAgent分享录音.md, 2026/05/28/DataWorks Data Agent：新一代数据智能体，企业大数据的数字员工.pdf, 2026/06/23/DataWorks Data Agent 总体架构.svg, 2026/06/23/DataWorks DataAgent入口与交互模式.svg, 2026/06/23/DataWorks 架构运行流与内核.svg, 2026/08/11/Agent 驱动的数据智能新范式(阿里云专场)论坛/04-闫建丽-DataWorks Data Agent：从“人机交互”到“碳硅协同”的企业级大数据智能体.pdf]
+sources: [2026/05/12/01. DataWorks Data Agent.pdf, 2026/05/12/DataWorks DataAgent分享录音.md, 2026/05/28/DataWorks Data Agent：新一代数据智能体，企业大数据的数字员工.pdf, 2026/06/23/DataWorks Data Agent 总体架构.svg, 2026/06/23/DataWorks DataAgent入口与交互模式.svg, 2026/06/23/DataWorks 架构运行流与内核.svg, 2026/08/11/Agent 驱动的数据智能新范式(阿里云专场)论坛/04-闫建丽-DataWorks Data Agent：从“人机交互”到“碳硅协同”的企业级大数据智能体.pdf, 2026/11/19/DataWorks AI 定时任务（官方文档摘录）.md]
 created: 2026-05-12
-updated: 2026-08-11
+updated: 2026-11-19
 ---
 
 # DataWorks Data Agent
@@ -346,6 +346,30 @@ P16 明确“DataAgent 不是终点，是新的起点”，关键词是开放架
 - Phase 03 远景：数据领域的自治智能体平台。
 
 页脚总结为“开放、可扩展、生态”，产品价值由真实场景与客户实践共同验证。P17 回到 DataWorks Data Agent 封面，并提示接下来进入真实场景、客户实践和大数据引擎团队扩展能力。
+
+## 调度：AI 定时任务
+
+DataWorks 有对应的"调度 Agent"能力，官方名称 **AI 定时任务**（入口：AI工作台 > AI定时任务）。机制与 Databricks 的 Genie Code 定时任务同构——**自然语言 prompt + 定时触发 + 每次执行留痕**，但定位是旁路自动化，不是 DAG 节点。
+
+| 维度 | DataWorks AI 定时任务 |
+|---|---|
+| 输入 | 任务名称 + 任务描述（prompt），例："每天上午 9 点检查昨日 ODS 同步任务是否有失败" |
+| 频率 | 仅 **每小时**（选第几分钟）/ **每天**（选 HH:mm）；按周、按业务日历不支持 |
+| 执行环境 | 工作空间（创建后不可改）+ 通用型 Serverless 资源组 |
+| 触发 | 定时触发 + 手动"立即执行" |
+| 留痕 | 每次一条执行记录（实例 ID、状态、触发类型、时长），可看运行日志、重跑、终止 |
+| 能力上限 | 对齐 Data Agent 已支持的运维/查询/巡查对话操作；不支持需要交互输入的操作 |
+| 成本 | 每次执行消耗 Token + CU |
+| 边界 | **不属于 DataStudio 周期任务，不参与基线保障**；22:00–24:00 的变更第三日生效；编辑/删除须先停止任务 |
+
+与 **AI 巡检**互补：巡检是模板化体检（基线超时、项目空间失败、变更节点），AI 定时任务由用户自由写 prompt；要基线保障只能走 DataStudio 周期任务或巡检模板。
+
+**和 Databricks 的差别**（对照 [[databricks-genie]]）：
+
+- **是否进 DAG**：Genie Code 是 Lakeflow Jobs 里的一等节点，有依赖、重试、超时、`{{tasks.<task>.output.response}}` 传递；AI 定时任务是**旁路**，不进 DataStudio 调度图、不进基线。
+- **频率**：DataWorks 明确收敛到每小时/每天两种；Databricks 文档未列频率上限。
+- **执行环境**：DataWorks 可选工作空间 + Serverless 资源组，Databricks 固定默认 serverless、配置里没有 compute 选项；两边都**没有容器 / 镜像控制权**（执行层口径与 [[databricks-genie]] 已核实的部分一致）。
+- **要在 DAG 里跑 Agent**：DataWorks 只能退回普通节点（PyODPS / Shell / HTTP）调 Data Agent 或百炼 API，依赖与重试自理；Databricks 有原生的 `Genie Code` task type，但仅限 Jobs UI 配置。
 
 ## 相关页面
 
