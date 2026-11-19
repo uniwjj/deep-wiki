@@ -1543,3 +1543,10 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `taobao-live-data-llm-wiki` — 相关页面加一条反向对照
 - 追加 `sources/2026/11/14/…/index.md` 的「2026-11-16 补充（摄取后核实）」说明（sidecar 仅追加，未改原有内容）
 - run `llm-wiki sync`
+
+## [2026-11-19] ingest | Databricks 把 Agent 纳入调度（Genie Code 定时任务 + Lakeflow Jobs 任务）
+- 触发：用户提问「Databricks 支持调度 Agent」，据官方文档核实（非传闻）
+- 一手来源归档 `sources/2026/11/19/Databricks Genie Code 调度能力（官方文档摘录）.md`（genie-code/scheduled-tasks 2026-10-30、jobs/tasks/genie-code 2026-11-05，节选原文关键段落）
+- 结论：两条产品化路径——个人级 Scheduled tasks（自然语言建任务、每次运行生成新 chat、创建者权限、不可共享、计入用量）与 Lakeflow Jobs 的 `Genie Code` task type（DAG 节点，可读上游输出、`{{ }}` 插值、下游取 `output.response`、可重试/超时/告警）；两者均**强制 auto-approve 且不可关闭**，官方明示「不是安全边界」；Job 任务**仅支持 Jobs UI**，Bundles / Jobs API / SDK 均不支持
+- updated `databricks-genie` — 新增「调度：把 Agent 接进平台自己的定时体系」一节（两路径对照表、插值语法、风险边界、典型用法、判断），frontmatter 增补来源与描述、相关页面加两条
+- run `llm-wiki sync`
