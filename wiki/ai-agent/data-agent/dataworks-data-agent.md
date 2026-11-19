@@ -3,7 +3,7 @@ title: DataWorks Data Agent
 description: 阿里云 DataWorks 双引擎驱动的全托管数据智能体——代码 Agent + 运维 Agent 共享统一数据语义与上下文，MCP 协议开放 Skill 生态，覆盖数据开发、治理、分析与引擎管控运维；2026-08 定位升级：从「人机交互」到「碳硅协同」，六层语义资产 + 安全四准则 + 云端全托管三模式
 aliases: [DataWorks Data Agent, 数据智能体, DataAgent]
 tags: [big-data, ai-agent, platform, tool]
-sources: [2026/05/12/01. DataWorks Data Agent.pdf, 2026/05/12/DataWorks DataAgent分享录音.md, 2026/05/28/DataWorks Data Agent：新一代数据智能体，企业大数据的数字员工.pdf, 2026/06/23/DataWorks Data Agent 总体架构.svg, 2026/06/23/DataWorks DataAgent入口与交互模式.svg, 2026/06/23/DataWorks 架构运行流与内核.svg, 2026/08/11/Agent 驱动的数据智能新范式(阿里云专场)论坛/04-闫建丽-DataWorks Data Agent：从“人机交互”到“碳硅协同”的企业级大数据智能体.pdf, 2026/11/19/DataWorks AI 定时任务（官方文档摘录）.md]
+sources: [2026/05/12/01. DataWorks Data Agent.pdf, 2026/05/12/DataWorks DataAgent分享录音.md, 2026/05/28/DataWorks Data Agent：新一代数据智能体，企业大数据的数字员工.pdf, 2026/06/23/DataWorks Data Agent 总体架构.svg, 2026/06/23/DataWorks DataAgent入口与交互模式.svg, 2026/06/23/DataWorks 架构运行流与内核.svg, 2026/08/11/Agent 驱动的数据智能新范式(阿里云专场)论坛/04-闫建丽-DataWorks Data Agent：从“人机交互”到“碳硅协同”的企业级大数据智能体.pdf, 2026/11/19/DataWorks AI 定时任务（官方文档摘录）.md, 2026/11/19/DataWorks 自带 Agent 与 MCP 路线（官方文档摘录）.md]
 created: 2026-05-12
 updated: 2026-11-19
 ---
@@ -371,6 +371,24 @@ DataWorks 有对应的"调度 Agent"能力，官方名称 **AI 定时任务**（
 - **执行环境**：DataWorks 可选工作空间 + Serverless 资源组，Databricks 固定默认 serverless、配置里没有 compute 选项；两边都**没有容器 / 镜像控制权**（执行层口径与 [[databricks-genie]] 已核实的部分一致）。
 - **要在 DAG 里跑 Agent**：DataWorks 只能退回普通节点（PyODPS / Shell / HTTP）调 Data Agent 或百炼 API，依赖与重试自理；Databricks 有原生的 `Genie Code` task type，但仅限 Jobs UI 配置。
 
+## 平台能力对照：Agent Bricks
+
+DataWorks **没有一个"托管你自己写的 Agent"的开发者平台**，它是"两条腿"：全托管只给自己的 Data Agent；想带自己的 Agent 就走 MCP。与 [[databricks-agent-bricks|Databricks Agent Bricks]] 逐项对照：
+
+| 能力 | Databricks Agent Bricks | DataWorks |
+|---|---|---|
+| 托管自研 Agent | ✅ Agent Runtime（Databricks Apps 上的鉴权 endpoint） | ❌ 只托管自家 Data Agent |
+| 自带框架 / 模型 | ✅ 任意框架 + Unity Gateway 任意模型 | ⚠️ 自带 MCP 客户端（Cline）+ 自带模型 key，跑在个人开发环境 |
+| 隔离执行环境 | ✅ Databricks Sandbox（容器、可自定义镜像、持久 home） | ⚠️ 个人开发环境（可选 `dataworks-mcp:py3.11-ubuntu22.04` 镜像，重启需重装 MCP） |
+| 记忆 / 会话 | ✅ Lakebase 托管记忆 | 文档未见对标能力 |
+| 追踪 / 评测 | ✅ MLflow Tracing + 评测 + 监控 | ⚠️ 执行记录与运行日志，无 Agent 级 trace/eval |
+| 平台治理 | ✅ Unity Catalog + Unity Gateway | ✅ 工作空间 / RAM / 数据保护伞（作用在平台侧） |
+| 被外部 Agent 调用 | ✅ Genie One MCP server 等 | ✅ **DataWorks MCP Server**（开源）+ OpenAPI |
+
+第二条腿的机制值得单独记：DataWorks 把 OpenAPI 包成 **DataWorks MCP Server**（GitHub `aliyun/alibabacloud-dataworks-mcp-server`），任何 MCP 客户端都能接，LLM 自己选，费用 = OpenAPI 调用费 + 自己的 Token。这是"**平台能力 MCP 化**"——把 DataWorks 变成 Agent 的工具箱，而不是把 Agent 变成平台的托管公民。
+
+所以判断很直接：要"部署我的 Agent、给我 endpoint / 记忆 / 评测"，DataWorks 给不了（阿里云体系里承担这层的是百炼 Model Studio）；要"让我的 Agent 能操作 DataWorks"，MCP 这条路是通的。
+
 ## 相关页面
 
 - [[superetl]] — 菜鸟基于 DataWorks Data Agent 的 SuperETL 实践
@@ -385,6 +403,7 @@ DataWorks 有对应的"调度 Agent"能力，官方名称 **AI 定时任务**（
 - [[dataagent-semantic-layer]] — 语义层内容分析
 - [[code-agent-vs-data-agent]] — Code Agent / Data Agent 分工的更普适论述
 - [[databricks-genie]] — Databricks 企业级 Data Agent
+- [[databricks-agent-bricks]] — Agent Bricks：托管自研 Agent 的平台（与本页"平台能力对照"一节对应）
 - [[infinisynapse]] — 另一种 Data Agent 基础设施方案
 - [[cloud-village-data-agent-platform]] — 云村 DAS Agent 平台（另一种 Agent 平台架构实践）
 - [[cainiao-data-warehouse-architecture]] — 菜鸟数仓未来架构（Data Mesh + CDM）

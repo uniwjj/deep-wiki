@@ -1578,3 +1578,11 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `index`（data-agent）— 厂商战略段加一行
 - 新增来源 `sources/2026/11/19/Databricks Agent Bricks 平台（官方文档摘录）.md`
 - run `llm-wiki sync`
+
+## [2026-11-19] ingest | DataWorks 有没有 Agent Bricks 的同类能力（答：两条腿，缺托管）
+- 触发：用户追问「DataWorks 是不是有同类的产品能力」
+- 核实：① 全托管 Agent 只有自家 Data Agent（AI 定时任务 / AI 巡检 / AI 运维）；② 自带 Agent 走《基于三方客户端的 DataWorks Agent》——Cline 等 MCP 客户端 + **DataWorks MCP Server**（开源 `aliyun/alibabacloud-dataworks-mcp-server`）+ 自带模型 key，跑在**个人开发环境**（可选 `dataworks-mcp:py3.11-ubuntu22.04` 镜像，重启需重装 MCP），计费 = OpenAPI 调用费 + Token
+- 结论：缺「托管自研 Agent」整段——没有 Agent Runtime/endpoint、没有托管记忆、没有 Agent 级 trace/eval；有「平台能力 MCP 化」（把 OpenAPI 反向暴露给任意 Agent）与平台侧治理。阿里云体系里对标 Agent Bricks 的是百炼（Model Studio）
+- updated `dataworks-data-agent` — 新增「平台能力对照：Agent Bricks」一节（7 项能力对照表 + MCP 路线判断），相关页面 +1、frontmatter 增补来源
+- 新增来源 `sources/2026/11/19/DataWorks 自带 Agent 与 MCP 路线（官方文档摘录）.md`
+- run `llm-wiki sync`
