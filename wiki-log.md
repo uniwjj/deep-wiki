@@ -1550,3 +1550,11 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - 结论：两条产品化路径——个人级 Scheduled tasks（自然语言建任务、每次运行生成新 chat、创建者权限、不可共享、计入用量）与 Lakeflow Jobs 的 `Genie Code` task type（DAG 节点，可读上游输出、`{{ }}` 插值、下游取 `output.response`、可重试/超时/告警）；两者均**强制 auto-approve 且不可关闭**，官方明示「不是安全边界」；Job 任务**仅支持 Jobs UI**，Bundles / Jobs API / SDK 均不支持
 - updated `databricks-genie` — 新增「调度：把 Agent 接进平台自己的定时体系」一节（两路径对照表、插值语法、风险边界、典型用法、判断），frontmatter 增补来源与描述、相关页面加两条
 - run `llm-wiki sync`
+
+## [2026-11-19] update | 核实 Genie Code 的执行环境（是否运行在容器中）
+- 触发：用户追问「这个是运行在容器中的吧」
+- 核实结论：Agent 本体是 Databricks 托管服务；代码执行默认走 **serverless compute**（Databricks 管理的 serverless compute plane，不在客户云账号里开机器），在 notebook / SQL editor 里自动复用当前选中的 compute，无 serverless 权限时必须挂一个 compute
+- 容器边界：官方文档**未描述** serverless 的容器/镜像实现，也未开放自定义镜像；唯一可指定镜像的路径是 classic compute + **Databricks Container Services**（VM → 拉镜像 → 起容器 → 拷 runtime，粒度是节点而非单次运行）。serverless 还是 **versionless**，运行时由 Databricks 自动升级
+- updated `databricks-genie` — 「调度」一节新增「执行环境」段（托管 Agent 服务 vs 执行层、三个推论：无镜像/常驻/持久本地盘、锁不住版本、确定性环境只能走 classic compute）
+- 新增来源 `sources/2026/11/19/Databricks Agent 代码执行环境（官方文档摘录）.md`（四份官方文档节选）
+- run `llm-wiki sync`

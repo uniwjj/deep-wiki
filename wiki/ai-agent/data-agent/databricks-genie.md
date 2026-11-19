@@ -3,7 +3,7 @@ title: Databricks Genie
 description: Databricks 的企业级 Data Agent，通过 specialized knowledge search、parallel thinking 和 Multi-LLM 设计，在内部 benchmark 上将准确率从 32% 提升至 90%+；2026 年衍生为面向业务团队的 Genie One 与面向工程的 Genie Code，后者可作为定时任务或 Lakeflow Jobs 任务被调度
 aliases: [Databricks Genie, Genie, Genie One, Genie Code, Pushing the Frontier for Data Agents with Genie]
 tags: [big-data, ai-agent, tool]
-sources: [2026/05/18/Pushing the Frontier for Data Agents with Genie.html, 2026/06/30/从Databricks产品发布会看数据平台的演进方向.html, 2026/06/30/Databricks官方博客-Introducing Genie One Genie Ontology Genie Agents.md, 2026/11/19/Databricks Genie Code 调度能力（官方文档摘录）.md]
+sources: [2026/05/18/Pushing the Frontier for Data Agents with Genie.html, 2026/06/30/从Databricks产品发布会看数据平台的演进方向.html, 2026/06/30/Databricks官方博客-Introducing Genie One Genie Ontology Genie Agents.md, 2026/11/19/Databricks Genie Code 调度能力（官方文档摘录）.md, 2026/11/19/Databricks Agent 代码执行环境（官方文档摘录）.md]
 created: 2026-05-18
 updated: 2026-11-19
 ---
@@ -83,6 +83,8 @@ Databricks 支持"调度 Agent"——不是给 Agent 框架外挂一个 cron，�
 **定时任务**：可以说一句"每天早上 6 点汇总夜间 job 状态"让它自己建，也可以手动填 Title/Prompt/Schedule/Timezone。每次触发都把 prompt 当一次**完整会话**执行并生成新 chat（不是续同一会话），可在 Run history 里回看、继续对话。任务以**创建者权限**运行、受 Unity Catalog 管控；不能共享给他人（单次 chat 可以）；计入 Genie 用量。
 
 **Job 任务**：在 Lakeflow Jobs 里新增 `Genie Code` 类型任务，prompt 可读上游任务输出，继承创建者的 Genie Code 设置与自定义 MCP 连接。prompt 支持双花括号插值：`{{job.id}}`、`{{job.start_time.iso_date}}`、`{{tasks.<task>.values.<key>}}`、For each 的 `{{input}}`、以及 job 参数 `{{region}}`；下游可用 `{{tasks.<task>.output.response}}` 取最终答复，接 If/else 或下一个 Agent 任务。于是"取数 → 汇总 → 判断 → 发报告"可以排进同一张 DAG，直接复用既有的重试、超时、告警与权限。
+
+**执行环境**：Agent 本体（规划、模型调用、工具编排）是 Databricks 托管服务，不在工作区 compute 里；真正跑代码的是 Databricks compute——默认 **serverless**（Databricks 管理的 serverless compute plane，不在你的云账号里开机器），在 notebook / SQL editor 里则自动复用当前选中的 compute。两个任务的配置里都没有 compute 选项，等于固定走这条默认路径。三个推论：① 官方从未承诺 serverless 内部是容器（公开口径只有 "Databricks-managed" 与 "multiple layers of security"），按容器做假设会踩空——没有镜像入口、没有常驻 localhost 服务、本地磁盘不跨运行保留，产物要写 UC 表或 Volume；② serverless 是 **versionless**，运行时由 Databricks 自动升级，锁不住版本；③ 要确定性环境，只能自己写 notebook / Python 任务挂 classic compute，用 Databricks Container Services 指定 Docker 镜像——但那是**节点级**容器（一台 VM 一个容器），且失去 Genie Code 任务的原生编排。
 
 **风险边界（关键）**：两条路径都**强制开启 auto-approve**，无法关闭，也没有运行前人工确认。Genie Code 用 AI 分类器按 prompt 范围审查每个工具动作、拦截越界的高风险操作，但官方明确写着"auto-approve 是生产力特性，不是安全边界"。无人值守时要提前划定的是：这个 prompt 能触达哪些生产数据、共享资源和外部系统（Slack/Jira/自定义 MCP）。
 

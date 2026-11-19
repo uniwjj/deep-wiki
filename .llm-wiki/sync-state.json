@@ -1148,8 +1148,8 @@
     },
     "wiki/ai-agent/data-agent/databricks-genie.md": {
       "path": "wiki/ai-agent/data-agent/databricks-genie.md",
-      "mtime": 1795086478851.3335,
-      "contentHash": "b6b5cc3be4a2cb43",
+      "mtime": 1795086667349.2432,
+      "contentHash": "fc9a208c3074bc5f",
       "lastSynced": "2026-11-19"
     },
     "wiki/ai-agent/data-agent/databuddy-ecs-demo.md": {
@@ -4108,6 +4108,12 @@
       "path": "sources/2026/11/12/关于 DeepSeek 的 SuperAgent，以及我们的实践.md",
       "mtime": 1794448297423.8547,
       "contentHash": "69ba03363625c654",
+      "lastSynced": "2026-11-19"
+    },
+    "sources/2026/11/19/Databricks Agent 代码执行环境（官方文档摘录）.md": {
+      "path": "sources/2026/11/19/Databricks Agent 代码执行环境（官方文档摘录）.md",
+      "mtime": 1795086662903.2754,
+      "contentHash": "609b333d6ad8bcbc",
       "lastSynced": "2026-11-19"
     },
     "sources/2026/11/19/Databricks Genie Code 调度能力（官方文档摘录）.md": {
