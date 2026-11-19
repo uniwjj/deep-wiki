@@ -1134,6 +1134,12 @@
       "contentHash": "b4e7fd51abaa6ddb",
       "lastSynced": "2026-11-19"
     },
+    "wiki/ai-agent/data-agent/databricks-agent-bricks.md": {
+      "path": "wiki/ai-agent/data-agent/databricks-agent-bricks.md",
+      "mtime": 1795086985222.6353,
+      "contentHash": "c6df83850c5064e0",
+      "lastSynced": "2026-11-19"
+    },
     "wiki/ai-agent/data-agent/databricks-agent-control-plane.md": {
       "path": "wiki/ai-agent/data-agent/databricks-agent-control-plane.md",
       "mtime": 1782799860898.6648,
@@ -1148,8 +1154,8 @@
     },
     "wiki/ai-agent/data-agent/databricks-genie.md": {
       "path": "wiki/ai-agent/data-agent/databricks-genie.md",
-      "mtime": 1795086667349.2432,
-      "contentHash": "fc9a208c3074bc5f",
+      "mtime": 1795086999580.484,
+      "contentHash": "4213bbb39f74747d",
       "lastSynced": "2026-11-19"
     },
     "wiki/ai-agent/data-agent/databuddy-ecs-demo.md": {
@@ -1256,8 +1262,8 @@
     },
     "wiki/ai-agent/data-agent/index.md": {
       "path": "wiki/ai-agent/data-agent/index.md",
-      "mtime": 1794534848308.454,
-      "contentHash": "da31edb7b219f9fa",
+      "mtime": 1795086997287.1152,
+      "contentHash": "fa61efce5de08326",
       "lastSynced": "2026-11-19"
     },
     "wiki/ai-agent/data-agent/infinisynapse.md": {
@@ -4114,6 +4120,12 @@
       "path": "sources/2026/11/19/DataWorks AI 定时任务（官方文档摘录）.md",
       "mtime": 1795086838195.02,
       "contentHash": "7ab3bede8282c594",
+      "lastSynced": "2026-11-19"
+    },
+    "sources/2026/11/19/Databricks Agent Bricks 平台（官方文档摘录）.md": {
+      "path": "sources/2026/11/19/Databricks Agent Bricks 平台（官方文档摘录）.md",
+      "mtime": 1795086972157.0662,
+      "contentHash": "3a5fdb9a4720adae",
       "lastSynced": "2026-11-19"
     },
     "sources/2026/11/19/Databricks Agent 代码执行环境（官方文档摘录）.md": {

@@ -1566,3 +1566,15 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `dataworks-data-agent` — 新增「调度：AI 定时任务」一节（能力表、与 AI 巡检的分工、与 Databricks Genie Code 的四点差异）
 - 新增来源 `sources/2026/11/19/DataWorks AI 定时任务（官方文档摘录）.md`
 - run `llm-wiki sync`
+
+## [2026-11-19] ingest | Databricks Agent Bricks：Agent 开发平台（回应"Agent 工作台"）
+- 触发：用户追问「Databricks 我记得今年重点发布了 Agent 工作台」
+- 核实：官方没有 "Agent Workbench" 这个产品名；对应的是 **Agent Bricks**——"the Databricks agent developer platform"（2025 首发，2026 扩展：10 万+ 生产 Agent、年 10¹⁵ tokens、多框架、Lakebase 托管内存）
+- 平台五件事：Agent Runtime（跑在 Databricks Apps 的鉴权 endpoint）+ DurableAgentServer（durable execution/崩溃恢复）+ **Databricks Sandbox**（隔离执行 Agent 写的代码）+ 托管记忆/MCP/AI Search + MLflow 评测与 Unity Gateway 治理
+- 调度位置修正：Agent Bricks 的 Agent 部署后是 endpoint，**没有**原生 Jobs 任务类型（任务清单里 AI 类只有 Genie Code 与 AI Functions），自建 Agent 只能由 notebook/Python 任务或外部调度器调 endpoint
+- **纠正上一轮口径**：Databricks Sandbox（Beta）是真容器语义——4 vCPU/8GB、home 100GB 跨启停持久、可自定义容器镜像（Artifact Registry）、24h 上限、入站全关出站不限、Beta 结束可能清空。"没有镜像入口/本地盘不持久"只适用于 Genie Code 的 serverless 路径
+- added `databricks-agent-bricks` — 新页面：五件事表、2026 规模、与 Genie 家族分工、调度位置、沙箱容器细节
+- updated `databricks-genie` — 「执行环境」段收窄到 Genie Code 路径并加沙箱反例引用；相关页面 +1；frontmatter 增补来源
+- updated `index`（data-agent）— 厂商战略段加一行
+- 新增来源 `sources/2026/11/19/Databricks Agent Bricks 平台（官方文档摘录）.md`
+- run `llm-wiki sync`

@@ -115,6 +115,7 @@ AI Agent 在数据领域的应用——Data Agent 产品、AI 原生数据平台
 - [[databricks-evolution]] — Databricks 四条技术 S 曲线（Spark → Lakehouse → Lakebase → Agents）与 a16z 投资故事
 - [[sora-system-of-record-for-agents]] — SORA：智能体的记录系统（状态/本体/护栏/评估四问闭环）
 - [[databricks-agent-control-plane]] — Databricks Agent 控制面战略：六层控制点拼图
+- [[databricks-agent-bricks]] — Agent Bricks：Agent 开发平台（Agent Runtime + Sandbox + 托管记忆）
 - [[customerlake]] — Databricks CustomerLake：Agentic CDP
 - [[lakewatch-agent-siem]] — Lakewatch + Panther 收购：Agent 驱动安全湖仓
 - [[agent-infra-vendor-strategies]] — Agent 基础设施厂商战略对照
