@@ -60,3 +60,4 @@ updated: 2026-11-16
 - [[data-agent-next-stage]] — 语义层/知识底座作为竞争焦点的行业侧印证
 - [[karpathy-agent-obsidian-os]] — Agent + Obsidian 知识库：知识外化的个人侧实践
 - [[taobao-live-data-llm-wiki]] — 数仓侧答卷：代码即真相 + 增量编译 + 持续 Lint，回应"底座必须自己活下去"
+- [[livex-wiki]] — 业务代码侧答卷：场景地图 + 逐链回源核验 + Git 受控发布，把「锚定权威事实来源」落到消费与维护环节

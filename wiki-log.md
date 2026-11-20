@@ -1586,3 +1586,15 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `dataworks-data-agent` — 新增「平台能力对照：Agent Bricks」一节（7 项能力对照表 + MCP 路线判断），相关页面 +1、frontmatter 增补来源
 - 新增来源 `sources/2026/11/19/DataWorks 自带 Agent 与 MCP 路线（官方文档摘录）.md`
 - run `llm-wiki sync`
+
+## [2026-11-20] ingest | LiveX Wiki：基于 LLM Wiki、OKF 与 Git 的 Agent 知识库（大淘宝直播互动）
+- 来源：公众号「大淘宝技术」，作者翎捷（淘天集团 · 直播互动团队），2026-11-20 16:39；未开源，一手实践自述
+- 归档：`sources/2026/11/20/基于 LLM Wiki、OKF 与 Git 的Agent知识库：淘宝直播互动团队的AI Coding实践.html`（自包含 HTML，保留原文内联样式，剥离账号名片卡与「拓展阅读」栏目；28 幅配图保留原链）+ 同名 `.md` sidecar（frontmatter + 正文结构 + 配图复核记录）
+- created `livex-wiki` — 核心：①四条设计约束（按需供给 / 按业务结构组织 / 给可核验路径 / 有生命周期）来自「知识库读者从人变 Agent」的推导；②建模用「业务域—业务场景—共享知识」三层，场景按「可独立理解、可明确归责、可单独核验」切分，场景内查证路径为真实接口→服务编排→核心模块→底部依赖；③消费是层次索引（域/场景 frontmatter 轻量入口）+ Agentic Search，五步表 + 三类终止条件，消费只读、待确认项不作事实；④生命周期 = 人工冷启定边界 + Agent 跨源核验编纂 + Git 受控发布（五道门禁；confidence ≥ 0.9 且无待确认项可自动合入，共享知识与场景删除交 Maintainer）；规则落在 `AGENTS.md`（入口与行为边界）与 `MAINTENANCE.md`（生产/消费/迭代契约）；⑤实测：两批同批次端到端生码综合得分较无知识库 +54.5% / +23.8%（均值 39.15%），较既有 RAG +44.3% / +15.9%（均值 30.1%）；需求路由归一化 F1 覆盖组 1.28/1.36/1.05/1.38 vs 未覆盖组 0.34/0.16/0.88/0.10（链路 1.38 : 0.10）；摘要口径「线上仓库定位准确率 60%→90%」
+- 早期 RAG 观测（2026 年 7–9 月）：知识相关率 25.45%→42.20%、知识库支撑占比 44.23%→55.87%、采纳率 20.54%~28.05% 波动；据此把优化重点从「扩大召回」转向「按场景组织上下文」
+- 配图逐张复核：总览图（六块基石含 PageIndex 思想 / Domain / Scene Index）、生产/消费/迭代三张流程图、生命周期全景图、脱敏知识图谱两张（8 领域 / 47 场景 / 37 知识 / 244 依赖）、评测两张（批次 A/B 逐维相对提升、路由归一化 F1）、仓库截图两张（domain frontmatter 的 `schema: domain-index/v1` 与 `MAINTENANCE.md` 目录）
+- updated `taobao-live-data-llm-wiki`、`knowledge-retrieval-paradigms`、`legacy-business-knowledge-foundation`、`llm-wiki-concept`、`semantic-layer-to-ontology` — 各加一条交叉引用（同公司另一条路线 / 第三代消费侧形态 / 业务代码侧答卷 / 工程化分支 / OKF 这一轻量档的实证）
+- updated `ai-agent/knowledge-base/index`（31→32 篇）、`ai-agent/index`（数量同步）、`homepage`（最近更新 +1）
+- 口径说明：文中「39.15% / 30.1%」为两批综合得分的算术均值；评测数值均只做同批次对照，原文不展示原始得分、需求数量与业务样本；知识图谱统计来自脱敏示例截图，不代表真实业务规模
+- 未改动 `sources/` 下任何既有文件
+- run `llm-wiki sync`

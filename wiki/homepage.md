@@ -5,7 +5,7 @@ aliases: [Deep Study, 知识库首页]
 tags: [meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-09
-updated: 2026-11-16
+updated: 2026-11-20
 ---
 
 # Deep Study
@@ -33,6 +33,7 @@ updated: 2026-11-16
 
 ## 最近更新
 
+- [[livex-wiki]] — LiveX Wiki（大淘宝直播互动，2026-11-20）：Coding Agent 的业务知识库——域/场景/共享知识三层、层次索引 + Agentic Search 五步消费、冷启/自更新/自审查 + Git 五道门禁；同批次端到端生码综合得分较无知识库 +54.5% / +23.8%（均值 39.15%），较 RAG +44.3% / +15.9%（均值 30.1%），链路 F1 1.38 : 0.10
 - [[nvidia-auto-ontology]] — NVIDIA Auto-Ontology（开源语义层，2026-11-14 内部竞品调研）：Generate 自动生成本体 → Certify 人工逐项认证 → Answer 用受审 SQL 属性组装查询；10 连接器 / 9 个 MCP 工具 / Ossie 互换；三条语义层路线对位与「生成商品化、护城河在认证治理」
 - [[taobao-live-data-llm-wiki]] — 直播数据 LLM Wiki 实践（大淘宝技术，2026-11-16）：把 LLM Wiki 当知识编译器——四性质、编译六步、3 层架构 + 7 个 Skill、Phase 0/1/2 流水线、8 节点 8 边关系图、三步检索栈、增量编译与持续 Lint；实测血缘查询 15×、下游遗漏率 20%→0%
 - [[data-qa-interview-framework]] — 智能问数面试框架（2026-11-13）：语义层当类型系统、Trust 三层与「成功率 = 覆盖 × 路由 × 对账」、幻觉四类分治、十道高频题与五道开放题

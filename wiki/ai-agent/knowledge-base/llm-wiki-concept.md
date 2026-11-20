@@ -71,6 +71,7 @@ AGENTS.md、MEMORY.md、memory/ 目录本质上就是 LLM Wiki 模式的雏形�
 ## 相关页面
 
 - [[taobao-live-data-llm-wiki]] — 工程化分支：把 Schema/编译/Lint 落成数仓知识底座（大淘宝直播数据）
+- [[livex-wiki]] — 工程化分支：把编纂、消费与维护落成业务代码知识库（大淘宝直播互动，OKF + Git）
 - [[knowledge-base-karpathy-practice]] — Karpathy 知识库实操指南
 - [[knowledge-base-karpathy-guide]] — 四步法教程
 - [[knowledge-retrieval-paradigms]] — 三代范式对比（RAG/GraphRAG/LLM Wiki）

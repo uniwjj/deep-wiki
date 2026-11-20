@@ -349,3 +349,4 @@ DATA → AIGO Ontology
 - [[ontology-five-routes]] — 把 Palantir / Semantic View / Ossie / Genie / Agent Memory 放在同一条"保证 ↔ 自由"轴上对比：本页的 Palantir 路径是"强保证"一端
 - [[data-to-knowledge-engineering]] — 云器科技关涛的同一命题：本体没有统一标准，五条路线各有设计目标（DACon 2026）
 - [[nvidia-auto-ontology]] — 开源侧的反向印证：机器自动生成本体后，人工认证环节成为最难被替代的部分
+- [[livex-wiki]] — 轻量一档的实证：不做统一本体，只用 OKF 式 Markdown + YAML frontmatter 表达身份与依赖，靠场景划分与回源核验控住准确性

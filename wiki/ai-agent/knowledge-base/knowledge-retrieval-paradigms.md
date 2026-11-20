@@ -107,4 +107,5 @@ LLM Wiki 支持根据查询类型动态决定回答方式：
 - [[graphrag]] — 第二代 GraphRAG / LightRAG
 - [[storm]] — STORM：让 AI 主动做研究
 - [[taobao-live-data-llm-wiki]] — 第三代范式的数仓落地：编译流水线、树+图索引与三步检索栈
+- [[livex-wiki]] — 第三代范式在 Coding Agent 侧的落地：层次索引 + Agentic Search、消费只读与回源核验
 - [[mem0]] — 记忆层维度

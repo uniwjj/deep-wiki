@@ -352,6 +352,7 @@ ${KB_ROOT}/
 
 - [[llm-wiki-concept]] — 概念层：Raw/Wiki/Schema 三层与 Ingest/Query/Lint 三操作，本页是它在数仓场景的工程落地
 - [[rag-vs-llm-wiki]] — 本文的"编译时 vs 运行时"是"Wiki 不替代 RAG"的一手佐证
+- [[livex-wiki]] — 同公司另一条路线：直播互动团队面向跨端业务代码建 LiveX Wiki（域/场景/共享知识 + Agentic Search），与本文「数仓知识编译器」互补
 - [[knowledge-retrieval-paradigms]] — 三代范式：本文属第三代编译器模式，并补齐了与 RAG 共存的那一层
 - [[llm-wiki-implementations]] — 开源实现侧（sage-wiki 的 5 个 Pass、llm-wiki CLI、OpenViking），可与本文编译流水线逐项对照
 - [[openviking]] — 另一条工程化路线：目录递归检索与 L0/L1/L2 上下文，与本文的树+图检索互补
