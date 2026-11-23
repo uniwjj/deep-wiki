@@ -5,7 +5,7 @@ aliases: [data-agent, Data Agent, AI 数据平台]
 tags: [ai-agent, big-data, meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-07-01
-updated: 2026-11-13
+updated: 2026-11-23
 ---
 
 # Data Agent 与 AI 数据平台
@@ -91,6 +91,8 @@ AI Agent 在数据领域的应用——Data Agent 产品、AI 原生数据平台
 - 附录 A 术语表见 [[ontology-terms]]（位于 ai-ml/）；哲学到工程的演进见 [[ontology-engineering-evolution]]（位于 ai-ml/）
 
 - [[ontological-semantic-layer]] — 本体化语义层：数仓到 Agent 架构补位
+- [[taobao-flash-ontology-platform]] — 淘宝闪购本体平台：三层元模型（3E/1L/7S）、变更治理与四端接口账目（2026-11）
+- [[taobao-flash-query-evolution]] — 淘宝闪购查询链路：三代引擎演进与 NeuG 多模融合检索，9511 条回放评测
 - [[dataagent-semantic-layer]] — DataAgent 语义层的实物层面内容
 - [[code-agent-vs-data-agent]] — Code Agent 与 Data Agent 的根本差异
 - [[data-agent-vs-ontology-agent]] — Data Agent 与 Ontology Agent 推理范式对比

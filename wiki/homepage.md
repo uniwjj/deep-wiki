@@ -5,7 +5,7 @@ aliases: [Deep Study, 知识库首页]
 tags: [meta, summary]
 sources: [2026/05/10/lint-stub.md]
 created: 2026-05-09
-updated: 2026-11-20
+updated: 2026-11-23
 ---
 
 # Deep Study
@@ -33,6 +33,8 @@ updated: 2026-11-20
 
 ## 最近更新
 
+- [[taobao-flash-ontology-platform]] — 淘宝闪购本体平台（阿里技术，2026-11-18）：三层元模型（3E/1L/7S）+ 单向派生链路；变更查重、三方合并、回调对账与稳定标识；四端 18 方法「只提供定义、不承担计算」，机器可读性三问
+- [[taobao-flash-query-evolution]] — 淘宝闪购查询链路（阿里技术，2026-11-18）：三代引擎演进 GDB → OpenSearch/Hologres → NeuG 多模图数据库；节点先于边、MERGE 三层幂等与写租约；RRF 融合 + 降级契约；9511 条回放评测（Top-1 命中 54.2% vs 42.8%）
 - [[livex-wiki]] — LiveX Wiki（大淘宝直播互动，2026-11-20）：Coding Agent 的业务知识库——域/场景/共享知识三层、层次索引 + Agentic Search 五步消费、冷启/自更新/自审查 + Git 五道门禁；同批次端到端生码综合得分较无知识库 +54.5% / +23.8%（均值 39.15%），较 RAG +44.3% / +15.9%（均值 30.1%），链路 F1 1.38 : 0.10
 - [[nvidia-auto-ontology]] — NVIDIA Auto-Ontology（开源语义层，2026-11-14 内部竞品调研）：Generate 自动生成本体 → Certify 人工逐项认证 → Answer 用受审 SQL 属性组装查询；10 连接器 / 9 个 MCP 工具 / Ossie 互换；三条语义层路线对位与「生成商品化、护城河在认证治理」
 - [[taobao-live-data-llm-wiki]] — 直播数据 LLM Wiki 实践（大淘宝技术，2026-11-16）：把 LLM Wiki 当知识编译器——四性质、编译六步、3 层架构 + 7 个 Skill、Phase 0/1/2 流水线、8 节点 8 边关系图、三步检索栈、增量编译与持续 Lint；实测血缘查询 15×、下游遗漏率 20%→0%
