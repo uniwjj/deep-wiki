@@ -1607,3 +1607,9 @@ Append-only record of wiki operations. Format: `[date] verb | subject`
 - updated `ai-agent/data-agent/index`（语义层与本体 +2 行）、`ai-agent/index`（data-agent 页数 93→95）、`homepage`（最近更新 +2）
 - 口径说明：评测数值（9511 条、54.2% 等）为平台 2026-10 生产回放数据，原文未给出评分公式细节；截断案例为排查实录，修复状态原文未提
 - run `llm-wiki sync`
+
+## [2026-11-23] summary | 淘宝闪购本体平台文章摘要（用户反馈原文难懂）
+- 用 article-summary 技能生成白话版结构化摘要：一段话总结 / 作者判断 / 核心内容十节（问题 → 三层元模型 → 治理链路 → 三代引擎演进 → NeuG 写入难点 → RRF 融合与截断陷阱 → 9511 条回放评测 → 场景圈选 → 接口账目 → 承诺代价与避坑经验）
+- 配图处理：原文 21 张图全部下载，多模态解析在当前会话不可用（read_image 返回 Unsupported），降级用正文上下文推断；嵌入 11 张与论证直接相关的架构/链路图（原文 URL），封面、装饰动图与文字已全覆盖的图表未收录
+- 产物：`article-summaries/淘宝闪购本体平台：让人与 AI Agent 共用一份实时可信的业务知识.md`（不影响 sources/ 与 wiki/）
+- run `llm-wiki sync`
